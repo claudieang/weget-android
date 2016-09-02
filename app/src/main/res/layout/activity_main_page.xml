@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout xmlns:android=
+        "http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#e8e8e8"
+        tools:context="com.wegot.fuyan.fyp.HomeActivity">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:id="@+id/relativeLayout1">
+            <TextView
+                android:text="GEO SERVICE HERE"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textview2"
+                android:textSize="35dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                />
+
+
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/relativeLayout1"
+            android:background="@color/bt_very_light_gray"
+            >
+
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/homepage"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/ic_home_black_24dp"/>
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/request"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/ic_shopping_basket_black_24dp"/>
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/addrequest"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/ic_loupe_black_24dp"/>
+                <!--android:layout_centerHorizontal="true"-->
+
+
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/fulfill"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/ic_directions_run_black_24dp"/>
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/imageButton3"
+
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/ic_chat_black_24dp"/>
+            <!--android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"-->
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

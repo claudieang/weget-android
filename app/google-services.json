@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "511006398088",
+    "firebase_url": "https://notification1-c1480.firebaseio.com",
+    "project_id": "notification1-c1480",
+    "storage_bucket": "notification1-c1480.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511006398088:android:381806b0da5c24b5",
+        "android_client_info": {
+          "package_name": "com.wegot.fuyan.fyp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "511006398088-bag55tf3r979lem63rheelihr35di0pj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyd34Ln2jqBfVWGbkdIWsuHPbBGws5Ogg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

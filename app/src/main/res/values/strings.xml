@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WEGET</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="responseisnull">Response is null</string>
+    <string name="msg_token_fmt">InstanceID Token: %s</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+</resources>
