@@ -9,6 +9,7 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -36,8 +37,8 @@ public class CreateRequestActivity extends AppCompatActivity {
     double latitude, longtitude;
 
     final int ONE_MINUTE_IN_MILLIS = 60000;
-    String productName, requestRequirement, addressLine, requestDurationS, postalCodeS,priceS,
-    startTime, endTime, err, username, password, authString;
+    String productName, requestRequirement, addressLine, requestDurationS, postalCodeS, priceS,
+            startTime, endTime, err, username, password, authString;
     int postalCode, requestDuration, requestorId;
     double price;
     EditText etProductName, etRequestRequirement, etPostalCode, etAddressLine, etRequestDuration, etPrice;
@@ -46,32 +47,40 @@ public class CreateRequestActivity extends AppCompatActivity {
     Geocoder geocoder;
     Context mContext;
 
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_request);
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
         //font
-        TextView myTextView=(TextView)findViewById(R.id.tv_request_title);
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Bold.ttf");
+        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+
+
+        TextView myTextView = (TextView) findViewById(R.id.tv_request_title);
+        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/TitilliumWeb-Bold.ttf");
         myTextView.setTypeface(typeFace);
 
 
-
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
-        requestorId = pref.getInt("id",0);
+        requestorId = pref.getInt("id", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
 
-        etProductName = (EditText)findViewById(R.id.product_name_txt);
-        etRequestRequirement = (EditText)findViewById(R.id.product_requirement_txt);
-        etPostalCode = (EditText)findViewById(R.id.postal_code_txt);
-        etAddressLine = (EditText)findViewById(R.id.address_line_txt);
-        etRequestDuration = (EditText)findViewById(R.id.request_duration_txt);
-        etPrice = (EditText)findViewById(R.id.request_price_txt);
+        etProductName = (EditText) findViewById(R.id.product_name_txt);
+        etRequestRequirement = (EditText) findViewById(R.id.product_requirement_txt);
+        etPostalCode = (EditText) findViewById(R.id.postal_code_txt);
+        etAddressLine = (EditText) findViewById(R.id.address_line_txt);
+        etRequestDuration = (EditText) findViewById(R.id.request_duration_txt);
+        etPrice = (EditText) findViewById(R.id.request_price_txt);
         getAddressBtn = (ImageButton) findViewById(R.id.get_address_btn);
-        Typeface typeFace2 =Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Regular.ttf");
-        createRequestBtn = (Button)findViewById(R.id.create_request_btn);
+        Typeface typeFace2 = Typeface.createFromAsset(getAssets(), "fonts/TitilliumWeb-Regular.ttf");
+        createRequestBtn = (Button) findViewById(R.id.create_request_btn);
+        Button done_Btn = (Button) findViewById(R.id.create_btn);
+        ImageButton cancel_Btn = (ImageButton) findViewById(R.id.close_btn);
         createRequestBtn.setTypeface(typeFace2);
         geocoder = new Geocoder(this);
 /*
@@ -88,7 +97,7 @@ public class CreateRequestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 postalCodeS = etPostalCode.getText().toString();
 
-                if(postalCodeS != null && postalCodeS.trim().length() >0) {
+                if (postalCodeS != null && postalCodeS.trim().length() > 0) {
                     postalCode = Integer.parseInt(postalCodeS);
 
                     String zip = postalCodeS;
@@ -144,7 +153,7 @@ public class CreateRequestActivity extends AppCompatActivity {
             }
         });
 
-        createRequestBtn.setOnClickListener(new View.OnClickListener() {
+        done_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 productName = etProductName.getText().toString();
@@ -155,20 +164,20 @@ public class CreateRequestActivity extends AppCompatActivity {
                 priceS = etPrice.getText().toString();
                 //requestDuration = Integer.parseInt(requestDurationS);
 
-                if(productName != null && productName.trim().length()>0){
+                if (productName != null && productName.trim().length() > 0) {
 
-                    if(requestRequirement != null && requestRequirement.trim().length() >0){
+                    if (requestRequirement != null && requestRequirement.trim().length() > 0) {
 
-                        if(postalCodeS != null && postalCodeS.trim().length() >0){
+                        if (postalCodeS != null && postalCodeS.trim().length() > 0) {
 
                             postalCode = Integer.parseInt(postalCodeS);
 
-                            if(addressLine != null && addressLine.trim().length()>0){
+                            if (addressLine != null && addressLine.trim().length() > 0) {
 
-                                if(requestDurationS != null && requestDurationS.trim().length() > 0){
+                                if (requestDurationS != null && requestDurationS.trim().length() > 0) {
                                     requestDuration = Integer.parseInt(requestDurationS);
 
-                                    if(priceS!=null && priceS.trim().length()>0){
+                                    if (priceS != null && priceS.trim().length() > 0) {
                                         price = Double.parseDouble(priceS);
                                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                         Date now = new Date();
@@ -177,45 +186,50 @@ public class CreateRequestActivity extends AppCompatActivity {
                                         Log.d("Start Time: ", startTime);
 
                                         Calendar date = Calendar.getInstance();
-                                        long t= date.getTimeInMillis();
-                                        Date afterAddingTenMins=new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
+                                        long t = date.getTimeInMillis();
+                                        Date afterAddingTenMins = new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
                                         endTime = sdf.format(afterAddingTenMins);
 
                                         Log.d("End Time: ", endTime);
 
-                                        authString  = username + ":" + password;
+                                        authString = username + ":" + password;
                                         new createRequest().execute(authString);
 
 
-                                    }else{
+                                    } else {
                                         etPrice.setError("Price required!");
                                     }
-                                }else{
+                                } else {
                                     etRequestDuration.setError("Duration required!");
                                 }
 
-                            }else{
+                            } else {
                                 etAddressLine.setError("Address required!");
                             }
 
-                        }else{
+                        } else {
                             etPostalCode.setError("Postal code required!");
                         }
 
-                    }else{
+                    } else {
                         etRequestRequirement.setError("Specify requirements!");
                     }
 
-                }else{
-                    etProductName.setError ("Product name required!");
+                } else {
+                    etProductName.setError("Product name required!");
                 }
 
 
             }
         });
 
-
-
+        cancel_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CreateRequestActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     private class createRequest extends AsyncTask<String, Void, Boolean> {
@@ -237,27 +251,25 @@ public class CreateRequestActivity extends AppCompatActivity {
 
             try {
 
-                    jsoin = new JSONObject();
-                    jsoin.put("requestorId", requestorId);
-                    jsoin.put("productName", productName);
-                    jsoin.put("requirement", requestRequirement);
-                    jsoin.put("location", addressLine);
-                    jsoin.put("postal", postalCode);
-                    jsoin.put("startTime", startTime);
-                    jsoin.put("duration", requestDuration);
-                    jsoin.put("endTime", endTime);
-                    jsoin.put("price", price);
-                    jsoin.put("status", "active");
+                jsoin = new JSONObject();
+                jsoin.put("requestorId", requestorId);
+                jsoin.put("productName", productName);
+                jsoin.put("requirement", requestRequirement);
+                jsoin.put("location", addressLine);
+                jsoin.put("postal", postalCode);
+                jsoin.put("startTime", startTime);
+                jsoin.put("duration", requestDuration);
+                jsoin.put("endTime", endTime);
+                jsoin.put("price", price);
+                jsoin.put("status", "active");
 
 
-
-
-            } catch(JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
                 err = e.getMessage();
             }
             Log.d("JSON String: ", jsoin.toString());
-            String rst = UtilHttp.doHttpPostBasicAuthentication(mContext, url, jsoin.toString()+ basicAuth);
+            String rst = UtilHttp.doHttpPostBasicAuthentication(mContext, url, jsoin.toString() + basicAuth);
             if (rst == null) {
                 err = UtilHttp.err;
             } else {
@@ -268,20 +280,23 @@ public class CreateRequestActivity extends AppCompatActivity {
 
 
         }
+
         @Override
         protected void onPostExecute(Boolean result) {
 
-            if(result) {
+            if (result) {
                 Toast.makeText(getBaseContext(), "Request created!", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(CreateRequestActivity.this, HomeActivity.class);
+                //Intent i = new Intent(CreateRequestActivity.this, HomeActivity.class);
+                Intent i = new Intent(CreateRequestActivity.this, MainActivity.class);
                 startActivity(i);
-            }else{
+            } else {
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }
 
         }
     }
 
+    /*
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater menuInflater = getMenuInflater();
@@ -293,7 +308,7 @@ public class CreateRequestActivity extends AppCompatActivity {
     /**
      * Event Handling for Individual menu item selected
      * Identify single menu item by it's id
-     * */
+     * *//*
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -345,4 +360,5 @@ public class CreateRequestActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    */
 }

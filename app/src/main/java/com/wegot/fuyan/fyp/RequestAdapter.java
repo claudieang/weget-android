@@ -66,8 +66,8 @@ public class RequestAdapter extends ArrayAdapter {
         Request request;
         request = (Request) this.getItem(position);
         handler.requestImage.setImageResource(request.getImageResource());
-        handler.requestTitle.setText("Product Name: " + request.getProductName());
-        handler.requestRequirement.setText("Status: " + request.getStatus());
+        handler.requestTitle.setText(request.getProductName());
+        handler.requestRequirement.setText(request.getRequirement());
 
         return row;
     }

@@ -29,12 +29,13 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity" android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".HomeActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ProfileActivity" />
@@ -43,7 +44,7 @@
         <activity android:name=".UpdateEmailActivity" />
         <activity android:name=".UpdateContactActivity" />
         <activity android:name=".UploadImageActivity" />
-        <activity android:name=".CreateRequestActivity" />
+        <activity android:name=".CreateRequestActivity" android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name=".RequestDetailsActivity" />
         <activity android:name=".MyRequestActivity" >
             <intent-filter>
@@ -62,7 +63,7 @@
         </activity>
         <activity android:name=".MyFulfillRequestDetailsActivity" />
         <activity android:name=".UpdateRequestActivity" />
-        <activity android:name=".MainPage"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+        <!--<activity android:name=".MainPage"></activity> ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <service
             android:name=".MyFirebaseMessagingService">

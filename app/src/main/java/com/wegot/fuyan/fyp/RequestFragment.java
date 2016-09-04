@@ -1,20 +1,25 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -27,8 +32,14 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
-public class MyRequestActivity extends AppCompatActivity {
+public class RequestFragment extends Fragment {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View view = inflater.inflate(R.layout.activity_my_request, container, false);
+        return view;
+    }
     ImageButton addRequest,homepage,requestbt,fulfillbt;
     ListView myRequestLV;
     RequestAdapter adapter;
@@ -38,18 +49,22 @@ public class MyRequestActivity extends AppCompatActivity {
     String err, authString, username, password;
     ArrayList<Request> myRequestArrayList = new ArrayList<>();
     private SwipeRefreshLayout swipeContainer;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_request);
+    View view;
+    Activity activity;
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //setContentView(R.layout.activity_my_request);
+        view = getView();
+        activity = getActivity();
         //change font
-        TextView myTextView=(TextView)findViewById(R.id.my_request_title);
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Quicksand-Bold.otf");
+        TextView myTextView=(TextView)view.findViewById(R.id.my_request_title);
+        Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Quicksand-Bold.otf");
         myTextView.setTypeface(typeFace);
 
         // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout)view.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -66,7 +81,7 @@ public class MyRequestActivity extends AppCompatActivity {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+        SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
         myId = pref.getInt("id", 0);
@@ -74,8 +89,8 @@ public class MyRequestActivity extends AppCompatActivity {
         //tr = (Transaction)getIntent().getSerializableExtra("transaction");
 
 
-        myRequestLV = (ListView)findViewById(R.id.my_request_list);
-        adapter = new RequestAdapter(getApplicationContext(),R.layout.row_layout);
+        myRequestLV = (ListView)view.findViewById(R.id.my_request_list);
+        adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.row_layout);
         myRequestLV.setAdapter(adapter);
 
         authString  = username + ":" + password;
@@ -88,53 +103,11 @@ public class MyRequestActivity extends AppCompatActivity {
                 Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
                 // Then you start a new Activity via Intent
                 Request rq = myRequestArrayList.get(position);
-                Intent intent = new Intent(MyRequestActivity.this, MyRequestFulfillerActivity.class);
+                Intent intent = new Intent(getActivity(), MyRequestFulfillerActivity.class);
                 intent.putExtra("selected_my_request",(Serializable) rq);
                 startActivity(intent);
             }
         });
-        /*
-        //bottom navigation bar
-        addRequest = (ImageButton)findViewById(R.id.addrequest);
-        homepage = (ImageButton)findViewById(R.id.homepage);
-        requestbt = (ImageButton)findViewById(R.id.request);
-        fulfillbt = (ImageButton)findViewById(R.id.fulfill);
-
-        addRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent (MyRequestActivity.this, CreateRequestActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        homepage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent (MyRequestActivity.this, HomeActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        requestbt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent (MyRequestActivity.this, MyRequestActivity.class);
-                startActivity(i);
-
-            }
-        });
-        fulfillbt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent (MyRequestActivity.this, MyFulfillActivity.class);
-                startActivity(i);
-
-            }
-        });
-        */
     }
 
     public void fetchTimelineAsync(int page) {
@@ -145,7 +118,7 @@ public class MyRequestActivity extends AppCompatActivity {
 
     private class getRequests extends AsyncTask<String, Void, Boolean> {
 
-        ProgressDialog dialog = new ProgressDialog(MyRequestActivity.this, R.style.MyTheme);
+        ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
 
         @Override
         protected void onPreExecute() {
@@ -180,7 +153,7 @@ public class MyRequestActivity extends AppCompatActivity {
                 new getMyRequests().execute(authString);
 
             }else {
-                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
 
             if(dialog.isShowing()){
@@ -269,73 +242,9 @@ public class MyRequestActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), "Populating My Requests!", Toast.LENGTH_SHORT).show();
 
             }else {
-                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
 
-        }
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.bottombar, menu);
-        return true;
-    }
-
-
-    /**
-     * Event Handling for Individual menu item selected
-     * Identify single menu item by it's id
-     * */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        switch (item.getItemId())
-        {
-            case R.id.home_item:
-                // Single menu item is selected do something
-                // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, HomeActivity.class);
-                startActivity(homeIntent);
-                Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.search_item:
-                Toast.makeText(this, "Search is selected", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.profile_item:
-                //Toast.makeText(HomeActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, ProfileActivity.class);
-                startActivity(i);
-                Toast.makeText(this, "Redirecting to Profile Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_request_item:
-                Intent myRequestIntent = new Intent (this, MyRequestActivity.class);
-                startActivity(myRequestIntent);
-                Toast.makeText(this, "Redirecting to My Request Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_fulfill_item:
-                Intent myFulfillIntent = new Intent (this, MyFulfillActivity.class);
-                startActivity(myFulfillIntent);
-                Toast.makeText(this, "Redirecting to My Fulfill Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.logout_item:
-
-                Intent logoutIntent = new Intent (this, LoginActivity.class);
-                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(logoutIntent);
-                finish();
-
-
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }

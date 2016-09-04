@@ -5,143 +5,165 @@
     android:layout_height="match_parent"
     tools:context="com.wegot.fuyan.fyp.CreateRequestActivity">
 
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar"></include>
+
     <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_below="@id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:id="@+id/relativeLayout1"
         android:background="@drawable/requestbg">
+
         <TextView
+            android:id="@+id/tv_request_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
             android:text="New Request"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:id="@+id/tv_request_title"
             android:textSize="40dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:textStyle="bold" />
 
 
     </RelativeLayout>
 
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@+id/relativeLayout1"
-    android:background="#e8e8e8">
-
-
-    <EditText
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:hint="Product Name"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="#BCBCBC"
-        android:singleLine="true"
-        android:id="@+id/product_name_txt"
-        android:background="@drawable/barbase"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/relativeLayout1"
+        android:background="#e8e8e8">
 
-    <EditText
+
+        <EditText
+            android:id="@+id/product_name_txt"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/barbase"
+            android:inputType="textCapSentences"
+            android:hint="Request Title"
+            android:paddingStart="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="#BCBCBC"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/product_requirement_txt"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/barbase"
+            android:inputType="textCapWords"
+            android:hint="Additional Info"
+            android:paddingStart="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="#BCBCBC"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/postal_code_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/barbase"
+            android:ems="10"
+            android:hint="Postal"
+            android:inputType="number"
+            android:paddingStart="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="#BCBCBC"
+            android:textSize="15dp" />
+
+        <ImageButton
+            android:id="@+id/get_address_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/postal_code_txt"
+            android:layout_toEndOf="@+id/postal_code_txt"
+            android:background="@drawable/location" />
+
+        <EditText
+            android:id="@+id/address_line_txt"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="170dp"
+            android:background="@drawable/barbase"
+            android:hint="Address"
+            android:paddingStart="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#BCBCBC"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/request_duration_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="220dp"
+            android:background="@drawable/barbase"
+            android:ems="10"
+            android:hint="Duration (Minutes)"
+            android:inputType="number"
+            android:paddingStart="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#BCBCBC"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/request_price_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="270dp"
+            android:background="@drawable/barbase"
+            android:ems="10"
+            android:hint="Price (SGD)"
+            android:inputType="numberDecimal|numberSigned"
+            android:paddingStart="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#BCBCBC"
+            android:textSize="15dp" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:hint="Requirement"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="#BCBCBC"
-        android:singleLine="true"
-        android:id="@+id/product_requirement_txt"
-        android:background="@drawable/barbase"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginTop="289dp">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:inputType="number"
-        android:ems="10"
-        android:hint="Postal"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="#BCBCBC"
-        android:singleLine="true"
-        android:id="@+id/postal_code_txt"
-        android:background="@drawable/barbase"
-        android:layout_marginTop="120dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
+        <Button
+            android:id="@+id/create_request_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="#87CEEB"
+            android:text="Create" />
 
-    <ImageButton
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:id="@+id/get_address_btn"
-        android:background="@drawable/location"
-        android:layout_alignTop="@+id/postal_code_txt"
-        android:layout_toEndOf="@+id/postal_code_txt" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/address_line_txt"
-        android:hint="Address"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="#BCBCBC"
-        android:background="@drawable/barbase"
-        android:layout_marginTop="170dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/request_duration_txt"
-        android:hint="Duration (Minutes)"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="#BCBCBC"
-        android:background="@drawable/barbase"
-        android:layout_marginTop="220dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:inputType="numberDecimal|numberSigned"
-        android:ems="10"
-        android:id="@+id/request_price_txt"
-        android:hint="Price (SGD)"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="#BCBCBC"
-        android:background="@drawable/barbase"
-        android:layout_marginTop="270dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
-
-    <Button
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:text="Create"
-        android:id="@+id/create_request_btn"
-        android:background="#87CEEB"
-        android:layout_marginTop="330dp"
-        android:layout_centerHorizontal="true" />
-
-</RelativeLayout>
-
+    </RelativeLayout>
 
 </RelativeLayout>

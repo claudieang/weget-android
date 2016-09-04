@@ -1,5 +1,6 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -84,8 +85,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private class getValues extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog = new ProgressDialog(LoginActivity.this, R.style.MyTheme);
+
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
         }
 
         @Override
@@ -150,13 +157,16 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("picture", dbProfilePic);
                 editor.commit();
 
-                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
 
             }else {
                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
            }
 
+            if(dialog.isShowing()){
+                dialog.dismiss();
+            }
         }
     }
 

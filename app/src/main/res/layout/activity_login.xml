@@ -7,9 +7,9 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:background="@drawable/homebg"
+    android:background="#E8E8EE"
     tools:context="com.wegot.fuyan.fyp.LoginActivity">
-
+<!--
     <ImageView
         android:layout_width="25dp"
         android:layout_height="25dp"
@@ -25,11 +25,14 @@
         android:background="@drawable/lock"
         android:layout_alignTop="@+id/password_text"
         android:layout_alignParentStart="true" />
+        -->
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:id="@+id/login_text"
+        android:fontFamily="normal"
+        android:drawableLeft="@drawable/ic_perm_identity_black_18dp"
         android:hint=" Username"
         android:textColorHint="#BCBCBC"
         android:imeOptions="actionDone"
@@ -37,62 +40,69 @@
         android:lines="1"
         android:focusable="true"
         android:textColorHighlight="#ff7eff15"
-        android:layout_marginTop="35dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:typeface="monospace"
         android:background="@drawable/barbase"
-        android:layout_alignStart="@+id/login_button" />
+        android:layout_below="@+id/appname"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="190dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="5dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="normal" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:inputType="textPassword"
+        android:fontFamily="normal"
+        android:drawableLeft="@drawable/ic_lock_outline_black_18dp"
         android:ems="10"
         android:id="@+id/password_text"
-        android:layout_marginTop="80dp"
-        android:layout_alignRight="@+id/login_text"
-        android:layout_alignEnd="@+id/login_text"
         android:hint=" Password"
         android:textColorHint="#BCBCBC"
         android:imeOptions="actionDone"
         android:singleLine="true"
         android:lines="1"
-        android:typeface="monospace"
         android:background="@drawable/barbase"
-        android:layout_alignStart="@+id/login_text" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/applogo_imageview"
-        android:background="@android:color/transparent"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/login_text"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentEnd="true"
+        android:paddingLeft="10dp"
+        android:drawablePadding="5dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="normal" />
 
     <Button
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="login"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:text="Log In"
         android:id="@+id/login_button"
         android:background="#87CEEB"
-        android:layout_marginLeft="50dp"
-        android:typeface="monospace"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/applogo_imageview"
-        android:layout_marginEnd="30dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/password_text"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Register"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:text="Sign up"
         android:id="@+id/register_button"
-        android:background="#87CEEB"
-        android:layout_marginLeft="200dp"
-        android:typeface="monospace"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/applogo_imageview"
-        android:layout_marginStart="30dp" />
+        android:background="#24ACE3"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/login_button"
+        android:layout_marginTop="18dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="10dp"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -104,5 +114,24 @@
         android:typeface="monospace"
         android:textStyle="bold"
         android:textSize="35dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:id="@+id/forgetPassword"
+        android:layout_below="@+id/register_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:clickable="true"
+        android:textStyle="italic"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:layout_below="@+id/appname"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

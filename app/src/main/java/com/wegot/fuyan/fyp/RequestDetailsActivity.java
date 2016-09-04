@@ -65,7 +65,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
         price = request.getPrice();
         status = request.getStatus();
 
-        itemPic = (ImageView)findViewById(R.id.itemPic);
+        //itemPic = (ImageView)findViewById(R.id.itemPic);
         profilePic = (ImageView)findViewById(R.id.profilePic);
         requestorTV = (TextView)findViewById(R.id.requestor_tv);
         productNameTV = (TextView)findViewById(R.id.product_tv);
@@ -301,14 +301,14 @@ public class RequestDetailsActivity extends AppCompatActivity {
                             decodeString, 0, decodeString.length);
                     profilePic.setImageBitmap(decodebitmap);
                 }
-                itemPic.setImageResource(R.drawable.ordericon);
+                //itemPic.setImageResource(R.drawable.ordericon);
                 requestorTV.setText(requestorName );
-                productNameTV.setText("Product: "+ productName);
+                productNameTV.setText(productName);
                 requirementTV.setText(requirement);
-                locationTV.setText("Deliver To: " + "\n" + location);
-                endTimeTV.setText("Request Expires At " + "\n" + endTime);
-                priceTV.setText("Price: " + price);
-                statusTV.setText("Status: "+ status);
+                locationTV.setText(location);
+                endTimeTV.setText(endTime);
+                priceTV.setText("" + price);
+                statusTV.setText(status);
 
                 if(myId != requestorId){
                     new getMyRequestFulfiller().execute(authString);
