@@ -23,6 +23,11 @@
         android:icon="@drawable/ordericon"
         android:title="My Fulfills" />
 
+    <item
+        android:id="@+id/my_chat"
+        android:icon="@drawable/ordericon"
+        android:title="My Fulfills" />
+
 
     <item
         android:id="@+id/logout_item"

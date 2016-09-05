@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +19,8 @@ import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.sendbird.android.SendBird;
+
 
 import java.util.ArrayList;
 
@@ -34,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
+    public static String VERSION = "3.0.1.0";
+
+    private enum State {DISCONNECTED, CONNECTED}
+
+    public static String sUserId;
+    private String mNickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +47,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        //initialize sendbird
+        SendBird.init("D32DF590-3ECB-4F13-AFA4-3DD8F14380CB", this);
+        /**
+         * Start GCM Service.
+         */
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
 
         mNavItems.add(new NavItem("Profile", "Edit your profile", R.drawable.ic_profile));
         mNavItems.add(new NavItem("Settings", "Manage your preferences", R.drawable.ic_settings_black_24dp));
@@ -126,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, fulfillFragment).commit();
                         break;
                     case 4:
+                        ChatFragment chatFragment = new ChatFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, chatFragment).commit();
                         break;
 
                 }
@@ -180,5 +194,7 @@ public class MainActivity extends AppCompatActivity {
         // Close the drawer
         mDrawerLayout.closeDrawer(mDrawerPane);
     }
+
+
 
 }

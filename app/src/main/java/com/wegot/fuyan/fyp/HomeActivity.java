@@ -373,6 +373,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         startActivity(i2);
                         break;
                     case 4:
+                        Intent i3 = new Intent(HomeActivity.this, CreateRequestActivity.class);
+                        startActivity(i3);
                         break;
 
                 }
@@ -679,6 +681,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Intent myRequestIntent = new Intent(this, MyRequestActivity.class);
                 startActivity(myRequestIntent);
                 Toast.makeText(this, "Redirecting to My Request Page.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Redirecting to My Request Page.", Toast.LENGTH_SHORT).show();
                 return true;
 
 
@@ -686,6 +689,12 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Intent myFulfillIntent = new Intent(this, MyFulfillActivity.class);
                 startActivity(myFulfillIntent);
                 Toast.makeText(this, "Redirecting to My Fulfill Page.", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.my_chat:
+                Intent i3 = new Intent(HomeActivity.this, ChatActivity.class);
+                startActivity(i3);
+                Toast.makeText(this, "Redirecting to My Chat Page.", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.logout_item:

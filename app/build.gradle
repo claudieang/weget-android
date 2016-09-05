@@ -35,9 +35,14 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:9.4.0'
     compile 'com.google.android.gms:play-services-auth:9.4.0'
     compile 'com.google.android.gms:play-services-gcm:9.4.0'
+    compile 'com.sendbird.sdk:sendbird-android-sdk:3.0.1'
     repositories {
         mavenCentral()
     }
+    repositories {
+        maven { url "https://raw.githubusercontent.com/smilefam/SendBird-SDK-Android/master/" }
+    }
     compile 'com.sothree.slidinguppanel:library:3.3.0'
+    compile files('/Users/user/Desktop/Shafiq Android App Development/weget-android/libs/sendbird-android-sdk-3.0.1.jar')
 }
 apply plugin: 'com.google.gms.google-services'
