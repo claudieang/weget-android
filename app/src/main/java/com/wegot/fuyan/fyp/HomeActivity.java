@@ -153,6 +153,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_home);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        TextView b1 = (TextView) findViewById(R.id.my_request_title);
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        b1.setTypeface(typeFace);
         //change font
         //TextView myTextView = (TextView) findViewById(R.id.textview2);
         //Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/TitilliumWeb-BoldItalic.ttf");

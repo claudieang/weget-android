@@ -49,7 +49,10 @@ public class LoginActivity extends AppCompatActivity {
         ed2 = (EditText)findViewById(R.id.password_text);
         b2 = (Button)findViewById(R.id.register_button);
 
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Regular.ttf");
+        b1.setTransformationMethod(null);
+        b2.setTransformationMethod(null);
+
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
         b1.setTypeface(typeFace);
         b2.setTypeface(typeFace);
 

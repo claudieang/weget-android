@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="bottom"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sliding_layout"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
     sothree:umanoPanelHeight="105dp"
     sothree:umanoShadowHeight="4dp">
 
 
-        <!-- The main content view -->
-        <RelativeLayout
-            android:id="@+id/mainContent"
+    <!-- The main content view -->
+    <RelativeLayout
+        android:id="@+id/mainContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="3dp" />
+        <!--android:layout_above="@+id/relativeLayoutTaskbar"-->
 
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="3dp" />
-            <!--android:layout_above="@+id/relativeLayoutTaskbar"-->
+    </RelativeLayout>
 
-        </RelativeLayout>
     <RelativeLayout
         android:id="@+id/list_section"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">
 
@@ -38,7 +39,7 @@
             android:id="@+id/relativeLayout3"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#80D8FF">
+            android:background="#2196F3">
 
             <TextView
                 android:id="@+id/my_request_title"
@@ -47,7 +48,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="See Nearby Requests"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="15dp"
                 android:textStyle="bold" />
         </RelativeLayout>

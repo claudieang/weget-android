@@ -1,17 +1,18 @@
 package com.wegot.fuyan.fyp;
 
+/**
+ * Created by Claudie on 9/5/16.
+ */
+
 import android.app.Activity;
-import android.support.v4.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Base64;
 import android.util.Log;
@@ -21,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -31,16 +31,11 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import it.neokree.materialtabs.MaterialTab;
-import it.neokree.materialtabs.MaterialTabHost;
-import it.neokree.materialtabs.MaterialTabListener;
+/**
+ * Created by HP on 4/4/2016.
+ */
 
-public class RequestFragment extends Fragment implements MaterialTabListener {
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.activity_my_request, container, false);
-        return view;
-    }
+public class PendingRequestsFragment extends Fragment {
     ImageButton addRequest,homepage,requestbt,fulfillbt;
     ListView myRequestLV;
     RequestAdapter adapter;
@@ -53,9 +48,11 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
     View view;
     Activity activity;
 
-    MaterialTabHost tabHost;
-    ViewPager viewPager;
-    ViewPagerAdapter androidAdapter;
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.active_requests, container, false);
+        return view;
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -68,28 +65,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
         //Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Quicksand-Bold.otf");
         //myTextView.setTypeface(typeFace);
 
-        //tab host
-        tabHost = (MaterialTabHost) view.findViewById(R.id.tabHost);
-        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 
-        //adapter view
-        androidAdapter = new ViewPagerAdapter(getFragmentManager());
-        viewPager.setAdapter(androidAdapter);
-        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int tabposition) {
-                tabHost.setSelectedNavigationItem(tabposition);
-            }
-        });
-
-        //for tab position
-        for (int i = 0; i < androidAdapter.getCount(); i++) {
-            tabHost.addTab(
-                    tabHost.newTab()
-                            .setText(androidAdapter.getPageTitle(i))
-                            .setTabListener(this)
-            );
-        }
         /*
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout)view.findViewById(R.id.swipeContainer);
@@ -115,7 +91,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
         myId = pref.getInt("id", 0);
 
         //tr = (Transaction)getIntent().getSerializableExtra("transaction");
-    /*
+
 
         myRequestLV = (ListView)view.findViewById(R.id.my_request_list);
         adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.row_layout);
@@ -135,60 +111,8 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
                 intent.putExtra("selected_my_request",(Serializable) rq);
                 startActivity(intent);
             }
-        });*/
+        });
 
-    }
-
-
-
-    // view pager adapter
-    private class ViewPagerAdapter extends FragmentStatePagerAdapter {
-
-        public ViewPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        public Fragment getItem(int num) {
-            switch(num){
-                case 0:
-                    return new ActiveRequestsFragment();
-                case 1:
-                    return new PendingRequestsFragment();
-                case 2:
-                    return new CompletedRequestsFragment();
-            }
-           return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int tabposition) {
-            CharSequence ret = "";
-            switch(tabposition){
-                case 0:
-                    ret = "Active";
-                    break;
-                case 1:
-                    ret = "Pending";
-                    break;
-
-                case 2:
-                    ret = "Completed";
-                    break;
-            }
-
-            return ret;
-        }
-    }
-
-    public void fetchTimelineAsync(int page) {
-        // Send the network request to fetch the updated data
-        // 'client' here is an instance of Android Async HTTP
-        new getRequests().execute(authString);
     }
 
     private class getRequests extends AsyncTask<String, Void, Boolean> {
@@ -282,7 +206,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
 
                         Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
                                 postal, startTime, endTime, duration, price, status);
-                        if(!status.equals("expired")) {
+                        if(status.equals("pending")) {
                             myRequestArrayList.add(request);
                         }
 
@@ -313,7 +237,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
                 }
                 Log.d("Print", "Value: " + myRequestArrayList.size());
                 // Now we call setRefreshing(false) to signal refresh has finished
-                swipeContainer.setRefreshing(false);
+                //swipeContainer.setRefreshing(false);
                 //Toast.makeText(getApplicationContext(), "Populating My Requests!", Toast.LENGTH_SHORT).show();
 
             }else {
@@ -321,23 +245,5 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
             }
 
         }
-    }
-    //tab on selected
-    @Override
-    public void onTabSelected(MaterialTab materialTab) {
-
-        viewPager.setCurrentItem(materialTab.getPosition());
-    }
-
-    //tab on reselected
-    @Override
-    public void onTabReselected(MaterialTab materialTab) {
-
-    }
-
-    //tab on unselected
-    @Override
-    public void onTabUnselected(MaterialTab materialTab) {
-
     }
 }

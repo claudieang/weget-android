@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -146,6 +147,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         view = getView();
         activity = getActivity();
+
+        TextView b1 = (TextView) view.findViewById(R.id.my_request_title);
+        Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Roboto-Light.ttf");
+        b1.setTypeface(typeFace);
     /*
             // Lookup the swipe container view
             swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
