@@ -23,6 +23,10 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+    repositories {
+        mavenCentral()
+    }
+
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.android.support:design:24.1.1'
     compile 'it.neokree:MaterialTabs:0.11'
@@ -36,10 +40,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:9.4.0'
     compile 'com.google.android.gms:play-services-auth:9.4.0'
     compile 'com.google.android.gms:play-services-gcm:9.4.0'
-    repositories {
-        mavenCentral()
-    }
     compile 'com.sothree.slidinguppanel:library:3.3.0'
-
 }
 apply plugin: 'com.google.gms.google-services'
