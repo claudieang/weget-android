@@ -26,6 +26,7 @@ import com.wegot.fuyan.fyp.Fulfill;
 import com.wegot.fuyan.fyp.R;
 import com.wegot.fuyan.fyp.Recycler.DividerItemDecoration;
 import com.wegot.fuyan.fyp.Recycler.RecyclerItemClickListener;
+import com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 import com.wegot.fuyan.fyp.Request;
 import com.wegot.fuyan.fyp.RequestDetailsActivity;
 import com.wegot.fuyan.fyp.UtilHttp;
@@ -55,12 +56,12 @@ public class PendingFulfillsFragment extends Fragment {
     ArrayList<Request> myFulfillRequestList = new ArrayList<>();
     View view;
     Activity activity;
-    private RecyclerView recyclerView;
+    private RecyclerViewEmptySupport recyclerView;
     private com.wegot.fuyan.fyp.Recycler.RequestListAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.active_requests, container, false);
+        View view = inflater.inflate(R.layout.active_fulfills, container, false);
         return view;
     }
 
@@ -76,13 +77,14 @@ public class PendingFulfillsFragment extends Fragment {
         password = pref.getString("password", null);
         myId = pref.getInt("id", 0);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.my_request_list);
+        recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
 
         mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myFulfillRequestArrayList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
+        recyclerView.setEmptyView(view.findViewById(R.id.empty_view2));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
 
 

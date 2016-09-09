@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.wegot.fuyan.fyp.Recycler.DividerItemDecoration;
 import com.wegot.fuyan.fyp.Recycler.RecyclerItemClickListener;
+import com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +48,7 @@ public class PendingRequestsFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     View view;
     Activity activity;
-    private RecyclerView recyclerView;
+    private RecyclerViewEmptySupport recyclerView;
     private com.wegot.fuyan.fyp.Recycler.RequestListAdapter mAdapter;
 
     @Override
@@ -99,14 +100,15 @@ public class PendingRequestsFragment extends Fragment {
 //        //adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.request_list_layout);
 //        adapter = new RequestListAdapter(activity.getApplicationContext(), R.layout.request_list_layout);
 //        myRequestLV.setAdapter(adapter);
-        recyclerView = (RecyclerView) view.findViewById(R.id.my_request_list);
+        recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
 
 
         mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myRequestArrayList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setEmptyView(view.findViewById(R.id.empty_view2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
 
 

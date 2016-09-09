@@ -1,6 +1,7 @@
 package com.wegot.fuyan.fyp.Recycler;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,12 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.request_list_layout, parent, false);
-
+        TextView b1 = (TextView) itemView.findViewById(R.id.request_title);
+        TextView b2 = (TextView) itemView.findViewById(R.id.request_requirement);
+        Typeface typeFace=Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Light.ttf");
+        b1.setTypeface(typeFace);
+        b2.setTypeface(typeFaceLight);
         return new MyViewHolder(itemView);
     }
 
