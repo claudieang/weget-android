@@ -22,6 +22,8 @@ public class Account implements Serializable {
         this.email = email;
         this.fulfiller = fulfiller;
         this.picture = picture;
+
+
     }
 
     public int getId() {
