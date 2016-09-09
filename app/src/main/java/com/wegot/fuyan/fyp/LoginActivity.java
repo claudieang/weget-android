@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -29,6 +30,7 @@ import java.security.NoSuchAlgorithmException;
 public class LoginActivity extends AppCompatActivity {
     Button b1, b2;
     EditText ed1, ed2;
+    TextView forgotPw;
     Context ctx = this;
     String username, password, dbUsername, dbPassword, dbEmail, dbProfilePic, err,token;
     int dbID, dbContactNumber;
@@ -48,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         ed1 = (EditText)findViewById(R.id.login_text);
         ed2 = (EditText)findViewById(R.id.password_text);
         b2 = (Button)findViewById(R.id.register_button);
+        forgotPw = (TextView)findViewById(R.id.forgetPassword);
 
         b1.setTransformationMethod(null);
         b2.setTransformationMethod(null);
@@ -55,6 +58,15 @@ public class LoginActivity extends AppCompatActivity {
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
         b1.setTypeface(typeFace);
         b2.setTypeface(typeFace);
+
+        forgotPw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent (LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(i);
+
+            }
+        });
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
