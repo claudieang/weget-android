@@ -117,10 +117,18 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(int position) {
                 switch(position){
                     case 0:
+                        SpannableString s = new SpannableString("Weget");
+                        s.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s.length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        getSupportActionBar().setTitle(s);
                         HomeFragment homeFragment = new HomeFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, homeFragment).commit();
                         break;
                     case 1:
+                        SpannableString s1 = new SpannableString("My Requests");
+                        s1.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s1.length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        getSupportActionBar().setTitle(s1);
                         RequestFragment requestFragment = new RequestFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, requestFragment).commit();
                         //Intent i = new Intent(MainActivity.this, RequestFragment.class);
@@ -130,10 +138,18 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, CreateRequestActivity.class));
                         break;
                     case 3:
+                        SpannableString s2 = new SpannableString("My Fulfills");
+                        s2.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s2.length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        getSupportActionBar().setTitle(s2);
                         FulfillFragment fulfillFragment = new FulfillFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, fulfillFragment).commit();
                         break;
                     case 4:
+                        SpannableString s3 = new SpannableString("Chat");
+                        s3.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s3.length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        getSupportActionBar().setTitle(s3);
                         break;
 
                 }

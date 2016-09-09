@@ -225,7 +225,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
         protected void onPostExecute(Boolean result) {
             if(result){
 
-                new getMyRequests().execute(authString);
+                //new getMyRequests().execute(authString);
 
             }else {
                 Toast.makeText(getActivity().getApplicationContext(), err, Toast.LENGTH_SHORT).show();
@@ -238,90 +238,6 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
         }
     }
 
-    private class getMyRequests extends AsyncTask<String, Void, Boolean> {
-
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId+"/request/";
-
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
-
-                myRequestArrayList.clear();
-
-                try {
-                    JSONArray jsoArray = new JSONArray(rst);
-                    for(int i = 0; i < jsoArray.length(); i++) {
-                        JSONObject jso = jsoArray.getJSONObject(i);
-
-                        int id = jso.getInt("id");
-                        int requestorId = jso.getInt("requestorId");
-                        int imageResource = requestImage;
-                        String productName = jso.getString("productName");
-                        String requirement = jso.getString("requirement");
-                        String location = jso.getString("location");
-                        int postal = jso.getInt("postal");
-                        String startTime = jso.getString("startTime");
-                        int duration = jso.getInt("duration");
-                        String endTime = jso.getString("endTime");
-                        double price = jso.getDouble("price");
-                        String status = jso.getString("status");
-
-                        Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
-                                postal, startTime, endTime, duration, price, status);
-                        if(!status.equals("expired")) {
-                            myRequestArrayList.add(request);
-                        }
-
-
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                success = true;
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-
-
-            if(result){
-                adapter.clear();
-
-                if(myRequestArrayList != null && !myRequestArrayList.isEmpty()){
-
-                    for(Request r: myRequestArrayList){
-
-                        adapter.add(r);
-
-                    }
-                }
-                Log.d("Print", "Value: " + myRequestArrayList.size());
-                // Now we call setRefreshing(false) to signal refresh has finished
-                swipeContainer.setRefreshing(false);
-                //Toast.makeText(getApplicationContext(), "Populating My Requests!", Toast.LENGTH_SHORT).show();
-
-            }else {
-                Toast.makeText(getActivity().getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
     //tab on selected
     @Override
     public void onTabSelected(MaterialTab materialTab) {
