@@ -1,36 +1,35 @@
-package com.wegot.fuyan.fyp;
+package com.wegot.fuyan.fyp.FulfillFragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wegot.fuyan.fyp.FulfillFragments.ActiveFulfillsFragment;
-import com.wegot.fuyan.fyp.FulfillFragments.CompletedFulfillsFragment;
-import com.wegot.fuyan.fyp.FulfillFragments.PendingFulfillsFragment;
+import com.wegot.fuyan.fyp.Fulfill;
+import com.wegot.fuyan.fyp.R;
+import com.wegot.fuyan.fyp.Recycler.DividerItemDecoration;
+import com.wegot.fuyan.fyp.Recycler.RecyclerItemClickListener;
+import com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
+import com.wegot.fuyan.fyp.Request;
+import com.wegot.fuyan.fyp.RequestDetailsActivity;
+import com.wegot.fuyan.fyp.UtilHttp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,159 +38,74 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import it.neokree.materialtabs.MaterialTab;
-import it.neokree.materialtabs.MaterialTabHost;
-import it.neokree.materialtabs.MaterialTabListener;
-
 /**
- * Created by Claudie on 9/3/16.
+ * Created by HP on 4/4/2016.
  */
-public class FulfillFragment extends Fragment  implements MaterialTabListener {
 
+public class CompletedFulfillsFragment extends Fragment {
     ImageButton addRequest,homepage,requestbt,fulfillbt;
-    ListView myFulfillRequestLV;
-    RequestAdapter adapter;
+    ListView myRequestLV;
+    //RequestListAdapter adapter;
     int fulfillRequestImage = R.drawable.ordericon;
+    int  requestImage = R.drawable.ordericon;
     int myId;
     Context mContext;
     String err, authString, username, password;
     ArrayList<Request> myFulfillRequestArrayList = new ArrayList<>();
     ArrayList<Fulfill> myFulfillList  = new ArrayList<>();
     ArrayList<Request> myFulfillRequestList = new ArrayList<>();
-    private SwipeRefreshLayout swipeContainer;
     View view;
     Activity activity;
+    private RecyclerViewEmptySupport recyclerView;
+    private com.wegot.fuyan.fyp.Recycler.RequestListAdapter mAdapter;
 
-    MaterialTabHost tabHost;
-    ViewPager viewPager;
-    ViewPagerAdapter androidAdapter;
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.activity_my_fulfill, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.active_fulfills, container, false);
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //setContentView(R.layout.activity_my_request);
         view = getView();
         activity = getActivity();
-        //font
-//        TextView myTextView=(TextView)view.findViewById(R.id.my_fulfill_title);
-//        Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/TitilliumWeb-Bold.ttf");
-//        myTextView.setTypeface(typeFace);
-//        // Lookup the swipe container view
-//        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
-//        // Setup refresh listener which triggers new data loading
-//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                // Your code to refresh the list here.
-//                // Make sure you call swipeContainer.setRefreshing(false)
-//                // once the network request has completed successfully.
-//                fetchTimelineAsync(0);
-//            }
-//        });
-//        // Configure the refreshing colors
-//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-//                android.R.color.holo_green_light,
-//                android.R.color.holo_orange_light,
-//                android.R.color.holo_red_light);
-        tabHost = (MaterialTabHost) view.findViewById(R.id.tabHost);
-        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 
-        //adapter view
-        androidAdapter = new ViewPagerAdapter(getFragmentManager());
-        viewPager.setAdapter(androidAdapter);
-        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int tabposition) {
-                tabHost.setSelectedNavigationItem(tabposition);
-            }
-        });
-
-        //for tab position
-        for (int i = 0; i < androidAdapter.getCount(); i++) {
-            tabHost.addTab(
-                    tabHost.newTab()
-                            .setText(androidAdapter.getPageTitle(i))
-                            .setTabListener(this)
-            );
-        }
-
-        SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
+        SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
         myId = pref.getInt("id", 0);
+
+        recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
+
+        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myFulfillRequestArrayList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setEmptyView(view.findViewById(R.id.empty_view3));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(mAdapter);
+
+
         authString  = username + ":" + password;
-
-//        myFulfillRequestLV = (ListView)view.findViewById(R.id.my_fulfill_list);
-//        adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.row_layout);
-//        myFulfillRequestLV.setAdapter(adapter);
-
         new getRequests().execute(authString);
 
-//        myFulfillRequestLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
-//                // Then you start a new Activity via Intent
-//                Request rq = myFulfillRequestList.get(position);
-//                Intent intent = new Intent(activity, MyFulfillRequestDetailsActivity.class);
-//                intent.putExtra("selected_my_fulfill_request",(Serializable) rq);
-//                startActivity(intent);
-//            }
-//        });
-    }
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // do whatever
+                        Request rq = myFulfillRequestArrayList.get(position);
+                        Intent intent = new Intent(getActivity(), RequestDetailsActivity.class);
+                        intent.putExtra("selected_request",(Serializable) rq);
+                        startActivity(intent);
+                    }
 
-    // view pager adapter
-    private class ViewPagerAdapter extends FragmentStatePagerAdapter {
-
-        public ViewPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        public Fragment getItem(int num) {
-            switch(num){
-                case 0:
-                    return new ActiveFulfillsFragment();
-                case 1:
-                    return new PendingFulfillsFragment();
-                case 2:
-                    return new CompletedFulfillsFragment();
-            }
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int tabposition) {
-            CharSequence ret = "";
-            switch(tabposition){
-                case 0:
-                    ret = "Active";
-                    break;
-                case 1:
-                    ret = "Pending";
-                    break;
-
-                case 2:
-                    ret = "Completed";
-                    break;
-            }
-
-            return ret;
-        }
-    }
-
-    public void fetchTimelineAsync(int page) {
-        // Send the network request to fetch the updated data
-        // 'client' here is an instance of Android Async HTTP
-        new getRequests().execute(authString);
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
     }
 
     private class getMyFulfill extends AsyncTask<String, Void, Boolean> {
@@ -290,7 +204,7 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
         protected void onPostExecute(Boolean result) {
             if(result){
 
-                //new getMyFulfill().execute(authString);
+                new getMyFulfill().execute(authString);
 
             }else {
                 Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
@@ -340,9 +254,10 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
                         double price = jso.getDouble("price");
                         String status = jso.getString("status");
 
-                        Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
-                                postal, startTime, endTime, duration, price, status);
-                        if(!status.equals("expired")&&!status.equals("active")&&!status.equals("inactive")) {
+
+                        if(status.equals("completed") || status.equals("dispute")) {
+                            Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
+                                    postal, startTime, endTime, duration, price, status);
                             myFulfillRequestArrayList.add(request);
                         }
 
@@ -361,7 +276,7 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
             if(result){
                 boolean check = false;
 
-                adapter.clear();
+                //adapter.clear();
                 if(myFulfillRequestArrayList != null && !myFulfillRequestArrayList.isEmpty()){
 
                     for(Request r: myFulfillRequestArrayList){
@@ -374,7 +289,7 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
 
                         if(check) {
 
-                            adapter.add(r);
+                            //adapter.add(r);
                             myFulfillRequestList.add(r);
                         }
 
@@ -390,25 +305,8 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
             }else {
                 Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
+            mAdapter.notifyDataSetChanged();
 
         }
-    }
-    //tab on selected
-    @Override
-    public void onTabSelected(MaterialTab materialTab) {
-
-        viewPager.setCurrentItem(materialTab.getPosition());
-    }
-
-    //tab on reselected
-    @Override
-    public void onTabReselected(MaterialTab materialTab) {
-
-    }
-
-    //tab on unselected
-    @Override
-    public void onTabUnselected(MaterialTab materialTab) {
-
     }
 }

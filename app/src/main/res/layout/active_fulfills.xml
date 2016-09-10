@@ -5,7 +5,7 @@
     android:id="@+id/relativeLayout2"
     android:layout_below="@+id/relativeLayout1"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<!--<ListView-->
+    <!--<ListView-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->
     <!--android:id="@+id/my_request_list"-->
@@ -29,7 +29,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="invisible"
-        android:text="No requests made yet." />
+        android:text="No fulfills made yet." />
 
     <TextView
         android:id="@+id/empty_view2"
@@ -37,7 +37,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="invisible"
-        android:text="No pending requests." />
+        android:text="No pending fulfills." />
 
     <TextView
         android:id="@+id/empty_view3"
@@ -45,5 +45,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="invisible"
-        android:text="No requests completed yet." />
+        android:text="No fulfills completed yet." />
+
+
 </RelativeLayout>

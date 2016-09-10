@@ -47,16 +47,16 @@ public class MyFulfillActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_fulfill);
+        //setContentView(R.layout.activity_my_fulfill);
 
         //font
-        TextView myTextView=(TextView)findViewById(R.id.my_fulfill_title);
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Bold.ttf");
-        myTextView.setTypeface(typeFace);
+//        TextView myTextView=(TextView)findViewById(R.id.my_fulfill_title);
+//        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Bold.ttf");
+//        myTextView.setTypeface(typeFace);
 
         //change title bar color
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#FF7F00"));
-        getSupportActionBar().setBackgroundDrawable(colorDrawable);
+//        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#FF7F00"));
+//        getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
@@ -82,9 +82,9 @@ public class MyFulfillActivity extends AppCompatActivity {
         myId = pref.getInt("id", 0);
         authString  = username + ":" + password;
 
-        myFulfillRequestLV = (ListView)findViewById(R.id.my_fulfill_list);
-        adapter = new RequestAdapter(getApplicationContext(),R.layout.row_layout);
-        myFulfillRequestLV.setAdapter(adapter);
+        //myFulfillRequestLV = (ListView)findViewById(R.id.my_fulfill_list);
+        //adapter = new RequestAdapter(getApplicationContext(),R.layout.row_layout);
+        //myFulfillRequestLV.setAdapter(adapter);
 
         new getRequests().execute(authString);
 

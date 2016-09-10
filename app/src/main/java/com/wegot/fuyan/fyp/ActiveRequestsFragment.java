@@ -9,19 +9,22 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.wegot.fuyan.fyp.Recycler.DividerItemDecoration;
+import com.wegot.fuyan.fyp.Recycler.RecyclerItemClickListener;
+import com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,8 +33,6 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import it.neokree.materialtabs.MaterialTabHost;
-
 /**
  * Created by HP on 4/4/2016.
  */
@@ -39,7 +40,7 @@ import it.neokree.materialtabs.MaterialTabHost;
 public class ActiveRequestsFragment extends Fragment {
     ImageButton addRequest,homepage,requestbt,fulfillbt;
     ListView myRequestLV;
-    RequestAdapter adapter;
+    //RequestListAdapter adapter;
     int  requestImage = R.drawable.ordericon;
     int myId;
     Context mContext;
@@ -48,6 +49,9 @@ public class ActiveRequestsFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     View view;
     Activity activity;
+    //private RecyclerView recyclerView;
+    private RecyclerViewEmptySupport recyclerView;
+    private com.wegot.fuyan.fyp.Recycler.RequestListAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -94,30 +98,41 @@ public class ActiveRequestsFragment extends Fragment {
         //tr = (Transaction)getIntent().getSerializableExtra("transaction");
 
 
-        myRequestLV = (ListView)view.findViewById(R.id.my_request_list);
-        adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.row_layout);
-        myRequestLV.setAdapter(adapter);
+//        myRequestLV = (ListView)view.findViewById(R.id.my_request_list);
+//        //adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.request_list_layout);
+//        adapter = new RequestListAdapter(activity.getApplicationContext(), R.layout.request_list_layout);
+//        myRequestLV.setAdapter(adapter);
+        recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
+        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myRequestArrayList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(mAdapter);
+
 
         authString  = username + ":" + password;
-
         new getRequests().execute(authString);
 
-        myRequestLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
-                // Then you start a new Activity via Intent
-                Request rq = myRequestArrayList.get(position);
-                Intent intent = new Intent(getActivity(), MyRequestFulfillerActivity.class);
-                intent.putExtra("selected_my_request",(Serializable) rq);
-                startActivity(intent);
-            }
-        });
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // do whatever
+                        Request rq = myRequestArrayList.get(position);
+                        Intent intent = new Intent(getActivity(), RequestDetailsActivity.class);
+                        intent.putExtra("selected_request",(Serializable) rq);
+                        startActivity(intent);
+                    }
 
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
     }
 
-    private class getRequests extends AsyncTask<String, Void, Boolean> {
-
+    private class getRequests extends AsyncTask<String, Void, Boolean>{
         ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
 
         @Override
@@ -162,89 +177,69 @@ public class ActiveRequestsFragment extends Fragment {
 
         }
     }
+        private class getMyRequests extends AsyncTask<String, Void, Boolean> {
 
-    private class getMyRequests extends AsyncTask<String, Void, Boolean> {
 
+            @Override
+            protected void onPreExecute() {
 
-        @Override
-        protected void onPreExecute() {
+            }
 
-        }
+            @Override
+            protected Boolean doInBackground(String... params) {
 
-        @Override
-        protected Boolean doInBackground(String... params) {
+                final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+                boolean success = false;
+                String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId + "/request/";
 
-            boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId+"/request/";
+                String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+                if (rst == null) {
+                    err = UtilHttp.err;
+                    success = false;
+                } else {
 
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
+                    myRequestArrayList.clear();
 
-                myRequestArrayList.clear();
+                    try {
+                        JSONArray jsoArray = new JSONArray(rst);
+                        for (int i = 0; i < jsoArray.length(); i++) {
+                            JSONObject jso = jsoArray.getJSONObject(i);
 
-                try {
-                    JSONArray jsoArray = new JSONArray(rst);
-                    for(int i = 0; i < jsoArray.length(); i++) {
-                        JSONObject jso = jsoArray.getJSONObject(i);
+                            int id = jso.getInt("id");
+                            int requestorId = jso.getInt("requestorId");
+                            int imageResource = requestImage;
+                            String productName = jso.getString("productName");
+                            String requirement = jso.getString("requirement");
+                            String location = jso.getString("location");
+                            int postal = jso.getInt("postal");
+                            String startTime = jso.getString("startTime");
+                            int duration = jso.getInt("duration");
+                            String endTime = jso.getString("endTime");
+                            double price = jso.getDouble("price");
+                            String status = jso.getString("status");
 
-                        int id = jso.getInt("id");
-                        int requestorId = jso.getInt("requestorId");
-                        int imageResource = requestImage;
-                        String productName = jso.getString("productName");
-                        String requirement = jso.getString("requirement");
-                        String location = jso.getString("location");
-                        int postal = jso.getInt("postal");
-                        String startTime = jso.getString("startTime");
-                        int duration = jso.getInt("duration");
-                        String endTime = jso.getString("endTime");
-                        double price = jso.getDouble("price");
-                        String status = jso.getString("status");
+                            Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
+                                    postal, startTime, endTime, duration, price, status);
+                            if (status.equals("active")) {
+                                myRequestArrayList.add(request);
+                            }
 
-                        Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
-                                postal, startTime, endTime, duration, price, status);
-                        if(status.equals("active")) {
-                            myRequestArrayList.add(request);
+                            //mAdapter.notifyDataSetChanged();
+
                         }
-
-
-
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    success = true;
                 }
-                success = true;
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-
-
-            if(result){
-                adapter.clear();
-
-                if(myRequestArrayList != null && !myRequestArrayList.isEmpty()){
-
-                    for(Request r: myRequestArrayList){
-
-                        adapter.add(r);
-
-                    }
-                }
-                Log.d("Print", "Value: " + myRequestArrayList.size());
-                // Now we call setRefreshing(false) to signal refresh has finished
-                //swipeContainer.setRefreshing(false);
-                //Toast.makeText(getApplicationContext(), "Populating My Requests!", Toast.LENGTH_SHORT).show();
-
-            }else {
-                Toast.makeText(getActivity().getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+                return success;
             }
 
+            @Override
+            protected void onPostExecute(Boolean result) {
+                mAdapter.notifyDataSetChanged();
+
+            }
         }
-    }
 }
