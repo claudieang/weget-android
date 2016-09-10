@@ -94,7 +94,8 @@
 
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".RequesterViewDetails" />
-        <activity android:name=".FulfillviewRequestDetails"></activity>
+        <activity android:name=".FulfillviewRequestDetails" />
+        <activity android:name=".MyfulfillDetails"></activity>
     </application>
 
 </manifest>

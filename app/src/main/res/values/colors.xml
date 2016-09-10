@@ -14,4 +14,8 @@
     <color name="request1">#FFF9C4</color>
     <color name="request2">#FFF59D</color>
     <color name="request3">#FF8A65</color>
+
+    <color name="fulfill0">#B9F6CA</color>
+    <color name="fulfill1">#69F0AE</color>
+    <color name="fulfill2">#00E676</color>
 </resources>
