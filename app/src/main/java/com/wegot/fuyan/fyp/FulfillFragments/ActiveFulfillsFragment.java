@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.wegot.fuyan.fyp.Fulfill;
+import com.wegot.fuyan.fyp.MyFulfillRequestDetailsActivity;
 import com.wegot.fuyan.fyp.R;
 import com.wegot.fuyan.fyp.Recycler.DividerItemDecoration;
 import com.wegot.fuyan.fyp.Recycler.RecyclerItemClickListener;
@@ -96,7 +97,7 @@ public class ActiveFulfillsFragment extends Fragment {
                     @Override public void onItemClick(View view, int position) {
                         // do whatever
                         Request rq = myFulfillRequestArrayList.get(position);
-                        Intent intent = new Intent(getActivity(), RequestDetailsActivity.class);
+                        Intent intent = new Intent(getActivity(), MyFulfillRequestDetailsActivity.class);
                         intent.putExtra("selected_request",(Serializable) rq);
                         startActivity(intent);
                     }

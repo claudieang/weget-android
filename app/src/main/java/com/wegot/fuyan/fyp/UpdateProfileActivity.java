@@ -114,7 +114,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             case R.id.home_item:
                 // Single menu item is selected do something
                 // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, HomeActivity.class);
+                Intent homeIntent = new Intent (this, MainActivity.class);
                 startActivity(homeIntent);
                 Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
                 return true;

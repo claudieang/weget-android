@@ -1,5 +1,6 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -88,7 +89,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        myRequest =(Request) getIntent().getSerializableExtra("selected_my_request");
+        myRequest =(Request) getIntent().getSerializableExtra("selected_request");
         //tr = (Transaction)getIntent().getSerializableExtra("fulfiller_transaction");
 
         myRequestId = myRequest.getId();
@@ -209,8 +210,14 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
     private class dispute extends AsyncTask<String, Void, Boolean> {
 
 
+        ProgressDialog dialog = new ProgressDialog(MyRequestFulfillerActivity.this, R.style.MyTheme);
+
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
         }
 
         @Override
@@ -219,11 +226,11 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId+"/dispute/";
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/transaction/" + transactionId+"/dispute/";
             JSONObject jsoin = null;
             try{
                 jsoin = new JSONObject();
-                jsoin.put("transactionId", transactionId);
+                jsoin.put("accountId", myId);
                 jsoin.put("message", "LOL nothing here!");
 
 
@@ -246,7 +253,9 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if(result) {
-                Intent i = new Intent(MyRequestFulfillerActivity.this, MyRequestActivity.class);
+                Intent i = new Intent(MyRequestFulfillerActivity.this, MainActivity.class);
+                i.putExtra("after_dispute_tab", 1);
+                i.putExtra("disputed_request_swipe", 2);
                 Toast.makeText(getApplicationContext(), "Complaint Logged!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
 
@@ -278,8 +287,14 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
 
     private class getRequestsAgainAgain extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog = new ProgressDialog(MyRequestFulfillerActivity.this, R.style.MyTheme);
+
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
         }
 
         @Override
@@ -374,8 +389,14 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
     private class doReceive extends AsyncTask<String, Void, Boolean> {
 
 
+        ProgressDialog dialog = new ProgressDialog(MyRequestFulfillerActivity.this, R.style.MyTheme);
+
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
         }
 
         @Override
@@ -400,8 +421,9 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if(result) {
-                Intent i = new Intent(MyRequestFulfillerActivity.this, HomeActivity.class);
-
+                Intent i = new Intent(MyRequestFulfillerActivity.this, MainActivity.class);
+                i.putExtra("after_received_tab", 1);
+                i.putExtra("complete_request_swipe", 2);
                 Toast.makeText(getApplicationContext(), "Received!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
 
@@ -728,7 +750,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
             case R.id.home_item:
                 // Single menu item is selected do something
                 // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, HomeActivity.class);
+                Intent homeIntent = new Intent (this, MainActivity.class);
                 startActivity(homeIntent);
                 Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
                 return true;

@@ -164,6 +164,35 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment homeFragment = new HomeFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, homeFragment).commit();
 
+        Intent i = getIntent();
+        int tabToOpen = i.getIntExtra("after_payment_request_tab",-1);
+        int tabToOpen2 = i.getIntExtra("after_received_tab",-1);
+        int tabToOpen3 = i.getIntExtra("after_delivered_tab",-1);
+        int tabToOpen4 = i.getIntExtra("after_dispute_tab",-1);
+        int tabToOpen5 = i.getIntExtra("after_dispute_fulfill_tab",-1);
+        int tabToOpen6 = i.getIntExtra("updated_request_tab", -1);
+
+
+
+        if(tabToOpen!=-1){
+            bottomNavigationBar.selectTab(tabToOpen);
+        }
+        if(tabToOpen2!=-1){
+            bottomNavigationBar.selectTab(tabToOpen2);
+        }
+        if(tabToOpen3!=-1){
+            bottomNavigationBar.selectTab(tabToOpen3);
+        }
+        if(tabToOpen4!=-1){
+            bottomNavigationBar.selectTab(tabToOpen4);
+        }
+        if(tabToOpen5!=-1){
+            bottomNavigationBar.selectTab(tabToOpen5);
+        }
+        if(tabToOpen6!=-1){
+            bottomNavigationBar.selectTab(tabToOpen6);
+        }
+
     }
 
     @Override

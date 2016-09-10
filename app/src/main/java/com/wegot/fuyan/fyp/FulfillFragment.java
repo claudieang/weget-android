@@ -142,6 +142,17 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
 //                startActivity(intent);
 //            }
 //        });
+
+        Intent i = activity.getIntent();
+        int swipeToOpen = i.getIntExtra("complete_fulfill_swipe",-1);
+        int swipeToOpen2 = i.getIntExtra("disputed_fulfill_swipe",-1);
+        if(swipeToOpen != -1){
+            viewPager.setCurrentItem(swipeToOpen);
+        }
+        if(swipeToOpen2 != -1){
+            viewPager.setCurrentItem(swipeToOpen2);
+        }
+
     }
 
     // view pager adapter
