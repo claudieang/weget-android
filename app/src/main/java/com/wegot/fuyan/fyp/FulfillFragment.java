@@ -11,12 +11,19 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,16 +39,17 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Claudie on 9/3/16.
- */
-public class FulfillFragment extends Fragment {
+import it.neokree.materialtabs.MaterialTab;
+import it.neokree.materialtabs.MaterialTabHost;
+import it.neokree.materialtabs.MaterialTabListener;
+
+public class FulfillFragment extends Fragment implements MaterialTabListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.activity_my_fulfill, container, false);
+        View view = inflater.inflate(R.layout.activity_my_fulfills, container, false);
         return view;
     }
     ImageButton addRequest,homepage,requestbt,fulfillbt;
-    ListView myFulfillRequestLV;
+    //ListView myFulfillRequestLV;
     RequestAdapter adapter;
     int fulfillRequestImage = R.drawable.ordericon;
     int myId;
@@ -54,37 +62,76 @@ public class FulfillFragment extends Fragment {
     View view;
     Activity activity;
 
+    MaterialTabHost tabHost;
+    ViewPager viewPager;
+    ViewPagerAdapter androidAdapter;
+
+    private Toolbar toolbarrefresh;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //toolbar
+        //setHasOptionsMenu(true);
+
+
         view = getView();
         activity = getActivity();
         //font
-        TextView myTextView=(TextView)view.findViewById(R.id.my_fulfill_title);
-        Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/TitilliumWeb-Bold.ttf");
-        myTextView.setTypeface(typeFace);
+        //TextView myTextView=(TextView)view.findViewById(R.id.my_fulfill_title);
+        //Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/TitilliumWeb-Bold.ttf");
+        //myTextView.setTypeface(typeFace);
+
+        //tab host
+        tabHost = (MaterialTabHost) view.findViewById(R.id.tabHost);
+        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+
+        //adapter view
+        androidAdapter = new ViewPagerAdapter(getFragmentManager());
+        viewPager.setAdapter(androidAdapter);
+        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int tabposition) {
+                tabHost.setSelectedNavigationItem(tabposition);
+            }
+        });
+
+        //for tab position
+        for (int i = 0; i < androidAdapter.getCount(); i++) {
+            tabHost.addTab(
+                    tabHost.newTab()
+                            .setText(androidAdapter.getPageTitle(i))
+                            .setTabListener(this)
+            );
+        }
+
+        //tool bar refresh
+        //toolbarrefresh = (Toolbar)findViewById(R.id.tool_bar_refresh);
+        //setSupportActionBar(toolbarrefresh);
+
+
 
         //change title bar color
         //ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#FF7F00"));
         //((AppCompatActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        //swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        //swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            //@Override
+            //public void onRefresh() {
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
-                fetchTimelineAsync(0);
-            }
-        });
+                //fetchTimelineAsync(0);
+            //}
+        //});
         // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+        /*swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+                android.R.color.holo_red_light);*/
 
         SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
@@ -92,12 +139,13 @@ public class FulfillFragment extends Fragment {
         myId = pref.getInt("id", 0);
         authString  = username + ":" + password;
 
-        myFulfillRequestLV = (ListView)view.findViewById(R.id.my_fulfill_list);
-        adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.row_layout);
-        myFulfillRequestLV.setAdapter(adapter);
+
+        //myFulfillRequestLV = (ListView)view.findViewById(R.id.my_fulfill_list);
+        //adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.row_layout);
+        //myFulfillRequestLV.setAdapter(adapter);
 
         new getRequests().execute(authString);
-
+        /*
         myFulfillRequestLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,12 +157,70 @@ public class FulfillFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        */
+
     }
 
-    public void fetchTimelineAsync(int page) {
-        // Send the network request to fetch the updated data
-        // 'client' here is an instance of Android Async HTTP
-        new getRequests().execute(authString);
+    //toolbar
+    /*
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                // Do Fragment menu item stuff here
+                return true;
+            default:
+                break;
+        }
+
+        return false;
+    }
+    */
+
+
+
+    private class getRequests extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/active/";
+
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+
+                success = true;
+            }
+            return success;
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+
+                new getMyFulfill().execute(authString);
+
+            }else {
+                Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
     private class getMyFulfill extends AsyncTask<String, Void, Boolean> {
@@ -185,42 +291,6 @@ public class FulfillFragment extends Fragment {
         }
     }
 
-    private class getRequests extends AsyncTask<String, Void, Boolean> {
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/active/";
-
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
-
-                success = true;
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if(result){
-
-                new getMyFulfill().execute(authString);
-
-            }else {
-                Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
 
     private class getMyFulfills extends AsyncTask<String, Void, Boolean> {
 
@@ -316,4 +386,77 @@ public class FulfillFragment extends Fragment {
 
         }
     }
+
+    public void fetchTimelineAsync(int page) {
+        // Send the network request to fetch the updated data
+        // 'client' here is an instance of Android Async HTTP
+        new getRequests().execute(authString);
+    }
+
+
+    // view pager adapter
+    private class ViewPagerAdapter extends FragmentStatePagerAdapter {
+
+        public ViewPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        public Fragment getItem(int num) {
+            switch(num){
+                case 0:
+                    return new ActiveRequestsFragment();
+                case 1:
+                    return new PendingRequestsFragment();
+                case 2:
+                    return new CompletedRequestsFragment();
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int tabposition) {
+            CharSequence ret = "";
+            switch(tabposition){
+                case 0:
+                    ret = "Active";
+                    break;
+                case 1:
+                    ret = "Pending";
+                    break;
+
+                case 2:
+                    ret = "Completed";
+                    break;
+            }
+
+            return ret;
+        }
+    }
+
+    //tab on selected
+    @Override
+    public void onTabSelected(MaterialTab materialTab) {
+
+        viewPager.setCurrentItem(materialTab.getPosition());
+    }
+
+    //tab on reselected
+    @Override
+    public void onTabReselected(MaterialTab materialTab) {
+
+    }
+
+    //tab on unselected
+    @Override
+    public void onTabUnselected(MaterialTab materialTab) {
+
+    }
+
+
+
 }
