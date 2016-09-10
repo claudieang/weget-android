@@ -1,5 +1,6 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -126,10 +127,17 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
 
     private class getRequestsv extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog = new ProgressDialog(RequestFulfillerDetailsActivity.this, R.style.MyTheme);
+
         @Override
         protected void onPreExecute() {
-        }
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
 
+
+        }
         @Override
         protected Boolean doInBackground(String... params) {
 
@@ -243,7 +251,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
             case R.id.home_item:
                 // Single menu item is selected do something
                 // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, HomeActivity.class);
+                Intent homeIntent = new Intent (this, MainActivity.class);
                 startActivity(homeIntent);
                 Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
                 return true;

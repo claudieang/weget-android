@@ -44,10 +44,11 @@ public class MyRequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_request);
 
         //change font
-        TextView myTextView=(TextView)findViewById(R.id.my_request_title);
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Quicksand-Bold.otf");
-        myTextView.setTypeface(typeFace);
+        //TextView myTextView=(TextView)findViewById(R.id.my_request_title);
+        //Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Quicksand-Bold.otf");
+        //myTextView.setTypeface(typeFace);
 
+        /*
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -65,6 +66,8 @@ public class MyRequestActivity extends AppCompatActivity {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+         */
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);

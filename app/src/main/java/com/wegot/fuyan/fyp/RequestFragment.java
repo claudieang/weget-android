@@ -137,6 +137,24 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
             }
         });*/
 
+        Intent i = activity.getIntent();
+        int swipeToOpen = i.getIntExtra("after_payment_request_swipe",-1);
+        int swipeToOpen2 = i.getIntExtra("complete_request_swipe", -1);
+        int swipeToOpen3 = i.getIntExtra("disputed_request_swipe",-1);
+
+
+        if(swipeToOpen!=-1){
+            viewPager.setCurrentItem(swipeToOpen);
+        }
+        if(swipeToOpen2!=-1){
+            viewPager.setCurrentItem(swipeToOpen2);
+        }
+        if(swipeToOpen3!=-1){
+            viewPager.setCurrentItem(swipeToOpen3);
+        }
+
+
+
     }
 
 

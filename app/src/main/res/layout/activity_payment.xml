@@ -29,6 +29,7 @@
             android:padding="16dp"
             android:textColor="@android:color/black"
             android:textColorHint="@color/colorGray"
+            android:textCursorDrawable="@null"
             android:textSize="14sp"
             tools:ignore="LabelFor,NegativeMargin" />
 
@@ -47,11 +48,12 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_card_date_edit_text"
                 android:drawableRight="@drawable/ic_card_date"
-                android:hint="MM/YYYY"
+                android:hint="MM/YY"
                 android:inputType="date"
                 android:padding="16dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/colorGray"
+                android:textCursorDrawable="@null"
                 android:textSize="14sp"
                 tools:ignore="LabelFor,RtlHardcoded" />
 
@@ -68,6 +70,7 @@
                 android:padding="16dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/colorGray"
+                android:textCursorDrawable="@null"
                 android:textSize="14sp"
                 tools:ignore="LabelFor,RtlHardcoded" />
         </LinearLayout>
