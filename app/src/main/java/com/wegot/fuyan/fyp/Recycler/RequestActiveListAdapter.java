@@ -1,70 +1,95 @@
 package com.wegot.fuyan.fyp.Recycler;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.wegot.fuyan.fyp.CreateRequestActivity;
 import com.wegot.fuyan.fyp.R;
 import com.wegot.fuyan.fyp.Request;
+import com.wegot.fuyan.fyp.RequestDetailsActivity;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Claudie on 9/8/16.
+ * Created by Claudie on 9/10/16.
  */
-public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.MyViewHolder>{
+public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActiveListAdapter.MyActiveViewHolder>{
 
     private List<Request> requestsList;
 
 
-    public RequestListAdapter(List<Request> requestsList) {
+    public RequestActiveListAdapter(List<Request> requestsList) {
         this.requestsList = requestsList;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyActiveViewHolder extends RecyclerView.ViewHolder{
         public TextView title, details;
         public Button fulfiller_btn;
-        //public RelativeLayout fulfillers_btn;
+        public RelativeLayout fulfillers_btn;
         //public View.OnClickListener mListener;
 
 
-        public MyViewHolder(View view) {
+        public MyActiveViewHolder(View view) {
             super(view);
+
             title = (TextView) view.findViewById(R.id.request_title);
             details = (TextView) view.findViewById(R.id.request_requirement);
             fulfiller_btn = (Button) view.findViewById(R.id.view_fulfill_btn);
-            //fulfillers_btn = (RelativeLayout)view.findViewById(R.id.fulfillers_btn);
+            fulfillers_btn = (RelativeLayout)view.findViewById(R.id.fulfillers_btn);
             //view.setOnClickListener(this);
+            View viewById = view.findViewById(R.id.cv2);
+            viewById.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Request request = requestsList.get(getAdapterPosition());
+                    Toast.makeText(view.getContext(),"RV clicked " + view.getId() + ", " + R.id.cv2, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(view.getContext(), RequestDetailsActivity.class);
+                    intent.putExtra("selected_request",(Serializable) request);
+                    view.getContext().startActivity(intent);
+
+                }
+            });
+
+            fulfillers_btn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    //Intent i = new Intent();
+
+                    Intent intent = new Intent(v.getContext(),CreateRequestActivity.class);
+                    v.getContext().startActivity(intent);
+                    Toast.makeText(v.getContext(),"Fulfiller button clicked", Toast.LENGTH_SHORT).show();
+
+                }
+            });
         }
+
+
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyActiveViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.request_list_layout, parent, false);
+                .inflate(R.layout.active_list_layout, parent, false);
         TextView b1 = (TextView) itemView.findViewById(R.id.request_title);
         TextView b2 = (TextView) itemView.findViewById(R.id.request_requirement);
         Typeface typeFace=Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Regular.ttf");
         Typeface typeFaceLight = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Light.ttf");
         b1.setTypeface(typeFace);
         b2.setTypeface(typeFaceLight);
+        RelativeLayout fulfillers_btn = (RelativeLayout)itemView.findViewById(R.id.fulfillers_btn);
 
-
-
-        return new MyViewHolder(itemView);
+        return new MyActiveViewHolder(itemView);
     }
 
     @Override
@@ -73,8 +98,8 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position)  {
-        Request request = requestsList.get(position);
+    public void onBindViewHolder(MyActiveViewHolder holder, int position)  {
+        final Request request = requestsList.get(position);
         holder.title.setText(request.getProductName());
         holder.details.setText(request.getRequirement());
         //final int idCheck = holder.fulfillers_btn.getId();
@@ -92,3 +117,4 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     }
 
 }
+

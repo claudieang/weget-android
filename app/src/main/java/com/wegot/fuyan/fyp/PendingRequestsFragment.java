@@ -15,10 +15,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.wegot.fuyan.fyp.Recycler.DividerItemDecoration;
@@ -111,25 +113,31 @@ public class PendingRequestsFragment extends Fragment {
         //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
 
-
         authString  = username + ":" + password;
         new getRequests().execute(authString);
 
+
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        // do whatever
-                        Request rq = myRequestArrayList.get(position);
-                        Intent intent = new Intent(getActivity(), RequestDetailsActivity.class);
-                        intent.putExtra("selected_request",(Serializable) rq);
-                        startActivity(intent);
-                    }
+            @Override public void onItemClick(View view, int position) {
+                // do whatever
+               // RelativeLayout lay = (RelativeLayout)view.findViewById(R.id.fulfillers_btn);
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
+                //Toast.makeText(view.getContext(),"Button clicked at: " + view.getId() + " , LAY: " + lay.getId() , Toast.LENGTH_SHORT).show();
+                Request rq = myRequestArrayList.get(position);
+                Intent intent = new Intent(getActivity(), RequestDetailsActivity.class);
+                intent.putExtra("selected_request",(Serializable) rq);
+                startActivity(intent);
+
+            }
+
+            @Override public void onLongItemClick(View view, int position) {
+                // do whatever
+
+            }
+        })
         );
+
     }
 
     private class getRequests extends AsyncTask<String, Void, Boolean>{

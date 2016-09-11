@@ -51,7 +51,7 @@ public class ActiveRequestsFragment extends Fragment {
     Activity activity;
     //private RecyclerView recyclerView;
     private RecyclerViewEmptySupport recyclerView;
-    private com.wegot.fuyan.fyp.Recycler.RequestListAdapter mAdapter;
+    private com.wegot.fuyan.fyp.Recycler.RequestActiveListAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -103,7 +103,7 @@ public class ActiveRequestsFragment extends Fragment {
 //        adapter = new RequestListAdapter(activity.getApplicationContext(), R.layout.request_list_layout);
 //        myRequestLV.setAdapter(adapter);
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
-        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myRequestArrayList);
+        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestActiveListAdapter(myRequestArrayList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
@@ -115,21 +115,21 @@ public class ActiveRequestsFragment extends Fragment {
         authString  = username + ":" + password;
         new getRequests().execute(authString);
 
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        // do whatever
-                        Request rq = myRequestArrayList.get(position);
-                        Intent intent = new Intent(getActivity(), RequestDetailsActivity.class);
-                        intent.putExtra("selected_request",(Serializable) rq);
-                        startActivity(intent);
-                    }
-
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
-        );
+//        recyclerView.addOnItemTouchListener(
+//                new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+//                    @Override public void onItemClick(View view, int position) {
+//                        // do whatever
+//                        Request rq = myRequestArrayList.get(position);
+//                        Intent intent = new Intent(getActivity(), RequestDetailsActivity.class);
+//                        intent.putExtra("selected_request",(Serializable) rq);
+//                        startActivity(intent);
+//                    }
+////
+//                    @Override public void onLongItemClick(View view, int position) {
+//                        // do whatever
+//                    }
+//                })
+//        );
     }
 
     private class getRequests extends AsyncTask<String, Void, Boolean>{

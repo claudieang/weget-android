@@ -9,7 +9,8 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_close_white_24dp"
+        android:src="@drawable/ic_close_white_24dp"
+        android:background="?selectableItemBackgroundBorderless"
         android:layout_gravity="left"
         android:id="@+id/close_btn"
         android:clickable="true" />
@@ -18,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="DONE"
-        android:background="@color/transparent"
+        android:background="?android:attr/selectableItemBackground"
         android:layout_gravity="right"
         android:textColor="@color/abc_primary_text_disable_only_material_dark"
         android:id="@+id/create_btn"
