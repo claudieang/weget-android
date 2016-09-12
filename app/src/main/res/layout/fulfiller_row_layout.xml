@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="#FFFFFF"
+    android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:id="@+id/cv2"
     android:padding="16dp"
@@ -12,7 +13,12 @@
         android:layout_height="40dp"
         android:id="@+id/accountImage"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="4dp" />
+        android:layout_marginLeft="4dp"
+        android:layout_gravity="center"
+        android:padding="1dp"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:background="@drawable/image_border" />
 
     <TextView
         android:id="@+id/fulfiller_name"

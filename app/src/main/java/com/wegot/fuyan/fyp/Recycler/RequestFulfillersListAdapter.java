@@ -75,12 +75,12 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
         holder.accountName.setText(account.getUsername());
         holder.rating.setRating((float) 3.5);
 
-        Log.d("BVH","Name: " + holder.accountName.toString());
+        //Log.d("BVH","Name: " + holder.accountName.toString());
     }
 
     @Override
     public int getItemCount() {
-        Log.d("ITEM COUNT: ", "" + list.size());
+        //Log.d("ITEM COUNT: ", "" + list.size());
         return list.size();
     }
 }

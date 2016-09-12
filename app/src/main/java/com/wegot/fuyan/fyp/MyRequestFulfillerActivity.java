@@ -1,5 +1,6 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -53,48 +54,56 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
     Transaction tr;
     private SwipeRefreshLayout swipeContainer;
     TextView dispute;
+    private RequestFulfillersListAdapter mAdapter;
+    private RecyclerViewEmptySupport recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_request_fulfiller);
 
-        //dispute
-        dispute = (TextView)findViewById(R.id.disputebt);
-        Typeface typeFace2=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-BoldItalic.ttf");
-        dispute.setTypeface(typeFace2);
-
-        dispute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new getTransaction().execute(authString);
-
-            }
-        });
-
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         //font
-        TextView myTextView=(TextView)findViewById(R.id.my_request_fulfiller_title);
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Bold.ttf");
-        myTextView.setTypeface(typeFace);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        toolbar.setTitle("Request Fulfillers");
+        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        //dispute
+//        dispute = (TextView)findViewById(R.id.disputebt);
+//        Typeface typeFace2=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-BoldItalic.ttf");
+//        dispute.setTypeface(typeFace2);
+//
+//        dispute.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new getTransaction().execute(authString);
+//
+//            }
+//        });
+//
+//        //font
+//        TextView myTextView=(TextView)findViewById(R.id.my_request_fulfiller_title);
+//        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Bold.ttf");
+//        myTextView.setTypeface(typeFace);
 
         // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                fetchTimelineAsync(0);
-
-            }
-        });
+//        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+//        // Setup refresh listener which triggers new data loading
+//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                // Your code to refresh the list here.
+//                // Make sure you call swipeContainer.setRefreshing(false)
+//                // once the network request has completed successfully.
+//                fetchTimelineAsync(0);
+//
+//            }
+//        });
         // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light,
+//                android.R.color.holo_orange_light,
+//                android.R.color.holo_red_light);
 
         myRequest =(Request) getIntent().getSerializableExtra("selected_my_request");
         //tr = (Transaction)getIntent().getSerializableExtra("fulfiller_transaction");
@@ -117,7 +126,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         new getRequests().execute(authString);
         new getMyRequestFulfiller().execute(authString);
 
-        recyclerView = (RecyclerViewEmptySupport)findViewById(R.id.my_request_fulfiller_list);
+        recyclerView = (RecyclerViewEmptySupport) findViewById(R.id.my_request_fulfiller_list);
         mAdapter = new RequestFulfillersListAdapter(fulfillerAccountList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -168,7 +177,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
 
 
 
-    }
+    //}
     private class getTransaction extends AsyncTask<String, Void, Boolean> {
 
         @Override
