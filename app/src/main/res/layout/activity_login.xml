@@ -3,29 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
-    android:background="#E8E8EE"
     tools:context="com.wegot.fuyan.fyp.LoginActivity">
-<!--
-    <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:id="@+id/person"
-        android:background="@drawable/person"
-        android:layout_alignTop="@+id/login_text"
-        android:layout_alignParentStart="true" />
 
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:id="@+id/password"
-        android:background="@drawable/lock"
-        android:layout_alignTop="@+id/password_text"
-        android:layout_alignParentStart="true" />
-        -->
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/weget_login_splash"
+        android:scaleType="centerCrop">
+    </ImageView>
+    <!--
+        android:background="#E8E8EE"
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/person"
+            android:background="@drawable/person"
+            android:layout_alignTop="@+id/login_text"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/password"
+            android:background="@drawable/lock"
+            android:layout_alignTop="@+id/password_text"
+            android:layout_alignParentStart="true" />
+            -->
 
     <EditText
         android:layout_width="wrap_content"
@@ -42,16 +46,16 @@
         android:focusable="true"
         android:textColorHighlight="#ff7eff15"
         android:background="@drawable/barbase"
-        android:layout_below="@+id/appname"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="210dp"
         android:paddingLeft="10dp"
         android:drawablePadding="5dp"
         android:textColor="@color/colorPrimaryDark"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_above="@+id/password_text"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -67,16 +71,16 @@
         android:singleLine="true"
         android:lines="1"
         android:background="@drawable/barbase"
-        android:layout_below="@+id/login_text"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_alignParentEnd="true"
         android:paddingLeft="10dp"
         android:drawablePadding="5dp"
         android:textColor="@color/colorPrimaryDark"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:layout_above="@+id/login_button"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -84,12 +88,9 @@
         android:text="Log In"
         android:id="@+id/login_button"
         android:background="@color/colorPrimary"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="24dp"
-        android:layout_below="@+id/password_text"
-        android:layout_alignParentStart="true"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentEnd="true" />
+        android:layout_above="@+id/register_button"
+        android:layout_alignEnd="@id/password_text"
+        android:layout_alignStart="@id/password_text" />
 
     <Button
         android:layout_width="wrap_content"
@@ -97,42 +98,23 @@
         android:text="Sign up"
         android:id="@+id/register_button"
         android:background="@color/colorPrimaryDark"
-        android:layout_marginLeft="10dp"
-        android:layout_below="@+id/login_button"
-        android:layout_marginTop="18dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginRight="10dp"
-        android:textColor="#ffffff" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/appname"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:typeface="monospace"
-        android:textStyle="bold"
-        android:textSize="35dp"/>
+        android:layout_marginTop="10dp"
+        android:textColor="#ffffff"
+        android:layout_above="@+id/forgetPassword"
+        android:layout_alignEnd="@id/password_text"
+        android:layout_alignStart="@id/password_text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Forgot Password?"
         android:id="@+id/forgetPassword"
-        android:layout_below="@+id/register_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
+        android:layout_marginBottom="24dp"
         android:clickable="true"
         android:textStyle="italic"
+        android:layout_alignParentBottom="true"
         android:textColor="@color/colorPrimaryDark" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:layout_below="@+id/appname"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
