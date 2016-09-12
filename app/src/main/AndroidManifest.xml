@@ -59,7 +59,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyRequestFulfillerActivity" />
+        <activity android:name=".MyRequestFulfillerActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".RequestFulfillerDetailsActivity" />
         <activity android:name=".PaymentActivity" />
         <activity android:name=".MyFulfillActivity">

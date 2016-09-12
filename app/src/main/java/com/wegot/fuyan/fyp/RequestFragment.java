@@ -82,6 +82,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
             }
         });
 
+
         //for tab position
         for (int i = 0; i < androidAdapter.getCount(); i++) {
             tabHost.addTab(

@@ -1,85 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipeContainer"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:background="#e8e8e8"
+    tools:context="com.wegot.fuyan.fyp.MyRequestFulfillerActivity">
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar_blank"></include>
+
+
+    <com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport
+        android:id="@+id/my_request_fulfiller_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e8e8e8"
-        tools:context="com.wegot.fuyan.fyp.MyRequestFulfillerActivity">
+        android:scrollbars="vertical"
+        android:layout_below="@id/tool_bar"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:focusable="true" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="135dp"
-            android:id="@+id/relativeLayout1"
-            android:background="@drawable/fulfiller">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Request Fulfillers"
-                android:textSize="30dp"
-                android:textColor="#000000"
-                android:id="@+id/my_request_fulfiller_title"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/relativeLayout1">
-
-            <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/my_request_fulfiller_list"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="30dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Received"
-                android:id="@+id/receive_button"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:visibility="gone"
-                />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Update Request"
-                android:id="@+id/udpate_button"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:visibility="gone"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Dispute, Click."
-                android:id="@+id/disputebt"
-                android:textColor="@color/red"
-                android:textSize="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginRight="15dp"
-                android:visibility="gone"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true" />
-
-        </RelativeLayout>
-
-
-
-
-    </RelativeLayout>
-
-</android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>
