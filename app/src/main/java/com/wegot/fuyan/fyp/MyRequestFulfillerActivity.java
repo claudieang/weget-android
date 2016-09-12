@@ -10,6 +10,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +26,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wegot.fuyan.fyp.Recycler.DividerItemDecoration;
+import com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
+import com.wegot.fuyan.fyp.Recycler.RequestFulfillersListAdapter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +40,7 @@ import java.util.ArrayList;
 public class MyRequestFulfillerActivity extends AppCompatActivity {
 
     Request myRequest;
-    Button receiveBtn, updateBtn;
+    //Button receiveBtn, updateBtn;
     ListView myRequestFulfillerLV;
     AccountAdapter adapter;
     String username, password, authString, fulfillStatus,requestStatus, err;
@@ -43,50 +51,24 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
     ArrayList <Integer> fulfillIdList = new ArrayList<>();
     ArrayList <Fulfill> fulfillList = new ArrayList<>();
     Transaction tr;
-    private SwipeRefreshLayout swipeContainer;
-    TextView dispute;
+    RecyclerViewEmptySupport recyclerView;
+    RequestFulfillersListAdapter mAdapter;
+    //private SwipeRef
+    // reshLayout swipeContainer;
+    //TextView dispute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_request_fulfiller);
 
-        //dispute
-        dispute = (TextView)findViewById(R.id.disputebt);
-        Typeface typeFace2=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-BoldItalic.ttf");
-        dispute.setTypeface(typeFace2);
 
-        dispute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new getTransaction().execute(authString);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
 
-            }
-        });
+        toolbar.setTitle("Request Fulfillers");
+        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
 
-        //font
-        TextView myTextView=(TextView)findViewById(R.id.my_request_fulfiller_title);
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Bold.ttf");
-        myTextView.setTypeface(typeFace);
-
-        // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                fetchTimelineAsync(0);
-
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         myRequest =(Request) getIntent().getSerializableExtra("selected_my_request");
         //tr = (Transaction)getIntent().getSerializableExtra("fulfiller_transaction");
@@ -101,64 +83,37 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
 
         authString  = username + ":" + password;
 
-        myRequestFulfillerLV = (ListView)findViewById(R.id.my_request_fulfiller_list);
-        receiveBtn = (Button)findViewById(R.id.receive_button);
-        updateBtn = (Button)findViewById(R.id.udpate_button);
-        adapter = new AccountAdapter(getApplicationContext(),R.layout.row_layout);
-        myRequestFulfillerLV.setAdapter(adapter);
-
+        //myRequestFulfillerLV = (ListView)findViewById(R.id.my_request_fulfiller_list);
+        //receiveBtn = (Button)findViewById(R.id.receive_button);
+        //updateBtn = (Button)findViewById(R.id.udpate_button);
+        //adapter = new AccountAdapter(getApplicationContext(),R.layout.row_layout);
+        //myRequestFulfillerLV.setAdapter(adapter);
         new getRequests().execute(authString);
+        new getMyRequestFulfiller().execute(authString);
 
-        myRequestFulfillerLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if(fulfillList.get(position).getStatus().equals("pending")) {
-                    Toast.makeText(getApplicationContext(), "Fulfiller Already Confirmed!", Toast.LENGTH_SHORT).show();
-                }else if(fulfillList.get(position).getStatus().equals("completed")){
-                    Toast.makeText(getApplicationContext(), "Request Completed!", Toast.LENGTH_SHORT).show();
-                }else {
-
-                    a = fulfillerAccountList.get(position);
-                    selectedId = fulfillIdList.get(position);
-                    new getRequestsAgain().execute(authString);
-
-
-                }
-
-
-            }
-        });
-
-        receiveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(MyRequestFulfillerActivity.this)
-                        .setTitle("Alert!")
-                        .setMessage("Confirm received order?")
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                new doReceive().execute(authString);
-                            }})
-                        .setNegativeButton(android.R.string.no, null).show();
-            }
-        });
-
-        updateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                new getRequestsAgainAgain().execute(authString);
-
-            }
-        });
+        recyclerView = (RecyclerViewEmptySupport)findViewById(R.id.my_request_fulfiller_list);
+        mAdapter = new RequestFulfillersListAdapter(fulfillerAccountList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        //recyclerView.setEmptyView(findViewById(R.id.empty_view));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(mAdapter);
 
 
 
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private class getTransaction extends AsyncTask<String, Void, Boolean> {
 
         @Override
@@ -260,15 +215,6 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
-
-
-
-
-
 
     public void fetchTimelineAsync(int page) {
         // Send the network request to fetch the updated data
@@ -539,16 +485,16 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
-            if(result){
-
-                if(requestStatus.equals("active")){
-                    updateBtn.setVisibility(View.VISIBLE);
-                }
-                new getMyRequestFulfill().execute(authString);
-
-            }else {
-                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
+//            if(result){
+//
+//                if(requestStatus.equals("active")){
+//                    //updateBtn.setVisibility(View.VISIBLE);
+//                }
+//                new getMyRequestFulfill().execute(authString);
+//
+//            }else {
+//                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+//            }
 
         }
     }
@@ -677,26 +623,27 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            mAdapter.notifyDataSetChanged();
             if(result) {
                 Log.d ("Value", "Number of accounts: " + fulfillerAccountList.size());
-                adapter.clear();
+                //adapter.clear();
 
                 if (fulfillerAccountList != null && !fulfillerAccountList.isEmpty()) {
 
                     for (Account a : fulfillerAccountList) {
 
-                        adapter.add(a);
+                       // adapter.add(a);
 
                     }
                 }
-                swipeContainer.setRefreshing(false);
-                //Toast.makeText(getApplicationContext(), "Populating Fulfiller list!", Toast.LENGTH_SHORT).show();
-
-                if(fulfillList.size() == 1 && fulfillList.get(0).getStatus().equals("pending")) {
-                        receiveBtn.setVisibility(View.VISIBLE);
-                        dispute.setVisibility(View.VISIBLE);
-
-                }
+//                swipeContainer.setRefreshing(false);
+//                //Toast.makeText(getApplicationContext(), "Populating Fulfiller list!", Toast.LENGTH_SHORT).show();
+//
+//                if(fulfillList.size() == 1 && fulfillList.get(0).getStatus().equals("pending")) {
+//                        receiveBtn.setVisibility(View.VISIBLE);
+//                        dispute.setVisibility(View.VISIBLE);
+//
+//                }
 
 
             }else{
@@ -704,70 +651,6 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
 
-        }
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.bottombar, menu);
-        return true;
-    }
-
-
-    /**
-     * Event Handling for Individual menu item selected
-     * Identify single menu item by it's id
-     * */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        switch (item.getItemId())
-        {
-            case R.id.home_item:
-                // Single menu item is selected do something
-                // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, HomeActivity.class);
-                startActivity(homeIntent);
-                Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.search_item:
-                Toast.makeText(this, "Search is selected", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.profile_item:
-                //Toast.makeText(HomeActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, ProfileActivity.class);
-                startActivity(i);
-                Toast.makeText(this, "Redirecting to Profile Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_request_item:
-                Intent myRequestIntent = new Intent (this, MyRequestActivity.class);
-                startActivity(myRequestIntent);
-                Toast.makeText(this, "Redirecting to My Request Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_fulfill_item:
-                Intent myFulfillIntent = new Intent (this, MyFulfillActivity.class);
-                startActivity(myFulfillIntent);
-                Toast.makeText(this, "Redirecting to My Fulfill Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.logout_item:
-
-                Intent logoutIntent = new Intent (this, LoginActivity.class);
-                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(logoutIntent);
-                finish();
-
-
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }

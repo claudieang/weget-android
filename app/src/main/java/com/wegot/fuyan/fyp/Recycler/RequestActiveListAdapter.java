@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wegot.fuyan.fyp.CreateRequestActivity;
+import com.wegot.fuyan.fyp.MyRequestFulfillerActivity;
 import com.wegot.fuyan.fyp.R;
 import com.wegot.fuyan.fyp.Request;
 import com.wegot.fuyan.fyp.RequestDetailsActivity;
@@ -53,7 +54,7 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
                 public void onClick(View view) {
 
                     Request request = requestsList.get(getAdapterPosition());
-                    Toast.makeText(view.getContext(),"RV clicked " + view.getId() + ", " + R.id.cv2, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(view.getContext(),"RV clicked " + view.getId() + ", " + R.id.cv2, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(view.getContext(), RequestDetailsActivity.class);
                     intent.putExtra("selected_request",(Serializable) request);
                     view.getContext().startActivity(intent);
@@ -66,9 +67,14 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
                 public void onClick(View v){
                     //Intent i = new Intent();
 
-                    Intent intent = new Intent(v.getContext(),CreateRequestActivity.class);
+//                    Intent intent = new Intent(v.getContext(),CreateRequestActivity.class);
+//                    v.getContext().startActivity(intent);
+//                    Toast.makeText(v.getContext(),"Fulfiller button clicked", Toast.LENGTH_SHORT).show();
+
+                    Request rq = requestsList.get(getAdapterPosition());
+                    Intent intent = new Intent(v.getContext(), MyRequestFulfillerActivity.class);
+                    intent.putExtra("selected_my_request",(Serializable) rq);
                     v.getContext().startActivity(intent);
-                    Toast.makeText(v.getContext(),"Fulfiller button clicked", Toast.LENGTH_SHORT).show();
 
                 }
             });
