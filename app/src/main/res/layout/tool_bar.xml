@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:theme="@style/MyTheme"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="?android:attr/actionBarSize"
     android:background="@color/colorPrimary"
     android:elevation="4dp"
     >
@@ -16,11 +16,21 @@
         android:id="@+id/close_btn"
         android:clickable="true" />
 
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text=""
+        android:id="@+id/toolbar_title"
+        android:paddingLeft="20dp"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+
+    </TextView>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="DONE"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="?selectableItemBackgroundBorderless"
         android:layout_gravity="right"
         android:textColor="@color/abc_primary_text_disable_only_material_dark"
         android:id="@+id/create_btn"
