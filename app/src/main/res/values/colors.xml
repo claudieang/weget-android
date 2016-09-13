@@ -10,9 +10,9 @@
     <color name="red">#FF0000</color>
     <color name="transparent">#00000000</color>
     <color name="colorWhite">#ffffff</color>
-    <color name="request0">#FFFDE7</color>
-    <color name="request1">#FFF9C4</color>
-    <color name="request2">#FFF59D</color>
+    <color name="request0">#FFFF8D</color>
+    <color name="request1">#FFFF00</color>
+    <color name="request2">#FFEA00</color>
     <color name="request3">#FF8A65</color>
 
     <color name="fulfill0">#B9F6CA</color>
