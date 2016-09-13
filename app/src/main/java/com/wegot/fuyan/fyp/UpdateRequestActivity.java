@@ -50,7 +50,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_request);
 
-        rq = (Request)getIntent().getSerializableExtra("selected_request_toupdate");
+        rq = (Request)getIntent().getSerializableExtra("selected_request");
 
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         requestorId = pref.getInt("id",0);

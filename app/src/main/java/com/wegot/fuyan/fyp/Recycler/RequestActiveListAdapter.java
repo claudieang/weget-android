@@ -16,6 +16,7 @@ import com.wegot.fuyan.fyp.MyRequestFulfillerActivity;
 import com.wegot.fuyan.fyp.R;
 import com.wegot.fuyan.fyp.Request;
 import com.wegot.fuyan.fyp.RequestDetailsActivity;
+import com.wegot.fuyan.fyp.RequesterViewDetails;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
 
                     Request request = requestsList.get(getAdapterPosition());
                     //Toast.makeText(view.getContext(),"RV clicked " + view.getId() + ", " + R.id.cv2, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(view.getContext(), RequestDetailsActivity.class);
+                    Intent intent = new Intent(view.getContext(), RequesterViewDetails.class);
                     intent.putExtra("selected_request",(Serializable) request);
                     view.getContext().startActivity(intent);
 
