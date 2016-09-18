@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.wegot.fuyan.fyp.CompletedRequest;
 import com.wegot.fuyan.fyp.Fulfill;
 import com.wegot.fuyan.fyp.MyFulfillRequestDetailsActivity;
 import com.wegot.fuyan.fyp.R;
@@ -97,8 +98,8 @@ public class CompletedFulfillsFragment extends Fragment {
                     @Override public void onItemClick(View view, int position) {
                         // do whatever
                         Request rq = myFulfillRequestArrayList.get(position);
-                        Intent intent = new Intent(getActivity(), MyFulfillRequestDetailsActivity.class);
-                        intent.putExtra("selected_request",(Serializable) rq);
+                        Intent intent = new Intent(getActivity(), CompletedRequest.class);
+                        intent.putExtra("completed_request",(Serializable) rq);
                         startActivity(intent);
                     }
 
