@@ -15,6 +15,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -65,7 +67,10 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         //Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         //font
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        toolbar.setTitle("Request Fulfillers");
+        SpannableString s = new SpannableString("Request Fulfillers");
+        s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        toolbar.setTitle(s);
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        //dispute

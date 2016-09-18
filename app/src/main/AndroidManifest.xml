@@ -55,7 +55,6 @@
         <activity android:name=".MyRequestActivity">
             <intent-filter>
                 <action android:name="request_page" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

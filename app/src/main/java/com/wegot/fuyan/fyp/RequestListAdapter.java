@@ -26,7 +26,7 @@ public class RequestListAdapter extends ArrayAdapter{
     static class DataHandler{
         TextView requestTitle;
         TextView requestRequirement;
-        Button viewFulfillerBtn;
+        //Button viewFulfillerBtn;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class RequestListAdapter extends ArrayAdapter{
             handler = new DataHandler();
             handler.requestTitle = (TextView)row.findViewById(R.id.request_title);
             handler.requestRequirement = (TextView)row.findViewById(R.id.request_requirement);
-            handler.viewFulfillerBtn = (Button)row.findViewById(R.id.view_fulfill_btn);
+            //handler.viewFulfillerBtn = (Button)row.findViewById(R.id.view_fulfill_btn);
             row.setTag(handler);
         }else{
             handler = (DataHandler)row.getTag();
@@ -70,13 +70,13 @@ public class RequestListAdapter extends ArrayAdapter{
         //to set see fulfillers button VISIBLE/GONE
         //setButtonVisibility();
         //get /request/id/fulfill/ . Returns array
-        ArrayList<String> fulfillList = new ArrayList<String>();
+        //ArrayList<String> fulfillList = new ArrayList<String>();
         //if /request/id/fulfill/ return empty array
-        if(fulfillList.isEmpty()) {
-            handler.viewFulfillerBtn.setVisibility(View.GONE);
-        } else{
-            handler.viewFulfillerBtn.setVisibility(View.VISIBLE);
-        }
+//        if(fulfillList.isEmpty()) {
+//            handler.viewFulfillerBtn.setVisibility(View.GONE);
+//        } else{
+//            handler.viewFulfillerBtn.setVisibility(View.VISIBLE);
+//        }
 
         return row;
     }
