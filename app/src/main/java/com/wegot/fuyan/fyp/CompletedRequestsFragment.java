@@ -120,8 +120,8 @@ public class CompletedRequestsFragment extends Fragment {
                     @Override public void onItemClick(View view, int position) {
                         // do whatever
                         Request rq = myRequestArrayList.get(position);
-                        Intent intent = new Intent(getActivity(), RequestDetailsActivity.class);
-                        intent.putExtra("selected_request",(Serializable) rq);
+                        Intent intent = new Intent(getActivity(), CompletedRequest.class);
+                        intent.putExtra("completed_request",(Serializable) rq);
                         startActivity(intent);
                     }
 

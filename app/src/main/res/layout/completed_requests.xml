@@ -79,7 +79,6 @@
             android:stepSize="0.5"
             android:paddingTop="10dp"
             android:layout_below="@id/request_date"
-            android:alightParentEnd="true"
             android:progressBackgroundTint="#000000"
             android:progressTint="@color/black"
             android:secondaryProgressTint="#000000"

@@ -102,20 +102,18 @@ public class PendingRequestsFragment extends Fragment {
 //        adapter = new RequestListAdapter(activity.getApplicationContext(), R.layout.request_list_layout);
 //        myRequestLV.setAdapter(adapter);
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
-
-
-        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myRequestArrayList);
+        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myRequestArrayList, 0);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(mAdapter);
+
 
 
         authString  = username + ":" + password;
         new getMyRequests().execute(authString);
-
+/*
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
@@ -131,6 +129,7 @@ public class PendingRequestsFragment extends Fragment {
                     }
                 })
         );
+        */
     }
 
     private class getMyRequests extends AsyncTask<String, Void, Boolean> {
@@ -198,6 +197,8 @@ public class PendingRequestsFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean result) {
             mAdapter.notifyDataSetChanged();
+
+            recyclerView.setAdapter(mAdapter);
 
             if(dialog.isShowing()){
                 dialog.dismiss();

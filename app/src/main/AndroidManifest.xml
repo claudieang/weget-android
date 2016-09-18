@@ -97,6 +97,8 @@
         <activity android:name=".PendingdetailsRequester"/>
         <activity android:name=".PendingdetailsFulfiller"/>
         <activity android:name=".MyfulfillDetails"></activity>
+        <activity android:name=".CompletedRequest"></activity>
+
     </application>
 
 </manifest>

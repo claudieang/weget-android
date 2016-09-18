@@ -81,7 +81,7 @@ public class PendingFulfillsFragment extends Fragment {
 
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
 
-        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myFulfillRequestArrayList);
+        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myFulfillRequestArrayList, 1);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -92,6 +92,8 @@ public class PendingFulfillsFragment extends Fragment {
 
         authString  = username + ":" + password;
         new getRequests().execute(authString);
+/*
+
 
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
@@ -108,6 +110,8 @@ public class PendingFulfillsFragment extends Fragment {
                     }
                 })
         );
+
+        */
     }
 
     private class getMyFulfill extends AsyncTask<String, Void, Boolean> {

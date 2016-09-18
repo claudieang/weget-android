@@ -81,7 +81,7 @@ public class ActiveFulfillsFragment extends Fragment {
 
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
 
-        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myFulfillRequestArrayList);
+        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myFulfillRequestArrayList,2);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

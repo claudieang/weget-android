@@ -64,7 +64,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(PendingdetailsFulfiller.this)
                         .setTitle("Alert!")
-                        .setMessage("Confirm received order?")
+                        .setMessage("Confirm delivered order?")
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
