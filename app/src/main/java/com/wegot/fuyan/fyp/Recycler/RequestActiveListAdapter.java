@@ -36,7 +36,7 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
 
     public class MyActiveViewHolder extends RecyclerView.ViewHolder{
         public TextView title, details;
-        public Button fulfiller_btn;
+        //public Button fulfiller_btn;
         public RelativeLayout fulfillers_btn;
         //public View.OnClickListener mListener;
 
@@ -46,7 +46,7 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
 
             title = (TextView) view.findViewById(R.id.request_title);
             details = (TextView) view.findViewById(R.id.request_requirement);
-            fulfiller_btn = (Button) view.findViewById(R.id.view_fulfill_btn);
+            //fulfiller_btn = (Button) view.findViewById(R.id.view_fulfill_btn);
             fulfillers_btn = (RelativeLayout)view.findViewById(R.id.fulfillers_btn);
             //view.setOnClickListener(this);
             View viewById = view.findViewById(R.id.cv2);
@@ -114,13 +114,13 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
 
 
 
-        ArrayList<String> fulfillList = new ArrayList<String>();
-        //if /request/id/fulfill/ return empty array
-        if(fulfillList.isEmpty()) {
-            holder.fulfiller_btn.setVisibility(View.GONE);
-        } else{
-            holder.fulfiller_btn.setVisibility(View.VISIBLE);
-        }
+//        ArrayList<String> fulfillList = new ArrayList<String>();
+//        //if /request/id/fulfill/ return empty array
+//        if(fulfillList.isEmpty()) {
+//            holder.fulfiller_btn.setVisibility(View.GONE);
+//        } else{
+//            holder.fulfiller_btn.setVisibility(View.VISIBLE);
+//        }
     }
 
 }

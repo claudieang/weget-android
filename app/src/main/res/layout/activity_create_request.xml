@@ -55,7 +55,8 @@
             android:singleLine="true"
             android:textColor="@color/black"
             android:textColorHint="#BCBCBC"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:drawableLeft="@drawable/timer"/>
 
         <EditText
             android:id="@+id/product_requirement_txt"

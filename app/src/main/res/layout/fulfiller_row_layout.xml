@@ -61,7 +61,6 @@
         android:layout_height="28dp"
         android:id="@+id/selectButton"
         android:src="@drawable/ic_done_black_36dp"
-
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="4dp"
