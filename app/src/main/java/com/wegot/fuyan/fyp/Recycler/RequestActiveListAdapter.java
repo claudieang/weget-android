@@ -90,8 +90,8 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
                 .inflate(R.layout.active_list_layout, parent, false);
         TextView b1 = (TextView) itemView.findViewById(R.id.request_title);
         TextView b2 = (TextView) itemView.findViewById(R.id.request_requirement);
-        Typeface typeFace=Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Regular.ttf");
-        Typeface typeFaceLight = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Light.ttf");
+        Typeface typeFace=Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Bold.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Italic.ttf");
         b1.setTypeface(typeFace);
         b2.setTypeface(typeFaceLight);
         RelativeLayout fulfillers_btn = (RelativeLayout)itemView.findViewById(R.id.fulfillers_btn);

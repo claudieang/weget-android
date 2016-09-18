@@ -1,36 +1,26 @@
 package com.wegot.fuyan.fyp.Recycler;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.wegot.fuyan.fyp.CreateRequestActivity;
 import com.wegot.fuyan.fyp.R;
 import com.wegot.fuyan.fyp.Request;
 
+import java.util.List;
+
 /**
- * Created by Claudie on 9/8/16.
+ * Created by Claudie on 9/18/16.
  */
-public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.MyViewHolder>{
+public class RequestCompletedListAdapter  extends RecyclerView.Adapter<RequestCompletedListAdapter.MyViewHolder>{
 
     private List<Request> requestsList;
 
 
-    public RequestListAdapter(List<Request> requestsList) {
+    public RequestCompletedListAdapter(List<Request> requestsList) {
         this.requestsList = requestsList;
     }
 
@@ -54,10 +44,10 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.request_list_layout, parent, false);
+                .inflate(R.layout.completed_requests, parent, false);
         TextView b1 = (TextView) itemView.findViewById(R.id.request_title);
         TextView b2 = (TextView) itemView.findViewById(R.id.request_requirement);
-        Typeface typeFace=Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Black.ttf");
+        Typeface typeFace=Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Bold.ttf");
         Typeface typeFaceLight = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-LightItalic.ttf");
         b1.setTypeface(typeFace);
         b2.setTypeface(typeFaceLight);

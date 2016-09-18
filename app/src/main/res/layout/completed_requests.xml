@@ -28,8 +28,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginRight="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@id/divider"/>
+            android:layout_alignParentLeft="true" />
 
         <TextView
             android:id="@+id/request_requirement"
@@ -40,47 +39,8 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             android:layout_marginRight="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@id/divider"/>
-        <View
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorGray"
-            android:layout_marginEnd="108dp"
-            android:id="@+id/divider"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentLeft="true" />
 
-        <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:id="@+id/confirm_received_button"
-            android:src="@drawable/ic_done_black_36dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="64dp"
-            android:layout_centerVertical="true"
-            android:tint="@color/colorDarkGray"
-            android:background="?selectableItemBackgroundBorderless" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorGray"
-            android:layout_marginEnd="48dp"
-            android:id="@+id/divider2"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
-
-        <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:id="@+id/chat_button"
-            android:src="@drawable/ic_chat_black_36dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="4dp"
-            android:layout_centerVertical="true"
-            android:tint="@color/colorDarkGray"
-            android:background="?selectableItemBackgroundBorderless" />
         <!--<Button-->
         <!--android:id="@+id/view_fulfill_btn"-->
         <!--android:layout_width="wrap_content"-->
@@ -100,5 +60,30 @@
         <!--android:layout_marginRight="16dp"-->
         <!--/>-->
 
+
+        <TextView
+            android:id="@+id/request_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="date fulfilled"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_alignParentEnd="true"/>
+
+        <RatingBar
+            style="@style/RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:rating="3.5"
+            android:stepSize="0.5"
+            android:paddingTop="10dp"
+            android:layout_below="@id/request_date"
+            android:alightParentEnd="true"
+            android:progressBackgroundTint="#000000"
+            android:progressTint="@color/black"
+            android:secondaryProgressTint="#000000"
+            android:id="@+id/ratingBar"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>
