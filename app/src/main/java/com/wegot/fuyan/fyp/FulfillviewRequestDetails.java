@@ -279,6 +279,8 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             if(result){
                 Toast.makeText(getBaseContext(), "Request Accepted!", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(FulfillviewRequestDetails.this, MainActivity.class);
+                i.putExtra("accepted_fulfill_tab", 3);
+                i.putExtra("accepted_fulfill_swipe", 0);
                 startActivity(i);
             }else{
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();

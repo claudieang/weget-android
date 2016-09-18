@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
         int tabToOpen4 = i.getIntExtra("after_dispute_tab",-1);
         int tabToOpen5 = i.getIntExtra("after_dispute_fulfill_tab",-1);
         int tabToOpen6 = i.getIntExtra("updated_request_tab", -1);
+        int tabToOpen7 = i.getIntExtra("accepted_fulfill_tab", -1);
 
 
 
@@ -191,6 +192,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if(tabToOpen6!=-1){
             bottomNavigationBar.selectTab(tabToOpen6);
+        }
+        if(tabToOpen7!=-1){
+            bottomNavigationBar.selectTab(tabToOpen7);
         }
 
     }

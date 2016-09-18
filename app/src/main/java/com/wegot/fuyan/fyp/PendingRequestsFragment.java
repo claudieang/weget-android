@@ -121,8 +121,8 @@ public class PendingRequestsFragment extends Fragment {
                     @Override public void onItemClick(View view, int position) {
                         // do whatever
                         Request rq = myRequestArrayList.get(position);
-                        Intent intent = new Intent(getActivity(), MyRequestFulfillerActivity.class);
-                        intent.putExtra("selected_my_request",(Serializable) rq);
+                        Intent intent = new Intent(getActivity(), PendingdetailsRequester.class);
+                        intent.putExtra("selected_my_pending_request",(Serializable) rq);
                         startActivity(intent);
                     }
 

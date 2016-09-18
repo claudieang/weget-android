@@ -61,9 +61,9 @@ public class CreateRequestActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
 
 
-        TextView myTextView = (TextView) findViewById(R.id.tv_request_title);
-        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/TitilliumWeb-Bold.ttf");
-        myTextView.setTypeface(typeFace);
+        //TextView myTextView = (TextView) findViewById(R.id.tv_request_title);
+        //Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/TitilliumWeb-Bold.ttf");
+        //myTextView.setTypeface(typeFace);
 
 
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);

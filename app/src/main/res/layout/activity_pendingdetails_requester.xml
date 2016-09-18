@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:id="@+id/relativeLayout1"
-            android:background="@drawable/Pending">
+            android:background="@drawable/pending">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,7 +46,6 @@
                 android:textSize="20dp"
                 android:id="@+id/product_name"
                 android:textColor="@color/black"
-
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"
                 />
@@ -54,7 +53,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Description"
                 android:textSize="15dp"
                 android:textStyle="italic"
                 android:id="@+id/product_description"
@@ -80,7 +78,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" Requested by"
-
                 android:textSize="20dp"
                 android:drawableLeft="@drawable/face_icon"
                 android:id="@+id/requestor_tv"
@@ -94,7 +91,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:id="@+id/requestor_name"
-                android:text="  Details"
                 android:textStyle="italic"
                 android:layout_below="@+id/requestor_tv"
                 android:layout_alignParentLeft="true"
@@ -131,7 +127,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-                android:text="  Details"
                 android:textStyle="italic"
                 android:id="@+id/address_details"
                 android:layout_below="@+id/address"
@@ -156,7 +151,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Details"
                 android:textSize="15dp"
                 android:textStyle="italic"
                 android:id="@+id/price_detail"

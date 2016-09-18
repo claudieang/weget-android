@@ -297,7 +297,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
                 }else if(requestStatus.equals("pending")){
 
                     Intent i = new Intent (UpdateRequestActivity.this, MyRequestActivity.class);
-                    Toast.makeText(getApplicationContext(), "Request Pending!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Request pending!", Toast.LENGTH_SHORT).show();
                     startActivity(i);
                 }else if(requestStatus.equals("completed")){
 

@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.wegot.fuyan.fyp.Fulfill;
 import com.wegot.fuyan.fyp.MyFulfillRequestDetailsActivity;
+import com.wegot.fuyan.fyp.MyfulfillDetails;
 import com.wegot.fuyan.fyp.R;
 import com.wegot.fuyan.fyp.Recycler.DividerItemDecoration;
 import com.wegot.fuyan.fyp.Recycler.RecyclerItemClickListener;
@@ -97,8 +98,8 @@ public class ActiveFulfillsFragment extends Fragment {
                     @Override public void onItemClick(View view, int position) {
                         // do whatever
                         Request rq = myFulfillRequestArrayList.get(position);
-                        Intent intent = new Intent(getActivity(), MyFulfillRequestDetailsActivity.class);
-                        intent.putExtra("selected_request",(Serializable) rq);
+                        Intent intent = new Intent(getActivity(), MyfulfillDetails.class);
+                        intent.putExtra("selected_fulfill_request",(Serializable) rq);
                         startActivity(intent);
                     }
 
@@ -107,6 +108,43 @@ public class ActiveFulfillsFragment extends Fragment {
                     }
                 })
         );
+    }
+
+    private class getRequests extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/active/";
+
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+
+                success = true;
+            }
+            return success;
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+
+                new getMyFulfill().execute(authString);
+
+            }else {
+                Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
     private class getMyFulfill extends AsyncTask<String, Void, Boolean> {
@@ -177,42 +215,7 @@ public class ActiveFulfillsFragment extends Fragment {
         }
     }
 
-    private class getRequests extends AsyncTask<String, Void, Boolean> {
 
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/active/";
-
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
-
-                success = true;
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if(result){
-
-                new getMyFulfill().execute(authString);
-
-            }else {
-                Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
 
     private class getMyFulfills extends AsyncTask<String, Void, Boolean> {
 
