@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.vision.text.Text;
 import com.wegot.fuyan.fyp.Account;
+import com.wegot.fuyan.fyp.PaymentActivity;
 import com.wegot.fuyan.fyp.R;
 import com.wegot.fuyan.fyp.Request;
 import com.wegot.fuyan.fyp.RequestFulfillerDetailsActivity;
@@ -29,15 +30,16 @@ import java.util.List;
  */
 public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFulfillersListAdapter.FulfillerListViewHolder>{
     List<Account> list;
-    List<Request> requestList;
-    int fulfillId;
+    List<Integer> fulfillIdList;
+    Request r;
 
 
-//    public RequestFulfillersListAdapter(List<Account> list, List<Request> requestList, int fulfillId) {
-//        this.list = list;
-//        this.requestList = requestList;
-//        this.fulfillId = fulfillId;
-//    }
+
+    public RequestFulfillersListAdapter(List<Account> list, List<Integer> fulfillIdList, Request r) {
+        this.list = list;
+        this.fulfillIdList = fulfillIdList;
+        this.r = r;
+    }
 
     public RequestFulfillersListAdapter(List<Account> list){
         this.list= list;
@@ -47,6 +49,7 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
         ImageView accountImage;
         TextView accountName;
         RatingBar rating;
+        ImageView acceptIV;
 
 
         public FulfillerListViewHolder(View view) {
@@ -55,24 +58,40 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
             accountImage = (ImageView)view.findViewById(R.id.accountImage);
             accountName = (TextView)view.findViewById(R.id.fulfiller_name);
             rating= (RatingBar)view.findViewById(R.id.ratingBar);
+            acceptIV = (ImageView)view.findViewById(R.id.selectButton);
             //view.setOnClickListener(this);
 
-//            View viewById = view.findViewById(R.id.cv2);
-//            viewById.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                    Account account = list.get(getAdapterPosition());
-//                    Request request = requestList.get(getAdapterPosition());
-//
-//                    Intent intent = new Intent(view.getContext(), RequestFulfillerDetailsActivity.class);
-//                    intent.putExtra("selected_fulfill_id", fulfillId);
-//                    intent.putExtra("selected_fulfiller", (Serializable) account);
-//                    intent.putExtra("selected_request_tofulfull", (Serializable) request);
-//                    view.getContext().startActivity(intent);
-//
-//                }
-//            });
+            View viewById = view.findViewById(R.id.cv2);
+            viewById.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Account account = list.get(getAdapterPosition());
+                    int fulfillId = fulfillIdList.get(getAdapterPosition());
+
+                    Intent intent = new Intent(view.getContext(), RequestFulfillerDetailsActivity.class);
+                    intent.putExtra("selected_fulfill_id", fulfillId);
+                    intent.putExtra("selected_fulfiller", (Serializable) account);
+                    intent.putExtra("selected_request_tofulfull", (Serializable) r);
+                    view.getContext().startActivity(intent);
+
+                }
+            });
+            acceptIV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Account account = list.get(getAdapterPosition());
+                    int fulfillId = fulfillIdList.get(getAdapterPosition());
+
+                    Intent intent = new Intent(view.getContext(), PaymentActivity.class);
+                    intent.putExtra("fulfill_Id", fulfillId);
+                    intent.putExtra("fulfill_price", r.getPrice());
+                    intent.putExtra("request_string", String.valueOf(r.getId()));
+                    view.getContext().startActivity(intent);
+
+                }
+            });
         }
 
 

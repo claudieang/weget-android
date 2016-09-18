@@ -54,7 +54,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Description"
                 android:textSize="15dp"
                 android:textStyle="italic"
                 android:id="@+id/product_description"
@@ -94,7 +93,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:id="@+id/requestor_name"
-                android:text="  Details"
                 android:textStyle="italic"
                 android:layout_below="@+id/requestor_tv"
                 android:layout_alignParentLeft="true"
@@ -131,7 +129,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-                android:text="  Details"
                 android:textStyle="italic"
                 android:id="@+id/address_details"
                 android:layout_below="@+id/address"
@@ -156,7 +153,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Details"
                 android:textSize="15dp"
                 android:textStyle="italic"
                 android:id="@+id/time_detail"
@@ -181,7 +177,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Details"
                 android:textSize="15dp"
                 android:textStyle="italic"
                 android:id="@+id/price_detail"

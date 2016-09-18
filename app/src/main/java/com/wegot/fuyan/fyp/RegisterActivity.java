@@ -16,6 +16,8 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -23,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,21 +72,27 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
-
-        b2 = (Button) findViewById(R.id.button5);
-        b3 = (Button)findViewById(R.id.button6);
+       TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+        toolbar_title.setText("Register");
+       // b2 = (Button) findViewById(R.id.button5);
+       // b3 = (Button)findViewById(R.id.button6);
         t1 = (EditText) findViewById(R.id.username);
         t2 = (EditText) findViewById(R.id.password);
         t3 = (EditText) findViewById(R.id.Cpassword);
         contact = (EditText) findViewById(R.id.contact_num);
         email1 = (EditText) findViewById(R.id.email);
         dpIV = (ImageView)findViewById(R.id.profile_pic_iv);
-        dpIV.setImageResource(R.drawable.ic_profile);
+        //dpIV.setImageResource(R.drawable.ic_profile);
 
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Regular.ttf");
-        b2.setTypeface(typeFace);
 
-        b2.setOnClickListener(new View.OnClickListener() {
+
+        Button done_Btn = (Button) findViewById(R.id.create_btn);
+        ImageButton cancel_Btn = (ImageButton) findViewById(R.id.close_btn);
+
+//        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Regular.ttf");
+//        b2.setTypeface(typeFace);
+
+        done_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -165,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
-        b3.setOnClickListener(new View.OnClickListener() {
+        cancel_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -240,7 +249,11 @@ public class RegisterActivity extends AppCompatActivity {
                 //txtmsg.setText(e.getMessage().toString());
             }
             if (originBitmap != null) {
-                this.dpIV.setImageBitmap(originBitmap);
+                RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(getResources(), originBitmap);
+                roundDrawable.setCircular(true);
+
+                this.dpIV.setImageDrawable(roundDrawable);
+                //this.dpIV.setImageBitmap(originBitmap);
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
 

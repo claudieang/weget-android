@@ -32,7 +32,7 @@
 
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,7 +41,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".RegisterActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".UpdateProfileActivity" />
         <activity android:name=".UpdatePasswordActivity" />
@@ -50,7 +50,7 @@
         <activity android:name=".UploadImageActivity" />
         <activity
             android:name=".CreateRequestActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RequestDetailsActivity" />
         <activity android:name=".MyRequestActivity">
             <intent-filter>

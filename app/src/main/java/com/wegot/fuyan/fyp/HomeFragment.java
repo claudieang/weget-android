@@ -82,6 +82,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     ListView requestList;
     int requestImage = R.drawable.ordericon;
     ArrayList<Request> requestArrayList = new ArrayList<>();
+    int myId;
 
     RequestAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
@@ -174,6 +175,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
         String username = pref.getString("username", null);
         String password = pref.getString("password", null);
+        myId = pref.getInt("id",-1);
         usernameText = "User: " + username;
         //text = (TextView) findViewById(R.id.textview2);
         //text.setText("Welcome, " + username + " ");
@@ -196,9 +198,17 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
                 // Then you start a new Activity via Intent
                 Request rq = requestArrayList.get(position);
-                Intent intent = new Intent(activity, RequestDetailsActivity.class);
-                intent.putExtra("selected_request", (Serializable) rq);
-                startActivity(intent);
+
+                if(myId == rq.getRequestorId()){
+                    Intent intent = new Intent(activity, RequesterViewDetails.class);
+                    intent.putExtra("selected_request", (Serializable) rq);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(activity, FulfillviewRequestDetails.class);
+                    intent.putExtra("selected_request", (Serializable) rq);
+                    startActivity(intent);
+                }
+
             }
         });
         mapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));

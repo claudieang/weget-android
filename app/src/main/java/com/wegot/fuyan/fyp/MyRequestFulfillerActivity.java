@@ -124,16 +124,17 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         //adapter = new AccountAdapter(getApplicationContext(),R.layout.row_layout);
         //myRequestFulfillerLV.setAdapter(adapter);
         new getRequests().execute(authString);
-        new getMyRequestFulfiller().execute(authString);
+        //new getMyRequestFulfiller().execute(authString);
 
         recyclerView = (RecyclerViewEmptySupport) findViewById(R.id.my_request_fulfiller_list);
-        mAdapter = new RequestFulfillersListAdapter(fulfillerAccountList);
+        mAdapter = new RequestFulfillersListAdapter(fulfillerAccountList,fulfillIdList, myRequest);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         //recyclerView.setEmptyView(findViewById(R.id.empty_view));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
+
 
 
 
@@ -579,16 +580,14 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
-//            if(result){
-//
-//                if(requestStatus.equals("active")){
-//                    //updateBtn.setVisibility(View.VISIBLE);
-//                }
-//                new getMyRequestFulfill().execute(authString);
-//
-//            }else {
-//                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-//            }
+            if(result){
+
+
+                new getMyRequestFulfill().execute(authString);
+
+            }else {
+                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+            }
 
         }
     }
@@ -718,31 +717,9 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             mAdapter.notifyDataSetChanged();
-            if(result) {
-                Log.d ("Value", "Number of accounts: " + fulfillerAccountList.size());
-                //adapter.clear();
-
-                if (fulfillerAccountList != null && !fulfillerAccountList.isEmpty()) {
-
-                    for (Account a : fulfillerAccountList) {
-
-                       // adapter.add(a);
-
-                    }
-                }
-//                swipeContainer.setRefreshing(false);
-//                //Toast.makeText(getApplicationContext(), "Populating Fulfiller list!", Toast.LENGTH_SHORT).show();
-//
-//                if(fulfillList.size() == 1 && fulfillList.get(0).getStatus().equals("pending")) {
-//                        receiveBtn.setVisibility(View.VISIBLE);
-//                        dispute.setVisibility(View.VISIBLE);
-//
-//                }
-
-
-            }else{
-
+            if(!result) {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+
             }
 
         }
