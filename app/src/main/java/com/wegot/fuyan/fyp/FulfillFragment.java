@@ -145,11 +145,15 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
         Intent i = activity.getIntent();
         int swipeToOpen = i.getIntExtra("complete_fulfill_swipe",-1);
         int swipeToOpen2 = i.getIntExtra("disputed_fulfill_swipe",-1);
+        int swipeToOpen3 = i.getIntExtra("accepted_fulfill_swipe", -1);
         if(swipeToOpen != -1){
             viewPager.setCurrentItem(swipeToOpen);
         }
         if(swipeToOpen2 != -1){
             viewPager.setCurrentItem(swipeToOpen2);
+        }
+        if(swipeToOpen3 != -1){
+            viewPager.setCurrentItem(swipeToOpen3);
         }
 
     }
@@ -186,7 +190,7 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
                     ret = "Active";
                     break;
                 case 1:
-                    ret = "Pending";
+                    ret = "pending";
                     break;
 
                 case 2:

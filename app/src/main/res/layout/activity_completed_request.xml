@@ -14,15 +14,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:id="@+id/relativeLayout1"
-            android:background="@drawable/mainfulfillbg"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
+            android:id="@+id/relativeLayout1">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/request_details_tital"
                 android:textSize="30dp"
+                android:text="BG HERE"
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_centerVertical="true"
@@ -38,7 +36,7 @@
             android:layout_below="@+id/relativeLayout1"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="@color/fulfill0">
+            android:background="@color/request0">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,6 +54,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="  Description"
                 android:textSize="15dp"
                 android:textStyle="italic"
                 android:id="@+id/product_description"
@@ -75,7 +74,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/linear1"
-            android:background="@color/fulfill1">
+            android:background="@color/request1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -95,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:id="@+id/requestor_name"
+                android:text="  Details"
                 android:textStyle="italic"
                 android:layout_below="@+id/requestor_tv"
                 android:layout_alignParentLeft="true"
@@ -109,7 +109,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="230dp"
-            android:background="@color/fulfill2"
+            android:background="@color/request2"
             android:id="@+id/linear3"
             android:layout_below="@+id/linear2"
             android:layout_alignParentStart="true"
@@ -131,6 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
+                android:text="  Details"
                 android:textStyle="italic"
                 android:id="@+id/address_details"
                 android:layout_below="@+id/address"
@@ -138,7 +139,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"/>
-
 
 
             <TextView
@@ -156,6 +156,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="  Details"
                 android:textSize="15dp"
                 android:textStyle="italic"
                 android:id="@+id/price_detail"
@@ -167,25 +168,26 @@
                 android:layout_alignParentStart="true"/>
 
 
+
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="45dp"
             android:id="@+id/linear4"
             android:layout_below="@+id/linear3"
-            android:layout_alignParentStart="true"
-            android:weightSum="1">
+            android:background="@color/colorPrimary">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:text="CHAT"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="COMPLETED"
+                android:textSize="20dp"
+                android:id="@+id/complete"
+                android:textColor="@color/black"
                 android:textStyle="bold"
-                android:id="@+id/chat_button"
-                android:background="@color/colorPrimary"
-                android:layout_weight="1" />
+                android:gravity="center"
+                />
 
         </LinearLayout>
 
@@ -193,4 +195,7 @@
     </RelativeLayout>
 
 </ScrollView>
+
+
+
 

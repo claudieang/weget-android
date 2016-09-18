@@ -172,7 +172,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
                                         Log.d("End Time: ", endTime);
 
                                         authString  = username + ":" + password;
-                                        new getRequests().execute(authString);
+                                        new updateRequest().execute(authString);
 
 
                                     }else{
@@ -202,7 +202,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
             }
         });
     }
-
+/*
     private class getRequests extends AsyncTask<String, Void, Boolean> {
 
         ProgressDialog dialog = new ProgressDialog(UpdateRequestActivity.this, R.style.MyTheme);
@@ -297,7 +297,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
                 }else if(requestStatus.equals("pending")){
 
                     Intent i = new Intent (UpdateRequestActivity.this, MyRequestActivity.class);
-                    Toast.makeText(getApplicationContext(), "Request Pending!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Request pending!", Toast.LENGTH_SHORT).show();
                     startActivity(i);
                 }else if(requestStatus.equals("completed")){
 
@@ -313,7 +313,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
         }
     }
 
-
+*/
     private class updateRequest extends AsyncTask<String, Void, Boolean> {
 
         @Override
