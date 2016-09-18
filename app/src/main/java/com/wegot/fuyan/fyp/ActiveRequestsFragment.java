@@ -113,7 +113,7 @@ public class ActiveRequestsFragment extends Fragment {
 
 
         authString  = username + ":" + password;
-        new getRequests().execute(authString);
+        new getMyRequests().execute(authString);
 
 //        recyclerView.addOnItemTouchListener(
 //                new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
@@ -132,59 +132,16 @@ public class ActiveRequestsFragment extends Fragment {
 //        );
     }
 
-    private class getRequests extends AsyncTask<String, Void, Boolean>{
-        ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
-
-        @Override
-        protected void onPreExecute() {
-            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            dialog.show();
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/active/";
-
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
-
-                success = true;
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if(result){
-
-                new getMyRequests().execute(authString);
-
-            }else {
-                Toast.makeText(getActivity().getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-            if(dialog.isShowing()){
-                dialog.dismiss();
-            }
-
-        }
-    }
         private class getMyRequests extends AsyncTask<String, Void, Boolean> {
-
+            ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
 
             @Override
             protected void onPreExecute() {
-
+                dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(false);
+                dialog.show();
             }
-
             @Override
             protected Boolean doInBackground(String... params) {
 
@@ -239,6 +196,10 @@ public class ActiveRequestsFragment extends Fragment {
             @Override
             protected void onPostExecute(Boolean result) {
                 mAdapter.notifyDataSetChanged();
+
+                if(dialog.isShowing()){
+                    dialog.dismiss();
+                }
 
             }
         }
