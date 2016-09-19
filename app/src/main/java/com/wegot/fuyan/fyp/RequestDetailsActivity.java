@@ -302,7 +302,6 @@ public class RequestDetailsActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             if(result){
 
-
                 if(picture.equals("")){
                     profilePic.setImageResource(R.drawable.ic_profile);
                 }else{

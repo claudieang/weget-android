@@ -202,118 +202,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
             }
         });
     }
-/*
-    private class getRequests extends AsyncTask<String, Void, Boolean> {
 
-        ProgressDialog dialog = new ProgressDialog(UpdateRequestActivity.this, R.style.MyTheme);
-
-        @Override
-        protected void onPreExecute() {
-            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            dialog.show();
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/active/";
-
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
-
-                success = true;
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if(result){
-
-                new getRequestStatus().execute(authString);
-
-            }else {
-                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
-
-    private class getRequestStatus extends AsyncTask<String, Void, Boolean> {
-
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/"+requestId+"/";
-
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
-
-                success = true;
-
-                JSONObject jso = null;
-                try{
-                    jso = new JSONObject(rst);
-                    requestStatus = jso.getString("status");
-
-                }catch(JSONException e){
-                    e.printStackTrace();
-                    err = e.getMessage();
-                }
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if(result){
-
-                if(requestStatus.equals("active")) {
-
-                    new updateRequest().execute(authString);
-                }else if(requestStatus.equals("expired")){
-
-                    Intent i = new Intent (UpdateRequestActivity.this, MyRequestActivity.class);
-                    Toast.makeText(getApplicationContext(), "Request Expired!", Toast.LENGTH_SHORT).show();
-                    startActivity(i);
-
-                }else if(requestStatus.equals("pending")){
-
-                    Intent i = new Intent (UpdateRequestActivity.this, MyRequestActivity.class);
-                    Toast.makeText(getApplicationContext(), "Request pending!", Toast.LENGTH_SHORT).show();
-                    startActivity(i);
-                }else if(requestStatus.equals("completed")){
-
-                    Intent i = new Intent (UpdateRequestActivity.this, MyRequestActivity.class);
-                    Toast.makeText(getApplicationContext(), "Request Completed!", Toast.LENGTH_SHORT).show();
-                    startActivity(i);
-                }
-
-            }else {
-                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
-
-*/
     private class updateRequest extends AsyncTask<String, Void, Boolean> {
 
         ProgressDialog dialog = new ProgressDialog(UpdateRequestActivity.this, R.style.MyTheme);
@@ -383,6 +272,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
                 i.putExtra("updated_request_tab", 1);
                 i.putExtra("udpated_request_swipe", 0);
                 startActivity(i);
+                finish();
             }else{
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }

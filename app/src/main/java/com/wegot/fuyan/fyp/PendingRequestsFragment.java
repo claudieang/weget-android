@@ -113,23 +113,7 @@ public class PendingRequestsFragment extends Fragment {
 
         authString  = username + ":" + password;
         new getMyRequests().execute(authString);
-/*
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        // do whatever
-                        Request rq = myRequestArrayList.get(position);
-                        Intent intent = new Intent(getActivity(), PendingdetailsRequester.class);
-                        intent.putExtra("selected_my_pending_request",(Serializable) rq);
-                        startActivity(intent);
-                    }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
-        );
-        */
     }
 
     private class getMyRequests extends AsyncTask<String, Void, Boolean> {

@@ -191,6 +191,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
                 i.putExtra("complete_request_swipe", 2);
                 Toast.makeText(getApplicationContext(), "Received!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
+                finish();
 
 
             }else{

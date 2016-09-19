@@ -353,6 +353,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Registration Success!", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(i);
+                finish();
             }else{
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }

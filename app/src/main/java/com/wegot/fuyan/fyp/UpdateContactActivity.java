@@ -147,6 +147,7 @@ public class UpdateContactActivity extends AppCompatActivity {
                 editor.commit();
                 Intent i = new Intent(UpdateContactActivity.this, ProfileActivity.class);
                 startActivity(i);
+                finish();
             }else{
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }
