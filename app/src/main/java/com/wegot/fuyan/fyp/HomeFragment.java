@@ -54,6 +54,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.wegot.fuyan.fyp.Recycler.DividerItemDecoration;
 import com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 import com.wegot.fuyan.fyp.Recycler.RequestAllListAdapter;
 
@@ -198,7 +199,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
 //        requestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -410,24 +411,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             mAdapter.notifyDataSetChanged();
             if (result) {
 
-
-                if (requestArrayList != null && !requestArrayList.isEmpty()) {
-                    //adapter.clear();
-
-                    for (Request r : requestArrayList) {
-
-                        //adapter.add(r);
-
-                    }
-
                     try {
                         addRequestMarkers();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
-
-
 
                 Log.d("Print", "Value: " + requestArrayList.size());
 
