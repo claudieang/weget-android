@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -21,24 +20,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.google.android.gms.appindexing.Action;
@@ -58,12 +54,13 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
+import com.wegot.fuyan.fyp.Recycler.RequestAllListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -79,7 +76,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     String usernameText, err, authString;
     Context mContext;
     TextView text;
-    ListView requestList;
+    //ListView requestList;
+
     int requestImage = R.drawable.ordericon;
     ArrayList<Request> requestArrayList = new ArrayList<>();
     int myId;
@@ -136,6 +134,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
     View view;
     Activity activity;
+    private RecyclerViewEmptySupport recyclerView;
+    private RequestAllListAdapter mAdapter;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_screen, container, false);
@@ -179,9 +179,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         usernameText = "User: " + username;
         //text = (TextView) findViewById(R.id.textview2);
         //text.setText("Welcome, " + username + " ");
-        requestList = (ListView) view.findViewById(R.id.active_request_list);
-        adapter = new RequestAdapter(activity.getApplicationContext(), R.layout.row_layout);
-        requestList.setAdapter(adapter);
+        //requestList = (ListView) view.findViewById(R.id.active_request_list);
+        //adapter = new RequestAdapter(activity.getApplicationContext(), R.layout.row_layout);
+        //requestList.setAdapter(adapter);
         //newRequestBtn = (Button)findViewById(R.id.new_request_btn);
         addRequest = (ImageButton) view.findViewById(R.id.addrequest);
         homepage = (ImageButton) view.findViewById(R.id.homepage);
@@ -192,25 +192,33 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
         new getRequests().execute(authString);
 
-        requestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
-                // Then you start a new Activity via Intent
-                Request rq = requestArrayList.get(position);
-
-                if(myId == rq.getRequestorId()){
-                    Intent intent = new Intent(activity, RequesterViewDetails.class);
-                    intent.putExtra("selected_request", (Serializable) rq);
-                    startActivity(intent);
-                }else{
-                    Intent intent = new Intent(activity, FulfillviewRequestDetails.class);
-                    intent.putExtra("selected_request", (Serializable) rq);
-                    startActivity(intent);
-                }
-
-            }
-        });
+        recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.active_request_list);
+        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestAllListAdapter(requestArrayList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(mAdapter);
+//        requestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
+//                // Then you start a new Activity via Intent
+//                Request rq = requestArrayList.get(position);
+//
+//                if(myId == rq.getRequestorId()){
+//                    Intent intent = new Intent(activity, RequesterViewDetails.class);
+//                    intent.putExtra("selected_request", (Serializable) rq);
+//                    startActivity(intent);
+//                }else{
+//                    Intent intent = new Intent(activity, FulfillviewRequestDetails.class);
+//                    intent.putExtra("selected_request", (Serializable) rq);
+//                    startActivity(intent);
+//                }
+//
+//            }
+//        });
         mapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));
         //mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
 
@@ -399,15 +407,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
         @Override
         protected void onPostExecute(Boolean result) {
+            mAdapter.notifyDataSetChanged();
             if (result) {
 
 
                 if (requestArrayList != null && !requestArrayList.isEmpty()) {
-                    adapter.clear();
+                    //adapter.clear();
 
                     for (Request r : requestArrayList) {
 
-                        adapter.add(r);
+                        //adapter.add(r);
 
                     }
 

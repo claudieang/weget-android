@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
+    sothree:umanoDragView="@+id/relativeLayout3"
     sothree:umanoPanelHeight="105dp"
     sothree:umanoShadowHeight="4dp">
 
@@ -53,14 +54,23 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <ListView
+        <!--<ListView-->
+            <!--android:id="@+id/active_request_list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/relativeLayout3"-->
+            <!--android:layout_marginBottom="55dp"-->
+            <!--android:background="#FFFFFF" />-->
+        <com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport
             android:id="@+id/active_request_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
             android:layout_below="@+id/relativeLayout3"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:layout_marginBottom="55dp"
-            android:background="#FFFFFF" />
-
+            android:focusable="true" />
 
     </RelativeLayout>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
