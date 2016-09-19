@@ -75,6 +75,7 @@
         </activity>
         <activity android:name=".MyFulfillRequestDetailsActivity" />
         <activity android:name=".UpdateRequestActivity" />
+        <activity android:name=".CompletedRequest"/>
         <!--
      <activity android:name=".MainPage"></activity> ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
