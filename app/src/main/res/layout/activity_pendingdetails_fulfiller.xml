@@ -5,6 +5,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar_blank"></include>
 
     <ImageView
         android:layout_width="match_parent"
@@ -176,9 +179,9 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Chat"
+                android:text="Dispute"
                 android:textStyle="bold"
-                android:id="@+id/chat_button"
+                android:id="@+id/dipute_button"
                 android:background="@color/colorPrimaryDark"
                 android:layout_weight="1" />
         </LinearLayout>

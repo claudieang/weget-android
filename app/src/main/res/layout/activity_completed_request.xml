@@ -1,58 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <!-- Here you put the rest of your current view-->
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/pic"
+        android:background="@drawable/complete"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.wegot.fuyan.fyp.RequestDetailsActivity">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:id="@+id/relativeLayout1">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/request_details_tital"
-                android:textSize="30dp"
-                android:text="BG HERE"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
+        android:orientation="vertical">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:id="@+id/linear1"
-            android:layout_below="@+id/relativeLayout1"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@color/request0">
+            android:background="@color/white"
+            android:layout_weight="1">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" Product Name"
-                android:drawableLeft="@drawable/product_icon"
+                android:drawableLeft="@drawable/product"
                 android:textSize="20dp"
                 android:id="@+id/product_name"
                 android:textColor="@color/black"
-
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
+                android:layout_weight="1"
                 />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="  Description"
                 android:textSize="15dp"
@@ -62,7 +52,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dp" />
+                android:layout_marginLeft="30dp"
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
@@ -71,49 +62,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linear2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/linear1"
-            android:background="@color/request1">
+            android:background="@color/white"
+            android:layout_weight="1">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" Requested by"
 
                 android:textSize="20dp"
                 android:drawableLeft="@drawable/face_icon"
                 android:id="@+id/requestor_tv"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/black"
+                android:layout_weight="1"
                 />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:id="@+id/requestor_name"
                 android:text="  Details"
                 android:textStyle="italic"
                 android:layout_below="@+id/requestor_tv"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
                 />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:background="@color/request2"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
             android:id="@+id/linear3"
             android:layout_below="@+id/linear2"
-            android:layout_alignParentStart="true"
-            android:weightSum="1">
+            android:layout_weight="2">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -123,7 +110,7 @@
 
                 android:drawableLeft="@drawable/my_location"
                 android:id="@+id/address"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/black"/>
 
@@ -173,11 +160,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:id="@+id/linear4"
             android:layout_below="@+id/linear3"
-            android:background="@color/colorPrimary">
-
+            android:layout_alignParentStart="true"
+            android:background="@color/colorPrimary"
+            android:layout_weight="1">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -190,11 +178,10 @@
                 />
 
         </LinearLayout>
+    </LinearLayout>
 
 
-    </RelativeLayout>
-
-</ScrollView>
+</LinearLayout>
 
 
 
