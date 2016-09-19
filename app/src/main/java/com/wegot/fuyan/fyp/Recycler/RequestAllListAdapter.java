@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.wegot.fuyan.fyp.FulfillviewRequestDetails;
 import com.wegot.fuyan.fyp.R;
 import com.wegot.fuyan.fyp.Request;
 import com.wegot.fuyan.fyp.RequesterViewDetails;
@@ -22,10 +23,12 @@ import java.util.List;
 public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAdapter.MyActiveViewHolder>{
 
     private List<Request> requestsList;
+    private int targetId;
 
 
-    public RequestAllListAdapter(List<Request> requestsList) {
+    public RequestAllListAdapter(List<Request> requestsList, int myId) {
         this.requestsList = requestsList;
+        targetId = myId;
     }
 
     public class MyActiveViewHolder extends RecyclerView.ViewHolder{
@@ -49,9 +52,16 @@ public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAd
 
                     Request request = requestsList.get(getAdapterPosition());
                     //Toast.makeText(view.getContext(),"RV clicked " + view.getId() + ", " + R.id.cv2, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(view.getContext(), RequesterViewDetails.class);
-                    intent.putExtra("selected_request",(Serializable) request);
-                    view.getContext().startActivity(intent);
+                    if(request.getRequestorId() == targetId){
+                        Intent intent = new Intent(view.getContext(), RequesterViewDetails.class);
+                        intent.putExtra("selected_request",(Serializable) request);
+                        view.getContext().startActivity(intent);
+
+                    } else {
+                        Intent intent = new Intent(view.getContext(), FulfillviewRequestDetails.class);
+                        intent.putExtra("selected_request", (Serializable) request);
+                        view.getContext().startActivity(intent);
+                    }
 
                 }
             });
