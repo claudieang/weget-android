@@ -422,65 +422,12 @@ public class PaymentActivity extends AppCompatActivity {
                 i.putExtra("after_payment_request_swipe", 1);
                 //i.putExtra("transaction", (Serializable)tr);
                 startActivity(i);
+                finish();
             }else{
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }
 
         }
     }
-
-    /*
-
-    private class processToken extends AsyncTask<String, Void, Boolean> {
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/token/";
-
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-            } else {
-                success = true;
-                try{
-
-                    JSONObject jso = new JSONObject(rst);
-                    clientToken = jso.getString("message");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            return success;
-
-
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-
-            if(result) {
-
-                //Toast.makeText(getBaseContext(), "Token Retrieved!", Toast.LENGTH_LONG).show();
-                findViewById(R.id.btn_start).setEnabled(true);
-
-            }else{
-                Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
-            }
-
-        }
-    }
-
-    */
-
 
 }

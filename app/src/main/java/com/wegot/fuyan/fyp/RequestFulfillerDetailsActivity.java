@@ -218,6 +218,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                     i.putExtra("fulfill_price", price);
                     i.putExtra("request_string", requestString);
                     startActivity(i);
+                    finish();
                 }else{
                     Intent i = new Intent (RequestFulfillerDetailsActivity.this, MyRequestActivity.class);
                     Toast.makeText(getApplicationContext(), "Request Expired!", Toast.LENGTH_SHORT).show();

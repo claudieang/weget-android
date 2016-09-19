@@ -191,7 +191,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
                 i.putExtra("complete_fulfill_swipe",2);
                 Toast.makeText(getApplicationContext(), "Delivered!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
-
+                finish();
 
             }else{
 

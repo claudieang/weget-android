@@ -90,6 +90,7 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
                     intent.putExtra("request_string", String.valueOf(r.getId()));
                     view.getContext().startActivity(intent);
 
+
                 }
             });
         }

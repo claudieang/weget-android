@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.stripe.model.BankAccount;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +33,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
     Button acceptRequestBtn, chatBtn;
     int requestId, requestorId, postal,duration,myId;
     boolean fulfilled = false;
+    boolean bank = true;
     Context mContext;
 
     ArrayList<Integer> fulfillerIdList = new ArrayList<>();
@@ -73,17 +76,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         acceptRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(FulfillviewRequestDetails.this)
-                        .setTitle("Alert!")
-                        .setMessage("Do you really want to fulfill this request?")
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                new createFulfill().execute(authString);
-                            }})
-                        .setNegativeButton(android.R.string.no, null).show();
-
+                new getBank().execute(authString);
             }
         });
     }
@@ -279,12 +272,84 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 i.putExtra("accepted_fulfill_tab", 3);
                 i.putExtra("accepted_fulfill_swipe", 0);
                 startActivity(i);
+                finish();
             }else{
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }
 
+        }
+    }
 
+    private class getBank extends AsyncTask<String, Void, Boolean> {
+
+        ProgressDialog dialog = new ProgressDialog(FulfillviewRequestDetails.this, R.style.MyTheme);
+
+        @Override
+        protected void onPreExecute() {
+
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ myId+"/bank/";
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+
+                success = true;
+                try {
+                    JSONObject jso = new JSONObject(rst);
+                    int bankId = jso.getInt("id");
+                    int bankUserId = jso.getInt("userId");
+                    String bankUserName = jso.getString("accountHolder");
+                    int bankAccNumber = jso.getInt("accountNumber");
+                    String bankName = jso.getString("bankName");
+                }catch (JSONException e){
+                    e.printStackTrace();
+                    success = false;
+                    bank = false;
+                }
+            }
+            return success;
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+            if(result){
+                bank = true;
+                new AlertDialog.Builder(FulfillviewRequestDetails.this)
+                        .setTitle("Alert!")
+                        .setMessage("Do you really want to fulfill this request?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                new createFulfill().execute(authString);
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+
+            }else {
+                if(!bank){
+                    Intent i = new Intent (FulfillviewRequestDetails.this, bank_details.class);
+                    startActivity(i);
+
+                }else{
+                    Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+                }
+
+            }
 
         }
     }
+
 }
