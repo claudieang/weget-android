@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wegot.fuyan.fyp.Util.DateFormatter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -134,9 +136,9 @@ public class RequesterViewDetails extends AppCompatActivity {
                 //itemPic.setImageResource(R.drawable.ordericon);
                 requestorTV.setText(requestorName );
                 productNameTV.setText(productName);
-                addressTV.setText(location);
-                expiryTimeTV.setText(endTime);
-                priceTV.setText("" + price);
+                addressTV.setText(location + " " + postal);
+                expiryTimeTV.setText(DateFormatter.formatDate(endTime));
+                priceTV.setText("$" + price + "0");
 
 
             }else {

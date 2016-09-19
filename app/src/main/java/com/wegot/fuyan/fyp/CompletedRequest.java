@@ -20,7 +20,7 @@ public class CompletedRequest extends AppCompatActivity {
     TextView productNameTV, requestorNameTV, addressTV, priceTV;
     String productName, requestorName, address, username, password, authString, requestorIdS, err;
     double price;
-    int requestId, myId, requestorId;
+    int requestId, myId, requestorId, postal;
     Context mContext;
 
     @Override
@@ -41,6 +41,7 @@ public class CompletedRequest extends AppCompatActivity {
         productName = r.getProductName();
         address = r.getLocation();
         price = r.getPrice();
+        postal = r.getPostal();
 
         productNameTV = (TextView)findViewById(R.id.product_description);
         requestorNameTV = (TextView)findViewById(R.id.requestor_name);
@@ -103,8 +104,8 @@ public class CompletedRequest extends AppCompatActivity {
 
                 requestorNameTV.setText(requestorName );
                 productNameTV.setText(productName);
-                addressTV.setText(address);
-                priceTV.setText("" + price);
+                addressTV.setText(address + " " + postal);
+                priceTV.setText("$" + price + "0");
 
 
             }else {

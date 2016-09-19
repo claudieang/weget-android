@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,14 +22,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.wegot.fuyan.fyp.Fulfill;
-import com.wegot.fuyan.fyp.MyFulfillRequestDetailsActivity;
 import com.wegot.fuyan.fyp.MyfulfillDetails;
 import com.wegot.fuyan.fyp.R;
-import com.wegot.fuyan.fyp.Recycler.DividerItemDecoration;
 import com.wegot.fuyan.fyp.Recycler.RecyclerItemClickListener;
 import com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 import com.wegot.fuyan.fyp.Request;
-import com.wegot.fuyan.fyp.RequestDetailsActivity;
 import com.wegot.fuyan.fyp.UtilHttp;
 
 import org.json.JSONArray;
@@ -59,7 +55,7 @@ public class ActiveFulfillsFragment extends Fragment {
     View view;
     Activity activity;
     private RecyclerViewEmptySupport recyclerView;
-    private com.wegot.fuyan.fyp.Recycler.RequestListAdapter mAdapter;
+    private com.wegot.fuyan.fyp.Recycler.FulfillActiveListAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,7 +77,7 @@ public class ActiveFulfillsFragment extends Fragment {
 
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
 
-        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myFulfillRequestArrayList,2);
+        mAdapter = new com.wegot.fuyan.fyp.Recycler.FulfillActiveListAdapter(myFulfillRequestArrayList,2);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
