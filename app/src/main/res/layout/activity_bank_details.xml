@@ -1,105 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/white"
-    tools:context="com.wegot.fuyan.fyp.bank_details">
+    android:orientation="vertical">
+
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorGray"
-        android:id="@+id/linear3"
-        android:layout_weight="2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="112dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" Collection Address"
-            android:textSize="20dp"
+            android:orientation="vertical"
+            android:id="@+id/title"
+            android:background="@color/colorPrimary"
+            android:layout_weight="1">
 
-            android:drawableLeft="@drawable/my_location"
-            android:id="@+id/address"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:id="@+id/title1"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="1"
+                />
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="provide account details"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:id="@+id/title2"
+                android:textColor="@color/white"
+                android:layout_below="@id/title1"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="1"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="  Details"
-            android:textStyle="italic"
-            android:id="@+id/address_details"
-            android:layout_below="@+id/address"
-            android:layout_alignParentLeft="true"
+            android:id="@+id/linear1"
+            android:background="@color/bt_very_light_gray"
+            android:layout_weight="10">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Payee's Name"
+                android:textSize="20dp"
+                android:id="@+id/payee_name"
+                android:textColor="@color/darkGray"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="0.5"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/payee_name_detail"
+                android:textColorHint="@color/bt_very_light_gray"
+                android:textColor="@color/black"
+                android:hint="Write here.."
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/barbase"
+                android:layout_below="@id/payee_name"
+                android:layout_weight="0.5"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Payee's Bank"
+                android:textSize="20dp"
+                android:id="@+id/bank_name"
+                android:textColor="@color/darkGray"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="0.5"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/payee_bank_detail"
+                android:textColorHint="@color/bt_very_light_gray"
+                android:textColor="@color/black"
+                android:hint="Write here.."
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/barbase"
+                android:layout_below="@id/bank_name"
+                android:layout_weight="0.5"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Account Number"
+                android:textSize="20dp"
+                android:id="@+id/account_number"
+                android:textColor="@color/darkGray"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="0.5"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/account_number_detail"
+                android:textColorHint="@color/bt_very_light_gray"
+                android:textColor="@color/black"
+                android:hint="Write here.."
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/barbase"
+                android:layout_below="@id/account_number"
+                android:layout_weight="0.5"
+                android:layout_marginBottom="50dp"/>
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear4"
+            android:layout_below="@+id/linear3"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Expiry Time"
-            android:id="@+id/expirytime"
-            android:textSize="20dp"
-
-            android:drawableLeft="@drawable/timer"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="  Details"
-            android:textSize="15dp"
-            android:textStyle="italic"
-            android:id="@+id/time_detail"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/expirytime"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Price"
-            android:id="@+id/price"
-            android:textSize="20dp"
-
-            android:drawableLeft="@drawable/money"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="  Details"
-            android:textSize="15dp"
-            android:textStyle="italic"
-            android:id="@+id/price_detail"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/price"
-            android:layout_marginBottom="15dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-
-
-
+            android:layout_weight="0.5">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="SUBMIT"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:id="@+id/submit_button"
+                android:background="@color/colorPrimaryDark"
+                android:layout_weight="1" />
+        </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+
+</LinearLayout>
+
+
+
+
