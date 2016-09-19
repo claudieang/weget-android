@@ -59,7 +59,7 @@ public class CompletedFulfillsFragment extends Fragment {
     View view;
     Activity activity;
     private RecyclerViewEmptySupport recyclerView;
-    private com.wegot.fuyan.fyp.Recycler.RequestListAdapter mAdapter;
+    private com.wegot.fuyan.fyp.Recycler.RequestCompletedListAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,7 +81,8 @@ public class CompletedFulfillsFragment extends Fragment {
 
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
 
-        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myFulfillRequestArrayList,3);
+//        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myFulfillRequestArrayList,3);
+        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestCompletedListAdapter(myFulfillRequestArrayList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
