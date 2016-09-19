@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bt_very_light_gray"
+    tools:context="com.wegot.fuyan.fyp.dispute">
+
+
+    <include
+    android:id="@+id/tool_bar"
+    layout="@layout/tool_bar_blank"></include>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/pic"
+            android:background="@drawable/form"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pic"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/dipute"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        />
+
+
+
+    <EditText
+        android:background="@drawable/barbase"
+        android:textColor="@color/black"
+        android:id="@+id/dipute_form"
+        android:layout_height="wrap_content"
+        android:hint=" Feedback Details ..."
+        android:inputType="textMultiLine"
+        android:lines="10"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/dipute">
+    </EditText>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="SUBMIT"
+        android:textSize="20dp"
+        android:background="@color/colorPrimary"
+        android:id="@+id/submit"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

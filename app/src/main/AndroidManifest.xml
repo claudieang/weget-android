@@ -41,7 +41,9 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".RegisterActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".UpdateProfileActivity" />
         <activity android:name=".UpdatePasswordActivity" />
@@ -55,10 +57,13 @@
         <activity android:name=".MyRequestActivity">
             <intent-filter>
                 <action android:name="request_page" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyRequestFulfillerActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".MyRequestFulfillerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RequestFulfillerDetailsActivity" />
         <activity android:name=".PaymentActivity" />
         <activity android:name=".MyFulfillActivity">
@@ -94,11 +99,16 @@
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".RequesterViewDetails" />
         <activity android:name=".FulfillviewRequestDetails" />
-        <activity android:name=".PendingdetailsRequester"/>
-        <activity android:name=".PendingdetailsFulfiller"/>
-        <activity android:name=".MyfulfillDetails"></activity>
-        <activity android:name=".CompletedRequest"></activity>
-
+        <activity
+            android:name=".PendingdetailsRequester"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PendingdetailsFulfiller"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MyfulfillDetails" />
+        <activity android:name=".bank_details" />
+        <activity android:name=".dispute"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
