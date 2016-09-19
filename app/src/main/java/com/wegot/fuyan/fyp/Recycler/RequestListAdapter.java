@@ -226,6 +226,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
 
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result) {
                 Intent i = new Intent(mContext, MainActivity.class);
                 i.putExtra("after_received_tab", 1);
@@ -277,6 +278,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
 
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result) {
                 Intent i = new Intent(mContext, MainActivity.class);
                 i.putExtra("after_delivered_tab", 3);

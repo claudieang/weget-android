@@ -201,7 +201,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         new getRequests().execute(authString);
 
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.active_request_list);
-        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestAllListAdapter(requestArrayList);
+        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestAllListAdapter(requestArrayList, myId);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view));

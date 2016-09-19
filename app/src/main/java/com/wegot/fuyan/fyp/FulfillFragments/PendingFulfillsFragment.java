@@ -168,7 +168,7 @@ public class PendingFulfillsFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(Boolean result) {
-
+            dialog.dismiss();
             if(result){
 
                 new getMyFulfills().execute(authString);
@@ -176,9 +176,8 @@ public class PendingFulfillsFragment extends Fragment {
                 Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
 
-            if(dialog.isShowing()){
-                dialog.dismiss();
-            }
+
+
         }
     }
 
