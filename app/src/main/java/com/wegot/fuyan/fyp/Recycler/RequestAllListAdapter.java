@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.wegot.fuyan.fyp.R;
 import com.wegot.fuyan.fyp.Request;
 import com.wegot.fuyan.fyp.RequesterViewDetails;
+import com.wegot.fuyan.fyp.Util.DateFormatter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,7 +29,7 @@ public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAd
     }
 
     public class MyActiveViewHolder extends RecyclerView.ViewHolder{
-        public TextView title, details;
+        public TextView title, details, price;
         //public Button fulfiller_btn;
         //public View.OnClickListener mListener;
 
@@ -38,6 +39,7 @@ public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAd
 
             title = (TextView) view.findViewById(R.id.request_title);
             details = (TextView) view.findViewById(R.id.request_requirement);
+            price = (TextView) view.findViewById(R.id.request_price);
             //fulfiller_btn = (Button) view.findViewById(R.id.view_fulfill_btn);
             //view.setOnClickListener(this);
             View viewById = view.findViewById(R.id.cv2);
@@ -64,9 +66,11 @@ public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAd
                 .inflate(R.layout.active_all_request_layout, parent, false);
         TextView b1 = (TextView) itemView.findViewById(R.id.request_title);
         TextView b2 = (TextView) itemView.findViewById(R.id.request_requirement);
+        TextView b3 = (TextView) itemView.findViewById(R.id.request_price);
         Typeface typeFace=Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Bold.ttf");
-        Typeface typeFaceLight = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Italic.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Regular.ttf");
         b1.setTypeface(typeFace);
+        b3.setTypeface(typeFace);
         b2.setTypeface(typeFaceLight);
        // RelativeLayout fulfillers_btn = (RelativeLayout)itemView.findViewById(R.id.fulfillers_btn);
 
@@ -82,7 +86,8 @@ public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAd
     public void onBindViewHolder(MyActiveViewHolder holder, int position)  {
         final Request request = requestsList.get(position);
         holder.title.setText(request.getProductName());
-        holder.details.setText(request.getRequirement());
+        holder.details.setText("Expires on: " + DateFormatter.formatDate(request.getEndTime()));
+        holder.price.setText("$" + request.getPrice() + "0");
     }
 
 }

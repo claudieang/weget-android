@@ -1,13 +1,12 @@
 package com.wegot.fuyan.fyp;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         //ActionBar actionBar = getActionBar();
         getSupportActionBar().setTitle(s);
 
-        mNavItems.add(new NavItem("Profile", "Edit your profile", R.drawable.ic_profile));
+        mNavItems.add(new NavItem("Profile", "Edit your profile", R.drawable.ic_account_circle_black_36dp));
         mNavItems.add(new NavItem("Settings", "Manage your preferences", R.drawable.ic_settings_black_24dp));
         mNavItems.add(new NavItem("About", "Get to know Weget", R.drawable.ic_info_outline_black_24dp));
         mNavItems.add(new NavItem("Logout", "Sign out from Weget", R.drawable.ic_exit_to_app_black_24dp));
@@ -90,10 +89,13 @@ public class MainActivity extends AppCompatActivity {
         if(profilePicture.equals("")){
             profileImage.setImageResource(R.drawable.ic_profile);
         }else{
+
             byte[] decodeString = Base64.decode(profilePicture, Base64.NO_WRAP);
             Bitmap decodebitmap = BitmapFactory.decodeByteArray(
                     decodeString, 0, decodeString.length);
-            profileImage.setImageBitmap(decodebitmap);
+            RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(getResources(), decodebitmap);
+            roundDrawable.setCircular(true);
+            profileImage.setImageDrawable(roundDrawable);
         }
 
         BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
