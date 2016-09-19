@@ -16,18 +16,24 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 public class bank_details extends AppCompatActivity {
 
     EditText accountHolderNameET, accountBankNameET, accountNumberET;
     Button submitBtn;
     String username,password, authString, accountHolderName, accountBankName, accountNumber, err;
-    int myId, accountNum;
+    int myId, accountNum, emptyBank;
     Context mContext;
+    Request request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_details);
+
+        emptyBank = getIntent().getIntExtra("empty_bank",0);
+        request = (Request) getIntent().getSerializableExtra("selected_request");
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
@@ -125,9 +131,19 @@ public class bank_details extends AppCompatActivity {
             dialog.dismiss();
 
             if(result){
-                Toast.makeText(getBaseContext(), "Bank Updated!", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(bank_details.this, MainActivity.class);
-                startActivity(i);
+                if(emptyBank ==1){
+                    Toast.makeText(getBaseContext(), "Bank Created!", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(bank_details.this,FulfillviewRequestDetails.class);
+                    i.putExtra("selected_request", (Serializable) request);
+                    startActivity(i);
+                    finish();
+                }else{
+                    Toast.makeText(getBaseContext(), "Bank Updated!", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(bank_details.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+
             }else{
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }

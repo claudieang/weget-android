@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class FulfillviewRequestDetails extends AppCompatActivity {
@@ -35,6 +36,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
     boolean fulfilled = false;
     boolean bank = true;
     Context mContext;
+    Request request;
 
     ArrayList<Integer> fulfillerIdList = new ArrayList<>();
 
@@ -43,7 +45,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fulfillview_request_details);
 
-        Request request = (Request) getIntent().getSerializableExtra("selected_request");
+        request = (Request) getIntent().getSerializableExtra("selected_request");
 
         requestId = request.getId();
         requestorId = request.getRequestorId();
@@ -341,6 +343,8 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             }else {
                 if(!bank){
                     Intent i = new Intent (FulfillviewRequestDetails.this, bank_details.class);
+                    i.putExtra("selected_request", (Serializable) request);
+                    i.putExtra("empty_bank", 1);
                     startActivity(i);
 
                 }else{
