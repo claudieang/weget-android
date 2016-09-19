@@ -110,7 +110,7 @@
             android:inputType="number"
             android:ems="10"
             android:id="@+id/request_duration_txt"
-            android:hint="Duration (Minutes)"
+            android:hint="Duration"
             android:textSize="15dp"
             android:textColor="@color/black"
             android:textColorHint="#BCBCBC"
