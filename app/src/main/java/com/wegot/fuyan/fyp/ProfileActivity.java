@@ -5,19 +5,16 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -33,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //font
         TextView myTextView=(TextView)findViewById(R.id.profile_title);
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-BoldItalic.ttf");
@@ -55,12 +52,18 @@ public class ProfileActivity extends AppCompatActivity {
         profilePicture = pref.getString("picture", null);
 
         if(profilePicture.equals("")){
-            profileImage.setImageResource(R.drawable.ic_profile);
+
+            profileImage.setImageResource(R.drawable.ic_account_circle_black_48dp);
         }else{
+
+
+            //this.dpIV.setImageDrawable(roundDrawable);
             byte[] decodeString = Base64.decode(profilePicture, Base64.NO_WRAP);
             Bitmap decodebitmap = BitmapFactory.decodeByteArray(
                     decodeString, 0, decodeString.length);
-            profileImage.setImageBitmap(decodebitmap);
+            RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(getResources(), decodebitmap);
+            roundDrawable.setCircular(true);
+            profileImage.setImageDrawable(roundDrawable);
         }
 
         profileUsernameTV = (TextView)findViewById(R.id.profile_username);
@@ -86,69 +89,14 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.bottombar, menu);
-        return true;
-    }
-
-    /**
-     * Event Handling for Individual menu item selected
-     * Identify single menu item by it's id
-     * */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        switch (item.getItemId())
-        {
-            case R.id.home_item:
-                // Single menu item is selected do something
-                // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, MainActivity.class);
-                startActivity(homeIntent);
-                Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.search_item:
-                Toast.makeText(this, "Search is selected", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.profile_item:
-                //Toast.makeText(HomeActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, ProfileActivity.class);
-                startActivity(i);
-                Toast.makeText(this, "Redirecting to Profile Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_request_item:
-                Intent myRequestIntent = new Intent (this, MyRequestActivity.class);
-                startActivity(myRequestIntent);
-                Toast.makeText(this, "Redirecting to My Request Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_fulfill_item:
-                Intent myFulfillIntent = new Intent (this, MyFulfillActivity.class);
-                startActivity(myFulfillIntent);
-                Toast.makeText(this, "Redirecting to My Fulfill Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.logout_item:
-
-                Intent logoutIntent = new Intent (this, LoginActivity.class);
-                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(logoutIntent);
-                finish();
-
-
-
-            default:
-                return super.onOptionsItemSelected(item);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed(); // close this activity and return to preview activity (if there is any)
         }
-    }
 
+        return super.onOptionsItemSelected(item);
+    }
 
 }
