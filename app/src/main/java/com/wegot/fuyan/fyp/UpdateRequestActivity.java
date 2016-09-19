@@ -316,8 +316,16 @@ public class UpdateRequestActivity extends AppCompatActivity {
 */
     private class updateRequest extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog = new ProgressDialog(UpdateRequestActivity.this, R.style.MyTheme);
+
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+
+
         }
 
         @Override
@@ -368,6 +376,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
 
+            dialog.dismiss();
             if(result) {
                 Toast.makeText(getBaseContext(), "Request updated!", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(UpdateRequestActivity.this, MainActivity.class);

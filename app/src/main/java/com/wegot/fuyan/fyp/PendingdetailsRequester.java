@@ -134,6 +134,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result){
 
 
@@ -145,10 +146,6 @@ public class PendingdetailsRequester extends AppCompatActivity {
 
             }else {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-            if(dialog.isShowing()){
-                dialog.dismiss();
             }
 
         }

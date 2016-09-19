@@ -160,7 +160,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
-           if(result){
+            dialog.dismiss();
+            if(result){
 
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
                 SharedPreferences.Editor editor = pref.edit();
@@ -179,9 +180,6 @@ public class LoginActivity extends AppCompatActivity {
                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
            }
 
-            if(dialog.isShowing()){
-                dialog.dismiss();
-            }
         }
     }
 

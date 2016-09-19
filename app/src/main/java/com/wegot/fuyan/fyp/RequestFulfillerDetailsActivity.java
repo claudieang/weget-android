@@ -158,6 +158,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+
+            dialog.dismiss();
             if(result){
 
                 new getFulfill().execute(authString);

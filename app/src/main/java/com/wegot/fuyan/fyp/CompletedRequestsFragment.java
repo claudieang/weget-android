@@ -199,10 +199,7 @@ public class CompletedRequestsFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean result) {
             mAdapter.notifyDataSetChanged();
-
-            if(dialog.isShowing()){
-                dialog.dismiss();
-            }
+            dialog.dismiss();
 
         }
     }

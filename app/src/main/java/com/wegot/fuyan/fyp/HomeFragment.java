@@ -399,6 +399,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if (result) {
 
 
@@ -427,10 +428,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
             } else {
                 Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-            if (dialog.isShowing()) {
-                dialog.dismiss();
             }
         }
 

@@ -205,15 +205,12 @@ public class MyFulfillActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
 
+            dialog.dismiss();
             if(result){
 
                 new getMyFulfills().execute(authString);
             }else {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-            if(dialog.isShowing()){
-                dialog.dismiss();
             }
         }
     }

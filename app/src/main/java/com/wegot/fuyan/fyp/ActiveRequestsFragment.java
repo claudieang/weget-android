@@ -122,21 +122,6 @@ public class ActiveRequestsFragment extends Fragment {
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-//        recyclerView.addOnItemTouchListener(
-//                new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-//                    @Override public void onItemClick(View view, int position) {
-//                        // do whatever
-//                        Request rq = myRequestArrayList.get(position);
-//                        Intent intent = new Intent(getActivity(), RequestDetailsActivity.class);
-//                        intent.putExtra("selected_request",(Serializable) rq);
-//                        startActivity(intent);
-//                    }
-////
-//                    @Override public void onLongItemClick(View view, int position) {
-//                        // do whatever
-//                    }
-//                })
-//        );
     }
 
         private class getMyRequests extends AsyncTask<String, Void, Boolean> {
@@ -202,11 +187,12 @@ public class ActiveRequestsFragment extends Fragment {
 
             @Override
             protected void onPostExecute(Boolean result) {
-                if(dialog.isShowing()){
-                    dialog.dismiss();
-                }
+
 
                 new getMyRequestFulfiller().execute(myRequestArrayList);
+
+
+                dialog.dismiss();
 
 
             }
@@ -274,7 +260,7 @@ public class ActiveRequestsFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(Boolean result) {
-            //mAdapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
             if(!result) {
                 Toast.makeText(getContext(), err, Toast.LENGTH_SHORT).show();
 

@@ -332,6 +332,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         protected void onPostExecute(Boolean result) {
 
+            dialog.dismiss();
             if(result) {
 
                 new acceptFulfill().execute(authString);

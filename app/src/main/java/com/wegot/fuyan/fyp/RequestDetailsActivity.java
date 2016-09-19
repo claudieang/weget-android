@@ -246,6 +246,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result){
                 Toast.makeText(getBaseContext(), "Request Accepted!", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(RequestDetailsActivity.this, MainActivity.class);

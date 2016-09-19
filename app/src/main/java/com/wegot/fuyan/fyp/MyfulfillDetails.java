@@ -101,6 +101,7 @@ public class MyfulfillDetails extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result){
 
 
@@ -114,9 +115,7 @@ public class MyfulfillDetails extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
 
-            if(dialog.isShowing()){
-                dialog.dismiss();
-            }
+
 
         }
     }

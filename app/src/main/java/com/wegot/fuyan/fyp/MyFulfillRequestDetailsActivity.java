@@ -185,6 +185,7 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result) {
                 Intent i = new Intent(MyFulfillRequestDetailsActivity.this, MainActivity.class);
                 i.putExtra("after_dispute_fulfill_tab", 3);
@@ -236,6 +237,7 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result) {
                 Intent i = new Intent(MyFulfillRequestDetailsActivity.this, MainActivity.class);
                 i.putExtra("after_delivered_tab", 3);

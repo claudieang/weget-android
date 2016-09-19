@@ -40,7 +40,7 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
     private List<Integer> counterList;
     Context mContext;
 
-    public RequestActiveListAdapter(List <Request> requestsList, List<Integer> counterList) {
+    public RequestActiveListAdapter(List <Request> requestsList, List <Integer> counterList) {
         this.requestsList = requestsList;
         this.counterList = counterList;
     }

@@ -310,9 +310,16 @@ public class UploadImageActivity extends AppCompatActivity {
 
     private class updateValue extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog = new ProgressDialog(UploadImageActivity.this, R.style.MyTheme);
 
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+
+
         }
 
         @Override
@@ -356,6 +363,7 @@ public class UploadImageActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result){
                 Toast.makeText(getBaseContext(), "Image Uploaded Success!", Toast.LENGTH_LONG).show();
                 editor.putString("picture",encodedImage);

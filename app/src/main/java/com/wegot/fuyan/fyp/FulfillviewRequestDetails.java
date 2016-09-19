@@ -134,10 +134,8 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result){
-
-
-
                 //itemPic.setImageResource(R.drawable.ordericon);
                 requestorTV.setText(requestorName );
                 productNameTV.setText(productName);
@@ -152,9 +150,6 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
 
-            if(dialog.isShowing()){
-                dialog.dismiss();
-            }
 
         }
     }
@@ -276,6 +271,8 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+
             if(result){
                 Toast.makeText(getBaseContext(), "Request Accepted!", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(FulfillviewRequestDetails.this, MainActivity.class);
@@ -286,9 +283,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }
 
-            if(dialog.isShowing()){
-                dialog.dismiss();
-            }
+
 
         }
     }

@@ -133,6 +133,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result){
 
 
@@ -146,9 +147,6 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
 
-            if(dialog.isShowing()){
-                dialog.dismiss();
-            }
 
         }
     }
@@ -186,6 +184,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result) {
                 Intent i = new Intent(PendingdetailsFulfiller.this, MainActivity.class);
                 i.putExtra("after_delivered_tab", 3);

@@ -348,7 +348,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
-
+            dialog.dismiss();
             if(result) {
                 Toast.makeText(getBaseContext(), "Registration Success!", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(RegisterActivity.this, LoginActivity.class);

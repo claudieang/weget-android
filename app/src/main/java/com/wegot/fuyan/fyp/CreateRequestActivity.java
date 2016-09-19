@@ -292,12 +292,13 @@ public class CreateRequestActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
-
+            dialog.dismiss();
             if (result) {
                 Toast.makeText(getBaseContext(), "Request created!", Toast.LENGTH_LONG).show();
                 //Intent i = new Intent(CreateRequestActivity.this, HomeActivity.class);
                 Intent i = new Intent(CreateRequestActivity.this, MainActivity.class);
                 startActivity(i);
+                finish();
             } else {
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }

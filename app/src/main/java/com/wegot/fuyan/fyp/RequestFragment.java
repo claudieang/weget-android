@@ -242,16 +242,13 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result){
 
                 //new getMyRequests().execute(authString);
 
             }else {
                 Toast.makeText(getActivity().getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-            if(dialog.isShowing()){
-                dialog.dismiss();
             }
 
         }

@@ -129,10 +129,8 @@ public class RequesterViewDetails extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result){
-
-
-
                 //itemPic.setImageResource(R.drawable.ordericon);
                 requestorTV.setText(requestorName );
                 productNameTV.setText(productName);
@@ -145,9 +143,6 @@ public class RequesterViewDetails extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
 
-            if(dialog.isShowing()){
-                dialog.dismiss();
-            }
 
         }
     }

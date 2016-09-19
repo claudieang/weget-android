@@ -200,9 +200,7 @@ public class PendingRequestsFragment extends Fragment {
 
             recyclerView.setAdapter(mAdapter);
 
-            if(dialog.isShowing()){
-                dialog.dismiss();
-            }
+            dialog.dismiss();
 
         }
     }

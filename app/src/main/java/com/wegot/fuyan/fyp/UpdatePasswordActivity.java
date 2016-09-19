@@ -1,5 +1,6 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -113,8 +114,16 @@ public class UpdatePasswordActivity extends AppCompatActivity {
 
     private class updateValue extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog = new ProgressDialog(UpdatePasswordActivity.this, R.style.MyTheme);
+
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+
+
         }
 
         @Override
@@ -156,6 +165,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
             if(result){
                 Toast.makeText(getBaseContext(), "Password Update Success!", Toast.LENGTH_LONG).show();
                 editor.putString("password",updatedNewPassword);
