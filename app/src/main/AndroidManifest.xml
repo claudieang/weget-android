@@ -110,6 +110,8 @@
         <activity android:name=".bank_details" />
         <activity android:name=".dispute"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CompletedRequest"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

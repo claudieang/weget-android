@@ -6,6 +6,10 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar_blank"></include>
+
     <ImageView
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -44,9 +48,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="  Description"
                 android:textSize="15dp"
                 android:textStyle="italic"
+                android:textColor="@color/darkGray"
                 android:id="@+id/product_description"
                 android:layout_below="@+id/product_name"
                 android:layout_alignParentLeft="true"
@@ -85,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:id="@+id/requestor_name"
-                android:text="  Details"
+                android:textColor="@color/darkGray"
                 android:textStyle="italic"
                 android:layout_below="@+id/requestor_tv"
                 android:layout_marginLeft="30dp"
@@ -118,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-                android:text="  Details"
+                android:textColor="@color/darkGray"
                 android:textStyle="italic"
                 android:id="@+id/address_details"
                 android:layout_below="@+id/address"
@@ -143,7 +147,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Details"
+                android:textColor="@color/darkGray"
                 android:textSize="15dp"
                 android:textStyle="italic"
                 android:id="@+id/price_detail"
@@ -158,26 +162,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linear4"
-            android:layout_below="@+id/linear3"
-            android:layout_alignParentStart="true"
-            android:background="@color/colorPrimary"
-            android:layout_weight="1">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="COMPLETED"
-                android:textSize="20dp"
-                android:id="@+id/complete"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:gravity="center"
-                />
-
-        </LinearLayout>
     </LinearLayout>
 
 
