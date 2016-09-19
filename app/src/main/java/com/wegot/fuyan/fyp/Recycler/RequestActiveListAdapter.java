@@ -1,8 +1,11 @@
 package com.wegot.fuyan.fyp.Recycler;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +14,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wegot.fuyan.fyp.Account;
 import com.wegot.fuyan.fyp.CreateRequestActivity;
 import com.wegot.fuyan.fyp.MyRequestFulfillerActivity;
 import com.wegot.fuyan.fyp.R;
 import com.wegot.fuyan.fyp.Request;
 import com.wegot.fuyan.fyp.RequestDetailsActivity;
 import com.wegot.fuyan.fyp.RequesterViewDetails;
+import com.wegot.fuyan.fyp.UtilHttp;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,14 +37,16 @@ import java.util.List;
 public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActiveListAdapter.MyActiveViewHolder>{
 
     private List<Request> requestsList;
+    private List<Integer> counterList;
+    Context mContext;
 
-
-    public RequestActiveListAdapter(List<Request> requestsList) {
+    public RequestActiveListAdapter(List <Request> requestsList, List<Integer> counterList) {
         this.requestsList = requestsList;
+        this.counterList = counterList;
     }
 
     public class MyActiveViewHolder extends RecyclerView.ViewHolder{
-        public TextView title, details;
+        public TextView title, details, fulfillerNum;
         //public Button fulfiller_btn;
         public RelativeLayout fulfillers_btn;
         //public View.OnClickListener mListener;
@@ -48,6 +59,7 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
             details = (TextView) view.findViewById(R.id.request_requirement);
             //fulfiller_btn = (Button) view.findViewById(R.id.view_fulfill_btn);
             fulfillers_btn = (RelativeLayout)view.findViewById(R.id.fulfillers_btn);
+            fulfillerNum = (TextView) view.findViewById(R.id.fulfiller_number);
             //view.setOnClickListener(this);
             View viewById = view.findViewById(R.id.cv2);
             viewById.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +107,7 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
         b1.setTypeface(typeFace);
         b2.setTypeface(typeFaceLight);
         RelativeLayout fulfillers_btn = (RelativeLayout)itemView.findViewById(R.id.fulfillers_btn);
+        mContext = parent.getContext();
 
         return new MyActiveViewHolder(itemView);
     }
@@ -107,8 +120,10 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
     @Override
     public void onBindViewHolder(MyActiveViewHolder holder, int position)  {
         final Request request = requestsList.get(position);
+        final int count = counterList.get(position);
         holder.title.setText(request.getProductName());
         holder.details.setText(request.getRequirement());
+        holder.fulfillerNum.setText(String.valueOf(count));
         //final int idCheck = holder.fulfillers_btn.getId();
         //holder.fulfillers_btn = (RelativeLayout)itemView.findViewById(R.id.fulfillers_btn);
 
@@ -122,6 +137,8 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
 //            holder.fulfiller_btn.setVisibility(View.VISIBLE);
 //        }
     }
+
+
 
 }
 

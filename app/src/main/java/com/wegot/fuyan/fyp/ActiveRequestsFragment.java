@@ -14,6 +14,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HP on 4/4/2016.
@@ -46,6 +48,8 @@ public class ActiveRequestsFragment extends Fragment {
     Context mContext;
     String err, authString, username, password;
     ArrayList<Request> myRequestArrayList = new ArrayList<>();
+    ArrayList<Account> fulfillerAccountList = new ArrayList<>();
+    ArrayList<Integer> counterList = new ArrayList<>();
     private SwipeRefreshLayout swipeContainer;
     View view;
     Activity activity;
@@ -102,19 +106,22 @@ public class ActiveRequestsFragment extends Fragment {
 //        //adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.request_list_layout);
 //        adapter = new RequestListAdapter(activity.getApplicationContext(), R.layout.request_list_layout);
 //        myRequestLV.setAdapter(adapter);
-        recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
-        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestActiveListAdapter(myRequestArrayList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(mAdapter);
+
 
 
         authString  = username + ":" + password;
         new getMyRequests().execute(authString);
 
+
+        recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
+        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestActiveListAdapter(myRequestArrayList,counterList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
 //        recyclerView.addOnItemTouchListener(
 //                new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
 //                    @Override public void onItemClick(View view, int position) {
@@ -195,12 +202,84 @@ public class ActiveRequestsFragment extends Fragment {
 
             @Override
             protected void onPostExecute(Boolean result) {
-                mAdapter.notifyDataSetChanged();
-
                 if(dialog.isShowing()){
                     dialog.dismiss();
                 }
 
+                new getMyRequestFulfiller().execute(myRequestArrayList);
+
+
             }
         }
+
+    private class getMyRequestFulfiller extends AsyncTask< ArrayList <Request> , Void, Boolean> {
+
+        int id, contactNo;
+        String username, password, email, fulfiller, picture;
+        Account account;
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Boolean doInBackground(ArrayList<Request>... params) {
+
+            final String basicAuth = "Basic " + Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
+            ArrayList<Request> rList = params[0];
+            boolean success = false;
+
+            for (Request r : rList) {
+                int rId = r.getId();
+
+                String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + rId + "/fulfillers/";
+
+                String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+                if (rst == null) {
+                    err = UtilHttp.err;
+                    success = false;
+                } else {
+                    fulfillerAccountList.clear();
+
+                    try {
+                        JSONArray jsoArray = new JSONArray(rst);
+                        for (int i = 0; i < jsoArray.length(); i++) {
+                            JSONObject jso = jsoArray.getJSONObject(i);
+
+                            id = jso.getInt("id");
+                            username = jso.getString("username");
+                            password = jso.getString("password");
+                            contactNo = jso.getInt("contactNo");
+                            email = jso.getString("email");
+                            fulfiller = jso.getString("fulfiller");
+                            picture = jso.getString("picture");
+
+                            account = new Account(id, username, password, contactNo, email, fulfiller, picture);
+
+
+                            fulfillerAccountList.add(account);
+
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    counterList.add(fulfillerAccountList.size());
+                    success = true;
+                }
+
+
+            }
+            return success;
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+            //mAdapter.notifyDataSetChanged();
+            if(!result) {
+                Toast.makeText(getContext(), err, Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
+    }
 }
