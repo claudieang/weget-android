@@ -41,17 +41,16 @@
                 />
 
             <TextView
-                android:layout_width="307dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Description"
+                android:text="Description"
                 android:textSize="16dp"
-                android:textStyle="italic"
                 android:id="@+id/product_description"
                 android:layout_below="@+id/product_name"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="35dp" />
+                android:layout_marginLeft="44dp" />
 
         </LinearLayout>
 
@@ -78,16 +77,14 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:id="@+id/requestor_name"
-                android:text="  Details"
-                android:textStyle="italic"
+                android:text="Details"
                 android:layout_below="@+id/requestor_tv"
-                android:layout_marginLeft="35dp"
                 android:layout_weight="1"
-                />
+                android:layout_marginLeft="44dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -115,13 +112,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:text="  Details"
-                android:textStyle="italic"
+                android:text="Details"
                 android:id="@+id/address_details"
                 android:layout_below="@+id/address"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="35dp" />
+                android:layout_marginLeft="44dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -138,14 +134,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Details"
+                android:text="Details"
                 android:textSize="16sp"
-                android:textStyle="italic"
                 android:id="@+id/time_detail"
-                android:layout_marginLeft="35dp"
                 android:layout_below="@+id/expirytime"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="44dp" />
 
 
             <TextView
@@ -163,15 +158,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Details"
+                android:text="Details"
                 android:textSize="15sp"
-                android:textStyle="italic"
                 android:id="@+id/price_detail"
-                android:layout_marginLeft="35dp"
                 android:layout_below="@+id/price"
                 android:layout_marginBottom="15dp"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="44dp" />
 
 
 

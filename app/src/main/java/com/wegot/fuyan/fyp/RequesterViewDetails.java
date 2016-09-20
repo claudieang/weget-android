@@ -12,6 +12,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class RequesterViewDetails extends AppCompatActivity {
         setContentView(R.layout.activity_requester_view_details);
         //apply font
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
-        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-LightItalic.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SpannableString s = new SpannableString("Request Details");
@@ -109,6 +110,16 @@ public class RequesterViewDetails extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private class getRequestor extends AsyncTask<String, Void, Boolean> {
