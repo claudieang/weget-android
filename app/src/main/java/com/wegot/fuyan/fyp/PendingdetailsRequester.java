@@ -28,9 +28,9 @@ public class PendingdetailsRequester extends AppCompatActivity {
     Request myRequest;
     TextView productNameTV, requestorTV, addressTV, priceTV;
     String productName, requestorName, address, err, username, password, authString, requestorIdS;
-    int myId, requestorId, myRequestId, postal;
+    int myId, requestorId, myRequestId, postal, transactionId;
     double price;
-    Button receivedBtn;
+    Button receivedBtn, disputeBtn;
     Context mContext;
     ProgressDialog dialog;
 
@@ -67,6 +67,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
         addressTV = (TextView)findViewById(R.id.address_details);
         priceTV = (TextView)findViewById(R.id.price_detail);
         receivedBtn = (Button)findViewById(R.id.receve_button);
+        disputeBtn = (Button)findViewById(R.id.dipute_button);
 
         new getRequestor().execute(authString + "," + requestorIdS);
 
@@ -85,6 +86,16 @@ public class PendingdetailsRequester extends AppCompatActivity {
                         .setNegativeButton(android.R.string.no, null).show();
             }
         });
+
+        disputeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new getTransaction().execute(authString);
+            }
+        });
+
+
 
     }
 
@@ -202,6 +213,62 @@ public class PendingdetailsRequester extends AppCompatActivity {
         }
 
 
+    }
+
+    private class getTransaction extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/"+myRequestId+"/transaction/";
+
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+
+                try {
+                    JSONObject jso = new JSONObject(rst);
+                    transactionId = jso.getInt("transactionId");
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                success = true;
+            }
+            return success;
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+            if(result){
+
+                Intent i = new Intent (PendingdetailsRequester.this, dispute.class);
+                i.putExtra("transaction_id", transactionId);
+                i.putExtra("origin", "requestor");
+                startActivity(i);
+                finish();
+
+            }else {
+                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
     @Override
