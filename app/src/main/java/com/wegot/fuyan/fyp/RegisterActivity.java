@@ -5,31 +5,29 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View.OnClickListener;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -66,14 +64,20 @@ public class RegisterActivity extends AppCompatActivity {
     );
 
     private static final String TAG = "RegisterActivity";
+    private CheckBox checkBox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        //set font
+        SpannableString s = new SpannableString("Register");
+        s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+        toolbar_title.setText(s);
 
-       TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
-        toolbar_title.setText("Register");
        // b2 = (Button) findViewById(R.id.button5);
        // b3 = (Button)findViewById(R.id.button6);
         t1 = (EditText) findViewById(R.id.username);
@@ -82,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
         contact = (EditText) findViewById(R.id.contact_num);
         email1 = (EditText) findViewById(R.id.email);
         dpIV = (ImageView)findViewById(R.id.profile_pic_iv);
+        checkBox = (CheckBox) findViewById(R.id.checkBox);
         //dpIV.setImageResource(R.drawable.ic_profile);
 
 
@@ -132,8 +137,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                 if(EMAIL_ADDRESS_PATTERN.matcher(email).matches()){ // email pattern validation
 
-                                                    new storeValue().execute(user_name); //execute webservice register!
-
+                                                    //check TOS checkbox
+                                                    if(checkBox.isChecked()) {
+                                                        new storeValue().execute(user_name); //execute webservice register!
+                                                    } else {
+                                                        checkBox.setError("You need to agree to the Terms & Services to register!");
+                                                    }
 
                                                 }else{
                                                     email1.setError("Invalid email format!");
@@ -204,6 +213,9 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
+
+
     }
 
     public void ChooseImage() {

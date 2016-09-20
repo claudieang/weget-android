@@ -164,6 +164,7 @@
             android:text="I accept the Terms of Services and Privacy Policy"
             android:textSize="10sp"
             android:id="@+id/checkBox"
+            android:buttonTint="@color/colorPrimary"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"/>
 
