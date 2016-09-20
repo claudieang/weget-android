@@ -32,7 +32,7 @@
                 android:id="@+id/product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:drawablePadding="8dp"
@@ -40,7 +40,7 @@
                 android:text="Product Name"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/product_description"
@@ -49,11 +49,11 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/product_name"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="44dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:textColor="@color/darkGray"
-                android:textSize="15dp"
+                android:textSize="16sp"
                 android:textStyle="italic" />
 
 
@@ -61,7 +61,7 @@
                 android:id="@+id/requestor_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:drawablePadding="8dp"
@@ -69,25 +69,25 @@
                 android:text="Requested by"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/requestor_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/requestor_tv"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="44dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:textColor="@color/darkGray"
-                android:textSize="15dp"
+                android:textSize="16sp"
                 android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:drawablePadding="8dp"
@@ -95,7 +95,7 @@
                 android:text="Collection Address"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/address_details"
@@ -104,18 +104,18 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/address"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="44dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:textColor="@color/darkGray"
-                android:textSize="15dp"
+                android:textSize="16sp"
                 android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:drawablePadding="8dp"
@@ -123,7 +123,7 @@
                 android:text="Price"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/price_detail"
@@ -132,12 +132,12 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/price"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="44dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:textColor="@color/darkGray"
-                android:textSize="15dp"
+                android:textSize="16sp"
                 android:textStyle="italic" />
         </LinearLayout>
 

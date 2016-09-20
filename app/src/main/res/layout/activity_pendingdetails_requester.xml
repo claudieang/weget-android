@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/bt_very_light_gray"
     android:orientation="vertical">
+
     <include
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar_blank"></include>
@@ -14,6 +16,7 @@
         android:layout_height="150dp"
         android:id="@+id/pic"
         android:background="@drawable/pending"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,26 +39,26 @@
                 android:id="@+id/product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:text="Product Name"
+                android:drawableLeft="@drawable/product"
+                android:drawablePadding="8dp"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="2dp"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/product"
-                android:text=" Product Name"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/product_description"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/product_name"
                 android:layout_marginBottom="2dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="44dp"
                 android:layout_weight="1"
                 android:textColor="@color/darkGray"
-                android:textSize="15dp"
+                android:textSize="16sp"
                 android:textStyle="italic" />
 
         </LinearLayout>
@@ -77,25 +80,26 @@
                 android:id="@+id/requestor_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:drawablePadding="8dp"
                 android:layout_marginTop="2dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/face_icon"
-                android:text=" Requested by"
+                android:text="Requested by"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/requestor_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/requestor_tv"
                 android:layout_marginBottom="2dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="44dp"
                 android:layout_weight="1"
                 android:textColor="@color/darkGray"
-                android:textSize="15dp"
+                android:textSize="16sp"
                 android:textStyle="italic" />
         </LinearLayout>
 
@@ -116,24 +120,26 @@
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:drawablePadding="8dp"
                 android:layout_marginTop="2dp"
+                android:layout_weight="1"
                 android:drawableLeft="@drawable/my_location"
-                android:text=" Collection Address"
+                android:text="Collection Address"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/address_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/address"
                 android:layout_marginBottom="2dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="44dp"
+                android:layout_weight="1"
                 android:textColor="@color/darkGray"
-                android:textSize="15dp"
+                android:textSize="16sp"
                 android:textStyle="italic" />
         </LinearLayout>
 
@@ -155,24 +161,26 @@
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:drawablePadding="8dp"
                 android:layout_marginTop="2dp"
+                android:layout_weight="1"
                 android:drawableLeft="@drawable/money"
-                android:text=" Price"
+                android:text="Price"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/price_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/price"
                 android:layout_marginBottom="2dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="44dp"
+                android:layout_weight="1"
                 android:textColor="@color/darkGray"
-                android:textSize="15dp"
+                android:textSize="16sp"
                 android:textStyle="italic" />
         </LinearLayout>
 
@@ -215,6 +223,8 @@
 
 
 </LinearLayout>
+
+
 
 
 
