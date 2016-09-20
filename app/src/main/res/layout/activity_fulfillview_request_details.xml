@@ -8,9 +8,9 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="140dp"
         android:id="@+id/pic"
-        android:background="@drawable/myrequestbg"/>
+        android:background="@drawable/myrequestbg" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,10 +28,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" Product Name"
+                android:text="Product Name"
                 android:drawableLeft="@drawable/product"
-                android:textSize="20dp"
+                android:drawablePadding="8dp"
+                android:textSize="18sp"
                 android:id="@+id/product_name"
+                android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
@@ -39,18 +41,16 @@
                 />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Description"
-                android:textSize="15dp"
-                android:textStyle="italic"
+                android:text="Description"
+                android:textSize="16sp"
                 android:id="@+id/product_description"
                 android:layout_below="@+id/product_name"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_weight="1"/>
+                android:layout_marginLeft="44dp" />
 
         </LinearLayout>
 
@@ -67,27 +67,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" Requested by"
-
-                android:textSize="20dp"
+                android:textSize="18sp"
                 android:drawableLeft="@drawable/face_icon"
+                android:gravity="center_vertical"
                 android:id="@+id/requestor_tv"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:textColor="@color/black"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
+                android:textSize="16sp"
                 android:id="@+id/requestor_name"
-                android:text="  Details"
-                android:textStyle="italic"
+                android:text="Details"
                 android:layout_below="@+id/requestor_tv"
-                android:layout_marginLeft="30dp"
                 android:layout_weight="1"
-                />
+                android:layout_marginLeft="44dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -103,51 +100,47 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" Collection Address"
-                android:textSize="20dp"
-
+                android:textSize="18sp"
+                android:gravity="center_vertical"
                 android:drawableLeft="@drawable/my_location"
                 android:id="@+id/address"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="  Details"
-                android:textStyle="italic"
+                android:textSize="16sp"
+                android:text="Details"
                 android:id="@+id/address_details"
                 android:layout_below="@+id/address"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginLeft="44dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" Expiry Time"
                 android:id="@+id/expirytime"
-                android:textSize="20dp"
-
+                android:textSize="18sp"
+                android:gravity="center_vertical"
                 android:drawableLeft="@drawable/timer"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Details"
-                android:textSize="15dp"
-                android:textStyle="italic"
+                android:text="Details"
+                android:textSize="16sp"
                 android:id="@+id/time_detail"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="5dp"
                 android:layout_below="@+id/expirytime"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="44dp" />
 
 
             <TextView
@@ -155,26 +148,24 @@
                 android:layout_height="wrap_content"
                 android:text=" Price"
                 android:id="@+id/price"
-                android:textSize="20dp"
-
+                android:textSize="18sp"
+                android:gravity="center_vertical"
                 android:drawableLeft="@drawable/money"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Details"
-                android:textSize="15dp"
-                android:textStyle="italic"
+                android:text="Details"
+                android:textSize="15sp"
                 android:id="@+id/price_detail"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="5dp"
                 android:layout_below="@+id/price"
                 android:layout_marginBottom="15dp"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="44dp" />
 
 
 
@@ -183,11 +174,10 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:id="@+id/linear4"
             android:layout_below="@+id/linear3"
-            android:layout_alignParentStart="true"
-            android:layout_weight="0.5">
+            android:layout_alignParentStart="true">
 
             <Button
                 android:layout_width="wrap_content"
@@ -195,8 +185,12 @@
                 android:text="Accept"
                 android:textStyle="bold"
                 android:id="@+id/accept_button"
+                android:textColor="@color/white"
+                android:fontFamily="normal"
+                android:foreground="?android:selectableItemBackground"
                 android:background="@color/colorPrimary"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:typeface="normal" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -204,8 +198,12 @@
                 android:text="Chat"
                 android:textStyle="bold"
                 android:id="@+id/chat_button"
+                android:fontFamily="normal"
+                android:textColor="@color/white"
+                android:foreground="?android:selectableItemBackground"
                 android:background="@color/colorPrimaryDark"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:typeface="normal" />
         </LinearLayout>
     </LinearLayout>
 

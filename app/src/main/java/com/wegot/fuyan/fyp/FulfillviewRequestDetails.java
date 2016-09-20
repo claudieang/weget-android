@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -39,13 +43,25 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
     Request request;
 
     ArrayList<Integer> fulfillerIdList = new ArrayList<>();
+    private TextView productDescriptionTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fulfillview_request_details);
 
-        request = (Request) getIntent().getSerializableExtra("selected_request");
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        SpannableString s = new SpannableString("Request Details");
+        s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // Update the action bar title with the TypefaceSpan instance
+        //ActionBar actionBar = getActionBar();
+        getSupportActionBar().setTitle(s);
+
+        Request request = (Request) getIntent().getSerializableExtra("selected_request");
 
         requestId = request.getId();
         requestorId = request.getRequestorId();
@@ -60,13 +76,28 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         price = request.getPrice();
         status = request.getStatus();
 
-        productNameTV = (TextView)findViewById(R.id.product_description);
+        productNameTV = (TextView)findViewById(R.id.product_name);
+        productDescriptionTV = (TextView)findViewById(R.id.product_description);
         requestorTV = (TextView)findViewById(R.id.requestor_name);
         addressTV = (TextView)findViewById(R.id.address_details);
         expiryTimeTV = (TextView)findViewById(R.id.time_detail);
         priceTV = (TextView)findViewById(R.id.price_detail);
         acceptRequestBtn = (Button)findViewById(R.id.accept_button);
         chatBtn = (Button)findViewById(R.id.chat_button);
+
+        //apply typeface
+        productNameTV.setTypeface(typeFace);
+        productDescriptionTV.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
+        requestorTV.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
+        addressTV.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.expirytime)).setTypeface(typeFace);
+        expiryTimeTV.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
+        priceTV.setTypeface(typeFaceLight);
+        acceptRequestBtn.setTypeface(typeFace);
+        chatBtn.setTypeface(typeFace);
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
@@ -137,6 +168,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 addressTV.setText(location);
                 expiryTimeTV.setText(endTime);
                 priceTV.setText("" + price);
+                productDescriptionTV.setText(requirement);
 
                 new getMyRequestFulfiller().execute(authString);
 
@@ -215,6 +247,16 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private class createFulfill extends AsyncTask<String, Void, Boolean> {
@@ -355,5 +397,4 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
         }
     }
-
 }

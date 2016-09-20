@@ -17,8 +17,7 @@
         android:layout_gravity="center"
         android:padding="1dp"
         android:cropToPadding="true"
-        android:scaleType="centerCrop"
-        android:background="@drawable/image_border" />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/fulfiller_name"
