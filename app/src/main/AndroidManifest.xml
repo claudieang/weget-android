@@ -97,8 +97,10 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".RequesterViewDetails" />
-        <activity android:name=".FulfillviewRequestDetails" />
+        <activity android:name=".RequesterViewDetails"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".FulfillviewRequestDetails"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".PendingdetailsRequester"
             android:theme="@style/AppTheme.NoActionBar" />

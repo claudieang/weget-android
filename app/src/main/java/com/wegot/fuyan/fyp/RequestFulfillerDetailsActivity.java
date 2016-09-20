@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -51,6 +52,11 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         TextView myTextView=(TextView)findViewById(R.id.request_fulfiller_title);
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Bold.ttf");
         myTextView.setTypeface(typeFace);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        toolbar.setTitle("Request Completed");
+        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
