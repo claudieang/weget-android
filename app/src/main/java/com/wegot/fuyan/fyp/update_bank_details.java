@@ -24,8 +24,9 @@ public class update_bank_details extends AppCompatActivity {
 
     EditText accountHolderNameET, accountBankNameET, accountNumberET;
     Button updateBankBtn;
-    String accountHolderName, accountBankName, accountNumber, username, password, authString, bankUserName, bankName, err;
-    int  myId, bankId, bankUserId, bankAccNumber;
+    String accountHolderName, accountBankName, accountNumber, username, password, authString, bankUserName, bankName,
+            err, bankAccNumber;
+    int  myId, bankId, bankUserId;
     Context mContext;
     Boolean bank = true;
 
@@ -108,7 +109,7 @@ public class update_bank_details extends AppCompatActivity {
                     bankId = jso.getInt("id");
                     bankUserId = jso.getInt("userId");
                     bankUserName = jso.getString("accountHolder");
-                    bankAccNumber = jso.getInt("accountNumber");
+                    bankAccNumber = jso.getString("accountNumber");
                     bankName = jso.getString("bankName");
                 }catch (JSONException e){
                     e.printStackTrace();
