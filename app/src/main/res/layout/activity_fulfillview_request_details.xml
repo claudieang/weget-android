@@ -52,6 +52,7 @@
                 android:id="@+id/product_description"
                 android:layout_below="@+id/product_name"
                 android:layout_alignParentLeft="true"
+                android:textColor="@color/black"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="44dp" />
@@ -87,6 +88,7 @@
                 android:id="@+id/requestor_name"
                 android:text="Details"
                 android:layout_below="@+id/requestor_tv"
+                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:layout_marginLeft="44dp" />
         </LinearLayout>
@@ -120,6 +122,7 @@
                 android:id="@+id/address_details"
                 android:layout_below="@+id/address"
                 android:layout_alignParentLeft="true"
+                android:textColor="@color/black"
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="44dp" />
 
@@ -142,6 +145,7 @@
                 android:textSize="16sp"
                 android:id="@+id/time_detail"
                 android:layout_below="@+id/expirytime"
+                android:textColor="@color/black"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="44dp" />
@@ -166,6 +170,7 @@
                 android:textSize="15sp"
                 android:id="@+id/price_detail"
                 android:layout_below="@+id/price"
+                android:textColor="@color/black"
                 android:layout_marginBottom="5dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"

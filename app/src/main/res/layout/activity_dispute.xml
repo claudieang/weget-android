@@ -50,8 +50,11 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:foreground="?android:selectableItemBackground"
+        android:fontFamily="normal"
         android:text="SUBMIT"
-        android:textSize="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:background="@color/colorPrimary"
         android:id="@+id/submit"
         android:layout_alignParentBottom="true" />

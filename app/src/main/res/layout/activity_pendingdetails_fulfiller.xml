@@ -205,7 +205,10 @@
                 android:background="@color/colorPrimary"
                 android:text="Delivered"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:foreground="?android:selectableItemBackground"
+                android:fontFamily="normal"
+                android:textStyle="bold"
+                />
 
             <Button
                 android:id="@+id/dipute_button"
@@ -213,7 +216,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
+                android:fontFamily="normal"
                 android:text="Dispute"
+                android:foreground="?android:selectableItemBackground"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
         </LinearLayout>

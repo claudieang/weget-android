@@ -115,7 +115,8 @@
         <activity
             android:name=".CompletedRequest"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".update_bank_details"></activity>
+        <activity android:name=".update_bank_details"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

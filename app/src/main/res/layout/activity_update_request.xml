@@ -140,6 +140,8 @@
             android:layout_height="40dp"
             android:text="Update"
             android:id="@+id/update_request_btn"
+            android:foreground="?android:selectableItemBackground"
+            android:fontFamily="normal"
             android:background="#87CEEB"
             android:layout_marginTop="330dp"
             android:layout_centerHorizontal="true" />
@@ -147,8 +149,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Duration (Min)"
+            android:text="Duration"
             android:textSize="20dp"
+            android:textColor="@color/black"
             android:gravity="center"
             android:id="@+id/textView"
             android:layout_alignBottom="@+id/request_duration_txt"
@@ -158,6 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="Price (SGD)"
+            android:textColor="@color/black"
             android:textSize="20dp"
             android:gravity="center"
             android:id="@+id/textView5"

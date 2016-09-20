@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar_blank"></include>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:text="Please"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="20sp"
                 android:id="@+id/title1"
                 android:textColor="@color/black"
                 android:layout_marginTop="10dp"
@@ -37,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="provide account details"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="20sp"
                 android:id="@+id/title2"
                 android:textColor="@color/white"
                 android:layout_below="@id/title1"
@@ -59,7 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Account Holder Name"
-                android:textSize="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:id="@+id/payee_name"
                 android:textColor="@color/darkGray"
                 android:layout_marginTop="10dp"
@@ -79,6 +82,7 @@
                 android:paddingLeft="10dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
+                android:textSize="16sp"
                 android:background="@drawable/barbase"
                 android:layout_below="@id/payee_name"
                 android:layout_weight="0.5"/>
@@ -87,7 +91,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Bank Name"
-                android:textSize="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:id="@+id/bank_name"
                 android:textColor="@color/darkGray"
                 android:layout_marginTop="20dp"
@@ -101,6 +106,7 @@
                 android:textColorHint="@color/bt_very_light_gray"
                 android:textColor="@color/black"
                 android:imeOptions="actionDone"
+                android:textSize="16sp"
                 android:singleLine="true"
                 android:lines="1"
                 android:hint="Change here.."
@@ -115,9 +121,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Account Number"
-                android:textSize="20dp"
+                android:textSize="18sp"
                 android:id="@+id/account_number"
                 android:textColor="@color/darkGray"
+                android:textStyle="bold"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="30dp"
                 android:layout_weight="0.5"
@@ -131,6 +138,7 @@
                 android:textColor="@color/black"
                 android:hint="Change here.."
                 android:inputType="number"
+                android:textSize="16sp"
                 android:paddingLeft="10dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
@@ -157,10 +165,12 @@
                 android:layout_height="match_parent"
                 android:text="UPDATE"
                 android:textColor="@color/white"
-                android:textSize="20dp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:id="@+id/update_button"
                 android:background="@color/colorPrimaryDark"
+                android:foreground="?android:selectableItemBackground"
+                android:fontFamily="normal"
                 android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>

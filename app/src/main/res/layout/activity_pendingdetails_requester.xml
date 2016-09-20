@@ -205,6 +205,8 @@
                 android:background="@color/colorPrimary"
                 android:text="Received"
                 android:textColor="@color/white"
+                android:foreground="?android:selectableItemBackground"
+                android:fontFamily="normal"
                 android:textStyle="bold" />
 
             <Button
@@ -213,6 +215,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
+                android:foreground="?android:selectableItemBackground"
+                android:fontFamily="normal"
                 android:text="Dispute"
                 android:textColor="@color/white"
                 android:textStyle="bold" />

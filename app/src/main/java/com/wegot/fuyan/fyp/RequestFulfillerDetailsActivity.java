@@ -53,11 +53,6 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Bold.ttf");
         myTextView.setTypeface(typeFace);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        toolbar.setTitle("Request Completed");
-        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
