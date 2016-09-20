@@ -82,6 +82,7 @@ public class UtilHttp {
             }
             if (in != null) {
                 try {
+
                     in.close();
                 } catch (IOException e) {
                     e.printStackTrace();
