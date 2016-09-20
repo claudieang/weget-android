@@ -33,14 +33,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
         //font
-        TextView myTextView=(TextView)findViewById(R.id.updateprofile_title);
         TextView updatepassword=(TextView)findViewById(R.id.textView1);
         TextView updatecontact=(TextView)findViewById(R.id.textView6);
         TextView updatepicture=(TextView)findViewById(R.id.textView4);
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Bold.ttf");
         Typeface typeFace2=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Italic.ttf");
         Typeface typeFace3=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Regular.ttf");
-        myTextView.setTypeface(typeFace);
+
         updatepassword.setTypeface(typeFace3);
         updatecontact.setTypeface(typeFace3);
         updatepicture.setTypeface(typeFace3);
