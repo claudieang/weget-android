@@ -2,11 +2,13 @@ package com.wegot.fuyan.fyp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -80,6 +82,28 @@ public class RequesterViewDetails extends AppCompatActivity {
             }
         });
 
+        deleteRequestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new AlertDialog.Builder(v.getContext())
+                        .setTitle("Alert!")
+                        .setMessage("Confirm cancel order??")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                new cancelRequest().execute(authString);
+
+
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
+
+            }
+        });
+
 
     }
 
@@ -143,6 +167,59 @@ public class RequesterViewDetails extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
 
+
+        }
+    }
+
+    private class cancelRequest extends AsyncTask<String, Void, Boolean> {
+
+        ProgressDialog dialog = new ProgressDialog(RequesterViewDetails.this, R.style.MyTheme);
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+
+
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+
+            //authString = "admin:password";
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + requestId + "/";
+
+            String rst = UtilHttp.doHttpDeleteBasicAuthenticaion(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+            } else {
+                success = true;
+
+            }
+            return success;
+
+
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            dialog.dismiss();
+            if(result) {
+                Toast.makeText(getBaseContext(), "Request cancelled!", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(RequesterViewDetails.this, MainActivity.class);
+                i.putExtra("updated_request_tab", 1);
+                i.putExtra("udpated_request_swipe", 0);
+                startActivity(i);
+                finish();
+            }else{
+                Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
+            }
 
         }
     }

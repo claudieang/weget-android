@@ -507,4 +507,87 @@ public class UtilHttp {
         }
         return result;
     }
+
+
+    public static String doHttpDeleteBasicAuthenticaion(Context ctx, String serverUrl, String params) {
+        String basicAuth = params;
+        Log.v(TAG, "HTTPDELETE:" + serverUrl);
+        String result = null;
+        err = null;
+        HttpURLConnection conn = null;
+        InputStream in = null;
+        try {
+            int TIMEOUT_MILLISEC = 15000;
+
+            conn = (HttpURLConnection) new URL(serverUrl).openConnection();
+            conn.setRequestMethod("DELETE");
+            conn.setConnectTimeout(TIMEOUT_MILLISEC);
+            conn.setReadTimeout(TIMEOUT_MILLISEC);
+            conn.setRequestProperty("Accept-Encoding", "");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty ("Authorization", basicAuth);
+            conn.setDoInput(true);
+
+            conn.connect();
+            int responseCode = conn.getResponseCode();
+            Log.v(TAG, "Return code = " + responseCode);
+            if (responseCode == 200 || responseCode == 201) {
+                in = new BufferedInputStream(conn.getInputStream());
+                String encoding = conn.getContentEncoding() == null ? "UTF-8"
+                        : conn.getContentEncoding();
+                result = IOUtils.toString(in, encoding);
+            } else{
+                if(conn.getContentType().equals("application/json") || conn.getContentType().equals("application/json;charset=UTF-8")){
+                    in = new BufferedInputStream(conn.getErrorStream());
+                    String encoding = conn.getContentEncoding() == null ? "UTF-8"
+                            : conn.getContentEncoding();
+                    String errorMsg = IOUtils.toString(in, encoding);
+                    try {
+
+                        JSONObject jso = new JSONObject(errorMsg);
+
+                        err = jso.getString("message");
+                    }catch(JSONException e){
+                        e.printStackTrace();
+                        err = e.getMessage();
+                    }
+
+                }else{
+
+                    String responseMsg = conn.getResponseMessage();
+                    if (responseMsg != null) {
+                        Log.v(TAG, "Response message = " + responseMsg);
+                        err = responseCode + ":" + responseMsg;
+                    } else {
+                        Log.v(TAG, "Response message is null");
+                        err = responseCode + ":"
+                                + ctx.getString(R.string.responseisnull);
+
+                    }
+
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            err = e.getMessage();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                conn.disconnect();
+                conn = null;
+            }
+        }
+        if (result != null) {
+            Log.v(TAG, result);
+        } else {
+            Log.v(TAG, "Result is null");
+        }
+        return result;
+    }
 }
