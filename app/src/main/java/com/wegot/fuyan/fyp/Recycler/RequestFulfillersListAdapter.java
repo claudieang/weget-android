@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.text.Text;
 import com.wegot.fuyan.fyp.Account;
 import com.wegot.fuyan.fyp.PaymentActivity;
 import com.wegot.fuyan.fyp.R;
@@ -22,7 +22,6 @@ import com.wegot.fuyan.fyp.Request;
 import com.wegot.fuyan.fyp.RequestFulfillerDetailsActivity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -119,7 +118,9 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
         byte[] decodeString = Base64.decode(account.getPicture(), Base64.NO_WRAP);
         Bitmap decodebitmap = BitmapFactory.decodeByteArray(
                 decodeString, 0, decodeString.length);
-        holder.accountImage.setImageBitmap(decodebitmap);
+        RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(holder.itemView.getResources(), decodebitmap);
+        roundDrawable.setCircular(true);
+        holder.accountImage.setImageDrawable(roundDrawable);
         //holder.accountImage.setBitmap(account.getPicture());
         holder.accountName.setText(account.getUsername());
         holder.rating.setRating((float) 3.5);

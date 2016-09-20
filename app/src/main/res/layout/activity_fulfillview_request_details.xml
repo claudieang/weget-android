@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Description"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:id="@+id/product_description"
                 android:layout_below="@+id/product_name"
                 android:layout_alignParentLeft="true"

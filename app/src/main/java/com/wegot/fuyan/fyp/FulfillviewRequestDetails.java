@@ -173,6 +173,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 addressTV.setText(location);
                 expiryTimeTV.setText(endTime);
                 priceTV.setText("" + price);
+                productDescriptionTV.setText(requirement);
 
                 new getMyRequestFulfiller().execute(authString);
 
