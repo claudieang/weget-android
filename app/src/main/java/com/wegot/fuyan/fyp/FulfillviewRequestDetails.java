@@ -61,7 +61,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         //ActionBar actionBar = getActionBar();
         getSupportActionBar().setTitle(s);
 
-        Request request = (Request) getIntent().getSerializableExtra("selected_request");
+        request = (Request) getIntent().getSerializableExtra("selected_request");
 
         requestId = request.getId();
         requestorId = request.getRequestorId();
@@ -356,7 +356,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                     int bankId = jso.getInt("id");
                     int bankUserId = jso.getInt("userId");
                     String bankUserName = jso.getString("accountHolder");
-                    int bankAccNumber = jso.getInt("accountNumber");
+                    String bankAccNumber = jso.getString("accountNumber");
                     String bankName = jso.getString("bankName");
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -388,6 +388,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                     i.putExtra("selected_request", (Serializable) request);
                     i.putExtra("empty_bank", 1);
                     startActivity(i);
+                    finish();
 
                 }else{
                     Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();

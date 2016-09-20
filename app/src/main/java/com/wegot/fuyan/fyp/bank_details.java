@@ -131,12 +131,13 @@ public class bank_details extends AppCompatActivity {
             dialog.dismiss();
 
             if(result){
-                if(emptyBank ==1){
+                if(emptyBank == 1){
                     Toast.makeText(getBaseContext(), "Bank Created!", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(bank_details.this,FulfillviewRequestDetails.class);
                     i.putExtra("selected_request", (Serializable) request);
                     startActivity(i);
                     finish();
+
                 }else if(emptyBank == 2){
                     Toast.makeText(getBaseContext(), "Bank Created!", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(bank_details.this, MainActivity.class);
