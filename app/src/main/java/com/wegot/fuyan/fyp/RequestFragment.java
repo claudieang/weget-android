@@ -143,6 +143,9 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
         int swipeToOpen2 = i.getIntExtra("complete_request_swipe", -1);
         int swipeToOpen3 = i.getIntExtra("disputed_request_swipe",-1);
 
+        int notificationrequestswipe = i.getIntExtra("notification_request_swipe",-1);
+        int notificationfulfillswipe = i.getIntExtra("notification_fulfill_swipe",-1);
+
 
         if(swipeToOpen!=-1){
             viewPager.setCurrentItem(swipeToOpen);
@@ -154,6 +157,12 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
             viewPager.setCurrentItem(swipeToOpen3);
         }
 
+        if(notificationrequestswipe!=-1){
+            viewPager.setCurrentItem(notificationrequestswipe);
+        }
+        if(notificationfulfillswipe!=-1){
+            viewPager.setCurrentItem(notificationfulfillswipe);
+        }
 
 
     }
