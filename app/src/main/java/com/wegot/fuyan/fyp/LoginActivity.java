@@ -2,18 +2,19 @@ package com.wegot.fuyan.fyp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     int dbID, dbContactNumber;
     private Context mContext;
     private static final String TAG = "LoginActivity";
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +61,50 @@ public class LoginActivity extends AppCompatActivity {
         b1.setTypeface(typeFace);
         b2.setTypeface(typeFace);
 
+//        forgotPw.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent (LoginActivity.this, ForgotPasswordActivity.class);
+//                startActivity(i);
+//
+//            }
+//        });
+
+
+        //mButton = (Button) findViewById(R.id.openUserInputDialog);
         forgotPw.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent (LoginActivity.this, ForgotPasswordActivity.class);
-                startActivity(i);
+            public void onClick(View v){
+                //Log.d("Error: ", "in click");
+                //LayoutInflater layoutInflaterAndroid = LayoutInflater.from(context);
+                LayoutInflater inflater = getLayoutInflater();
 
+                View mView = inflater.inflate(R.layout.user_input_dialog_box, null);
+                AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(context);
+                alertDialogBuilderUserInput.setView(mView);
+
+                final EditText email = (EditText) mView.findViewById(R.id.userInputDialog);
+                alertDialogBuilderUserInput
+                        .setCancelable(false)
+                        .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                // get user input here
+
+                                new resetPassword().execute(email.getText().toString());
+                            }
+                        })
+
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogBox, int id) {
+                                        dialogBox.cancel();
+                                    }
+                                });
+
+                AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                alertDialogAndroid.show();
+                alertDialogAndroid.getButton(alertDialogAndroid.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                alertDialogAndroid.getButton(alertDialogAndroid.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             }
         });
 
@@ -200,5 +240,57 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return "";
+    }
+
+    private class resetPassword extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            boolean success = false;
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/reset/";
+            JSONObject jsoin = null;
+
+            //Log.d("name: ", params[0]);
+            try {
+
+                jsoin = new JSONObject();
+                jsoin.put("email",params[0] );
+
+            } catch(JSONException e) {
+                e.printStackTrace();
+                err = e.getMessage();
+            }
+
+            String rst = UtilHttp.doHttpPostJson(LoginActivity.this , url, jsoin.toString());
+            if (rst == null) {
+                err = UtilHttp.err;
+            } else {
+                Log.d("fuck", "ok");
+                success = true;
+
+            }
+            Log.d("fuck", "fail");
+            return success;
+
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if(result){
+                Intent i = new Intent (LoginActivity.this,LoginActivity.class);
+                startActivity(i);
+                Toast.makeText(getApplicationContext(), "Email Sent!", Toast.LENGTH_SHORT).show();
+
+
+            }else {
+                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 }
