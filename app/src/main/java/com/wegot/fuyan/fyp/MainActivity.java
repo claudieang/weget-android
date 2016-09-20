@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         SpannableString s = new SpannableString("Weget");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -80,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         String username = pref.getString("username", null);
+
+
         TextView nav_tv = (TextView) findViewById(R.id.userName);
         nav_tv.setText(username);
         //set profile pic
@@ -223,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case 1:
-
+                startActivity(new Intent(this, update_bank_details.class));
                 break;
             case 2:
 

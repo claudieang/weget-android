@@ -137,8 +137,8 @@ public class bank_details extends AppCompatActivity {
                     i.putExtra("selected_request", (Serializable) request);
                     startActivity(i);
                     finish();
-                }else{
-                    Toast.makeText(getBaseContext(), "Bank Updated!", Toast.LENGTH_LONG).show();
+                }else if(emptyBank == 2){
+                    Toast.makeText(getBaseContext(), "Bank Created!", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(bank_details.this, MainActivity.class);
                     startActivity(i);
                     finish();
