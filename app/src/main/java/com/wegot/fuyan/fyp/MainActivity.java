@@ -179,6 +179,9 @@ public class MainActivity extends AppCompatActivity {
         int tabToOpen7 = i.getIntExtra("accepted_fulfill_tab", -1);
         int tabToOpen8 = i.getIntExtra("after_dispute_request_tab", -1);
 
+        int notificationRequesttab = i.getIntExtra("notification_request_tab",-1);
+        int notification_fulfill_tab = i.getIntExtra("notification_fulfill_tab",-1);
+
 
 
         if(tabToOpen!=-1){
@@ -204,6 +207,13 @@ public class MainActivity extends AppCompatActivity {
         }
         if(tabToOpen8!=-1){
             bottomNavigationBar.selectTab(tabToOpen8);
+        }
+
+        if(notificationRequesttab!=-1){
+            bottomNavigationBar.selectTab(notificationRequesttab);
+        }
+        if(notification_fulfill_tab!=-1){
+            bottomNavigationBar.selectTab(notification_fulfill_tab);
         }
 
     }

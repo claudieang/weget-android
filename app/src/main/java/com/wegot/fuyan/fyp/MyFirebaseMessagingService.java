@@ -56,7 +56,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         if (remoteMessage.getNotification().getTag().equalsIgnoreCase("request")){
-            Intent intent = new Intent(this,MyRequestActivity.class);
+            Intent intent = new Intent(this,MainActivity.class);
+            intent.putExtra("notification_request_tab", 1);
+            intent.putExtra("notification_request_swipe", 0);
+
+
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
@@ -72,6 +76,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         if (remoteMessage.getNotification().getTag().equalsIgnoreCase("fulfill")){
             Intent intent = new Intent(this,MyFulfillActivity.class);
+            intent.putExtra("notification_fulfill_tab", 3);
+            intent.putExtra("notification_fulfill_swipe", 0);
+
+
+
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
