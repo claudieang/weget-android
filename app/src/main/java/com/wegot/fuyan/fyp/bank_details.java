@@ -23,7 +23,7 @@ public class bank_details extends AppCompatActivity {
     EditText accountHolderNameET, accountBankNameET, accountNumberET;
     Button submitBtn;
     String username,password, authString, accountHolderName, accountBankName, accountNumber, err;
-    int myId, accountNum, emptyBank;
+    int myId, emptyBank;
     Context mContext;
     Request request;
 
@@ -57,7 +57,7 @@ public class bank_details extends AppCompatActivity {
                 if(accountHolderName!=null && accountHolderName.trim().length()!= 0){
                     if(accountBankName!=null && accountBankName.trim().length()!=0){
                         if(accountNumber != null && accountNumber.trim().length()!=0){
-                            accountNum = Integer.parseInt(accountNumber);
+                            //accountNum = Integer.parseInt(accountNumber);
                             new setBank().execute(authString);
 
                         }else{
@@ -107,7 +107,7 @@ public class bank_details extends AppCompatActivity {
                 jsoin = new JSONObject();
                 jsoin.put("userId", myId);
                 jsoin.put("accountHolder", accountHolderName);
-                jsoin.put("accountNumber", accountNum);
+                jsoin.put("accountNumber", accountNumber);
                 jsoin.put("bankName", accountBankName);
 
 
