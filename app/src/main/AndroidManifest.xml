@@ -107,10 +107,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MyfulfillDetails" />
         <activity android:name=".bank_details" />
-        <activity android:name=".dispute"
+        <activity
+            android:name=".dispute"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CompletedRequest"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".CompletedRequest"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".update_bank_details"></activity>
     </application>
 
 </manifest>
