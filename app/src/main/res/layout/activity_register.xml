@@ -13,7 +13,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/profile_pic_iv"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:layout_below="@id/tool_bar"
             android:layout_centerHorizontal="true"
             android:tint="#616161"
@@ -25,26 +25,31 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="265dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/profile_text"
         android:layout_below="@id/profile_pic_iv"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:paddingRight="16dp"
-        android:paddingLeft="16dp">
+        android:paddingLeft="16dp"
+        android:paddingBottom="10dp">
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:id="@+id/username"
             android:hint=" Username"
             android:drawableLeft="@drawable/ic_account"
             android:textColor="@color/colorPrimaryDark"
             android:typeface="normal"
+            android:background="@drawable/barbase"
             android:imeOptions="actionDone"
             android:singleLine="true"
             android:lines="1"
             android:focusable="true"
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
             android:textColorHint="#383838"
             android:textColorHighlight="#ff7eff15"
             android:layout_alignParentLeft="false"
@@ -54,7 +59,7 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:inputType="textPassword"
             android:id="@+id/password"
             android:layout_below="@+id/username"
@@ -68,6 +73,10 @@
             android:textColorHighlight="#ff7eff15"
             android:typeface="normal"
             android:hint=" Password"
+            android:paddingLeft="10dp"
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="5dp"
+            android:background="@drawable/barbase"
             android:drawableLeft="@drawable/ic_tick"
             android:imeOptions="actionDone"
             android:singleLine="true"
@@ -75,7 +84,7 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:inputType="textPassword"
             android:id="@+id/Cpassword"
             android:layout_below="@+id/password"
@@ -84,8 +93,12 @@
             android:layout_alignRight="@+id/password"
             android:layout_alignEnd="@+id/password"
             android:hint=" Confirm Password"
+            android:background="@drawable/barbase"
             android:textColorHighlight="#ff7eff15"
             android:textColorHint="#383838"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:layout_marginBottom="8dp"
             android:textColor="@color/colorPrimaryDark"
             android:fontFamily="normal"
             android:typeface="normal"
@@ -96,7 +109,7 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:inputType="phone"
             android:id="@+id/contact_num"
             android:hint=" Contact Number"
@@ -106,6 +119,10 @@
             android:fontFamily="normal"
             android:textColorHighlight="#ff7eff15"
             android:typeface="normal"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/barbase"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignRight="@+id/password"
@@ -118,13 +135,17 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:inputType="textEmailAddress"
             android:id="@+id/email"
             android:hint=" Email"
             android:textColor="@color/colorPrimaryDark"
             android:fontFamily="normal"
             android:typeface="normal"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/barbase"
             android:textColorHighlight="#ff7eff15"
             android:drawableLeft="@drawable/ic_email"
             android:layout_below="@+id/contact_num"
@@ -137,9 +158,14 @@
             android:singleLine="true"
             android:lines="1" />
 
-
-
-
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I accept the Terms of Services and Privacy Policy"
+            android:textSize="10sp"
+            android:id="@+id/checkBox"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
 
 
     </RelativeLayout>
