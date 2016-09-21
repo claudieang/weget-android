@@ -140,7 +140,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             dialog.setCancelable(false);
             dialog.show();
 
-            acceptRequestBtn.setEnabled(false);
+            acceptRequestBtn.setVisibility(View.GONE);
         }
 
         @Override
@@ -253,7 +253,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
                 Log.d("test -----------", ""+fulfilled);
                 if(!fulfilled) {
-                    acceptRequestBtn.setEnabled(true);
+                    acceptRequestBtn.setVisibility(View.VISIBLE);
                 }
 
             }else{
