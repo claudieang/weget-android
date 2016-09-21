@@ -4,172 +4,162 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.wegot.fuyan.fyp.CreateRequestActivity">
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar"></include>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:id="@+id/relativeLayout1"
-        android:background="@drawable/requestbg">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Update Request"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:id="@+id/tv_request_title"
-            android:textSize="40dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relativeLayout1"
-        android:background="#e8e8e8">
+        android:layout_alignParentBottom="true"
+        android:background="#e8e8e8"
+        android:layout_below="@+id/tool_bar">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/request_title"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="Details"
+            android:textSize="20sp"
+            android:textColor="@color/darkGray"
+            />
+
 
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:hint="Product Name"
-            android:textSize="15dp"
-            android:textColor="@color/black"
-            android:textColorHint="#BCBCBC"
-            android:singleLine="true"
             android:id="@+id/product_name_txt"
-            android:background="@drawable/barbase"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"/>
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="Requirement"
-            android:textSize="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/request_title"
+            android:background="@drawable/barbase"
+            android:inputType="textCapWords"
+            android:hint=" Product Name"
+            android:paddingStart="10dp"
+            android:singleLine="true"
+            android:drawableLeft="@drawable/product_icon"
             android:textColor="@color/black"
             android:textColorHint="#BCBCBC"
-            android:singleLine="true"
+            android:textSize="15sp" />
+
+        <EditText
             android:id="@+id/product_requirement_txt"
-            android:background="@drawable/barbase"
-            android:layout_marginTop="70dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:inputType="number"
-            android:ems="10"
-            android:hint="Postal"
-            android:textSize="15dp"
-            android:textColor="@color/black"
-            android:textColorHint="#BCBCBC"
-            android:singleLine="true"
-            android:id="@+id/postal_code_txt"
-            android:background="@drawable/barbase"
-            android:layout_marginTop="120dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            />
-
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:text="Get Address"
-            android:id="@+id/get_address_btn"
-            android:background="@drawable/okbt"
-            android:layout_alignTop="@+id/postal_code_txt"
-            android:layout_alignRight="@+id/product_requirement_txt"
-            android:layout_alignEnd="@+id/product_requirement_txt"
-            android:layout_alignBottom="@+id/postal_code_txt" />
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/address_line_txt"
-            android:hint="Address"
-            android:textSize="15dp"
-            android:textColor="@color/black"
-            android:textColorHint="#BCBCBC"
-            android:background="@drawable/barbase"
-            android:layout_marginTop="170dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            />
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/product_name_txt"
+            android:background="@drawable/barbase"
+            android:inputType="textCapSentences"
+            android:hint=" Additional Info"
+            android:paddingStart="10dp"
+            android:singleLine="true"
+            android:drawableLeft="@drawable/info_icon"
+            android:textColor="@color/black"
+            android:textColorHint="#BCBCBC"
+            android:textSize="15sp" />
 
         <EditText
+            android:id="@+id/postal_code_txt"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/product_requirement_txt"
+            android:background="@drawable/barbase"
+            android:ems="10"
+            android:hint=" Postal"
             android:inputType="number"
-            android:ems="10"
-            android:id="@+id/request_duration_txt"
-            android:hint="Duration"
-            android:textSize="15dp"
+            android:paddingStart="10dp"
+            android:singleLine="true"
+            android:drawableLeft="@drawable/my_location_light"
             android:textColor="@color/black"
             android:textColorHint="#BCBCBC"
-            android:background="@drawable/barbase"
-            android:layout_marginTop="220dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            />
+            android:textSize="15sp" />
+
+        <ImageButton
+            android:id="@+id/get_address_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/postal_code_txt"
+            android:layout_toEndOf="@+id/postal_code_txt"
+            android:background="@drawable/location" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/address_line_txt"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:inputType="numberDecimal|numberSigned"
-            android:ems="10"
-            android:id="@+id/request_price_txt"
-            android:hint="Price (SGD)"
-            android:textSize="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/postal_code_txt"
+            android:background="@drawable/barbase"
+            android:hint=" Address"
+            android:drawableLeft="@drawable/map_icon"
+            android:paddingStart="10dp"
             android:textColor="@color/black"
             android:textColorHint="#BCBCBC"
-            android:background="@drawable/barbase"
-            android:layout_marginTop="270dp"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/request_duration_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/address_line_txt"
+            android:background="@drawable/barbase"
+            android:ems="10"
+            android:hint=" Duration"
+            android:drawableLeft="@drawable/timer_light"
+            android:inputType="number"
+            android:paddingStart="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#BCBCBC"
+            android:textSize="15sp" />
 
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:text="Update"
-            android:id="@+id/update_request_btn"
-            android:foreground="?android:selectableItemBackground"
-            android:fontFamily="normal"
-            android:background="#87CEEB"
-            android:layout_marginTop="330dp"
-            android:layout_centerHorizontal="true" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Extend this Request"
+            android:id="@+id/checkBox2"
+            android:checked="false"
+            android:textSize="14sp"
+            android:buttonTint="@color/colorPrimary"
+            android:layout_below="@+id/request_duration_txt"
+            android:layout_alignStart="@+id/request_duration_txt" />
 
-        <TextView
+        <EditText
+            android:id="@+id/request_price_txt"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Duration"
-            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/checkBox2"
+            android:background="@drawable/barbase"
+            android:ems="10"
+            android:hint=" Price (SGD)"
+            android:drawableLeft="@drawable/money_light"
+            android:inputType="numberDecimal|numberSigned"
+            android:paddingStart="10dp"
             android:textColor="@color/black"
-            android:gravity="center"
-            android:id="@+id/textView"
-            android:layout_alignBottom="@+id/request_duration_txt"
-            android:layout_toEndOf="@+id/request_duration_txt" />
+            android:textColorHint="#BCBCBC"
+            android:textSize="15sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Price (SGD)"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:id="@+id/textView5"
-            android:layout_alignStart="@+id/textView"
-            android:layout_alignBottom="@+id/request_price_txt"
-            android:layout_toEndOf="@+id/request_price_txt" />
+
+
 
     </RelativeLayout>
+
 
 
 </RelativeLayout>

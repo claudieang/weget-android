@@ -4,26 +4,27 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,15 +41,22 @@ public class UpdateRequestActivity extends AppCompatActivity {
     int postalCode, requestDuration, requestorId, requestId;
     double price;
     EditText etProductName, etRequestRequirement, etPostalCode, etAddressLine, etRequestDuration, etPrice;
-    Button getAddressBtn, updateRequestBtn;
+    //Button getAddressBtn, updateRequestBtn;
+    Button updateRequestBtn;
+    ImageButton getAddressBtn;
     Geocoder geocoder;
     Context mContext;
     Request rq;
+    CheckBox cb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_request);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
 
         rq = (Request)getIntent().getSerializableExtra("selected_request");
 
@@ -58,14 +66,25 @@ public class UpdateRequestActivity extends AppCompatActivity {
         password = pref.getString("password", null);
         requestId = rq.getId();
 
+        ImageButton cancel_Btn = (ImageButton)findViewById(R.id.close_btn);
+
+        Button updateRequestBtn = (Button)findViewById(R.id.create_btn);
+        TextView toolbarTitle = (TextView)findViewById(R.id.toolbar_title);
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        toolbarTitle.setText("Update Request");
+        toolbarTitle.setTypeface(typeFace);
+        updateRequestBtn.setText("UPDATE");
+
+        cb = (CheckBox)findViewById(R.id.checkBox2);
         etProductName = (EditText)findViewById(R.id.product_name_txt);
         etRequestRequirement = (EditText)findViewById(R.id.product_requirement_txt);
         etPostalCode = (EditText)findViewById(R.id.postal_code_txt);
         etAddressLine = (EditText)findViewById(R.id.address_line_txt);
         etRequestDuration = (EditText)findViewById(R.id.request_duration_txt);
         etPrice = (EditText)findViewById(R.id.request_price_txt);
-        getAddressBtn = (Button)findViewById(R.id.get_address_btn);
-        updateRequestBtn = (Button)findViewById(R.id.update_request_btn);
+        //getAddressBtn = (Button)findViewById(R.id.get_address_btn);
+        getAddressBtn = (ImageButton)findViewById(R.id.get_address_btn);
+        //updateRequestBtn = (Button)findViewById(R.id.update_request_btn);
         geocoder = new Geocoder(this);
 
         etProductName.setText(rq.getProductName());
@@ -158,22 +177,31 @@ public class UpdateRequestActivity extends AppCompatActivity {
 
                                     if(priceS!=null && priceS.trim().length()>0){
                                         price = Double.parseDouble(priceS);
-                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                        Date now = new Date();
-                                        startTime = sdf.format(now);
 
-                                        Log.d("Start Time: ", startTime);
+                                        //check if time should be updated
+                                        if(cb.isChecked()) {
+                                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                            Date now = new Date();
+                                            startTime = sdf.format(now);
 
-                                        Calendar date = Calendar.getInstance();
-                                        long t= date.getTimeInMillis();
-                                        Date afterAddingTenMins=new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
-                                        endTime = sdf.format(afterAddingTenMins);
+                                            Log.d("Start Time: ", startTime);
 
-                                        Log.d("End Time: ", endTime);
+                                            Calendar date = Calendar.getInstance();
+                                            long t = date.getTimeInMillis();
+                                            Date afterAddingTenMins = new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
+                                            endTime = sdf.format(afterAddingTenMins);
 
-                                        authString  = username + ":" + password;
-                                        new updateRequest().execute(authString);
+                                            Log.d("End Time: ", endTime);
 
+                                            authString = username + ":" + password;
+                                            new updateRequest().execute(authString);
+                                        } else{
+                                            startTime = rq.getStartTime();
+                                            endTime = rq.getEndTime();
+                                            //if not checked, do not process new start/end
+                                            authString = username + ":" + password;
+                                            new updateRequest().execute(authString);
+                                        }
 
                                     }else{
                                         etPrice.setError("Price required!");
@@ -198,6 +226,15 @@ public class UpdateRequestActivity extends AppCompatActivity {
                     etProductName.setError ("Product name required!");
                 }
 
+
+            }
+        });
+
+        cancel_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(UpdateRequestActivity.this, MainActivity.class);
+                onBackPressed();
 
             }
         });
@@ -277,70 +314,6 @@ public class UpdateRequestActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }
 
-        }
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.bottombar, menu);
-        return true;
-    }
-
-
-    /**
-     * Event Handling for Individual menu item selected
-     * Identify single menu item by it's id
-     * */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        switch (item.getItemId())
-        {
-            case R.id.home_item:
-                // Single menu item is selected do something
-                // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, MainActivity.class);
-                startActivity(homeIntent);
-                Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.search_item:
-                Toast.makeText(this, "Search is selected", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.profile_item:
-                //Toast.makeText(HomeActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, ProfileActivity.class);
-                startActivity(i);
-                Toast.makeText(this, "Redirecting to Profile Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_request_item:
-                Intent myRequestIntent = new Intent (this, MyRequestActivity.class);
-                startActivity(myRequestIntent);
-                Toast.makeText(this, "Redirecting to My Request Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_fulfill_item:
-                Intent myFulfillIntent = new Intent (this, MyFulfillActivity.class);
-                startActivity(myFulfillIntent);
-                Toast.makeText(this, "Redirecting to My Fulfill Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.logout_item:
-
-                Intent logoutIntent = new Intent (this, LoginActivity.class);
-                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(logoutIntent);
-                finish();
-
-
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }
