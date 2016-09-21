@@ -3,12 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e8e8e8"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/bt_very_light_gray"
     tools:context="com.wegot.fuyan.fyp.ProfileActivity">
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,7 +13,7 @@
         android:text="User Profile"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textSize="25sp"
         android:id="@+id/profile_title"
         android:layout_below="@+id/profile_picture"
         android:layout_centerHorizontal="true"
@@ -37,8 +34,8 @@
         android:id="@+id/profile_username"
         android:layout_below="@+id/profile_title"
         android:textColor="@color/black"
-        android:textSize="15dp"
-        android:text="username"
+        android:textSize="16sp"
+        android:text="Username"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="80dp"/>
 
@@ -55,9 +52,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/profile_email"
-        android:text="email"
+        android:text="Email"
         android:textColor="@color/black"
-        android:textSize="15dp"
+        android:textSize="16sp"
         android:layout_below="@+id/profile_username"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="80dp"
@@ -77,8 +74,8 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:id="@+id/profile_contactNumber"
-        android:text="contact"
-        android:textSize="15dp"
+        android:text="Contact"
+        android:textSize="16sp"
         android:layout_below="@+id/profile_email"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="80dp"
@@ -88,15 +85,19 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:id="@+id/profile_picture"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true" />
 
 
     <Button
-        android:layout_width="120dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#87CEEB"
+        android:background="@color/colorPrimary"
         android:text="Update Profile"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:fontFamily="normal"
+        android:foreground="?android:selectableItemBackground"
         android:id="@+id/updateprofile_btn"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,10 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pendingdetails_fulfiller);
 
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         toolbar.setTitle("Pending Request");
@@ -68,6 +73,19 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
         priceTV = (TextView)findViewById(R.id.price_detail);
         deliveredBtn = (Button)findViewById(R.id.delivered_button);
         disputeBtn = (Button)findViewById(R.id.dipute_button);
+
+        ((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);
+        productNameTV.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
+        requestorTV.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
+        addressTV.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
+        priceTV.setTypeface(typeFaceLight);
+
+        deliveredBtn.setTypeface(typeFace);
+        disputeBtn.setTypeface(typeFace);
+
 
         new getRequestor().execute(authString + "," + requestorIdS);
 

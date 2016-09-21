@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,8 +31,15 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+
         forgotEmailET = (EditText)findViewById(R.id.forget_email_et);
         retrieveAccountBtn = (Button)findViewById(R.id.retrieve_account_btn);
+
+        forgotEmailET.setTypeface(typeFace);
+        retrieveAccountBtn.setTypeface(typeFace);
 
         retrieveAccountBtn.setOnClickListener(new View.OnClickListener() {
 

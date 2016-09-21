@@ -4,13 +4,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -32,6 +36,16 @@ public class bank_details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_details);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        toolbar.setTitle("Bank Details");
+        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //apply font
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+
         emptyBank = getIntent().getIntExtra("empty_bank",0);
         request = (Request) getIntent().getSerializableExtra("selected_request");
 
@@ -45,6 +59,18 @@ public class bank_details extends AppCompatActivity {
         accountBankNameET = (EditText)findViewById(R.id.payee_bank_detail);
         accountNumberET = (EditText)findViewById(R.id.account_number_detail);
         submitBtn = (Button)findViewById(R.id.submit_button);
+
+        ((TextView)findViewById(R.id.title1)).setTypeface(typeFaceBold);
+        ((TextView)findViewById(R.id.title2)).setTypeface(typeFaceBold);
+        ((TextView)findViewById(R.id.payee_name)).setTypeface(typeFace);
+        accountHolderNameET.setTypeface(typeFace);
+        ((TextView)findViewById(R.id.bank_name)).setTypeface(typeFace);
+        accountBankNameET.setTypeface(typeFace);
+        ((TextView)findViewById(R.id.account_number)).setTypeface(typeFace);
+        accountNumberET.setTypeface(typeFace);
+        submitBtn.setTypeface(typeFace);
+
+
 
         accountHolderNameET.setText(username);
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +101,17 @@ public class bank_details extends AppCompatActivity {
         });
 
 
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
 
     }
 
