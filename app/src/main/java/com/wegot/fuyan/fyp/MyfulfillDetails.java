@@ -3,11 +3,15 @@ package com.wegot.fuyan.fyp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +31,16 @@ public class MyfulfillDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myfulfill_details);
+
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        toolbar.setTitle("Fulfill Details");
+        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
@@ -49,8 +63,29 @@ public class MyfulfillDetails extends AppCompatActivity {
         addressTV = (TextView)findViewById(R.id.address_details);
         priceTV = (TextView)findViewById(R.id.price_detail);
 
+        ((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);
+        productNameTV.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
+        requestorNameTV.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
+        addressTV.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
+        priceTV.setTypeface(typeFaceLight);
+        ((Button)findViewById(R.id.chat_button)).setTypeface(typeFace);
+
 
         new getRequestor().execute(authString + "," + requestorIdS);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
 
     }
 

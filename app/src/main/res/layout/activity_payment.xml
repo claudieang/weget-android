@@ -30,7 +30,7 @@
             android:textColor="@android:color/black"
             android:textColorHint="@color/colorGray"
             android:textCursorDrawable="@null"
-            android:textSize="14sp"
+            android:textSize="16sp"
             tools:ignore="LabelFor,NegativeMargin" />
 
         <LinearLayout
@@ -54,7 +54,7 @@
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/colorGray"
                 android:textCursorDrawable="@null"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:ignore="LabelFor,RtlHardcoded" />
 
             <EditText
@@ -71,7 +71,7 @@
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/colorGray"
                 android:textCursorDrawable="@null"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:ignore="LabelFor,RtlHardcoded" />
         </LinearLayout>
     </LinearLayout>
@@ -84,6 +84,7 @@
         android:text="Proceed to Payment"
         android:onClick="onStartClick"
         android:id="@+id/btn_start"
+        android:textSize="16sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 

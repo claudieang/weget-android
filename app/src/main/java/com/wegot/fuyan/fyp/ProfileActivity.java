@@ -31,17 +31,18 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+
         //font
         TextView myTextView=(TextView)findViewById(R.id.profile_title);
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-BoldItalic.ttf");
-        myTextView.setTypeface(typeFace);
+        myTextView.setTypeface(typeFaceBold);
 
 
         updateProfile = (Button)findViewById(R.id.updateprofile_btn);
-        Typeface typeFace2=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Regular.ttf");
-        updateProfile.setTypeface(typeFace2);
-
-
         profileImage = (ImageView)findViewById(R.id.profile_picture);
 
 
@@ -70,9 +71,15 @@ public class ProfileActivity extends AppCompatActivity {
         profileEmailTV = (TextView)findViewById(R.id.profile_email);
         profileContactNumberTV = (TextView)findViewById(R.id.profile_contactNumber);
 
+        profileUsernameTV.setTypeface(typeFace);
+        profileEmailTV.setTypeface(typeFace);
+        profileContactNumberTV.setTypeface(typeFace);
+        updateProfile.setTypeface(typeFace);
+
         String displayUserName = "User Name: " + profileUsername;
         String displayEmail = "Email: " + profileEmail;
         String displayContactNumber = "Contact Number: " + profileContactNumber;
+
 
         profileUsernameTV.setText(displayUserName);
         profileEmailTV.setText(displayEmail);

@@ -12,7 +12,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="150dp"
         android:id="@+id/pic"
         android:background="@drawable/myrequestbg" />
 
@@ -192,7 +192,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Accept"
-                android:textStyle="bold"
+                android:textSize="16sp"
                 android:id="@+id/accept_button"
                 android:textColor="@color/white"
                 android:fontFamily="normal"
@@ -205,7 +205,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Chat"
-                android:textStyle="bold"
+                android:textSize="16sp"
                 android:id="@+id/chat_button"
                 android:fontFamily="normal"
                 android:textColor="@color/white"
