@@ -1,18 +1,14 @@
 package com.wegot.fuyan.fyp;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +18,7 @@ public class ProfileActivity extends AppCompatActivity {
     int profileContactNumber;
     TextView profileUsernameTV, profileEmailTV, profileContactNumberTV;
     ImageView profileImage;
-    Button updateProfile;
+    ImageView updateProfile;
 
 
 
@@ -32,14 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //font
-        TextView myTextView=(TextView)findViewById(R.id.profile_title);
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-BoldItalic.ttf");
-        myTextView.setTypeface(typeFace);
-
-
-        updateProfile = (Button)findViewById(R.id.updateprofile_btn);
-        Typeface typeFace2=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Regular.ttf");
-        updateProfile.setTypeface(typeFace2);
+        //updateProfile = (ImageView)findViewById(R.id.updateprofile_btn);
 
 
         profileImage = (ImageView)findViewById(R.id.profile_picture);
@@ -70,23 +59,23 @@ public class ProfileActivity extends AppCompatActivity {
         profileEmailTV = (TextView)findViewById(R.id.profile_email);
         profileContactNumberTV = (TextView)findViewById(R.id.profile_contactNumber);
 
-        String displayUserName = "User Name: " + profileUsername;
-        String displayEmail = "Email: " + profileEmail;
-        String displayContactNumber = "Contact Number: " + profileContactNumber;
+        String displayUserName = profileUsername;
+        String displayEmail = profileEmail;
+        String displayContactNumber = ""+profileContactNumber;
 
         profileUsernameTV.setText(displayUserName);
         profileEmailTV.setText(displayEmail);
         profileContactNumberTV.setText(displayContactNumber);
 
-        updateProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent (ProfileActivity.this, UpdateProfileActivity.class);
-                startActivity(i);
-                finish();
-
-            }
-        });
+//        updateProfile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent (ProfileActivity.this, UpdateProfileActivity.class);
+//                startActivity(i);
+//                finish();
+//
+//            }
+//        });
     }
 
     @Override
