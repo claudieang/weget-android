@@ -1,14 +1,17 @@
 package com.wegot.fuyan.fyp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +35,8 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         profileImage = (ImageView)findViewById(R.id.profile_picture);
+        TextView change_pw = (TextView)findViewById(R.id.change_password);
+        change_pw.setPaintFlags(change_pw.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
@@ -67,15 +72,22 @@ public class ProfileActivity extends AppCompatActivity {
         profileEmailTV.setText(displayEmail);
         profileContactNumberTV.setText(displayContactNumber);
 
-//        updateProfile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent (ProfileActivity.this, UpdateProfileActivity.class);
-//                startActivity(i);
-//                finish();
-//
-//            }
-//        });
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent (ProfileActivity.this, UpdateProfileActivity.class);
+                startActivity(i);
+            }
+        });
+
+        change_pw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent (ProfileActivity.this, UpdatePasswordActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
