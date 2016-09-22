@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -37,6 +39,10 @@ public class update_bank_details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_bank_details);
 
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         toolbar.setTitle("Update Bank Details");
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
@@ -52,6 +58,17 @@ public class update_bank_details extends AppCompatActivity {
         accountBankNameET = (EditText)findViewById(R.id.payee_bank_detail);
         accountNumberET = (EditText)findViewById(R.id.account_number_detail);
         updateBankBtn = (Button)findViewById(R.id.update_button);
+
+        ((TextView)findViewById(R.id.title1)).setTypeface(typeFaceBold);
+        ((TextView)findViewById(R.id.title2)).setTypeface(typeFaceBold);
+        ((TextView)findViewById(R.id.payee_name)).setTypeface(typeFace);
+        accountHolderNameET.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.bank_name)).setTypeface(typeFace);
+        accountBankNameET.setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.account_number)).setTypeface(typeFace);
+        accountNumberET.setTypeface(typeFaceLight);
+
+        updateBankBtn.setTypeface(typeFace);
 
 
         new getBank().execute(authString);

@@ -59,7 +59,7 @@ public class RequesterViewDetails extends AppCompatActivity {
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        SpannableString s = new SpannableString("Pending Request");
+        SpannableString s = new SpannableString("Active Request");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         // Update the action bar title with the TypefaceSpan instance
