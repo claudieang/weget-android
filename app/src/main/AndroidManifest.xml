@@ -32,11 +32,8 @@
 
         <activity
             android:name=".LoginActivity"
-<<<<<<< HEAD
             android:theme="@style/AppTheme.NoActionBar">
-=======
-            android:theme="@style/Theme.AppCompat.NoActionBar">
->>>>>>> refs/remotes/origin/weget-chat
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,11 +53,7 @@
         <activity android:name=".UploadImageActivity" />
         <activity
             android:name=".CreateRequestActivity"
-<<<<<<< HEAD
             android:theme="@style/AppTheme.NoActionBar" />
-=======
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
->>>>>>> refs/remotes/origin/weget-chat
         <activity android:name=".RequestDetailsActivity" />
         <activity android:name=".MyRequestActivity">
             <intent-filter>
@@ -69,16 +62,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+
         <activity
             android:name=".MyRequestFulfillerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RequestFulfillerDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-=======
-        <activity android:name=".MyRequestFulfillerActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".RequestFulfillerDetailsActivity" />
->>>>>>> refs/remotes/origin/weget-chat
+
         <activity android:name=".PaymentActivity" />
         <activity android:name=".MyFulfillActivity">
             <intent-filter>
@@ -88,11 +78,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MyFulfillRequestDetailsActivity" />
-<<<<<<< HEAD
         <activity android:name=".UpdateRequestActivity" android:theme="@style/AppTheme.NoActionBar"/>
-=======
-        <activity android:name=".UpdateRequestActivity" />
->>>>>>> refs/remotes/origin/weget-chat
+
         <!--
      <activity android:name=".MainPage"></activity> ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -115,7 +102,6 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ForgotPasswordActivity" />
-<<<<<<< HEAD
         <activity android:name=".RequesterViewDetails"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".FulfillviewRequestDetails"
@@ -138,13 +124,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".update_bank_details"
             android:theme="@style/AppTheme.NoActionBar"/>
-=======
-        <activity android:name=".RequesterViewDetails" />
-        <activity android:name=".FulfillviewRequestDetails" />
-        <activity android:name=".MyfulfillDetails"></activity>
-        <activity android:name=".ChatActivity"/>
-        <activity android:name=".UserChatActivity"/>
->>>>>>> refs/remotes/origin/weget-chat
+
     </application>
 
 </manifest>
