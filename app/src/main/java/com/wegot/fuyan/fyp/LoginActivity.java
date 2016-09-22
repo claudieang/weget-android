@@ -147,7 +147,10 @@ public class LoginActivity extends AppCompatActivity {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
+
+            if(!isFinishing()) {
+                dialog.show();
+            }
         }
 
         @Override
@@ -215,6 +218,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
+                finish();
 
             }else {
                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
