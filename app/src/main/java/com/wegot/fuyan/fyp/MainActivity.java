@@ -1,13 +1,18 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,8 +24,6 @@ import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.sendbird.android.SendBird;
-
 
 import java.util.ArrayList;
 
@@ -34,12 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
-    public static String VERSION = "3.0.1.0";
-
-    private enum State {DISCONNECTED, CONNECTED}
-
-    public static String sUserId;
-    private String mNickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +44,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //initialize sendbird
-        SendBird.init("D32DF590-3ECB-4F13-AFA4-3DD8F14380CB", this);
-        /**
-         * Start GCM Service.
-         */
-        Intent intent = new Intent(this, RegistrationIntentService.class);
-        startService(intent);
+        SpannableString s = new SpannableString("Weget");
+        s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // Update the action bar title with the TypefaceSpan instance
+        //ActionBar actionBar = getActionBar();
+        getSupportActionBar().setTitle(s);
 
         mNavItems.add(new NavItem("Profile", "Edit your profile", R.drawable.ic_profile));
         mNavItems.add(new NavItem("Settings", "Manage your preferences", R.drawable.ic_settings_black_24dp));
@@ -121,10 +117,18 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(int position) {
                 switch(position){
                     case 0:
+                        SpannableString s = new SpannableString("Weget");
+                        s.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s.length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        getSupportActionBar().setTitle(s);
                         HomeFragment homeFragment = new HomeFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, homeFragment).commit();
                         break;
                     case 1:
+                        SpannableString s1 = new SpannableString("My Requests");
+                        s1.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s1.length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        getSupportActionBar().setTitle(s1);
                         RequestFragment requestFragment = new RequestFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, requestFragment).commit();
                         //Intent i = new Intent(MainActivity.this, RequestFragment.class);
@@ -134,12 +138,19 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, CreateRequestActivity.class));
                         break;
                     case 3:
+                        SpannableString s2 = new SpannableString("My Fulfills");
+                        s2.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s2.length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        getSupportActionBar().setTitle(s2);
                         FulfillFragment fulfillFragment = new FulfillFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, fulfillFragment).commit();
                         break;
                     case 4:
-                        ChatFragment chatFragment = new ChatFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, chatFragment).commit();
+                        SpannableString s3 = new SpannableString("Chat");
+                        s3.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s3.length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        getSupportActionBar().setTitle(s3);
+                        startActivity(new Intent(MainActivity.this, ChatActivity.class));
                         break;
 
                 }
@@ -153,6 +164,35 @@ public class MainActivity extends AppCompatActivity {
         });
         HomeFragment homeFragment = new HomeFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, homeFragment).commit();
+
+        Intent i = getIntent();
+        int tabToOpen = i.getIntExtra("after_payment_request_tab",-1);
+        int tabToOpen2 = i.getIntExtra("after_received_tab",-1);
+        int tabToOpen3 = i.getIntExtra("after_delivered_tab",-1);
+        int tabToOpen4 = i.getIntExtra("after_dispute_tab",-1);
+        int tabToOpen5 = i.getIntExtra("after_dispute_fulfill_tab",-1);
+        int tabToOpen6 = i.getIntExtra("updated_request_tab", -1);
+
+
+
+        if(tabToOpen!=-1){
+            bottomNavigationBar.selectTab(tabToOpen);
+        }
+        if(tabToOpen2!=-1){
+            bottomNavigationBar.selectTab(tabToOpen2);
+        }
+        if(tabToOpen3!=-1){
+            bottomNavigationBar.selectTab(tabToOpen3);
+        }
+        if(tabToOpen4!=-1){
+            bottomNavigationBar.selectTab(tabToOpen4);
+        }
+        if(tabToOpen5!=-1){
+            bottomNavigationBar.selectTab(tabToOpen5);
+        }
+        if(tabToOpen6!=-1){
+            bottomNavigationBar.selectTab(tabToOpen6);
+        }
 
     }
 
@@ -194,7 +234,5 @@ public class MainActivity extends AppCompatActivity {
         // Close the drawer
         mDrawerLayout.closeDrawer(mDrawerPane);
     }
-
-
 
 }

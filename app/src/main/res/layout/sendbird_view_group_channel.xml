@@ -23,7 +23,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/sendbird_ic_launcher"
+            android:src="@drawable/profileicon"
             android:layout_gravity="center_vertical"
             />
 

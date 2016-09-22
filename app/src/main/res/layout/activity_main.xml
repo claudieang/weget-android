@@ -44,7 +44,7 @@
                 android:id="@+id/profileBox"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:background="#0288D1"
+                android:background="#1976D2"
                 android:padding="8dp">
 
                 <ImageView

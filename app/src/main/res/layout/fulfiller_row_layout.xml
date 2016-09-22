@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="#FFFFFF"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:id="@+id/cv2"
+    android:padding="16dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/accountImage"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="4dp"
+        android:layout_gravity="center"
+        android:padding="1dp"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:background="@drawable/image_border" />
+
+    <TextView
+        android:id="@+id/fulfiller_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fulfiller Name"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/accountImage"
+        android:layout_marginLeft="10dp" />
+
+    <RatingBar
+        style="@style/RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="3.5"
+        android:stepSize="0.5"
+        android:layout_below="@id/fulfiller_name"
+        android:layout_alignStart="@+id/fulfiller_name"
+        android:paddingTop="4dp"
+        android:progressBackgroundTint="#000000"
+        android:progressTint="@color/black"
+        android:secondaryProgressTint="#000000"
+        android:id="@+id/ratingBar" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:background="@color/colorGray"
+        android:layout_marginEnd="48dp"
+        android:id="@+id/divider"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:id="@+id/selectButton"
+        android:src="@drawable/ic_done_black_36dp"
+
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="4dp"
+        android:background="?selectableItemBackgroundBorderless" />
+
+</RelativeLayout>

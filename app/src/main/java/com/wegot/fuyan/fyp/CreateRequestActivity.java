@@ -1,5 +1,6 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -234,8 +235,16 @@ public class CreateRequestActivity extends AppCompatActivity {
 
     private class createRequest extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog = new ProgressDialog(CreateRequestActivity.this, R.style.MyTheme);
+
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+
+
         }
 
         @Override

@@ -14,6 +14,11 @@ public class Account implements Serializable {
     String fulfiller;
     String picture;
 
+    public Account(String picture, String username){
+        this.picture = picture;
+        this.username = username;
+    }
+
     public Account(int id, String username, String password, int contactNo, String email, String fulfiller, String picture){
         this.id = id;
         this.username = username;
@@ -22,6 +27,8 @@ public class Account implements Serializable {
         this.email = email;
         this.fulfiller = fulfiller;
         this.picture = picture;
+
+
     }
 
     public int getId() {

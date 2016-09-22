@@ -53,7 +53,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Helper {
     public static String generateDeviceUUID(Context context) {
-        String serial = Build.SERIAL;
+        String serial = android.os.Build.SERIAL;
         String androidID = Settings.Secure.ANDROID_ID;
         String deviceUUID = serial + androidID;
 
@@ -81,7 +81,7 @@ public class Helper {
 
     public static final int MY_PERMISSION_REQUEST_STORAGE = 100;
     public static boolean requestReadWriteStoragePermissions(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -474,7 +474,7 @@ public class Helper {
                             imageView.setImageBitmap((Bitmap) object);
                         }
                     } else {
-                        imageView.setImageResource(R.drawable.sendbird_img_placeholder);
+                        imageView.setImageResource(R.drawable.product_icon);
                     }
                 }
             });

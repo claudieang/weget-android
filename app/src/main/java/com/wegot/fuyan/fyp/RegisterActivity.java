@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    Button b1, b2,dpBtn;
+    Button b1, b2, b3;
     EditText t1, t2, t3, contact, email1;
     Context ctx = this;
     String user_name, user_pass, confirm_pass, email, contactNumS, err, token;
@@ -71,8 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         b2 = (Button) findViewById(R.id.button5);
-
-        dpBtn = (Button)findViewById(R.id.register_image_btn);
+        b3 = (Button)findViewById(R.id.button6);
         t1 = (EditText) findViewById(R.id.username);
         t2 = (EditText) findViewById(R.id.password);
         t3 = (EditText) findViewById(R.id.Cpassword);
@@ -165,7 +164,16 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        dpBtn.setOnClickListener(new View.OnClickListener() {
+
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(i);
+
+            }
+        });
+        dpIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(RegisterActivity.this,
@@ -260,8 +268,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     private class storeValue extends AsyncTask<String, Void, Boolean>{
 
+        ProgressDialog dialog = new ProgressDialog(RegisterActivity.this, R.style.MyTheme);
+
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
         }
 
         @Override

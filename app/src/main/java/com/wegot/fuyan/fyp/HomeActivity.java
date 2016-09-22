@@ -70,6 +70,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
+import com.sendbird.android.SendBird;
+import com.sendbird.android.SendBird.ConnectHandler;
+import com.sendbird.android.SendBirdException;
+import com.sendbird.android.User;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -153,6 +158,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_home);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        TextView b1 = (TextView) findViewById(R.id.my_request_title);
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        b1.setTypeface(typeFace);
         //change font
         //TextView myTextView = (TextView) findViewById(R.id.textview2);
         //Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/TitilliumWeb-BoldItalic.ttf");
@@ -179,7 +187,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 android.R.color.holo_red_light);
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
-        String username = pref.getString("username", null);
+        final String username = pref.getString("username", null);
         String password = pref.getString("password", null);
         usernameText = "User: " + username;
         //text = (TextView) findViewById(R.id.textview2);
@@ -196,6 +204,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         authString = username + ":" + password;
 
         new getRequests().execute(authString);
+
 
         //change username
         TextView nav_tv = (TextView) findViewById(R.id.userName);
@@ -214,6 +223,13 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         /*
+
+
+
+
+
+
+
         newRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -373,8 +389,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         startActivity(i2);
                         break;
                     case 4:
-                        Intent i3 = new Intent(HomeActivity.this, CreateRequestActivity.class);
-                        startActivity(i3);
                         break;
 
                 }
@@ -498,6 +512,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         @Override
         protected Boolean doInBackground(String... params) {
+
 
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
@@ -681,7 +696,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Intent myRequestIntent = new Intent(this, MyRequestActivity.class);
                 startActivity(myRequestIntent);
                 Toast.makeText(this, "Redirecting to My Request Page.", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Redirecting to My Request Page.", Toast.LENGTH_SHORT).show();
                 return true;
 
 
@@ -689,12 +703,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Intent myFulfillIntent = new Intent(this, MyFulfillActivity.class);
                 startActivity(myFulfillIntent);
                 Toast.makeText(this, "Redirecting to My Fulfill Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_chat:
-                Intent i3 = new Intent(HomeActivity.this, ChatActivity.class);
-                startActivity(i3);
-                Toast.makeText(this, "Redirecting to My Chat Page.", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.logout_item:

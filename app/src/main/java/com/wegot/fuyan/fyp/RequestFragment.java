@@ -1,6 +1,7 @@
 package com.wegot.fuyan.fyp;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,15 +10,12 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,9 +30,12 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
-public class RequestFragment extends Fragment {
+import it.neokree.materialtabs.MaterialTab;
+import it.neokree.materialtabs.MaterialTabHost;
+import it.neokree.materialtabs.MaterialTabListener;
+
+public class RequestFragment extends Fragment implements MaterialTabListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.activity_my_request, container, false);
@@ -52,6 +53,10 @@ public class RequestFragment extends Fragment {
     View view;
     Activity activity;
 
+    MaterialTabHost tabHost;
+    ViewPager viewPager;
+    ViewPagerAdapter androidAdapter;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -59,10 +64,34 @@ public class RequestFragment extends Fragment {
         view = getView();
         activity = getActivity();
         //change font
-        TextView myTextView=(TextView)view.findViewById(R.id.my_request_title);
-        Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Quicksand-Bold.otf");
-        myTextView.setTypeface(typeFace);
+        //TextView myTextView=(TextView)view.findViewById(R.id.my_request_title);
+        //Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Quicksand-Bold.otf");
+        //myTextView.setTypeface(typeFace);
 
+        //tab host
+        tabHost = (MaterialTabHost) view.findViewById(R.id.tabHost);
+        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+
+        //adapter view
+        androidAdapter = new ViewPagerAdapter(getFragmentManager());
+        viewPager.setAdapter(androidAdapter);
+        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int tabposition) {
+                tabHost.setSelectedNavigationItem(tabposition);
+            }
+        });
+
+
+        //for tab position
+        for (int i = 0; i < androidAdapter.getCount(); i++) {
+            tabHost.addTab(
+                    tabHost.newTab()
+                            .setText(androidAdapter.getPageTitle(i))
+                            .setTabListener(this)
+            );
+        }
+        /*
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout)view.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -80,14 +109,14 @@ public class RequestFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
+*/
         SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
         myId = pref.getInt("id", 0);
 
         //tr = (Transaction)getIntent().getSerializableExtra("transaction");
-
+    /*
 
         myRequestLV = (ListView)view.findViewById(R.id.my_request_list);
         adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.row_layout);
@@ -107,7 +136,72 @@ public class RequestFragment extends Fragment {
                 intent.putExtra("selected_my_request",(Serializable) rq);
                 startActivity(intent);
             }
-        });
+        });*/
+
+        Intent i = activity.getIntent();
+        int swipeToOpen = i.getIntExtra("after_payment_request_swipe",-1);
+        int swipeToOpen2 = i.getIntExtra("complete_request_swipe", -1);
+        int swipeToOpen3 = i.getIntExtra("disputed_request_swipe",-1);
+
+
+        if(swipeToOpen!=-1){
+            viewPager.setCurrentItem(swipeToOpen);
+        }
+        if(swipeToOpen2!=-1){
+            viewPager.setCurrentItem(swipeToOpen2);
+        }
+        if(swipeToOpen3!=-1){
+            viewPager.setCurrentItem(swipeToOpen3);
+        }
+
+
+
+    }
+
+
+
+    // view pager adapter
+    private class ViewPagerAdapter extends FragmentStatePagerAdapter {
+
+        public ViewPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        public Fragment getItem(int num) {
+            switch(num){
+                case 0:
+                    return new ActiveRequestsFragment();
+                case 1:
+                    return new PendingRequestsFragment();
+                case 2:
+                    return new CompletedRequestsFragment();
+            }
+           return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int tabposition) {
+            CharSequence ret = "";
+            switch(tabposition){
+                case 0:
+                    ret = "Active";
+                    break;
+                case 1:
+                    ret = "Pending";
+                    break;
+
+                case 2:
+                    ret = "Completed";
+                    break;
+            }
+
+            return ret;
+        }
     }
 
     public void fetchTimelineAsync(int page) {
@@ -150,7 +244,7 @@ public class RequestFragment extends Fragment {
         protected void onPostExecute(Boolean result) {
             if(result){
 
-                new getMyRequests().execute(authString);
+                //new getMyRequests().execute(authString);
 
             }else {
                 Toast.makeText(getActivity().getApplicationContext(), err, Toast.LENGTH_SHORT).show();
@@ -163,88 +257,22 @@ public class RequestFragment extends Fragment {
         }
     }
 
-    private class getMyRequests extends AsyncTask<String, Void, Boolean> {
+    //tab on selected
+    @Override
+    public void onTabSelected(MaterialTab materialTab) {
 
+        viewPager.setCurrentItem(materialTab.getPosition());
+    }
 
-        @Override
-        protected void onPreExecute() {
+    //tab on reselected
+    @Override
+    public void onTabReselected(MaterialTab materialTab) {
 
-        }
+    }
 
-        @Override
-        protected Boolean doInBackground(String... params) {
+    //tab on unselected
+    @Override
+    public void onTabUnselected(MaterialTab materialTab) {
 
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId+"/request/";
-
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
-
-                myRequestArrayList.clear();
-
-                try {
-                    JSONArray jsoArray = new JSONArray(rst);
-                    for(int i = 0; i < jsoArray.length(); i++) {
-                        JSONObject jso = jsoArray.getJSONObject(i);
-
-                        int id = jso.getInt("id");
-                        int requestorId = jso.getInt("requestorId");
-                        int imageResource = requestImage;
-                        String productName = jso.getString("productName");
-                        String requirement = jso.getString("requirement");
-                        String location = jso.getString("location");
-                        int postal = jso.getInt("postal");
-                        String startTime = jso.getString("startTime");
-                        int duration = jso.getInt("duration");
-                        String endTime = jso.getString("endTime");
-                        double price = jso.getDouble("price");
-                        String status = jso.getString("status");
-
-                        Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
-                                postal, startTime, endTime, duration, price, status);
-                        if(!status.equals("expired")) {
-                            myRequestArrayList.add(request);
-                        }
-
-
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                success = true;
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-
-
-            if(result){
-                adapter.clear();
-
-                if(myRequestArrayList != null && !myRequestArrayList.isEmpty()){
-
-                    for(Request r: myRequestArrayList){
-
-                        adapter.add(r);
-
-                    }
-                }
-                Log.d("Print", "Value: " + myRequestArrayList.size());
-                // Now we call setRefreshing(false) to signal refresh has finished
-                swipeContainer.setRefreshing(false);
-                //Toast.makeText(getApplicationContext(), "Populating My Requests!", Toast.LENGTH_SHORT).show();
-
-            }else {
-                Toast.makeText(getActivity().getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-        }
     }
 }

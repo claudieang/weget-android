@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="1_sendbird-android-sdk-3.0.1">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/libs/sendbird-android-sdk-3.0.1.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -146,6 +147,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         view = getView();
         activity = getActivity();
+
+        TextView b1 = (TextView) view.findViewById(R.id.my_request_title);
+        Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Roboto-Light.ttf");
+        b1.setTypeface(typeFace);
     /*
             // Lookup the swipe container view
             swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -395,13 +400,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                         adapter.add(r);
 
                     }
+
+                    try {
+                        addRequestMarkers();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
-                try {
-                    addRequestMarkers();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
 
                 Log.d("Print", "Value: " + requestArrayList.size());
 
@@ -423,15 +430,18 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     protected void addRequestMarkers() throws JSONException {
         //lat = 1.3790849;
         //lng = 103.955139;
-        for (int i = 0; i < latList.size(); i++) {
-            LatLng templatLng = new LatLng(latList.get(i), lngList.get(i));
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(templatLng);
-            markerOptions.title("Request: " + requestNameList.get(i));
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-            mMap.addMarker(markerOptions);
-            //LatLng requestMarker = new LatLng(lat, lng);
-            //mMap.addMarker(new MarkerOptions().position(requestMarker).title("This is a request by: Shafiq"));
+        if(mMap != null) {
+            for (int i = 0; i < latList.size(); i++) {
+                LatLng templatLng = new LatLng(latList.get(i), lngList.get(i));
+                Log.d("Print", "Value of latlist size: " + latList.get(i) + " lolol " + lngList.get(i));
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(templatLng);
+                markerOptions.title("Request: " + requestNameList.get(i));
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                mMap.addMarker(markerOptions);
+                //LatLng requestMarker = new LatLng(lat, lng);
+                //mMap.addMarker(new MarkerOptions().position(requestMarker).title("This is a request by: Shafiq"));
+            }
         }
     }
 

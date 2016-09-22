@@ -1,5 +1,6 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -275,10 +276,19 @@ public class PaymentActivity extends AppCompatActivity {
 
     private class processPayment extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog = new ProgressDialog(PaymentActivity.this, R.style.MyTheme);
+
         @Override
         protected void onPreExecute() {
             findViewById(R.id.btn_start).setEnabled(false);
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+
+
         }
+
 
         @Override
         protected Boolean doInBackground(String... params) {
@@ -406,7 +416,9 @@ public class PaymentActivity extends AppCompatActivity {
 
             if(result) {
                 //Toast.makeText(getBaseContext(), "Transaction Created!", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(PaymentActivity.this, MyRequestActivity.class);
+                Intent i = new Intent(PaymentActivity.this, MainActivity.class);
+                i.putExtra("after_payment_request_tab", 1);
+                i.putExtra("after_payment_request_swipe", 1);
                 //i.putExtra("transaction", (Serializable)tr);
                 startActivity(i);
             }else{

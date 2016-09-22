@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -106,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity {
             case R.id.home_item:
                 // Single menu item is selected do something
                 // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, HomeActivity.class);
+                Intent homeIntent = new Intent (this, MainActivity.class);
                 startActivity(homeIntent);
                 Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
                 return true;
@@ -149,6 +154,10 @@ public class ProfileActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+
+
 
 
 }

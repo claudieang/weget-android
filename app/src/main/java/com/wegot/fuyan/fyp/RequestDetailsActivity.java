@@ -1,5 +1,6 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -85,6 +86,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
         myId = pref.getInt ("id", 0);
         authString  = username + ":" + password;
 
+
         new getRequestor().execute(authString + "," + requestorIdS);
 
 
@@ -147,7 +149,9 @@ public class RequestDetailsActivity extends AppCompatActivity {
             boolean success = false;
             String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + requestId +"/fulfillers/";
 
+
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+
             if (rst == null) {
                 err = UtilHttp.err;
                 success = false;
@@ -198,8 +202,16 @@ public class RequestDetailsActivity extends AppCompatActivity {
 
     private class createFulfill extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog = new ProgressDialog(RequestDetailsActivity.this, R.style.MyTheme);
+
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+
+
         }
 
         @Override
@@ -239,7 +251,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             if(result){
                 Toast.makeText(getBaseContext(), "Request Accepted!", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(RequestDetailsActivity.this, HomeActivity.class);
+                Intent i = new Intent(RequestDetailsActivity.this, MainActivity.class);
                 startActivity(i);
             }else{
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
@@ -343,7 +355,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
             case R.id.home_item:
                 // Single menu item is selected do something
                 // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, HomeActivity.class);
+                Intent homeIntent = new Intent (this, MainActivity.class);
                 startActivity(homeIntent);
                 Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
                 return true;

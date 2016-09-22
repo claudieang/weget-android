@@ -1,6 +1,7 @@
 package com.wegot.fuyan.fyp;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,11 @@ class DrawerListAdapter extends BaseAdapter {
         }
 
         TextView titleView = (TextView) view.findViewById(R.id.title);
+        Typeface typeFace = Typeface.createFromAsset(mContext.getAssets(),"fonts/Roboto-Bold.ttf");
+        titleView.setTypeface(typeFace);
         TextView subtitleView = (TextView) view.findViewById(R.id.subTitle);
+        Typeface typeFace1 = Typeface.createFromAsset(mContext.getAssets(),"fonts/Roboto-Thin.ttf");
+        titleView.setTypeface(typeFace1);
         ImageView iconView = (ImageView) view.findViewById(R.id.icon);
 
         titleView.setText( mNavItems.get(position).mTitle );

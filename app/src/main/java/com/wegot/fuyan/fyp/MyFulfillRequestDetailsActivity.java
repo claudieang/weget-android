@@ -1,5 +1,6 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,7 +48,7 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_fulfill_request_details);
 
-        Request request = (Request) getIntent().getSerializableExtra("selected_my_fulfill_request");
+        Request request = (Request) getIntent().getSerializableExtra("selected_request");
 
         requestId = request.getId();
         requestorId = request.getRequestorId();
@@ -142,9 +143,14 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
 
     private class dispute extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog = new ProgressDialog(MyFulfillRequestDetailsActivity.this, R.style.MyTheme);
 
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
         }
 
         @Override
@@ -153,11 +159,11 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId+"/dispute/";
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/transaction/" + transactionId+"/dispute/";
             JSONObject jsoin = null;
             try{
                 jsoin = new JSONObject();
-                jsoin.put("transactionId", transactionId);
+                jsoin.put("accountId", myId);
                 jsoin.put("message", "LOL nothing here!");
 
 
@@ -180,7 +186,9 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if(result) {
-                Intent i = new Intent(MyFulfillRequestDetailsActivity.this, MyFulfillActivity.class);
+                Intent i = new Intent(MyFulfillRequestDetailsActivity.this, MainActivity.class);
+                i.putExtra("after_dispute_fulfill_tab", 3);
+                i.putExtra("disputed_fulfill_swipe", 2);
                 Toast.makeText(getApplicationContext(), "Complaint Logged!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
 
@@ -197,9 +205,14 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
 
     private class doDeliver extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog = new ProgressDialog(MyFulfillRequestDetailsActivity.this, R.style.MyTheme);
 
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
         }
 
         @Override
@@ -224,7 +237,9 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if(result) {
-                Intent i = new Intent(MyFulfillRequestDetailsActivity.this, HomeActivity.class);
+                Intent i = new Intent(MyFulfillRequestDetailsActivity.this, MainActivity.class);
+                i.putExtra("after_delivered_tab", 3);
+                i.putExtra("complete_fulfill_swipe",2);
                 Toast.makeText(getApplicationContext(), "Delivered!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
 
@@ -377,7 +392,7 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
             case R.id.home_item:
                 // Single menu item is selected do something
                 // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, HomeActivity.class);
+                Intent homeIntent = new Intent (this, MainActivity.class);
                 startActivity(homeIntent);
                 Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
                 return true;

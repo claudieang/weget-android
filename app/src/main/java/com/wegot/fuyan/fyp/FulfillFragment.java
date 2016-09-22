@@ -11,6 +11,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +28,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wegot.fuyan.fyp.FulfillFragments.ActiveFulfillsFragment;
+import com.wegot.fuyan.fyp.FulfillFragments.CompletedFulfillsFragment;
+import com.wegot.fuyan.fyp.FulfillFragments.PendingFulfillsFragment;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,14 +39,15 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import it.neokree.materialtabs.MaterialTab;
+import it.neokree.materialtabs.MaterialTabHost;
+import it.neokree.materialtabs.MaterialTabListener;
+
 /**
  * Created by Claudie on 9/3/16.
  */
-public class FulfillFragment extends Fragment {
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.activity_my_fulfill, container, false);
-        return view;
-    }
+public class FulfillFragment extends Fragment  implements MaterialTabListener {
+
     ImageButton addRequest,homepage,requestbt,fulfillbt;
     ListView myFulfillRequestLV;
     RequestAdapter adapter;
@@ -54,37 +62,62 @@ public class FulfillFragment extends Fragment {
     View view;
     Activity activity;
 
+    MaterialTabHost tabHost;
+    ViewPager viewPager;
+    ViewPagerAdapter androidAdapter;
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View view = inflater.inflate(R.layout.activity_my_fulfill, container, false);
+        return view;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         view = getView();
         activity = getActivity();
         //font
-        TextView myTextView=(TextView)view.findViewById(R.id.my_fulfill_title);
-        Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/TitilliumWeb-Bold.ttf");
-        myTextView.setTypeface(typeFace);
+//        TextView myTextView=(TextView)view.findViewById(R.id.my_fulfill_title);
+//        Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/TitilliumWeb-Bold.ttf");
+//        myTextView.setTypeface(typeFace);
+//        // Lookup the swipe container view
+//        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+//        // Setup refresh listener which triggers new data loading
+//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                // Your code to refresh the list here.
+//                // Make sure you call swipeContainer.setRefreshing(false)
+//                // once the network request has completed successfully.
+//                fetchTimelineAsync(0);
+//            }
+//        });
+//        // Configure the refreshing colors
+//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light,
+//                android.R.color.holo_orange_light,
+//                android.R.color.holo_red_light);
+        tabHost = (MaterialTabHost) view.findViewById(R.id.tabHost);
+        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 
-        //change title bar color
-        //ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#FF7F00"));
-        //((AppCompatActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(colorDrawable);
-
-        // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        //adapter view
+        androidAdapter = new ViewPagerAdapter(getFragmentManager());
+        viewPager.setAdapter(androidAdapter);
+        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                fetchTimelineAsync(0);
+            public void onPageSelected(int tabposition) {
+                tabHost.setSelectedNavigationItem(tabposition);
             }
         });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+
+        //for tab position
+        for (int i = 0; i < androidAdapter.getCount(); i++) {
+            tabHost.addTab(
+                    tabHost.newTab()
+                            .setText(androidAdapter.getPageTitle(i))
+                            .setTabListener(this)
+            );
+        }
 
         SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
@@ -92,23 +125,77 @@ public class FulfillFragment extends Fragment {
         myId = pref.getInt("id", 0);
         authString  = username + ":" + password;
 
-        myFulfillRequestLV = (ListView)view.findViewById(R.id.my_fulfill_list);
-        adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.row_layout);
-        myFulfillRequestLV.setAdapter(adapter);
+//        myFulfillRequestLV = (ListView)view.findViewById(R.id.my_fulfill_list);
+//        adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.row_layout);
+//        myFulfillRequestLV.setAdapter(adapter);
 
         new getRequests().execute(authString);
 
-        myFulfillRequestLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
-                // Then you start a new Activity via Intent
-                Request rq = myFulfillRequestList.get(position);
-                Intent intent = new Intent(activity, MyFulfillRequestDetailsActivity.class);
-                intent.putExtra("selected_my_fulfill_request",(Serializable) rq);
-                startActivity(intent);
+//        myFulfillRequestLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
+//                // Then you start a new Activity via Intent
+//                Request rq = myFulfillRequestList.get(position);
+//                Intent intent = new Intent(activity, MyFulfillRequestDetailsActivity.class);
+//                intent.putExtra("selected_my_fulfill_request",(Serializable) rq);
+//                startActivity(intent);
+//            }
+//        });
+        Intent i = activity.getIntent();
+        int swipeToOpen = i.getIntExtra("complete_fulfill_swipe",-1);
+        int swipeToOpen2 = i.getIntExtra("disputed_fulfill_swipe",-1);
+        if(swipeToOpen != -1){
+            viewPager.setCurrentItem(swipeToOpen);
+        }
+        if(swipeToOpen2 != -1){
+            viewPager.setCurrentItem(swipeToOpen2);
+        }
+
+    }
+
+    // view pager adapter
+    private class ViewPagerAdapter extends FragmentStatePagerAdapter {
+
+        public ViewPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        public Fragment getItem(int num) {
+            switch(num){
+                case 0:
+                    return new ActiveFulfillsFragment();
+                case 1:
+                    return new PendingFulfillsFragment();
+                case 2:
+                    return new CompletedFulfillsFragment();
             }
-        });
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int tabposition) {
+            CharSequence ret = "";
+            switch(tabposition){
+                case 0:
+                    ret = "Active";
+                    break;
+                case 1:
+                    ret = "Pending";
+                    break;
+
+                case 2:
+                    ret = "Completed";
+                    break;
+            }
+
+            return ret;
+        }
     }
 
     public void fetchTimelineAsync(int page) {
@@ -213,7 +300,7 @@ public class FulfillFragment extends Fragment {
         protected void onPostExecute(Boolean result) {
             if(result){
 
-                new getMyFulfill().execute(authString);
+                //new getMyFulfill().execute(authString);
 
             }else {
                 Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
@@ -307,7 +394,7 @@ public class FulfillFragment extends Fragment {
                 }
                 Log.d("Print", "Value: " + myFulfillRequestArrayList.size());
                 // Now we call setRefreshing(false) to signal refresh has finished
-                swipeContainer.setRefreshing(false);
+                //swipeContainer.setRefreshing(false);
                 //Toast.makeText(getApplicationContext(), "Populating My Fulfills!", Toast.LENGTH_SHORT).show();
 
             }else {
@@ -315,5 +402,23 @@ public class FulfillFragment extends Fragment {
             }
 
         }
+    }
+    //tab on selected
+    @Override
+    public void onTabSelected(MaterialTab materialTab) {
+
+        viewPager.setCurrentItem(materialTab.getPosition());
+    }
+
+    //tab on reselected
+    @Override
+    public void onTabReselected(MaterialTab materialTab) {
+
+    }
+
+    //tab on unselected
+    @Override
+    public void onTabUnselected(MaterialTab materialTab) {
+
     }
 }
