@@ -46,7 +46,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".UpdateProfileActivity" />
-        <activity android:name=".UpdatePasswordActivity" />
+        <activity android:name=".UpdatePasswordActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".UpdateEmailActivity" />
         <activity android:name=".UpdateContactActivity" />
         <activity android:name=".UploadImageActivity" />
@@ -65,7 +65,7 @@
             android:name=".MyRequestFulfillerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RequestFulfillerDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity android:name=".PaymentActivity" />
         <activity android:name=".MyFulfillActivity">
             <intent-filter>

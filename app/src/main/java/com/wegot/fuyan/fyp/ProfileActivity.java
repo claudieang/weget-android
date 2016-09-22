@@ -32,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //font
         //updateProfile = (ImageView)findViewById(R.id.updateprofile_btn);
-
+        getSupportActionBar().setTitle("Profile");
 
         profileImage = (ImageView)findViewById(R.id.profile_picture);
         TextView change_pw = (TextView)findViewById(R.id.change_password);
@@ -75,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent (ProfileActivity.this, UpdateProfileActivity.class);
+                Intent i = new Intent (ProfileActivity.this, UploadImageActivity.class);
                 startActivity(i);
             }
         });
