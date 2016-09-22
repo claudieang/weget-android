@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bt_very_light_gray"
     android:orientation="vertical">
 
     <include
@@ -12,9 +13,10 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="130dp"
         android:id="@+id/pic"
         android:background="@drawable/myrequestbg" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,8 +27,12 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/linear1"
-            android:background="@color/white"
+            android:background="@drawable/barbase"
             android:layout_weight="1">
 
             <TextView
@@ -39,7 +45,7 @@
                 android:id="@+id/product_name"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 />
@@ -47,13 +53,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
                 android:textSize="16sp"
                 android:id="@+id/product_description"
                 android:layout_below="@+id/product_name"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="44dp" />
+                android:textColor="@color/darkGray"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="44dp"
+                android:layout_weight="1"
+                android:textStyle="italic" />
 
         </LinearLayout>
 
@@ -63,19 +70,24 @@
             android:layout_height="wrap_content"
             android:id="@+id/linear2"
             android:layout_below="@+id/linear1"
-            android:background="@color/white"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/barbase"
             android:layout_weight="1">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" Requested by"
+                android:text="Requested by"
                 android:textSize="18sp"
                 android:drawableLeft="@drawable/face_icon"
                 android:gravity="center_vertical"
                 android:id="@+id/requestor_tv"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginLeft="5dp"
+                android:drawablePadding="8dp"
                 android:textColor="@color/black"
                 android:layout_weight="1" />
 
@@ -84,95 +96,135 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:id="@+id/requestor_name"
-                android:text="Details"
                 android:layout_below="@+id/requestor_tv"
-                android:textColor="@color/black"
+                android:textColor="@color/darkGray"
                 android:layout_weight="1"
-                android:layout_marginLeft="44dp" />
+                android:layout_marginLeft="44dp"
+                android:layout_marginBottom="2dp"
+                android:textStyle="italic" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:id="@+id/linear3"
             android:layout_below="@+id/linear2"
-            android:layout_weight="2">
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/barbase"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Collection Address"
+                android:text="Collection Address"
                 android:textSize="18sp"
                 android:gravity="center_vertical"
                 android:drawableLeft="@drawable/my_location"
                 android:id="@+id/address"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
+                android:drawablePadding="8dp"
                 android:layout_marginLeft="5dp"
+                android:layout_weight="1"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="Details"
                 android:id="@+id/address_details"
                 android:layout_below="@+id/address"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:textColor="@color/black"
-                android:layout_marginLeft="44dp" />
+                android:textColor="@color/darkGray"
+                android:layout_marginLeft="44dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:textStyle="italic"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear4"
+            android:layout_below="@+id/linear3"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/barbase"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Expiry Time"
+                android:text="Expiry Time"
                 android:id="@+id/expirytime"
                 android:textSize="18sp"
                 android:gravity="center_vertical"
                 android:drawableLeft="@drawable/timer"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
+                android:drawablePadding="8dp"
                 android:layout_marginLeft="5dp"
+                android:layout_weight="1"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Details"
                 android:textSize="16sp"
                 android:id="@+id/time_detail"
                 android:layout_below="@+id/expirytime"
                 android:layout_alignParentLeft="true"
-                android:textColor="@color/black"
+                android:textColor="@color/darkGray"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="44dp" />
+                android:layout_marginLeft="44dp"
+                android:layout_marginBottom="2dp"
+                android:textStyle="italic"
+                android:layout_weight="1"/>
+            </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear5"
+            android:layout_below="@+id/linear4"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/barbase"
+            android:layout_weight="1">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Price"
+                android:text="Price"
                 android:id="@+id/price"
                 android:textSize="18sp"
                 android:gravity="center_vertical"
                 android:drawableLeft="@drawable/money"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
+                android:drawablePadding="8dp"
                 android:layout_marginLeft="5dp"
+                android:layout_weight="1"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Details"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:id="@+id/price_detail"
                 android:layout_below="@+id/price"
-                android:textColor="@color/black"
-                android:layout_marginBottom="5dp"
+                android:textColor="@color/darkGray"
+                android:layout_marginBottom="2dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="44dp" />
+                android:layout_marginLeft="44dp"
+                android:layout_weight="1"/>
 
 
 
@@ -181,16 +233,17 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:id="@+id/linear4"
-            android:layout_below="@+id/linear3"
-            android:layout_alignParentStart="true">
+            android:layout_height="wrap_content"
+            android:id="@+id/linear6"
+            android:layout_below="@+id/linear5"
+            android:layout_alignParentStart="true"
+            android:layout_weight="0.3">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Edit"
-                android:textStyle="bold"
+                android:textSize="16sp"
                 android:id="@+id/edit_button"
                 android:textColor="@color/white"
                 android:fontFamily="normal"
@@ -203,7 +256,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Delete"
-                android:textStyle="bold"
+                android:textSize="16sp"
                 android:id="@+id/delete_button"
                 android:fontFamily="normal"
                 android:textColor="@color/white"

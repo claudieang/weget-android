@@ -3,6 +3,7 @@ package com.wegot.fuyan.fyp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +31,11 @@ public class CompletedRequest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_completed_request);
 
+        //apply font
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         toolbar.setTitle("Request Completed");
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
@@ -55,6 +61,17 @@ public class CompletedRequest extends AppCompatActivity {
         requestorNameTV = (TextView)findViewById(R.id.requestor_name);
         addressTV = (TextView)findViewById(R.id.address_details);
         priceTV = (TextView)findViewById(R.id.price_detail);
+
+
+        ((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);
+        ((TextView)findViewById(R.id.product_description)).setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
+        ((TextView)findViewById(R.id.requestor_name)).setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
+        ((TextView)findViewById(R.id.address_details)).setTypeface(typeFaceLight);
+        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
+        ((TextView)findViewById(R.id.price_detail)).setTypeface(typeFaceLight);
+
 
 
         new getRequestor().execute(authString + "," + requestorIdS);

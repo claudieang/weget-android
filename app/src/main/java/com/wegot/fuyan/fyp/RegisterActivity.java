@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -70,6 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
 
         //set font
         SpannableString s = new SpannableString("Register");
@@ -88,6 +90,13 @@ public class RegisterActivity extends AppCompatActivity {
         dpIV = (ImageView)findViewById(R.id.profile_pic_iv);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
         //dpIV.setImageResource(R.drawable.ic_profile);
+
+        t1.setTypeface(typeFace);
+        t2.setTypeface(typeFace);
+        t3.setTypeface(typeFace);
+        contact.setTypeface(typeFace);
+        email1.setTypeface(typeFace);
+
 
 
 

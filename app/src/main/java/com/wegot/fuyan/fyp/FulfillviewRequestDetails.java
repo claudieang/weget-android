@@ -59,7 +59,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        SpannableString s = new SpannableString("Pending Fulfill");
+        SpannableString s = new SpannableString("Active Request");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         // Update the action bar title with the TypefaceSpan instance

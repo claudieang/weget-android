@@ -54,6 +54,12 @@ public class CreateRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_request);
+
+
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
         //font
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
@@ -78,11 +84,20 @@ public class CreateRequestActivity extends AppCompatActivity {
         etRequestDuration = (EditText) findViewById(R.id.request_duration_txt);
         etPrice = (EditText) findViewById(R.id.request_price_txt);
         getAddressBtn = (ImageButton) findViewById(R.id.get_address_btn);
-        Typeface typeFace2 = Typeface.createFromAsset(getAssets(), "fonts/TitilliumWeb-Regular.ttf");
         createRequestBtn = (Button) findViewById(R.id.create_request_btn);
         Button done_Btn = (Button) findViewById(R.id.create_btn);
         ImageButton cancel_Btn = (ImageButton) findViewById(R.id.close_btn);
-        createRequestBtn.setTypeface(typeFace2);
+
+        ((TextView)findViewById(R.id.request_title)).setTypeface(typeFaceBold);
+        etProductName.setTypeface(typeFace);
+        etRequestRequirement.setTypeface(typeFace);
+        etPostalCode.setTypeface(typeFace);
+        etAddressLine.setTypeface(typeFace);
+        etRequestDuration.setTypeface(typeFace);
+        etPrice.setTypeface(typeFace);
+        createRequestBtn.setTypeface(typeFace);
+
+
         geocoder = new Geocoder(this);
 /*
         productName = etProductName.getText().toString();

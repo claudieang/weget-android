@@ -48,6 +48,11 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_fulfiller_details);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        toolbar.setTitle("Fulfiller Details");
+        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //font
         TextView myTextView=(TextView)findViewById(R.id.request_fulfiller_title);
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Bold.ttf");
@@ -124,6 +129,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         });
 
     }
+
+
 
 
     private class getRequestsv extends AsyncTask<String, Void, Boolean> {
@@ -234,6 +241,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         }
     }
 
+
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater menuInflater = getMenuInflater();
@@ -249,6 +257,12 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed(); // close this activity and return to preview activity (if there is any)
+        }
+
 
         switch (item.getItemId())
         {

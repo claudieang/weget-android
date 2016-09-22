@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar_blank"></include>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,7 +61,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Account Holder Name"
-                android:textStyle="bold"
                 android:textSize="18sp"
                 android:id="@+id/payee_name"
                 android:textColor="@color/darkGray"
@@ -91,7 +92,6 @@
                 android:text="Bank Name"
                 android:textSize="18sp"
                 android:id="@+id/bank_name"
-                android:textStyle="bold"
                 android:textColor="@color/darkGray"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="30dp"
@@ -122,7 +122,6 @@
                 android:textSize="18sp"
                 android:id="@+id/account_number"
                 android:textColor="@color/darkGray"
-                android:textStyle="bold"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="30dp"
                 android:layout_weight="0.5"
@@ -162,9 +161,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="SUBMIT"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:id="@+id/submit_button"
                 android:background="@color/colorPrimaryDark"
                 android:foreground="?android:selectableItemBackground"

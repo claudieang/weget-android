@@ -64,7 +64,8 @@
         <activity
             android:name=".MyRequestFulfillerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RequestFulfillerDetailsActivity" />
+        <activity android:name=".RequestFulfillerDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PaymentActivity" />
         <activity android:name=".MyFulfillActivity">
             <intent-filter>
@@ -107,8 +108,10 @@
         <activity
             android:name=".PendingdetailsFulfiller"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MyfulfillDetails" />
-        <activity android:name=".bank_details" />
+        <activity android:name=".MyfulfillDetails"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".bank_details"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".dispute"
             android:theme="@style/AppTheme.NoActionBar" />

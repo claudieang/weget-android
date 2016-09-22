@@ -10,94 +10,172 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.wegot.fuyan.fyp.ProfileActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/profile_section"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="User Profile"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        android:id="@+id/profile_title"
-        android:layout_below="@+id/profile_picture"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:background="@color/white">
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:id="@+id/usericon"
-        android:layout_below="@+id/profile_title"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/usericon"/>
+        <TextView
+            android:id="@+id/profile_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/profile_picture"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/profile_picture"
+            android:text="username"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/emailicon"
+            android:layout_width="16dp"
+            android:layout_height="14dp"
+            android:layout_alignStart="@+id/profile_username"
+            android:layout_below="@+id/profile_username"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/mail" />
+
+
+        <TextView
+            android:id="@+id/profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_alignTop="@+id/emailicon"
+            android:layout_toEndOf="@+id/emailicon" />
+
+        <TextView
+            android:id="@+id/profile_contactNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/profile_email"
+            android:layout_below="@+id/profile_email"
+            android:layout_marginTop="8dp"
+            android:text="contact"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/contacticon"
+            android:layout_width="16dp"
+            android:layout_height="14dp"
+            android:layout_alignBottom="@+id/profile_contactNumber"
+            android:layout_alignStart="@+id/emailicon"
+            android:background="@drawable/contact" />
+
+        <ImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:foreground="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/change_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/emailicon"
+            android:layout_below="@+id/contacticon"
+            android:layout_marginTop="8dp"
+            android:text="change your password"
+            android:clickable="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:singleLine="false" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/profile_username"
-        android:layout_below="@+id/profile_title"
-        android:textColor="@color/black"
-        android:textSize="15dp"
-        android:text="username"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="80dp"/>
+        android:layout_below="@+id/profile_section"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:id="@+id/rating_section">
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:id="@+id/emailicon"
-        android:layout_below="@+id/profile_username"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/mail"/>
+        <TextView
+            android:id="@+id/rating_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Overall Rating"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/profile_email"
-        android:text="email"
-        android:textColor="@color/black"
-        android:textSize="15dp"
-        android:layout_below="@+id/profile_username"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="80dp"
-        />
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar2"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/rating_text"
+            android:layout_centerHorizontal="true"
+            android:isIndicator="true"
+            android:rating="3.5" />
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:id="@+id/contacticon"
-        android:layout_below="@+id/profile_email"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/contact"/>
+    </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:id="@+id/profile_contactNumber"
-        android:text="contact"
-        android:textSize="15dp"
-        android:layout_below="@+id/profile_email"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="80dp"
-        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rating_section"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:id="@+id/past_txn_section">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:id="@+id/profile_picture"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/past_txn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Past Transactions"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
+        <!--<ListView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:background="@color/bt_very_light_gray"-->
+            <!--android:id="@+id/listView"-->
+            <!--android:layout_alignStart="@+id/past_txn"-->
+            <!--android:layout_below="@+id/past_txn" />-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@+id/past_txn"
+                android:background="@color/bt_very_light_gray"
+                >
 
-    <Button
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:background="#87CEEB"
-        android:text="Update Profile"
-        android:id="@+id/updateprofile_btn"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="No transactions to show."
+                    android:id="@+id/textView11"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+    </RelativeLayout>
+
 </RelativeLayout>
