@@ -278,8 +278,8 @@ public class SendBirdGroupChatActivity extends FragmentActivity {
             turnOffListViewDecoration(mListView);
 
             mBtnSend = (Button) rootView.findViewById(R.id.btn_send);
-            mBtnUpload = (ImageButton) rootView.findViewById(R.id.btn_upload);
-            mProgressBtnUpload = (ProgressBar) rootView.findViewById(R.id.progress_btn_upload);
+//            mBtnUpload = (ImageButton) rootView.findViewById(R.id.btn_upload);
+//            mProgressBtnUpload = (ProgressBar) rootView.findViewById(R.id.progress_btn_upload);
             mEtxtMessage = (EditText) rootView.findViewById(R.id.etxt_message);
 
             mBtnSend.setEnabled(false);
@@ -608,7 +608,7 @@ public class SendBirdGroupChatActivity extends FragmentActivity {
                         viewHolder.setView("left_container", v);
                         iv = (ImageView) convertView.findViewById(R.id.img_left_thumbnail);
                         viewHolder.setView("left_thumbnail", iv);
-                        tv = (TextView) convertView.findViewById(R.id.txt_left);
+                        tv = (TextView) convertView.findViewById(R.id.txt_left_friend);
                         viewHolder.setView("left_message", tv);
                         tv = (TextView) convertView.findViewById(R.id.txt_left_name);
                         viewHolder.setView("left_name", tv);
@@ -619,7 +619,7 @@ public class SendBirdGroupChatActivity extends FragmentActivity {
                         viewHolder.setView("right_container", v);
                         iv = (ImageView) convertView.findViewById(R.id.img_right_thumbnail);
                         viewHolder.setView("right_thumbnail", iv);
-                        tv = (TextView) convertView.findViewById(R.id.txt_right);
+                        tv = (TextView) convertView.findViewById(R.id.txt_right_user);
                         viewHolder.setView("right_message", tv);
                         tv = (TextView) convertView.findViewById(R.id.txt_right_name);
                         viewHolder.setView("right_name", tv);

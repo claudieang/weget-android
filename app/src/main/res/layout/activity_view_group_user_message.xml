@@ -186,9 +186,9 @@
         android:layout_height="wrap_content"
         android:minHeight="48dp"
         android:orientation="horizontal"
-        android:background="@drawable/sendbird_chat_input_bg"
-        android:layout_alignParentBottom="true"
 
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/sendbird_chat_input_bg"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="0dp"
         android:layout_alignParentTop="true"
@@ -222,3 +222,5 @@
             />
     </LinearLayout>
 </RelativeLayout>
+
+

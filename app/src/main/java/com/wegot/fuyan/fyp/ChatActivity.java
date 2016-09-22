@@ -71,7 +71,7 @@ public class ChatActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //overridePendingTransition(R.anim.sendbird_slide_in_from_bottom, R.anim.sendbird_slide_out_to_top);
-        setContentView(R.layout.activity_sendbird_group_channel_list);
+        setContentView(R.layout.activity_groupchat_list);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         initFragment();
         initUIComponents();
@@ -135,17 +135,17 @@ public class ChatActivity extends FragmentActivity {
     }
 
     private void initUIComponents() {
-        mTopBarContainer = findViewById(R.id.top_bar_container);
-
-        mSettingsContainer = findViewById(R.id.settings_container);
-        mSettingsContainer.setVisibility(View.GONE);
-
-        findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+//        mTopBarContainer = findViewById(R.id.top_bar_container);
+//
+//        mSettingsContainer = findViewById(R.id.settings_container);
+//        mSettingsContainer.setVisibility(View.GONE);
+//
+//        findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
 
 //        findViewById(R.id.btn_settings).setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -179,7 +179,7 @@ public class ChatActivity extends FragmentActivity {
 //            }
 //        });
 
-        resizeMenubar();
+//        resizeMenubar();
     }
 
     public void addConnectionStatus(boolean status){

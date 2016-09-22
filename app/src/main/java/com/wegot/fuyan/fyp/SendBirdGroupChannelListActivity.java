@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -328,8 +329,12 @@ public class SendBirdGroupChannelListActivity extends FragmentActivity {
             mAdapter.clear();
             mAdapter.notifyDataSetChanged();
 
+            SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
+
+            int myId = pref.getInt("id", 0);
+
             if (SendBird.getConnectionState() != SendBird.ConnectionState.OPEN) {
-                SendBird.connect(MainActivity.sUserId, new SendBird.ConnectHandler() {
+                SendBird.connect(myId+"", new SendBird.ConnectHandler() {
                     @Override
                     public void onConnected(User user, SendBirdException e) {
                         if (e != null) {
