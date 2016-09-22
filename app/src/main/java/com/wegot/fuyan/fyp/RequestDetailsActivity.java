@@ -86,6 +86,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
         myId = pref.getInt ("id", 0);
         authString  = username + ":" + password;
 
+
         new getRequestor().execute(authString + "," + requestorIdS);
 
 
@@ -148,7 +149,9 @@ public class RequestDetailsActivity extends AppCompatActivity {
             boolean success = false;
             String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + requestId +"/fulfillers/";
 
+
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+
             if (rst == null) {
                 err = UtilHttp.err;
                 success = false;
