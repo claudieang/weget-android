@@ -33,6 +33,7 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,11 +62,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MyRequestFulfillerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RequestFulfillerDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".PaymentActivity" />
         <activity android:name=".MyFulfillActivity">
             <intent-filter>
@@ -76,6 +79,7 @@
         </activity>
         <activity android:name=".MyFulfillRequestDetailsActivity" />
         <activity android:name=".UpdateRequestActivity" android:theme="@style/AppTheme.NoActionBar"/>
+
         <!--
      <activity android:name=".MainPage"></activity> ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -120,6 +124,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".update_bank_details"
             android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

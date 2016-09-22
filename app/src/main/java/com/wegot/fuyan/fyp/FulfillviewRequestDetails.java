@@ -59,7 +59,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        SpannableString s = new SpannableString("Pending Fulfill");
+        SpannableString s = new SpannableString("Active Request");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         // Update the action bar title with the TypefaceSpan instance
@@ -140,7 +140,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             dialog.setCancelable(false);
             dialog.show();
 
-            acceptRequestBtn.setEnabled(false);
+            acceptRequestBtn.setVisibility(View.GONE);
         }
 
         @Override
@@ -253,7 +253,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
                 Log.d("test -----------", ""+fulfilled);
                 if(!fulfilled) {
-                    acceptRequestBtn.setEnabled(true);
+                    acceptRequestBtn.setVisibility(View.VISIBLE);
                 }
 
             }else{

@@ -27,6 +27,7 @@ public class UtilHttp {
         OutputStreamWriter out = null;
         String json = params.substring(0,(params.indexOf('}')+1));
         String basicAuth = params.substring(params.indexOf('}')+1);
+        Log.d("Hihi", "basic Auth is : " + basicAuth);
         try {
             int TIMEOUT_MILLISEC = 15000;
 

@@ -52,10 +52,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(s);
 
         mNavItems.add(new NavItem("Profile", "Edit your profile", R.drawable.ic_account_circle_black_36dp));
-        mNavItems.add(new NavItem("Settings", "Manage your preferences", R.drawable.ic_settings_black_24dp));
+        mNavItems.add(new NavItem("Bank Settings", "Manage your bank accounts", R.drawable.ic_account_balance_wallet_black_24dp));
         mNavItems.add(new NavItem("About", "Get to know Weget", R.drawable.ic_info_outline_black_24dp));
         mNavItems.add(new NavItem("Logout", "Sign out from Weget", R.drawable.ic_exit_to_app_black_24dp));
-
         // DrawerLayout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
@@ -155,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                         s3.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s3.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s3);
+                        startActivity(new Intent(MainActivity.this, ChatActivity.class));
                         break;
 
                 }
