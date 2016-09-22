@@ -202,7 +202,10 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
+
+            if(!((Activity)mContext).isFinishing()) {
+                dialog.show();
+            }
         }
 
         @Override
@@ -233,7 +236,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
                 i.putExtra("complete_request_swipe", 2);
                 Toast.makeText(mContext, "Received!", Toast.LENGTH_SHORT).show();
                 mContext.startActivity(i);
-
+                //((Activity)mContext).finish();
 
             }else{
 
@@ -254,7 +257,9 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
+            if(!((Activity)mContext).isFinishing()) {
+                dialog.show();
+            }
         }
 
         @Override
@@ -285,7 +290,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
                 i.putExtra("complete_fulfill_swipe",2);
                 Toast.makeText(mContext, "Delivered!", Toast.LENGTH_SHORT).show();
                 mContext.startActivity(i);
-
+                //((Activity)mContext).finish();
 
             }else{
 

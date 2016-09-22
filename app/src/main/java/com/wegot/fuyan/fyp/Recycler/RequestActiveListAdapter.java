@@ -1,5 +1,6 @@
 package com.wegot.fuyan.fyp.Recycler;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -88,6 +89,8 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
                     Intent intent = new Intent(v.getContext(), MyRequestFulfillerActivity.class);
                     intent.putExtra("selected_my_request",(Serializable) rq);
                     v.getContext().startActivity(intent);
+                    //((Activity)mContext).finish();
+                    //a.finish();
 
                 }
             });

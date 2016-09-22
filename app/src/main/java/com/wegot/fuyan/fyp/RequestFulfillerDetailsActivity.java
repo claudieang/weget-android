@@ -142,7 +142,10 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
+
+            if(!isFinishing()) {
+                dialog.show();
+            }
 
 
         }
@@ -227,10 +230,12 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                     i.putExtra("request_string", requestString);
                     startActivity(i);
                     finish();
+
                 }else{
                     Intent i = new Intent (RequestFulfillerDetailsActivity.this, MyRequestActivity.class);
                     Toast.makeText(getApplicationContext(), "Request Expired!", Toast.LENGTH_SHORT).show();
                     startActivity(i);
+                    finish();
 
                 }
 
