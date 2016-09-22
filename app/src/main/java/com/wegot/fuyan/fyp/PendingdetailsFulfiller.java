@@ -122,7 +122,11 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
+
+
+            if(!isFinishing()) {
+                dialog.show();
+            }
 
 
         }
@@ -186,7 +190,10 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
+
+            if(!isFinishing()) {
+                dialog.show();
+            }
         }
 
         @Override
@@ -237,7 +244,9 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
+            if(!isFinishing()) {
+                dialog.show();
+            }
         }
 
         @Override
@@ -276,7 +285,6 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
                 i.putExtra("transaction_id", transactionId);
                 i.putExtra("origin", "fulfiller");
                 startActivity(i);
-                finish();
 
             }else {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();

@@ -151,7 +151,9 @@ public class ActiveFulfillsFragment extends Fragment {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
+            if(!activity.isFinishing()) {
+                dialog.show();
+            }
         }
 
         @Override

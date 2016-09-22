@@ -284,8 +284,10 @@ public class PaymentActivity extends AppCompatActivity {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
 
+            if(!isFinishing()) {
+                dialog.show();
+            }
 
         }
 

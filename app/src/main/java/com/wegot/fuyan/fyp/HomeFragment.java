@@ -426,10 +426,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             } else {
                 Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
-
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
         }
 
 

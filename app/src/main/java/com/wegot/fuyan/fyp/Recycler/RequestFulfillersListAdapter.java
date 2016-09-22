@@ -1,11 +1,15 @@
 package com.wegot.fuyan.fyp.Recycler;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -31,6 +35,7 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
     List<Account> list;
     List<Integer> fulfillIdList;
     Request r;
+    Context mContext;
 
 
 
@@ -73,6 +78,7 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
                     intent.putExtra("selected_fulfiller", (Serializable) account);
                     intent.putExtra("selected_request_tofulfull", (Serializable) r);
                     view.getContext().startActivity(intent);
+                    //((Activity)mContext).finish();
 
                 }
             });
@@ -80,14 +86,29 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
                 @Override
                 public void onClick(View view) {
 
-                    Account account = list.get(getAdapterPosition());
-                    int fulfillId = fulfillIdList.get(getAdapterPosition());
 
-                    Intent intent = new Intent(view.getContext(), PaymentActivity.class);
-                    intent.putExtra("fulfill_Id", fulfillId);
-                    intent.putExtra("fulfill_price", r.getPrice());
-                    intent.putExtra("request_string", String.valueOf(r.getId()));
-                    view.getContext().startActivity(intent);
+
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("Alert!")
+                            .setMessage("Do you really want to select this Fulfiller?")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int whichButton) {
+
+                                    Account account = list.get(getAdapterPosition());
+                                    int fulfillId = fulfillIdList.get(getAdapterPosition());
+
+                                    Intent intent = new Intent(mContext, PaymentActivity.class);
+                                    intent.putExtra("fulfill_Id", fulfillId);
+                                    intent.putExtra("fulfill_price", r.getPrice());
+                                    intent.putExtra("request_string", String.valueOf(r.getId()));
+                                    mContext.startActivity(intent);
+                                    //((Activity)mContext).finish();
+                                }})
+                            .setNegativeButton(android.R.string.no, null).show();
+
+
 
 
                 }
@@ -105,7 +126,7 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
         Typeface typeFace=Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Roboto-Regular.ttf");
         b1.setTypeface(typeFace);
 //        RelativeLayout fulfillers_btn = (RelativeLayout)itemView.findViewById(R.id.fulfillers_btn);
-
+        mContext = parent.getContext();
 
 
         return new FulfillerListViewHolder(itemView);

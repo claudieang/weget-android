@@ -125,7 +125,9 @@ public class PendingdetailsRequester extends AppCompatActivity {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
+            if(!isFinishing()) {
+                dialog.show();
+            }
 
 
         }
@@ -189,7 +191,10 @@ public class PendingdetailsRequester extends AppCompatActivity {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
+
+            if(!isFinishing()) {
+                dialog.show();
+            }
         }
 
         @Override
@@ -240,7 +245,11 @@ public class PendingdetailsRequester extends AppCompatActivity {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
-            dialog.show();
+
+
+            if(!isFinishing()) {
+                dialog.show();
+            }
         }
 
         @Override
@@ -279,7 +288,6 @@ public class PendingdetailsRequester extends AppCompatActivity {
                 i.putExtra("transaction_id", transactionId);
                 i.putExtra("origin", "requestor");
                 startActivity(i);
-                finish();
 
             }else {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
