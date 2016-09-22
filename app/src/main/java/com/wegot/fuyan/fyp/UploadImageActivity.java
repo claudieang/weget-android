@@ -1,17 +1,6 @@
 package com.wegot.fuyan.fyp;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOError;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -23,20 +12,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AndroidRuntimeException;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -44,6 +26,11 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.sql.ResultSet;
 
 public class UploadImageActivity extends AppCompatActivity {
 
@@ -96,6 +83,9 @@ public class UploadImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_image);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Upload Profile Picture");
 
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
@@ -376,67 +366,6 @@ public class UploadImageActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }
 
-        }
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.bottombar, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        switch (item.getItemId())
-        {
-            case R.id.home_item:
-                // Single menu item is selected do something
-                // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, MainActivity.class);
-                startActivity(homeIntent);
-                Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.search_item:
-                Toast.makeText(this, "Search is selected", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.profile_item:
-                //Toast.makeText(HomeActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, ProfileActivity.class);
-                startActivity(i);
-                Toast.makeText(this, "Redirecting to Profile Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_request_item:
-                Intent myRequestIntent = new Intent (this, MyRequestActivity.class);
-                startActivity(myRequestIntent);
-                Toast.makeText(this, "Redirecting to My Request Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_fulfill_item:
-                Intent myFulfillIntent = new Intent (this, MyFulfillActivity.class);
-                startActivity(myFulfillIntent);
-                Toast.makeText(this, "Redirecting to My Fulfill Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.logout_item:
-
-                Intent logoutIntent = new Intent (this, LoginActivity.class);
-                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(logoutIntent);
-                finish();
-
-
-
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 
