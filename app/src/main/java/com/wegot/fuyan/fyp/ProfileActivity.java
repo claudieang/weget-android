@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +21,7 @@ public class ProfileActivity extends AppCompatActivity {
     int profileContactNumber;
     TextView profileUsernameTV, profileEmailTV, profileContactNumberTV;
     ImageView profileImage;
-    Button updateProfile;
+    ImageView updateProfile;
 
 
 
@@ -31,19 +30,13 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
-        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
-        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
-
         //font
-        TextView myTextView=(TextView)findViewById(R.id.profile_title);
-        myTextView.setTypeface(typeFaceBold);
+        //updateProfile = (ImageView)findViewById(R.id.updateprofile_btn);
 
 
-        updateProfile = (Button)findViewById(R.id.updateprofile_btn);
         profileImage = (ImageView)findViewById(R.id.profile_picture);
+        TextView change_pw = (TextView)findViewById(R.id.change_password);
+        change_pw.setPaintFlags(change_pw.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
@@ -71,29 +64,30 @@ public class ProfileActivity extends AppCompatActivity {
         profileEmailTV = (TextView)findViewById(R.id.profile_email);
         profileContactNumberTV = (TextView)findViewById(R.id.profile_contactNumber);
 
-        profileUsernameTV.setTypeface(typeFace);
-        profileEmailTV.setTypeface(typeFace);
-        profileContactNumberTV.setTypeface(typeFace);
-        updateProfile.setTypeface(typeFace);
-
-        String displayUserName = "User Name: " + profileUsername;
-        String displayEmail = "Email: " + profileEmail;
-        String displayContactNumber = "Contact Number: " + profileContactNumber;
-
+        String displayUserName = profileUsername;
+        String displayEmail = profileEmail;
+        String displayContactNumber = ""+profileContactNumber;
 
         profileUsernameTV.setText(displayUserName);
         profileEmailTV.setText(displayEmail);
         profileContactNumberTV.setText(displayContactNumber);
 
-        updateProfile.setOnClickListener(new View.OnClickListener() {
+        profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent (ProfileActivity.this, UpdateProfileActivity.class);
                 startActivity(i);
-                finish();
-
             }
         });
+
+        change_pw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent (ProfileActivity.this, UpdatePasswordActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
