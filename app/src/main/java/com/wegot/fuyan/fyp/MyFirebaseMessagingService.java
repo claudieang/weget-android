@@ -74,7 +74,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         if (remoteMessage.getNotification().getTag().equalsIgnoreCase("fulfill")){
-            Intent intent = new Intent(this,MyFulfillActivity.class);
+            Intent intent = new Intent(this,MainActivity.class);
             intent.putExtra("notification_fulfill_tab", 3);
             intent.putExtra("notification_fulfill_swipe", 0);
 

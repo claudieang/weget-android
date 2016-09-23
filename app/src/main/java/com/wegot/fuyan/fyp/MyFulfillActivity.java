@@ -47,7 +47,7 @@ public class MyFulfillActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_my_fulfill);
+        setContentView(R.layout.activity_my_fulfill);
 
         //font
 //        TextView myTextView=(TextView)findViewById(R.id.my_fulfill_title);
@@ -59,8 +59,9 @@ public class MyFulfillActivity extends AppCompatActivity {
 //        getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        //swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
+        /*
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -70,11 +71,14 @@ public class MyFulfillActivity extends AppCompatActivity {
                 fetchTimelineAsync(0);
             }
         });
+        */
         // Configure the refreshing colors
+        /*
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+                */
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
@@ -88,6 +92,7 @@ public class MyFulfillActivity extends AppCompatActivity {
 
         new getRequests().execute(authString);
 
+        /*
         myFulfillRequestLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -99,8 +104,10 @@ public class MyFulfillActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        */
 
         //bottom navigation bar
+        /*
         addRequest = (ImageButton)findViewById(R.id.addrequest);
         homepage = (ImageButton)findViewById(R.id.homepage);
         requestbt = (ImageButton)findViewById(R.id.request);
@@ -140,6 +147,7 @@ public class MyFulfillActivity extends AppCompatActivity {
 
             }
         });
+        */
 
 
     }
