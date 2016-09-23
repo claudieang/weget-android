@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -68,7 +67,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationBuilder.setContentTitle("Weget");
             notificationBuilder.setContentText(remoteMessage.getNotification().getBody());
             notificationBuilder.setAutoCancel(true);
-            notificationBuilder.setSmallIcon(R.drawable.usericon);
+            notificationBuilder.setSmallIcon(R.drawable.ic_weget_notif);
             notificationBuilder.setContentIntent(pendingIntent);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(0,notificationBuilder.build());
@@ -88,7 +87,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationBuilder.setContentTitle("Weget");
             notificationBuilder.setContentText(remoteMessage.getNotification().getBody());
             notificationBuilder.setAutoCancel(true);
-            notificationBuilder.setSmallIcon(R.drawable.usericon);
+            notificationBuilder.setSmallIcon(R.drawable.ic_weget_notif);
             notificationBuilder.setContentIntent(pendingIntent);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(0,notificationBuilder.build());

@@ -66,7 +66,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RequestFulfillerDetailsActivity"
             />
-        <activity android:name=".PaymentActivity" />
+        <activity android:name=".PaymentActivity" android:theme="@style/Theme.AppCompat.Dialog"/>
         <activity android:name=".MyFulfillActivity">
             <intent-filter>
                 <action android:name="fulfill_page" />
