@@ -257,12 +257,15 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
+
             case 1:
                 startActivity(new Intent(this, update_bank_details.class));
                 break;
+
             case 2:
 
                 break;
+
             case 3:
                 new logout().execute(authString);
                 break;
