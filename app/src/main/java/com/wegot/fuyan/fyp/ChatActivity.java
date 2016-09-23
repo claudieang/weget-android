@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.LocaleDisplayNames;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.text.LoginFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,6 +77,8 @@ public class ChatActivity extends FragmentActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         initFragment();
         initUIComponents();
+
+        //new initialize().equals("");
         Toast.makeText(this, "Loading your chat groups.", Toast.LENGTH_LONG).show();
     }
 
@@ -88,7 +92,6 @@ public class ChatActivity extends FragmentActivity {
         @Override
         protected Boolean doInBackground(String... params) {
             connect();
-            Log.d("Hihi", "doing in background");
             return true;
         }
         @Override
@@ -204,8 +207,6 @@ public class ChatActivity extends FragmentActivity {
             }
         });
 
-        Log.d("Hihi", "Connection Status : " + connectionStatus);
-
         return connectionStatus;
     }
 
@@ -232,7 +233,9 @@ public class ChatActivity extends FragmentActivity {
 
         private void initUIComponents(View rootView) {
             mListView = (ListView) rootView.findViewById(R.id.list);
+            mAdapter = new SendBirdGroupChannelAdapter(getActivity());
             mListView.setAdapter(mAdapter);
+//            mListView.setAdapter(mAdapter);
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -302,8 +305,7 @@ public class ChatActivity extends FragmentActivity {
                 }
             });
 
-            mAdapter = new SendBirdGroupChannelAdapter(getActivity());
-            mListView.setAdapter(mAdapter);
+
         }
 
         private void loadNextChannels() {
@@ -332,33 +334,33 @@ public class ChatActivity extends FragmentActivity {
             });
         }
 
-//        private void create(final String[] userIds) {
-//            View view = getActivity().getLayoutInflater().inflate(R.layout.sendbird_view_group_create_channel, null);
-//            final EditText chName = (EditText) view.findViewById(R.id.etxt_chname);
-//            final CheckBox distinct = (CheckBox) view.findViewById(R.id.chk_distinct);
-//
-//            new AlertDialog.Builder(getActivity())
-//                    .setView(view)
-//                    .setTitle("Create Group Channel")
-//                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            GroupChannel.createChannelWithUserIds(Arrays.asList(userIds), distinct.isChecked(), chName.getText().toString(), null, null, new GroupChannel.GroupChannelCreateHandler() {
-//                                @Override
-//                                public void onResult(GroupChannel groupChannel, SendBirdException e) {
-//                                    if (e != null) {
-//                                        Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                                        return;
-//                                    }
-//
-//                                    mAdapter.replace(groupChannel);
-//                                }
-//
-//                            });
-//                        }
-//                    })
-//                    .setNegativeButton("Cancel", null).create().show();
-//        }
+        private void create(final String[] userIds) {
+            View view = getActivity().getLayoutInflater().inflate(R.layout.sendbird_view_group_create_channel, null);
+            final EditText chName = (EditText) view.findViewById(R.id.etxt_message);
+            final CheckBox distinct = (CheckBox) view.findViewById(R.id.chk_distinct);
+
+            new AlertDialog.Builder(getActivity())
+                    .setView(view)
+                    .setTitle("Create Group Channel")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            GroupChannel.createChannelWithUserIds(Arrays.asList(userIds), distinct.isChecked(), chName.getText().toString(), null, null, new GroupChannel.GroupChannelCreateHandler() {
+                                @Override
+                                public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                                    if (e != null) {
+                                        Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+
+                                    mAdapter.replace(groupChannel);
+                                }
+
+                            });
+                        }
+                    })
+                    .setNegativeButton("Cancel", null).create().show();
+        }
 
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -427,6 +429,7 @@ public class ChatActivity extends FragmentActivity {
                     }
                 });
             } else {
+
                 mQuery = GroupChannel.createMyGroupChannelListQuery();
                 mQuery.setIncludeEmpty(true);
             }
@@ -494,7 +497,7 @@ public class ChatActivity extends FragmentActivity {
                 convertView = mInflater.inflate(R.layout.sendbird_view_group_channel, parent, false);
                 viewHolder.setView("img_thumbnail", convertView.findViewById(R.id.img_thumbnail));
                 viewHolder.setView("txt_topic", convertView.findViewById(R.id.txt_topic));
-                viewHolder.setView("txt_member_count", convertView.findViewById(R.id.txt_member_count));
+//                viewHolder.setView("txt_member_count", convertView.findViewById(R.id.txt_member_count));
                 viewHolder.setView("txt_unread_count", convertView.findViewById(R.id.txt_unread_count));
                 viewHolder.setView("txt_date", convertView.findViewById(R.id.txt_date));
                 viewHolder.setView("txt_desc", convertView.findViewById(R.id.txt_desc));
@@ -515,8 +518,8 @@ public class ChatActivity extends FragmentActivity {
                 viewHolder.getView("txt_unread_count", TextView.class).setVisibility(View.INVISIBLE);
             }
 
-            viewHolder.getView("txt_member_count", TextView.class).setVisibility(View.VISIBLE);
-            viewHolder.getView("txt_member_count", TextView.class).setText("" + item.getMemberCount());
+            //viewHolder.getView("txt_member_count", TextView.class).setVisibility(View.VISIBLE);
+            //viewHolder.getView("txt_member_count", TextView.class).setText("" + item.getMemberCount());
 
             BaseMessage message = item.getLastMessage();
             if (message == null) {

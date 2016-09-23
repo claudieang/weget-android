@@ -120,6 +120,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     //Google Maps variables
     private GoogleMap mMap;
+    private ArrayList<String> markerList;
     protected GoogleApiClient mGoogleApiClient;
     public LocationRequest mLocationRequest;
     public Location mLastLocation;
@@ -297,7 +298,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 @Override
                 public void onMapReady(GoogleMap googleMap) {
 
-
+                    markerList = new ArrayList<>();
                     mMap = googleMap;
                     mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.290270,103.851959),14));
@@ -394,6 +395,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onTabReselected(int position) {
             }
         });
+
 
     }
 
@@ -519,6 +521,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 success = false;
             } else {
                 requestArrayList.clear();
+                markerList.clear();
 
                 try {
                     JSONArray jsoArray = new JSONArray(rst);
@@ -719,17 +722,26 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void addRequestMarkers() throws JSONException {
         //lat = 1.3790849;
         //lng = 103.955139;
+
         for (int i = 0; i < latList.size(); i++) {
             LatLng templatLng = new LatLng(latList.get(i), lngList.get(i));
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(templatLng);
-            markerOptions.title("Request: "+requestNameList.get(i));
+            markerOptions.title("Request: "+requestArrayList.get(i).getProductName());
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-            mMap.addMarker(markerOptions);
-            //LatLng requestMarker = new LatLng(lat, lng);
-            //mMap.addMarker(new MarkerOptions().position(requestMarker).title("This is a request by: Shafiq"));
+            Marker mkr = mMap.addMarker(markerOptions);
+            mkr.setTag(requestArrayList.get(i));
+            markerList.add(mkr.getId());
+
+            
+
         }
+
+
+
+
     }
+
 
     /**
      * Manipulates the map once available.
@@ -759,6 +771,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.setMyLocationEnabled(true);
         }
 
+
+
+
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -780,6 +795,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
+
+        Log.d("geo1", "LOLOLOOLOLOLOLOLO");
+
+
     }
 
     @Override

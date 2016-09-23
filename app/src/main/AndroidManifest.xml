@@ -61,6 +61,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".UserChatActivity" />
+        <activity android:name=".SendBirdBlockedUserListActivity" />
+        <activity android:name=".SendBirdGroupChannelListActivity" />
+        <activity android:name=".SendBirdGroupChatActivity" />
+        <activity android:name=".SendBirdMemberListActivity" />
         <activity
             android:name=".MyRequestFulfillerActivity"
             android:theme="@style/AppTheme.NoActionBar" />

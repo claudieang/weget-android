@@ -49,7 +49,7 @@ public class MyRequestActivity extends AppCompatActivity {
         //myTextView.setTypeface(typeFace);
 
         /*
-        // Lookup the swipe container view
+        // Lookup the swipe containerin view
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -73,6 +73,7 @@ public class MyRequestActivity extends AppCompatActivity {
         username = pref.getString("username", null);
         password = pref.getString("password", null);
         myId = pref.getInt("id", 0);
+        Log.d("Hihi","In MyRequestActivity myId is : " + myId);
 
         //tr = (Transaction)getIntent().getSerializableExtra("transaction");
 
