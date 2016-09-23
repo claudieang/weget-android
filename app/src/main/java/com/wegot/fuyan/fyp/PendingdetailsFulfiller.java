@@ -225,7 +225,6 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Toast.makeText(getApplicationContext(), "Delivered!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
-                finish();
 
             }else{
 
