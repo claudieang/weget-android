@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +50,9 @@ public class UpdateEmailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_email);
 
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
         username = pref.getString("username", null);
@@ -65,6 +69,12 @@ public class UpdateEmailActivity extends AppCompatActivity {
         updateTitle = (TextView)findViewById(R.id.update_username);
         updateTitle.setText("User Name: " + username);
         updateEmail.setHint(email);
+
+        ((TextView)findViewById(R.id.title1)).setTypeface(typeFaceBold);
+        ((TextView)findViewById(R.id.title2)).setTypeface(typeFaceBold);
+        updateTitle.setTypeface(typeFace);
+        ((TextView)findViewById(R.id.textView1)).setTypeface(typeFace);
+        updateEmailBtn.setTypeface(typeFace);
 
 
         updateEmailBtn.setOnClickListener(new View.OnClickListener() {

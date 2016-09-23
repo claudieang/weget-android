@@ -5,16 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             updatedConfirmPassword, contactNoS, idString, picture;
     int contactNo, id;
     private Context mContext;
+    TextView updateTitle;
     Button updatePasswordBtn;
     EditText updateOldPassword,updateNewPassword, updateConfirmPassword;
     SharedPreferences.Editor editor = null;
@@ -37,23 +40,8 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_password);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setTitle("Change Password");
-
-        //change toolbar actions
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
-
-        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
-        //font
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
-
-        TextView toolBar_title = (TextView)findViewById(R.id.toolbar_title);
-        toolBar_title.setTypeface(typeFace);
-        toolBar_title.setText("Change Password");
-        Button update_btn = (Button)findViewById(R.id.create_btn);
-        update_btn.setText("UPDATE");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
 
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
@@ -70,12 +58,24 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         updateOldPassword = (EditText)findViewById(R.id.update_old_password);
         updateNewPassword = (EditText)findViewById(R.id.update_new_password);
         updateConfirmPassword = (EditText)findViewById(R.id.update_confirm_password);
-        //updatePasswordBtn = (Button)findViewById(R.id.confirm_update_password_btn);
+        updatePasswordBtn = (Button)findViewById(R.id.confirm_update_password_btn);
+        updateTitle = (TextView)findViewById(R.id.update_username);
+        updateTitle.setText("User Name: " + username);
         updateOldPassword.setHint("Old password");
         updateNewPassword.setHint("New password");
         updateConfirmPassword.setHint("Confirm password");
 
-        update_btn.setOnClickListener(new View.OnClickListener() {
+        ((TextView)findViewById(R.id.title1)).setTypeface(typeFaceBold);
+        ((TextView)findViewById(R.id.title2)).setTypeface(typeFaceBold);
+        updateTitle.setTypeface(typeFace);
+        ((TextView)findViewById(R.id.textView1)).setTypeface(typeFace);
+        updateOldPassword.setTypeface(typeFace);
+        updateNewPassword.setTypeface(typeFace);
+        ((TextView)findViewById(R.id.textView3)).setTypeface(typeFace);
+        updateConfirmPassword.setTypeface(typeFace);
+
+
+        updatePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updatedOldPassword = updateOldPassword.getText().toString();
@@ -119,14 +119,6 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             }else{
                 updateOldPassword.setError("Old password is required!");
             }
-            }
-        });
-
-        ImageButton close_btn = (ImageButton)findViewById(R.id.close_btn);
-        close_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
             }
         });
     }
@@ -199,6 +191,70 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }
 
+        }
+    }
+
+
+    //Menu Bar
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.bottombar, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+
+        switch (item.getItemId())
+        {
+            case R.id.home_item:
+                // Single menu item is selected do something
+                // Ex: launching new activity/screen or show alert message
+                Intent homeIntent = new Intent (this, MainActivity.class);
+                startActivity(homeIntent);
+                Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.search_item:
+                Toast.makeText(this, "Search is selected", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.profile_item:
+                //Toast.makeText(HomeActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(this, ProfileActivity.class);
+                startActivity(i);
+                Toast.makeText(this, "Redirecting to Profile Page.", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.my_request_item:
+                Intent myRequestIntent = new Intent (this, MyRequestActivity.class);
+                startActivity(myRequestIntent);
+                Toast.makeText(this, "Redirecting to My Request Page.", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.my_fulfill_item:
+                Intent myFulfillIntent = new Intent (this, MyFulfillActivity.class);
+                startActivity(myFulfillIntent);
+                Toast.makeText(this, "Redirecting to My Fulfill Page.", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.logout_item:
+
+                Intent logoutIntent = new Intent (this, LoginActivity.class);
+                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(logoutIntent);
+                finish();
+
+
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

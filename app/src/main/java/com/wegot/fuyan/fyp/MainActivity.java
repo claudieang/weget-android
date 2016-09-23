@@ -1,9 +1,12 @@
 package com.wegot.fuyan.fyp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -13,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,9 +24,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -35,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout mDrawerPane;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
+    private int userID;
+    Context mContext;
+    private String err, password, authString,username;
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 
     @Override
@@ -79,7 +90,11 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
-        String username = pref.getString("username", null);
+        username = pref.getString("username", null);
+
+        userID = pref.getInt("id",0);
+        password = pref.getString("password", null);
+        authString  = username + ":" + password;
 
 
         TextView nav_tv = (TextView) findViewById(R.id.userName);
@@ -242,11 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case 3:
-                Intent intent = new Intent(this,LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                new logout().execute(authString);
                 break;
         }
 
@@ -255,6 +266,50 @@ public class MainActivity extends AppCompatActivity {
 
         // Close the drawer
         mDrawerLayout.closeDrawer(mDrawerPane);
+    }
+
+    private class logout extends AsyncTask<String, Void, Boolean> {
+
+
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ userID + "/logout/";
+
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+                success = true;
+            }
+            return success;
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result==true){
+                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        }
     }
 
 }
