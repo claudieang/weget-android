@@ -1,20 +1,33 @@
 package com.wegot.fuyan.fyp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -25,314 +38,247 @@ import android.widget.Toast;
 import com.sendbird.android.BaseChannel;
 import com.sendbird.android.BaseMessage;
 import com.sendbird.android.GroupChannel;
+import com.sendbird.android.GroupChannelListQuery;
 import com.sendbird.android.PreviousMessageListQuery;
 import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
 import com.sendbird.android.UserMessage;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import it.neokree.materialtabs.MaterialTab;
+import it.neokree.materialtabs.MaterialTabHost;
+import it.neokree.materialtabs.MaterialTabListener;
 
 /**
  * Created by HP on 9/13/2016.
  */
-public class ChatFragment extends Fragment{
-
-    private static final int REQUEST_PICK_IMAGE = 100;
-    private static final String identifier = "SendBirdOpenChat";
-
-    //Context context = this;
-    String username;
-    String password;
-    int myId;
-    String authString;
-
-
+public class ChatFragment extends Fragment {
+    private static final String identifier = "SendBirdGroupChannelList";
+    private static final int REQUEST_INVITE_USERS = 100;
     private ListView mListView;
+    private SendBirdGroupChannelAdapter mAdapter;
+    private GroupChannelListQuery mQuery;
+    private String username;
+    private String password;
+    private int myId;
 
-    ChatRowAdapter mAdapter;
-    private EditText mEtxtUserInput;
-    private Button mBtnSend;
-    private ImageButton mBtnUpload;
-    private ProgressBar mProgressBtnUpload;
-    private String mChannelUrl;
-    private GroupChannel mGroupChannel;
-    private PreviousMessageListQuery mPrevMessageListQuery;
-    private boolean isUploading;
+
+    public ChatFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_view_group_user_message, container, false);
-
-        mChannelUrl = getArguments().getString("channel_url");
-
+        View rootView = inflater.inflate(R.layout.sendbird_fragment_group_channel_list, container, false);
         initUIComponents(rootView);
         return rootView;
+    }
+
+    private void initUIComponents(View rootView) {
+        mListView = (ListView) rootView.findViewById(R.id.list);
+        mAdapter = new SendBirdGroupChannelAdapter(getActivity());
+        mListView.setAdapter(mAdapter);
+//            mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                GroupChannel channel = mAdapter.getItem(position);
+                Intent intent = new Intent(getActivity(), UserChatActivity.class);
+                intent.putExtra("channel_url", channel.getUrl());
+                startActivity(intent);
+            }
+        });
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem + visibleItemCount >= (int) (totalItemCount * 0.8f)) {
+                    loadNextChannels();
+                }
+            }
+        });
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                final GroupChannel channel = mAdapter.getItem(position);
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Leave")
+                        .setMessage("Do you want to leave or hide this channel?")
+                        .setPositiveButton("Leave", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                channel.leave(new GroupChannel.GroupChannelLeaveHandler() {
+                                    @Override
+                                    public void onResult(SendBirdException e) {
+                                        if (e != null) {
+                                            Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
+
+                                        Toast.makeText(getActivity(), "Channel left.", Toast.LENGTH_SHORT).show();
+                                        mAdapter.remove(position);
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                        })
+                        .setNeutralButton("Hide", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                channel.hide(new GroupChannel.GroupChannelHideHandler() {
+                                    @Override
+                                    public void onResult(SendBirdException e) {
+                                        if (e != null) {
+                                            Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
+
+                                        Toast.makeText(getActivity(), "Channel hidden.", Toast.LENGTH_SHORT).show();
+                                        mAdapter.remove(position);
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("Cancel", null).create().show();
+                return true;
+            }
+        });
+
+
+    }
+
+    private void loadNextChannels() {
+        if (mQuery == null || mQuery.isLoading()) {
+            return;
+        }
+
+        if (!mQuery.hasNext()) {
+            return;
+        }
+
+        mQuery.next(new GroupChannelListQuery.GroupChannelListQueryResultHandler() {
+            @Override
+            public void onResult(List<GroupChannel> list, SendBirdException e) {
+                if (e != null) {
+                    Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                mAdapter.addAll(list);
+                mAdapter.notifyDataSetChanged();
+
+                if (mAdapter.getCount() == 0) {
+                    Toast.makeText(getActivity(), "No channels found.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void create(final String[] userIds) {
+        View view = getActivity().getLayoutInflater().inflate(R.layout.sendbird_view_group_create_channel, null);
+        final EditText chName = (EditText) view.findViewById(R.id.etxt_message);
+        final CheckBox distinct = (CheckBox) view.findViewById(R.id.chk_distinct);
+
+        new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .setTitle("Create Group Channel")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        GroupChannel.createChannelWithUserIds(Arrays.asList(userIds), distinct.isChecked(), chName.getText().toString(), null, null, new GroupChannel.GroupChannelCreateHandler() {
+                            @Override
+                            public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                                if (e != null) {
+                                    Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                mAdapter.replace(groupChannel);
+                            }
+
+                        });
+                    }
+                })
+                .setNegativeButton("Cancel", null).create().show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//            if (resultCode == Activity.RESULT_OK) {
+//                if (requestCode == REQUEST_INVITE_USERS) {
+//                    String[] userIds = data.getStringArrayExtra("user_ids");
+//                    create(userIds);
+//                }
+//            }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (isUploading) {
-            SendBird.removeChannelHandler(identifier);
-        }
+        SendBird.removeChannelHandler(identifier);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (!isUploading) {
-            SendBird.addChannelHandler(identifier, new SendBird.ChannelHandler() {
+        //check connection from sendbird
+        SendBird.addChannelHandler(identifier, new SendBird.ChannelHandler() {
+            @Override
+            public void onMessageReceived(BaseChannel baseChannel, BaseMessage baseMessage) {
+                if (baseChannel instanceof GroupChannel) {
+                    GroupChannel groupChannel = (GroupChannel) baseChannel;
+                    mAdapter.replace(groupChannel);
+                }
+            }
+
+            @Override
+            public void onUserJoined(GroupChannel groupChannel, User user) {
+                // Member changed. Refresh group channel item.
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onUserLeft(GroupChannel groupChannel, User user) {
+                // Member changed. Refresh group channel item.
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mAdapter.clear();
+        mAdapter.notifyDataSetChanged();
+
+        SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
+        username = pref.getString("username", null);
+        password = pref.getString("password", null);
+        myId = pref.getInt("id", 0);
+        String authString = username + ":" + password;
+
+        if (SendBird.getConnectionState() != SendBird.ConnectionState.OPEN) {
+            SendBird.connect(myId+"", new SendBird.ConnectHandler() {
                 @Override
-                public void onMessageReceived(BaseChannel baseChannel, BaseMessage baseMessage) {
-                    if (baseChannel.getUrl().equals(mChannelUrl)) {
-                        mAdapter.appendMessage(baseMessage);
-                        mAdapter.notifyDataSetChanged();
+                public void onConnected(User user, SendBirdException e) {
+                    if (e != null) {
+                        Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                }
+                    mQuery = GroupChannel.createMyGroupChannelListQuery();
+                    mQuery.setIncludeEmpty(true);
 
-                @Override
-                public void onReadReceiptUpdated(GroupChannel groupChannel) {
-                }
 
-                @Override
-                public void onTypingStatusUpdated(GroupChannel groupChannel) {
                 }
             });
-
-            if (SendBird.getConnectionState() != SendBird.ConnectionState.OPEN) {
-                SendBird.connect("12", new SendBird.ConnectHandler() {
-                    @Override
-                    public void onConnected(User user, SendBirdException e) {
-                        if (e != null) {
-                            Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        //enterChannel(mChannelUrl);
-
-                    }
-                });
-            } else {
-                // enterChannel(mChannelUrl);
-            }
         } else {
-            isUploading = false;
+
+            mQuery = GroupChannel.createMyGroupChannelListQuery();
+            mQuery.setIncludeEmpty(true);
         }
     }
 
-    private void loadPrevMessages(final boolean refresh) {
-        if (mGroupChannel == null) {
-            return;
-        }
-
-        if (refresh || mPrevMessageListQuery == null) {
-            mPrevMessageListQuery = mGroupChannel.createPreviousMessageListQuery();
-        }
-
-        if (mPrevMessageListQuery.isLoading()) {
-            return;
-        }
-
-        if (!mPrevMessageListQuery.hasMore()) {
-            return;
-        }
-
-        mPrevMessageListQuery.load(30, true, new PreviousMessageListQuery.MessageListQueryResult() {
-            @Override
-            public void onResult(List<BaseMessage> list, SendBirdException e) {
-                if (e != null) {
-                    Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (refresh) {
-                    mAdapter.clear();
-                }
-
-                for (BaseMessage message : list) {
-                    mAdapter.insertMessage(message);
-                }
-                mAdapter.notifyDataSetChanged();
-                mListView.setSelection(list.size());
-            }
-        });
-    }
-
-//    private void enterChannel(String channelUrl) {
-//        GroupChannel.getChannel(channelUrl, new GroupChannel.GroupChannelGetHandler() {
-//            @Override
-//            public void onResult(final GroupChannel groupChannel, SendBirdException e) {
-//                if(e != null) {
-//                    Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//
-//                GroupChannel.enter(new Gr.OpenChannelEnterHandler() {
-//                    @Override
-//                    public void onResult(SendBirdException e) {
-//                        if(e != null) {
-//                            Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                            return;
-//                        }
-//
-//                        mOpenChannel = openChannel;
-//                        ((TextView)getActivity().findViewById(R.id.txt_channel_url)).setText(openChannel.getName());
-//
-//                        loadPrevMessages(true);
-//                    }
-//                });
-//            }
-//        });
-//
-//    }
-
-    private void initUIComponents(View rootView) {
-
-        //initialize row layouts
-
-        //mAdapter = new UserChatAdapter(getActivity());
-
-//        mListView = (ListView) rootView.findViewById(R.id.list);
-//        turnOffListViewDecoration(mListView);
-//        mListView.setAdapter(mAdapter);
-//
-//        mBtnSend = (Button) rootView.findViewById(R.id.btn_send);
-//        //mBtnUpload = (ImageButton)rootView.findViewById(R.id.btn_upload);
-//        //mProgressBtnUpload = (ProgressBar)rootView.findViewById(R.id.progress_btn_upload);
-//        mEtxtMessageUser = (TextView) rootView.findViewById(R.id.txt_right_user);
-//        mEtxtMessageFriend = (TextView) rootView.findViewById(R.id.txt_left_friend);
-//        mTviewTimeUser = (TextView) rootView.findViewById(R.id.txt_right_time_user);
-//        mTviewTimeFriend = (TextView) rootView.findViewById(R.id.txt_left_time_friend);
-//        mTviewFriendName = (TextView) rootView.findViewById(R.id.txt_left_name_friend);
-//        mTViewUserName = (TextView) rootView.findViewById(R.id.txt_right_name);
-//        mEtxtUserInput = (EditText) rootView.findViewById(R.id.txt_message);
-//
-
-        mBtnSend.setEnabled(false);
-        mBtnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                send();
-            }
-        });
-
-
-//        mBtnUpload.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(Helper.requestReadWriteStoragePermissions(getActivity())) {
-//                    isUploading = true;
-//
-//                    Intent intent = new Intent();
-//                    intent.setType("image/*");
-//                    intent.setAction(Intent.ACTION_GET_CONTENT);
-//                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_PICK_IMAGE);
-//                }
-//            }
-//        });
-
-        mEtxtUserInput.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                        send();
-                    }
-                    return true; // Do not hide keyboard.
-                }
-                return false;
-            }
-        });
-        mEtxtUserInput.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
-        mEtxtUserInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mBtnSend.setEnabled(s.length() > 0);
-            }
-        });
-
-//        mListView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                Helper.hideKeyboard(getActivity());
-//                return false;
-//            }
-//        });
-
-        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE) {
-                    if (view.getFirstVisiblePosition() == 0 && view.getChildCount() > 0 && view.getChildAt(0).getTop() == 0) {
-                        loadPrevMessages(false);
-                    }
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-            }
-        });
-    }
-
-    private void showUploadProgress(boolean tf) {
-        if (tf) {
-            mBtnUpload.setEnabled(false);
-            mBtnUpload.setVisibility(View.INVISIBLE);
-            mProgressBtnUpload.setVisibility(View.VISIBLE);
-        } else {
-            mBtnUpload.setEnabled(true);
-            mBtnUpload.setVisibility(View.VISIBLE);
-            mProgressBtnUpload.setVisibility(View.GONE);
-        }
-    }
-
-    private void turnOffListViewDecoration(ListView listView) {
-        listView.setDivider(null);
-        listView.setDividerHeight(0);
-        listView.setHorizontalFadingEdgeEnabled(false);
-        listView.setVerticalFadingEdgeEnabled(false);
-        listView.setHorizontalScrollBarEnabled(false);
-        listView.setVerticalScrollBarEnabled(true);
-        listView.setSelector(new ColorDrawable(0x00ffffff));
-        listView.setCacheColorHint(0x00000000); // For Gingerbread scrolling bug fix
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-//            if(requestCode == REQUEST_PICK_IMAGE && data != null && data.getData() != null) {
-//                upload(data.getData());
-//            }
-        }
-    }
-
-    private void send() {
-        mGroupChannel.sendUserMessage(mEtxtUserInput.getText().toString(), new BaseChannel.SendUserMessageHandler() {
-            @Override
-            public void onSent(UserMessage userMessage, SendBirdException e) {
-                if (e != null) {
-                    Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                mAdapter.appendMessage(userMessage);
-                mAdapter.notifyDataSetChanged();
-
-                mEtxtUserInput.setText("");
-            }
-        });
-
-
-    }
 }

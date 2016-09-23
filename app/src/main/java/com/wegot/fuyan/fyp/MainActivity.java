@@ -175,8 +175,10 @@ public class MainActivity extends AppCompatActivity {
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s3);
 
+                        ChatFragment chatFragment = new ChatFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, chatFragment).commit();
 
-                        startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                        //startActivity(new Intent(MainActivity.this, ChatActivity.class));
                         break;
 
                 }

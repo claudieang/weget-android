@@ -62,7 +62,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ChatActivity" />
-        <activity android:name=".UserChatActivity" />
+        <activity android:name=".UserChatActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".SendBirdBlockedUserListActivity" />
         <activity android:name=".SendBirdGroupChannelListActivity" />
         <activity android:name=".SendBirdGroupChatActivity" />
