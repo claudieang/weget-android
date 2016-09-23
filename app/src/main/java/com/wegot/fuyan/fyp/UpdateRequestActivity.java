@@ -313,7 +313,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
                 i.putExtra("udpated_request_swipe", 0);
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
-                //finish();
+                finish();
             }else{
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }
