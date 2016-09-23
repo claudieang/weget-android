@@ -215,7 +215,8 @@ public class ActiveRequestsFragment extends Fragment {
 
             final String basicAuth = "Basic " + Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
             ArrayList<Request> rList = params[0];
-            boolean success = false;
+            boolean success = true;
+
 
             for (Request r : rList) {
                 int rId = r.getId();
@@ -250,7 +251,9 @@ public class ActiveRequestsFragment extends Fragment {
 
                         }
                     } catch (JSONException e) {
+                        success = false;
                         e.printStackTrace();
+                        err = e.getMessage();
                     }
                     counterList.add(fulfillerAccountList.size());
                     success = true;

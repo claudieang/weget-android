@@ -235,12 +235,15 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
+
             case 1:
                 startActivity(new Intent(this, update_bank_details.class));
                 break;
+
             case 2:
 
                 break;
+
             case 3:
                 Intent intent = new Intent(this,LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
