@@ -88,7 +88,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         mAdapter = new RequestFulfillersListAdapter(fulfillerAccountList,fulfillIdList, myRequest);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setEmptyView(findViewById(R.id.empty_view));
+        recyclerView.setEmptyView(findViewById(R.id.empty_view));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);

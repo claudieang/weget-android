@@ -19,7 +19,7 @@
 
         <TextView
             android:id="@+id/request_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="Product Name"
@@ -28,13 +28,26 @@
             android:textStyle="bold"
             android:layout_marginRight="10dp"
             android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/fulfillers_btn"/>
+            android:layout_toLeftOf="@+id/price"
+/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$0.00"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:id="@+id/price"
+        android:layout_marginRight="15dp"
+        android:layout_alignTop="@+id/request_title"
+        android:layout_toStartOf="@+id/fulfillers_btn"/>
 
         <TextView
             android:id="@+id/request_requirement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product details"
+            android:text="Expires at: "
             android:textColor="@color/black"
             android:textSize="14sp"
             android:paddingBottom="4dp"

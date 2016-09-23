@@ -60,8 +60,8 @@ public class bank_details extends AppCompatActivity {
         accountNumberET = (EditText)findViewById(R.id.account_number_detail);
         submitBtn = (Button)findViewById(R.id.submit_button);
 
-        ((TextView)findViewById(R.id.title1)).setTypeface(typeFaceBold);
-        ((TextView)findViewById(R.id.title2)).setTypeface(typeFaceBold);
+        //((TextView)findViewById(R.id.title1)).setTypeface(typeFaceBold);
+        //((TextView)findViewById(R.id.title2)).setTypeface(typeFaceBold);
         ((TextView)findViewById(R.id.payee_name)).setTypeface(typeFace);
         accountHolderNameET.setTypeface(typeFace);
         ((TextView)findViewById(R.id.bank_name)).setTypeface(typeFace);

@@ -2,14 +2,12 @@ package com.wegot.fuyan.fyp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.MenuItem;
@@ -21,8 +19,6 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.Serializable;
 
 public class update_bank_details extends AppCompatActivity {
 
@@ -59,8 +55,6 @@ public class update_bank_details extends AppCompatActivity {
         accountNumberET = (EditText)findViewById(R.id.account_number_detail);
         updateBankBtn = (Button)findViewById(R.id.update_button);
 
-        ((TextView)findViewById(R.id.title1)).setTypeface(typeFaceBold);
-        ((TextView)findViewById(R.id.title2)).setTypeface(typeFaceBold);
         ((TextView)findViewById(R.id.payee_name)).setTypeface(typeFace);
         accountHolderNameET.setTypeface(typeFaceLight);
         ((TextView)findViewById(R.id.bank_name)).setTypeface(typeFace);

@@ -7,170 +7,124 @@
     <include
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar_blank"></include>
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/bt_very_light_gray"
         android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/payee_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/title"
-            android:background="@color/colorPrimary"
-            android:layout_weight="1">
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:text="Account Holder Name"
+            android:textColor="@color/darkGray"
+            android:textSize="18sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Please"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:id="@+id/title1"
-                android:textColor="@color/black"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="30dp"
-                android:layout_weight="1"
-                />
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/payee_name_detail"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/payee_name"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/barbase"
+            android:hint="Account Holder Name"
+            android:imeOptions="actionDone"
+            android:drawableLeft="@drawable/ic_account"
+            android:drawableTint="@color/colorGray"
+            android:lines="1"
+            android:paddingLeft="10dp"
+            android:drawablePadding="5dp"
+            android:singleLine="true"
+            android:layout_alignParentStart="@+id/payee_name"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorGray"
+            android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="provide account details"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:id="@+id/title2"
-                android:textColor="@color/white"
-                android:layout_below="@id/title1"
-                android:layout_marginLeft="30dp"
-                android:layout_marginBottom="15dp"
-                android:layout_weight="1"
-                />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/bank_name"
+            android:layout_below="@+id/payee_name_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linear1"
-            android:background="@color/bt_very_light_gray"
-            android:layout_weight="10">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Account Holder Name"
-                android:textSize="18sp"
-                android:id="@+id/payee_name"
-                android:textColor="@color/darkGray"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="30dp"
-                android:layout_weight="0.5"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/payee_name_detail"
-                android:imeOptions="actionDone"
-                android:singleLine="true"
-                android:lines="1"
-                android:textColorHint="@color/bt_very_light_gray"
-                android:textColor="@color/black"
-                android:hint="Change here.."
-                android:paddingLeft="10dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:textSize="16sp"
-                android:background="@drawable/barbase"
-                android:layout_below="@id/payee_name"
-                android:layout_weight="0.5"/>
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:text="Bank Name"
+            android:textColor="@color/darkGray"
+            android:textSize="18sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bank Name"
-                android:textSize="18sp"
-                android:id="@+id/bank_name"
-                android:textColor="@color/darkGray"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="30dp"
-                android:layout_weight="0.5"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/payee_bank_detail"
-                android:textColorHint="@color/bt_very_light_gray"
-                android:textColor="@color/black"
-                android:imeOptions="actionDone"
-                android:textSize="16sp"
-                android:singleLine="true"
-                android:lines="1"
-                android:hint="Change here.."
-                android:paddingLeft="10dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/barbase"
-                android:layout_below="@id/bank_name"
-                android:layout_weight="0.5"/>
+        <EditText
+            android:id="@+id/payee_bank_detail"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/bank_name"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/barbase"
+            android:hint="Bank Name"
+            android:imeOptions="actionDone"
+            android:lines="1"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="10dp"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/money"
+            android:drawableTint="@color/colorGray"
+            android:singleLine="true"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorGray"
+            android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Account Number"
-                android:textSize="18sp"
-                android:id="@+id/account_number"
-                android:textColor="@color/darkGray"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="30dp"
-                android:layout_weight="0.5"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/account_number_detail"
-                android:lines="1"
-                android:textColorHint="@color/bt_very_light_gray"
-                android:textColor="@color/black"
-                android:hint="Change here.."
-                android:inputType="number"
-                android:textSize="16sp"
-                android:paddingLeft="10dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/barbase"
-                android:layout_below="@id/account_number"
-                android:layout_weight="0.5"
-                android:layout_marginBottom="50dp"/>
-
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
+            android:id="@+id/account_number"
+            android:layout_below="@+id/payee_bank_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linear4"
-            android:layout_below="@+id/linear3"
-            android:layout_alignParentStart="true"
-            android:layout_weight="0.5">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="UPDATE"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:id="@+id/update_button"
-                android:background="@color/colorPrimaryDark"
-                android:foreground="?android:selectableItemBackground"
-                android:fontFamily="normal"
-                android:layout_weight="1" />
-        </LinearLayout>
-    </LinearLayout>
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:text="Account Number"
+            android:textColor="@color/darkGray"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/account_number_detail"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/account_number"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/barbase"
+            android:hint="Account Number"
+            android:drawablePadding="5dp"
+            android:layout_marginTop="5dp"
+            android:drawableLeft="@drawable/ic_card_number"
+            android:drawableTint="@color/colorGray"
+            android:inputType="number"
+            android:lines="1"
+            android:paddingLeft="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorGray"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/update_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:fontFamily="normal"
+            android:foreground="?android:selectableItemBackground"
+            android:text="Update"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
 
 
 </LinearLayout>
