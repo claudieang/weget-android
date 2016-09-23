@@ -73,18 +73,17 @@ public class MyRequestActivity extends AppCompatActivity {
         username = pref.getString("username", null);
         password = pref.getString("password", null);
         myId = pref.getInt("id", 0);
+
+        authString  = username + ":" + password;
         Log.d("Hihi","In MyRequestActivity myId is : " + myId);
+        new getRequests().execute(authString);
 
         //tr = (Transaction)getIntent().getSerializableExtra("transaction");
 
-
+/*
         myRequestLV = (ListView)findViewById(R.id.my_request_list);
         adapter = new RequestAdapter(getApplicationContext(),R.layout.row_layout);
         myRequestLV.setAdapter(adapter);
-
-        authString  = username + ":" + password;
-
-        new getRequests().execute(authString);
 
         myRequestLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -97,6 +96,8 @@ public class MyRequestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        */
         /*
         //bottom navigation bar
         addRequest = (ImageButton)findViewById(R.id.addrequest);
