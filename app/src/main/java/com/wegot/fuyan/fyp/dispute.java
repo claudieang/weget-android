@@ -133,14 +133,14 @@ public class dispute extends AppCompatActivity {
                 if(origin.equals("fulfiller")){
                     i.putExtra("after_dispute_fulfill_tab", 3);
                     i.putExtra("disputed_fulfill_swipe", 2);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     Toast.makeText(getApplicationContext(), "Complaint Logged!", Toast.LENGTH_SHORT).show();
                     startActivity(i);
                     finish();
                 }else{
                     i.putExtra("after_dispute_request_tab", 1);
                     i.putExtra("disputed_request_swipe", 2);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     Toast.makeText(getApplicationContext(), "Complaint Logged!", Toast.LENGTH_SHORT).show();
                     startActivity(i);
                     finish();
