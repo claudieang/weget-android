@@ -85,8 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             markerOptions.title("This is a nearby request");
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             mMap.addMarker(markerOptions);
-            //LatLng requestMarker = new LatLng(lat, lng);
-            //mMap.addMarker(new MarkerOptions().position(requestMarker).title("This is a request by: Shafiq"));
+
         }
     }
 

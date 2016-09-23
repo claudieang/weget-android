@@ -2,6 +2,7 @@ package com.wegot.fuyan.fyp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MyRequestFulfillerActivity extends AppCompatActivity {
@@ -72,7 +74,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
-        myId = pref.getInt("id", 0);
+
 
         authString  = username + ":" + password;
 
@@ -278,6 +280,8 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
 
 
                         fulfillerAccountList.add(account);
+
+
 
 
                     }

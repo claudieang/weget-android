@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -249,6 +250,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         }
 
         client = new GoogleApiClient.Builder(activity).addApi(AppIndex.API).build();
+
+
+
     }
 
     public void fetchTimelineAsync(int page) {
@@ -442,10 +446,26 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 markerOptions.position(templatLng);
                 markerOptions.title("Request: " + requestNameList.get(i));
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                mMap.addMarker(markerOptions);
+                Marker mkr = mMap.addMarker(markerOptions);
+                mkr.setTag(requestArrayList.get(i));
+                //markerList.add(mkr.getId());
                 //LatLng requestMarker = new LatLng(lat, lng);
                 //mMap.addMarker(new MarkerOptions().position(requestMarker).title("This is a request by: Shafiq"));
             }
+
+            Log.d("geo1", "mMap is : " + mMap);
+            //need to set marker as onclick
+            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    Request request = (Request) marker.getTag();
+                    Intent intent = new Intent(getContext(),FulfillviewRequestDetails.class);
+                    Log.d("geo1", "request marker has data of : " + request);
+                    intent.putExtra("selected_request",request);
+                    startActivity(intent);
+                }
+            });
+            Log.d("geo1", "HIHIIHIHIHIIHIHI");
         }
     }
 
@@ -477,6 +497,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             mMap.setMyLocationEnabled(true);
         }
 
+
+
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -498,6 +520,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
+
     }
 
     @Override

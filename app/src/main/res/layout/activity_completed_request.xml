@@ -25,15 +25,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/white"
+            android:background="@color/bt_very_light_gray"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linear2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/barbase"
+                android:orientation="vertical">
 
             <TextView
                 android:id="@+id/product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:layout_weight="1"
                 android:drawablePadding="8dp"
                 android:drawableLeft="@drawable/product"
@@ -50,19 +62,33 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/product_name"
                 android:layout_marginLeft="44dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="1"
                 android:textColor="@color/darkGray"
                 android:textSize="16sp"
                 android:textStyle="italic" />
 
+                </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear2"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/barbase"
+                android:orientation="vertical">
 
             <TextView
                 android:id="@+id/requestor_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:layout_weight="1"
                 android:drawablePadding="8dp"
                 android:drawableLeft="@drawable/face_icon"
@@ -77,18 +103,32 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/requestor_tv"
                 android:layout_marginLeft="44dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="1"
                 android:textColor="@color/darkGray"
                 android:textSize="16sp"
                 android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear3"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/barbase"
+                android:orientation="vertical">
 
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:layout_weight="1"
                 android:drawablePadding="8dp"
                 android:drawableLeft="@drawable/my_location"
@@ -105,18 +145,32 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/address"
                 android:layout_marginLeft="44dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="1"
                 android:textColor="@color/darkGray"
                 android:textSize="16sp"
                 android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear4"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/barbase"
+                android:orientation="vertical">
 
             <TextView
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:layout_weight="1"
                 android:drawablePadding="8dp"
                 android:drawableLeft="@drawable/money"
@@ -133,12 +187,12 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/price"
                 android:layout_marginLeft="44dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="1"
                 android:textColor="@color/darkGray"
                 android:textSize="16sp"
                 android:textStyle="italic" />
+                </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
