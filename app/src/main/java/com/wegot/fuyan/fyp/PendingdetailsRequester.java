@@ -222,7 +222,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
                 Intent i = new Intent(PendingdetailsRequester.this, MainActivity.class);
                 i.putExtra("after_received_tab", 1);
                 i.putExtra("complete_request_swipe", 2);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Toast.makeText(getApplicationContext(), "Received!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
                 finish();

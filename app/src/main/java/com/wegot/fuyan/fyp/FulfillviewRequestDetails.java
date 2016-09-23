@@ -327,6 +327,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 Intent i = new Intent(FulfillviewRequestDetails.this, MainActivity.class);
                 i.putExtra("accepted_fulfill_tab", 3);
                 i.putExtra("accepted_fulfill_swipe", 0);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
                 finish();
             }else{

@@ -222,7 +222,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
                 Intent i = new Intent(PendingdetailsFulfiller.this, MainActivity.class);
                 i.putExtra("after_delivered_tab", 3);
                 i.putExtra("complete_fulfill_swipe",2);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Toast.makeText(getApplicationContext(), "Delivered!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
                 finish();

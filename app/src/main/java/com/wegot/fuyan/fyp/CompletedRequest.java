@@ -78,10 +78,18 @@ public class CompletedRequest extends AppCompatActivity {
         ((TextView)findViewById(R.id.price_detail)).setTypeface(typeFaceLight);
 
 
-        if (myId == requestorId) {
+        if (myId != requestorId) {
 
+
+            Log.d("MY ID: =========", ""+myId);
+            Log.d("R ID:========", ""+requestorId);
             new getRequestor().execute(authString + "," + requestorIdS);
+
+
         }else{
+
+            Log.d("MY ID: =========", ""+myId);
+            Log.d("R ID:========", ""+requestorId);
             new getMyRequestFulfiller().execute(authString);
         }
     }

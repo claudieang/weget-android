@@ -234,7 +234,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
                 Intent i = new Intent(mContext, MainActivity.class);
                 i.putExtra("after_received_tab", 1);
                 i.putExtra("complete_request_swipe", 2);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Toast.makeText(mContext, "Received!", Toast.LENGTH_SHORT).show();
                 mContext.startActivity(i);
                 //((Activity)mContext).finish();
@@ -289,7 +289,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
                 Intent i = new Intent(mContext, MainActivity.class);
                 i.putExtra("after_delivered_tab", 3);
                 i.putExtra("complete_fulfill_swipe",2);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Toast.makeText(mContext, "Delivered!", Toast.LENGTH_SHORT).show();
                 mContext.startActivity(i);
                 //((Activity)mContext).finish();
