@@ -3,7 +3,6 @@ package com.wegot.fuyan.fyp;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,26 +13,20 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wegot.fuyan.fyp.Recycler.DividerItemDecoration;
-import com.wegot.fuyan.fyp.Recycler.RecyclerItemClickListener;
 import com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by HP on 4/4/2016.
@@ -215,7 +208,7 @@ public class ActiveRequestsFragment extends Fragment {
 
             final String basicAuth = "Basic " + Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
             ArrayList<Request> rList = params[0];
-            boolean success = false;
+            boolean success = true;
 
             for (Request r : rList) {
                 int rId = r.getId();
@@ -250,6 +243,7 @@ public class ActiveRequestsFragment extends Fragment {
 
                         }
                     } catch (JSONException e) {
+                        success = false;
                         e.printStackTrace();
                     }
                     counterList.add(fulfillerAccountList.size());
@@ -265,7 +259,6 @@ public class ActiveRequestsFragment extends Fragment {
             mAdapter.notifyDataSetChanged();
             if(!result) {
                 Toast.makeText(getContext(), err, Toast.LENGTH_SHORT).show();
-
             }
 
         }
