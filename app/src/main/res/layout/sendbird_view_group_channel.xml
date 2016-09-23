@@ -52,18 +52,7 @@
                     android:textColor="#3d3d3d"
                     android:text="Topic"
                     />
-                <TextView
-                    android:id="@+id/txt_member_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/sendbird_icon_group_number"
-                    android:text="1"
-                    android:textSize="10sp"
-                    android:textColor="#a4acbc"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:layout_marginLeft="6dp"
-                    />
+
                 <TextView
                     android:id="@+id/txt_date"
                     android:layout_width="wrap_content"

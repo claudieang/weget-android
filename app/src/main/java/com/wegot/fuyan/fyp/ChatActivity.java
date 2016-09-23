@@ -497,7 +497,7 @@ public class ChatActivity extends FragmentActivity {
                 convertView = mInflater.inflate(R.layout.sendbird_view_group_channel, parent, false);
                 viewHolder.setView("img_thumbnail", convertView.findViewById(R.id.img_thumbnail));
                 viewHolder.setView("txt_topic", convertView.findViewById(R.id.txt_topic));
-//                viewHolder.setView("txt_member_count", convertView.findViewById(R.id.txt_member_count));
+                //viewHolder.setView("txt_member_count", convertView.findViewById(R.id.txt_member_count));
                 viewHolder.setView("txt_unread_count", convertView.findViewById(R.id.txt_unread_count));
                 viewHolder.setView("txt_date", convertView.findViewById(R.id.txt_date));
                 viewHolder.setView("txt_desc", convertView.findViewById(R.id.txt_desc));
