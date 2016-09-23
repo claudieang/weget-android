@@ -726,10 +726,16 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             markerOptions.title("Request: "+requestNameList.get(i));
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             mMap.addMarker(markerOptions);
-            //LatLng requestMarker = new LatLng(lat, lng);
-            //mMap.addMarker(new MarkerOptions().position(requestMarker).title("This is a request by: Shafiq"));
+
+            //need to set marker as onclick
+
         }
+
+
+
+
     }
+
 
     /**
      * Manipulates the map once available.

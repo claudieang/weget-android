@@ -24,10 +24,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sendbird.android.GroupChannel;
+import com.sendbird.android.SendBirdException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RequestFulfillerDetailsActivity extends AppCompatActivity {
 
@@ -35,11 +40,11 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
     Account account;
     TextView fulfillerNameTV, fulfillerEmailTV, fulfillerContactTV;
     ImageView fulfillerPicIV;
-    Button acceptFulfillerBtn;
+    Button acceptFulfillerBtn, chatBtn;
 
     String fulfillerName, fulfillerEmail, fulfillerPic, fulfillerContactS, productName, requirement,
     location, startTime, endTime, username, password, authString, err, fulfillStatus, requestString;
-    int fulfillerContact, requestorId, fulfillerId, postal, duration, fulfillId, requestId;
+    int fulfillerContact, requestorId, fulfillerId, postal, duration, fulfillId, requestId, myId;
     double price;
     Context mContext;
 
@@ -62,6 +67,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
+        myId = pref.getInt("id",0);
         authString  = username + ":" + password;
 
         fulfillerNameTV = (TextView)findViewById(R.id.request_fulfiller_name);
@@ -71,6 +77,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         acceptFulfillerBtn = (Button)findViewById(R.id.select_fulfiller_btn);
         Typeface typeFace2=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Regular.ttf");
         acceptFulfillerBtn.setTypeface(typeFace2);
+        chatBtn = (Button)findViewById(R.id.chat_button);
+        chatBtn.setTypeface(typeFace2);
 
 
         request = (Request) getIntent().getSerializableExtra("selected_request_tofulfull");
@@ -125,6 +133,33 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                             }})
                         .setNegativeButton(android.R.string.no, null).show();
 
+            }
+        });
+
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d("Hihi", "checking fulfillerId : " + fulfillerId);
+                Log.d("Hihi", "checking myId : " + myId);
+
+                List<String> userIds = new ArrayList<>();
+                userIds.add(fulfillerId +"");
+                userIds.add(myId+"");
+
+                GroupChannel.createChannelWithUserIds(userIds, true, new GroupChannel.GroupChannelCreateHandler() {
+                    @Override
+                    public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                        if(e != null) {
+                            Toast.makeText(RequestFulfillerDetailsActivity.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        Intent intent = new Intent(RequestFulfillerDetailsActivity.this, UserChatActivity.class);
+                        intent.putExtra("channel_url", groupChannel.getUrl());
+                        startActivity(intent);
+                    }
+                });
+                finish();
             }
         });
 

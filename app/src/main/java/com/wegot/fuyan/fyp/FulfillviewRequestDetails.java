@@ -21,6 +21,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sendbird.android.GroupChannel;
+import com.sendbird.android.SendBirdException;
+import com.sendbird.android.User;
 import com.stripe.model.BankAccount;
 
 import org.json.JSONArray;
@@ -29,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FulfillviewRequestDetails extends AppCompatActivity {
 
@@ -117,6 +121,35 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 new getBank().execute(authString);
             }
         });
+
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d("Hihi", "checking requestor id : " + requestorId);
+                Log.d("Hihi", "checking myId : " + myId);
+
+                List<String> userIds = new ArrayList<>();
+                userIds.add(requestorId +"");
+                userIds.add(myId+"");
+
+                GroupChannel.createChannelWithUserIds(userIds, true, new GroupChannel.GroupChannelCreateHandler() {
+                    @Override
+                    public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                        if(e != null) {
+                            Toast.makeText(FulfillviewRequestDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
+                        intent.putExtra("channel_url", groupChannel.getUrl());
+                        startActivity(intent);
+                    }
+                });
+
+                finish();
+            }
+        });
+
     }
 
     @Override
@@ -191,6 +224,8 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             }else {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
+
+
 
 
         }

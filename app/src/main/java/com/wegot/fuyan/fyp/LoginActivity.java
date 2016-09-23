@@ -19,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.sendbird.android.SendBird;
+import com.sendbird.android.SendBirdException;
+import com.sendbird.android.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -215,9 +218,31 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("email", dbEmail);
                 editor.putString("picture", dbProfilePic);
                 editor.commit();
+                SendBird.init("73152F8B-67D9-4606-802C-A1BED7143436", getApplication().getApplicationContext());
+                SendBird.connect(dbID+"", new SendBird.ConnectHandler() {
+                    @Override
+                    public void onConnected(User user, SendBirdException e) {
+                        if (e != null) {
+                            Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        SendBird.updateCurrentUserInfo(dbUsername, dbProfilePic, new SendBird.UserInfoUpdateHandler() {
+                            @Override
+                            public void onUpdated(SendBirdException e) {
+                                if (e != null) {
+                                    Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
+                        });
+
+
+                    }
+                });
 
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
+
                 finish();
 
             }else {
