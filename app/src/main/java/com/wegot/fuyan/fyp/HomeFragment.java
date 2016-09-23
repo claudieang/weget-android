@@ -459,10 +459,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 @Override
                 public void onInfoWindowClick(Marker marker) {
                     Request request = (Request) marker.getTag();
-                    Intent intent = new Intent(getContext(),FulfillviewRequestDetails.class);
-                    Log.d("geo1", "request marker has data of : " + request);
-                    intent.putExtra("selected_request",request);
-                    startActivity(intent);
+                    if(request != null){
+                        Intent intent = new Intent(getContext(),FulfillviewRequestDetails.class);
+                        Log.d("geo1", "request marker has data of : " + request);
+                        intent.putExtra("selected_request",request);
+                        startActivity(intent);
+                    }
+
                 }
             });
             Log.d("geo1", "HIHIIHIHIHIIHIHI");

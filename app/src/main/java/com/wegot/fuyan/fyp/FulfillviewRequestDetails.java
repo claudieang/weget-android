@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sendbird.android.GroupChannel;
+import com.sendbird.android.GroupChannelListQuery;
+import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
 import com.stripe.model.BankAccount;
@@ -132,19 +134,84 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 List<String> userIds = new ArrayList<>();
                 userIds.add(requestorId +"");
                 userIds.add(myId+"");
-
-                GroupChannel.createChannelWithUserIds(userIds, true, new GroupChannel.GroupChannelCreateHandler() {
-                    @Override
-                    public void onResult(GroupChannel groupChannel, SendBirdException e) {
-                        if(e != null) {
-                            Toast.makeText(FulfillviewRequestDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            return;
+                GroupChannelListQuery mQuery = GroupChannel.createMyGroupChannelListQuery();
+                if(mQuery == null){
+                    GroupChannel.createChannelWithUserIds(userIds, true, new GroupChannel.GroupChannelCreateHandler() {
+                        @Override
+                        public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                            if(e != null) {
+                                Toast.makeText(FulfillviewRequestDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
+                            intent.putExtra("channel_url", groupChannel.getUrl());
+                            startActivity(intent);
+                            finish();
                         }
-                        Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
-                        intent.putExtra("channel_url", groupChannel.getUrl());
-                        startActivity(intent);
-                    }
-                });
+                    });
+                } else{
+
+                    Log.d("geo1","isit we dunnid create a group?");
+
+                    mQuery.setIncludeEmpty(true);
+                    mQuery.next(new GroupChannelListQuery.GroupChannelListQueryResultHandler() {
+                        @Override
+                        public void onResult(List<GroupChannel> list, SendBirdException e) {
+                            if (e != null) {
+                                Toast.makeText(FulfillviewRequestDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            boolean haveMyId = false;
+                            int membercount = 0;
+                            for (GroupChannel gc: list){
+                                List<User> uList = gc.getMembers();
+                                for (User u: uList){
+                                    Log.d("geo1","user Id now is : " + u.getUserId());
+                                    if (u.getUserId().equals(requestorId+"")){
+                                        membercount++;
+                                    }
+
+                                    if (u.getUserId().equals(myId+"")){
+                                        membercount++;
+                                        haveMyId = true;
+                                    }
+
+                                }
+
+                                if (membercount == gc.getMemberCount() && haveMyId){
+                                    Log.d("geo1","isit it goes in here nao?");
+                                    Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
+                                    intent.putExtra("channel_url", gc.getUrl());
+                                    startActivity(intent);
+                                    finish();
+                                } else if (haveMyId){
+                                    List<String> uIds = new ArrayList<>();
+                                    uIds.add(requestorId+"");
+                                    uIds.add(myId+"");
+                                    GroupChannel.createChannelWithUserIds(uIds, true, new GroupChannel.GroupChannelCreateHandler() {
+                                        @Override
+                                        public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                                            if(e != null) {
+                                                Toast.makeText(FulfillviewRequestDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                return;
+                                            }
+                                            Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
+                                            intent.putExtra("channel_url", groupChannel.getUrl());
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+                                }
+                                membercount = 0;
+                            }
+
+
+
+                        }
+                    });
+                }
+
 
                 finish();
             }
