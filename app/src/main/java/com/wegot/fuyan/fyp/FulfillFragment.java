@@ -146,6 +146,9 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
         int swipeToOpen = i.getIntExtra("complete_fulfill_swipe",-1);
         int swipeToOpen2 = i.getIntExtra("disputed_fulfill_swipe",-1);
         int swipeToOpen3 = i.getIntExtra("accepted_fulfill_swipe", -1);
+
+        int notificationfulfillswipe = i.getIntExtra("notification_fulfill_swipe",-1);
+
         if(swipeToOpen != -1){
             viewPager.setCurrentItem(swipeToOpen);
         }
@@ -155,6 +158,10 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
         if(swipeToOpen3 != -1){
             viewPager.setCurrentItem(swipeToOpen3);
         }
+        if(notificationfulfillswipe!=-1){
+            viewPager.setCurrentItem(notificationfulfillswipe);
+        }
+
 
     }
 
