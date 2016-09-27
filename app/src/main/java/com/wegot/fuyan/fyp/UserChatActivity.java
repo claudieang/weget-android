@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -62,6 +63,8 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
+import butterknife.internal.ListenerClass;
+
 public class UserChatActivity extends FragmentActivity {
     private SendBirdChatFragment mSendBirdMessagingFragment;
     String productName, requirement, location, startTime, endTime, status, err, requestorIdS, requestorName,
@@ -80,12 +83,29 @@ public class UserChatActivity extends FragmentActivity {
     private GroupChannel mGroupChannel;
     private SendBirdMessagingAdapter mAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //overridePendingTransition(R.anim.sendbird_slide_in_from_bottom, R.anim.sendbird_slide_out_to_top);
         setContentView(R.layout.activity_groupchat_list);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        //toolbar.setTitle("Request Completed");
+//        setActionBar(toolbar);
+//
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
+        Button btn = (Button)findViewById(R.id.create_btn);
+        btn.setVisibility(View.GONE);
+        ImageButton imgBtn = (ImageButton)findViewById(R.id.close_btn);
+
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
         initFragment();
         initUIComponents();

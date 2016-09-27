@@ -62,17 +62,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".ChatActivity" />
-        <activity android:name=".UserChatActivity" />
+        <activity android:name=".UserChatActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".SendBirdBlockedUserListActivity" />
         <activity android:name=".SendBirdGroupChannelListActivity" />
         <activity android:name=".SendBirdGroupChatActivity" />
         <activity android:name=".SendBirdMemberListActivity" />
         <activity
             android:name=".MyRequestFulfillerActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true"/>
         <activity android:name=".RequestFulfillerDetailsActivity"
             />
-        <activity android:name=".PaymentActivity" android:theme="@style/Theme.AppCompat.Dialog"/>
+        <activity android:name=".PaymentActivity" android:theme="@style/Theme.AppCompat.Dialog"
+            android:noHistory="true"/>
         <activity android:name=".MyFulfillActivity">
             <intent-filter>
                 <action android:name="fulfill_page" />

@@ -74,7 +74,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         if (remoteMessage.getNotification().getTag().equalsIgnoreCase("fulfill")){
-            Intent intent = new Intent(this,MyFulfillActivity.class);
+            Intent intent = new Intent(this,MainActivity.class);
             intent.putExtra("notification_fulfill_tab", 3);
             intent.putExtra("notification_fulfill_swipe", 0);
 
@@ -117,7 +117,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+                .setSmallIcon(R.drawable.ic_weget_notif)
                 .setContentTitle("FCM Message")
                 .setContentText(messageBody)
                 .setAutoCancel(true)

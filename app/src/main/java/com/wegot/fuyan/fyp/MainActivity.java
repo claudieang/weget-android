@@ -170,8 +170,10 @@ public class MainActivity extends AppCompatActivity {
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s3);
 
+                        ChatFragment chatFragment = new ChatFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, chatFragment).commit();
 
-                        startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                        //startActivity(new Intent(MainActivity.this, ChatActivity.class));
                         break;
 
                 }
@@ -252,12 +254,15 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
+
             case 1:
                 startActivity(new Intent(this, update_bank_details.class));
                 break;
+
             case 2:
 
                 break;
+
             case 3:
                 new logout().execute(authString);
                 break;
@@ -269,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
         // Close the drawer
         mDrawerLayout.closeDrawer(mDrawerPane);
     }
+
 
     private class logout extends AsyncTask<String, Void, Boolean> {
 

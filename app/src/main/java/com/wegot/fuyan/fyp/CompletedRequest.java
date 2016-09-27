@@ -12,19 +12,23 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 public class CompletedRequest extends AppCompatActivity {
 
     Request r;
-    TextView productNameTV, requestorNameTV, addressTV, priceTV;
+    TextView productNameTV, requestorNameTV, addressTV, priceTV, requestorTitleTV;
     String productName, requestorName, address, username, password, authString, requestorIdS, err;
     double price;
     int requestId, myId, requestorId, postal;
     Context mContext;
+    ArrayList<Account> fulfillerAccountList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,7 @@ public class CompletedRequest extends AppCompatActivity {
         Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        toolbar.setTitle("Request Completed");
+        toolbar.setTitle("Completed");
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -61,6 +65,7 @@ public class CompletedRequest extends AppCompatActivity {
         requestorNameTV = (TextView)findViewById(R.id.requestor_name);
         addressTV = (TextView)findViewById(R.id.address_details);
         priceTV = (TextView)findViewById(R.id.price_detail);
+        requestorTitleTV = (TextView)findViewById(R.id.requestor_tv);
 
 
         ((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);
@@ -73,8 +78,20 @@ public class CompletedRequest extends AppCompatActivity {
         ((TextView)findViewById(R.id.price_detail)).setTypeface(typeFaceLight);
 
 
+        if (myId != requestorId) {
 
-        new getRequestor().execute(authString + "," + requestorIdS);
+
+            Log.d("MY ID: =========", ""+myId);
+            Log.d("R ID:========", ""+requestorId);
+            new getRequestor().execute(authString + "," + requestorIdS);
+
+
+        }else{
+
+            Log.d("MY ID: =========", ""+myId);
+            Log.d("R ID:========", ""+requestorId);
+            new getMyRequestFulfiller().execute(authString);
+        }
     }
 
     @Override
@@ -152,6 +169,90 @@ public class CompletedRequest extends AppCompatActivity {
 
             if(dialog.isShowing()){
                 dialog.dismiss();
+            }
+
+        }
+    }
+
+    private class getMyRequestFulfiller extends AsyncTask<String, Void, Boolean> {
+
+        int id, contactNo;
+        String username, password, email, fulfiller, picture;
+        Account account;
+        ProgressDialog dialog = new ProgressDialog(CompletedRequest.this, R.style.MyTheme);
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+
+            if(!isFinishing()) {
+                dialog.show();
+            }
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + requestId +"/fulfillers/";
+
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+                fulfillerAccountList.clear();
+
+                try {
+                    JSONArray jsoArray = new JSONArray(rst);
+                    for(int i = 0; i < jsoArray.length(); i++) {
+                        JSONObject jso = jsoArray.getJSONObject(i);
+
+                        id = jso.getInt("id");
+                        username = jso.getString("username");
+                        password = jso.getString("password");
+                        contactNo = jso.getInt("contactNo");
+                        email = jso.getString("email");
+                        fulfiller = jso.getString("fulfiller");
+                        picture = jso.getString("picture");
+
+                        account = new Account(id, username, password, contactNo, email, fulfiller, picture);
+
+
+                        fulfillerAccountList.add(account);
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                success = true;
+            }
+            return success;
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+
+            if(result) {
+                if(fulfillerAccountList.size() == 1){
+                    Account a = fulfillerAccountList.get(0);
+
+
+                    requestorTitleTV.setText("Fulfilled by");
+                    requestorNameTV.setText(a.getUsername());
+                    productNameTV.setText(productName);
+                    addressTV.setText(address + " " + postal);
+                    priceTV.setText("$" + price + "0");
+
+                }
+
+            }else{
+                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
 
         }

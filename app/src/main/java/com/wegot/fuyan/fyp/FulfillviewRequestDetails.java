@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sendbird.android.GroupChannel;
+import com.sendbird.android.GroupChannelListQuery;
+import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
 import com.stripe.model.BankAccount;
@@ -132,19 +134,116 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 List<String> userIds = new ArrayList<>();
                 userIds.add(requestorId +"");
                 userIds.add(myId+"");
-
-                GroupChannel.createChannelWithUserIds(userIds, true, new GroupChannel.GroupChannelCreateHandler() {
-                    @Override
-                    public void onResult(GroupChannel groupChannel, SendBirdException e) {
-                        if(e != null) {
-                            Toast.makeText(FulfillviewRequestDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            return;
+                GroupChannelListQuery mQuery = GroupChannel.createMyGroupChannelListQuery();
+                if(mQuery == null){
+                    GroupChannel.createChannelWithUserIds(userIds, true, new GroupChannel.GroupChannelCreateHandler() {
+                        @Override
+                        public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                            if(e != null) {
+                                Toast.makeText(FulfillviewRequestDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
+                            intent.putExtra("channel_url", groupChannel.getUrl());
+                            startActivity(intent);
+                            finish();
                         }
-                        Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
-                        intent.putExtra("channel_url", groupChannel.getUrl());
-                        startActivity(intent);
-                    }
-                });
+                    });
+                } else{
+
+                    Log.d("geo1","isit we dunnid create a group?");
+
+                    mQuery.setIncludeEmpty(true);
+                    mQuery.next(new GroupChannelListQuery.GroupChannelListQueryResultHandler() {
+                        @Override
+                        public void onResult(List<GroupChannel> list, SendBirdException e) {
+                            if (e != null) {
+                                Toast.makeText(FulfillviewRequestDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            boolean activityStarted = false;
+                            boolean imARequestor = false;
+                            boolean imAFulfiller = false;
+                            boolean haveMyId = false;
+                            int membercount = 0;
+
+                            if((requestorId+"").equals(myId+"")){
+                                imARequestor = true;
+                            } else {
+                                imAFulfiller = true;
+                            }
+
+
+                            if(imAFulfiller) {
+                                Log.d("victorious", "Yes Im a fulfiller!");
+                                for (GroupChannel gc : list) {
+                                    if (!activityStarted) {
+                                        Log.d("victorious", "Activity not started yet! Running checks before opening channel...");
+                                        Log.d("victorious", "This person has " + list.size() +" number of channles");
+                                        List<User> uList = gc.getMembers();
+                                        for (User u : uList) {
+                                            if (u.getUserId().equals(requestorId + "")) {
+                                                membercount++;
+                                            }
+
+                                            if (u.getUserId().equals(myId + "")) {
+                                                membercount++;
+                                                haveMyId = true;
+
+
+                                            }
+
+                                        }
+
+                                        //if im a requestor and channel already exists
+                                        if (membercount == gc.getMemberCount() && haveMyId) {
+                                            Log.d("victorious", "if im a requestor and channel already exists");
+                                            Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
+                                            intent.putExtra("channel_url", gc.getUrl());
+                                            activityStarted = true;
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                        membercount = 0;
+                                    }
+                                }
+                                if (!activityStarted){
+                                    Log.d("victorious", "Activity still not started yet! Running checks before creating channel...");
+                                    if (haveMyId) {
+                                        Log.d("victorious", "if im a fulfiller and channel doesnt exists");
+                                        Log.d("victorious", "so the requestor is : " + requestorId);
+                                        Log.d("victorious", "so the fulfiller is : " + myId);
+
+                                        List<String> uIds = new ArrayList<>();
+                                        uIds.add(requestorId + "");
+                                        uIds.add(myId + "");
+
+                                        GroupChannel.createChannelWithUserIds(uIds, true, new GroupChannel.GroupChannelCreateHandler() {
+                                            @Override
+                                            public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                                                if (e != null) {
+                                                    Toast.makeText(FulfillviewRequestDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                }
+                                                Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
+                                                intent.putExtra("channel_url", groupChannel.getUrl());
+
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        });
+                                        activityStarted = true;
+                                    }
+                                }
+                            }
+
+
+
+                        }
+                    });
+                }
+
 
                 finish();
             }
@@ -362,6 +461,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 Intent i = new Intent(FulfillviewRequestDetails.this, MainActivity.class);
                 i.putExtra("accepted_fulfill_tab", 3);
                 i.putExtra("accepted_fulfill_swipe", 0);
+                //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
                 finish();
             }else{

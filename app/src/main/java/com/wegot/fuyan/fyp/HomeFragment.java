@@ -327,7 +327,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 err = UtilHttp.err;
                 success = false;
             } else {
+                //clear all used lists before adding the as markers
                 requestArrayList.clear();
+                postalList.clear();
+                requestNameList.clear();
 
                 try {
                     JSONArray jsoArray = new JSONArray(rst);
@@ -438,7 +441,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     protected void addRequestMarkers() throws JSONException {
         //lat = 1.3790849;
         //lng = 103.955139;
+
         if(mMap != null) {
+            mMap.clear();
             for (int i = 0; i < latList.size(); i++) {
                 LatLng templatLng = new LatLng(latList.get(i), lngList.get(i));
                 Log.d("Print", "Value of latlist size: " + latList.get(i) + " lolol " + lngList.get(i));
@@ -459,10 +464,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 @Override
                 public void onInfoWindowClick(Marker marker) {
                     Request request = (Request) marker.getTag();
-                    Intent intent = new Intent(getContext(),FulfillviewRequestDetails.class);
-                    Log.d("geo1", "request marker has data of : " + request);
-                    intent.putExtra("selected_request",request);
-                    startActivity(intent);
+                    if(request != null){
+                        Intent intent = new Intent(getContext(),FulfillviewRequestDetails.class);
+                        Log.d("geo1", "request marker has data of : " + request);
+                        intent.putExtra("selected_request",request);
+                        startActivity(intent);
+                    }
+
                 }
             });
             Log.d("geo1", "HIHIIHIHIHIIHIHI");
@@ -537,31 +545,31 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        // Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Your current position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-        //Create Radius
-        drawCircle(new LatLng(location.getLatitude(), location.getLongitude()));
-
-
-        //move camera to marker
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-        CameraPosition cmp = new CameraPosition(latLng, 16, 50, 0);
-
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cmp));
-
-
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        }
+//
+//        // Place current location marker
+//        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+//        MarkerOptions markerOptions = new MarkerOptions();
+//        markerOptions.position(latLng);
+//        markerOptions.title("Your current position");
+//        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+//        mCurrLocationMarker = mMap.addMarker(markerOptions);
+//
+//        //Create Radius
+//        drawCircle(new LatLng(location.getLatitude(), location.getLongitude()));
+//
+//
+//        //move camera to marker
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+//        //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+//        CameraPosition cmp = new CameraPosition(latLng, 16, 50, 0);
+//
+//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cmp));
+//
+//
+//        //stop location updates
+//        if (mGoogleApiClient != null) {
+//            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+//        }
     }
 
     @Override

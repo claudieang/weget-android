@@ -268,6 +268,7 @@ public class RequesterViewDetails extends AppCompatActivity {
                 Intent i = new Intent(RequesterViewDetails.this, MainActivity.class);
                 i.putExtra("updated_request_tab", 1);
                 i.putExtra("udpated_request_swipe", 0);
+                //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
                 finish();
             }else{
