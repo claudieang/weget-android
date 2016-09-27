@@ -1,6 +1,5 @@
 package com.wegot.fuyan.fyp.Recycler;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -79,6 +78,7 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
                     intent.putExtra("selected_request_tofulfull", (Serializable) r);
                     view.getContext().startActivity(intent);
                     //((Activity)mContext).finish();
+                    //((Activity)view.getContext()).finish();
 
                 }
             });
@@ -105,6 +105,7 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
                                     intent.putExtra("request_string", String.valueOf(r.getId()));
                                     mContext.startActivity(intent);
                                     //((Activity)mContext).finish();
+
                                 }})
                             .setNegativeButton(android.R.string.no, null).show();
 
