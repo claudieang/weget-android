@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#e8e8e8"
 
-    tools:context="com.wegot.fuyan.fyp.ProfileActivity">
+    tools:context="com.weget.fuyan.fyp.ProfileActivity">
 
     <RelativeLayout
         android:id="@+id/profile_section"

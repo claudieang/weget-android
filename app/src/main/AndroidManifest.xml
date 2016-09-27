@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wegot.fuyan.fyp">
+    package="com.weget.fuyan.fyp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -31,7 +31,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name="com.weget.fuyan.fyp.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,63 +39,63 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name="com.weget.fuyan.fyp.MainActivity" />
+        <activity android:name="com.weget.fuyan.fyp.HomeActivity" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.weget.fuyan.fyp.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".UpdateProfileActivity" />
-        <activity android:name=".UpdatePasswordActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".UpdateEmailActivity" />
-        <activity android:name=".UpdateContactActivity" />
-        <activity android:name=".UploadImageActivity" />
+        <activity android:name="com.weget.fuyan.fyp.ProfileActivity" />
+        <activity android:name="com.weget.fuyan.fyp.UpdateProfileActivity" />
+        <activity android:name="com.weget.fuyan.fyp.UpdatePasswordActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.weget.fuyan.fyp.UpdateEmailActivity" />
+        <activity android:name="com.weget.fuyan.fyp.UpdateContactActivity" />
+        <activity android:name="com.weget.fuyan.fyp.UploadImageActivity" />
         <activity
-            android:name=".CreateRequestActivity"
+            android:name="com.weget.fuyan.fyp.CreateRequestActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RequestDetailsActivity" />
-        <activity android:name=".MyRequestActivity">
+        <activity android:name="com.weget.fuyan.fyp.RequestDetailsActivity" />
+        <activity android:name="com.weget.fuyan.fyp.MyRequestActivity">
             <intent-filter>
                 <action android:name="request_page" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".UserChatActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".SendBirdBlockedUserListActivity" />
-        <activity android:name=".SendBirdGroupChannelListActivity" />
-        <activity android:name=".SendBirdGroupChatActivity" />
-        <activity android:name=".SendBirdMemberListActivity" />
+        <activity android:name="com.weget.fuyan.fyp.ChatActivity" />
+        <activity android:name="com.weget.fuyan.fyp.UserChatActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.weget.fuyan.fyp.SendBirdBlockedUserListActivity" />
+        <activity android:name="com.weget.fuyan.fyp.SendBirdGroupChannelListActivity" />
+        <activity android:name="com.weget.fuyan.fyp.SendBirdGroupChatActivity" />
+        <activity android:name="com.weget.fuyan.fyp.SendBirdMemberListActivity" />
         <activity
-            android:name=".MyRequestFulfillerActivity"
+            android:name="com.weget.fuyan.fyp.MyRequestFulfillerActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:noHistory="true"/>
-        <activity android:name=".RequestFulfillerDetailsActivity"
+        <activity android:name="com.weget.fuyan.fyp.RequestFulfillerDetailsActivity"
             />
-        <activity android:name=".PaymentActivity" android:theme="@style/Theme.AppCompat.Dialog"
+        <activity android:name="com.weget.fuyan.fyp.PaymentActivity" android:theme="@style/Theme.AppCompat.Dialog"
             android:noHistory="true"/>
-        <activity android:name=".MyFulfillActivity">
+        <activity android:name="com.weget.fuyan.fyp.MyFulfillActivity">
             <intent-filter>
                 <action android:name="fulfill_page" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyFulfillRequestDetailsActivity" />
-        <activity android:name=".UpdateRequestActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.weget.fuyan.fyp.MyFulfillRequestDetailsActivity" />
+        <activity android:name="com.weget.fuyan.fyp.UpdateRequestActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <!--
      <activity android:name=".MainPage"></activity> ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         -->
-        <service android:name=".MyFirebaseMessagingService">
+        <service android:name="com.weget.fuyan.fyp.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <!-- [END firebase_service] -->
         <!-- [START firebase_iid_service] -->
-        <service android:name=".MyFirebaseInstanceIDService">
+        <service android:name="com.weget.fuyan.fyp.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -105,28 +105,28 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".RequesterViewDetails"
+        <activity android:name="com.weget.fuyan.fyp.ForgotPasswordActivity" />
+        <activity android:name="com.weget.fuyan.fyp.RequesterViewDetails"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".FulfillviewRequestDetails"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".PendingdetailsRequester"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".PendingdetailsFulfiller"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MyfulfillDetails"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".bank_details"
+        <activity android:name="com.weget.fuyan.fyp.FulfillviewRequestDetails"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".dispute"
+            android:name="com.weget.fuyan.fyp.PendingdetailsRequester"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CompletedRequest"
+            android:name="com.weget.fuyan.fyp.PendingdetailsFulfiller"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".update_bank_details"
+        <activity android:name="com.weget.fuyan.fyp.MyfulfillDetails"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.weget.fuyan.fyp.bank_details"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name="com.weget.fuyan.fyp.dispute"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.weget.fuyan.fyp.CompletedRequest"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.weget.fuyan.fyp.update_bank_details"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

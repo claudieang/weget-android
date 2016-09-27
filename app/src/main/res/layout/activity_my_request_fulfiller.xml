@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bt_very_light_gray"
-    tools:context="com.wegot.fuyan.fyp.MyRequestFulfillerActivity">
+    tools:context="com.weget.fuyan.fyp.MyRequestFulfillerActivity">
     <include
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar_blank"></include>
 
 
-    <com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport
+    <com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport
         android:id="@+id/my_request_fulfiller_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

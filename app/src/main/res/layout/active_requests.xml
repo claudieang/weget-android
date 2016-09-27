@@ -14,7 +14,7 @@
     <!--android:layout_alignParentTop="true"-->
     <!--android:layout_alignParentBottom="true"-->
     <!--android:layout_marginBottom="55dp" />-->
-    <com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport
+    <com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport
         android:id="@+id/my_request_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

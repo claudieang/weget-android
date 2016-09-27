@@ -62,7 +62,7 @@
             <!--android:layout_below="@+id/relativeLayout3"-->
             <!--android:layout_marginBottom="55dp"-->
             <!--android:background="#FFFFFF" />-->
-        <com.wegot.fuyan.fyp.Recycler.RecyclerViewEmptySupport
+        <com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport
             android:id="@+id/active_request_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
