@@ -36,6 +36,68 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511006398088:android:cbcd587465f410cd",
+        "android_client_info": {
+          "package_name": "com.weget.fyp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "511006398088-bag55tf3r979lem63rheelihr35di0pj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyd34Ln2jqBfVWGbkdIWsuHPbBGws5Ogg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511006398088:android:ccfba52f8a5b7f45",
+        "android_client_info": {
+          "package_name": "com.weget.fuyan.fyp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "511006398088-bag55tf3r979lem63rheelihr35di0pj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyd34Ln2jqBfVWGbkdIWsuHPbBGws5Ogg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

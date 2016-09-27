@@ -1,4 +1,4 @@
-package com.wegot.fuyan.fyp;
+package com.weget.fuyan.fyp;
 
 import org.junit.Test;
 
