@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("email", dbEmail);
                 editor.putString("picture", dbProfilePic);
                 editor.commit();
-                SendBird.init("73152F8B-67D9-4606-802C-A1BED7143436", getApplication().getApplicationContext());
+                SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getApplication().getApplicationContext());
                 SendBird.connect(dbID+"", new SendBird.ConnectHandler() {
                     @Override
                     public void onConnected(User user, SendBirdException e) {

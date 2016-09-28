@@ -7,20 +7,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class PendingdetailsRequester extends AppCompatActivity {
 
@@ -32,6 +34,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
     Button receivedBtn, disputeBtn;
     Context mContext;
     ProgressDialog dialog;
+    ArrayList<Account> fulfillerAccountList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +87,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
         receivedBtn.setTypeface(typeFace);
         disputeBtn.setTypeface(typeFace);
 
-        new getRequestor().execute(authString + "," + requestorIdS);
+        new getMyRequestFulfiller().execute(authString);
 
         receivedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,45 +117,59 @@ public class PendingdetailsRequester extends AppCompatActivity {
 
     }
 
-    private class getRequestor extends AsyncTask<String, Void, Boolean> {
+    private class getMyRequestFulfiller extends AsyncTask<String, Void, Boolean> {
 
-
+        int id, contactNo;
+        String username, password, email, fulfiller, picture;
+        Account account;
+        ProgressDialog dialog = new ProgressDialog(PendingdetailsRequester.this, R.style.MyTheme);
 
         @Override
         protected void onPreExecute() {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
+
             if(!isFinishing()) {
                 dialog.show();
             }
-
-
         }
 
         @Override
         protected Boolean doInBackground(String... params) {
 
-            String auth = params[0].substring(0, params[0].indexOf(','));
-            String rId = params[0].substring(params[0].indexOf(',') + 1);
-
-            Log.d("auth: ", auth);
-            Log.d("rID: ", rId);
-            final String basicAuth = "Basic " + Base64.encodeToString(auth.getBytes(), Base64.NO_WRAP);
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ rId + "/";
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + myRequestId +"/fulfillers/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
                 err = UtilHttp.err;
                 success = false;
             } else {
+                fulfillerAccountList.clear();
 
                 try {
-                    JSONObject jso = new JSONObject(rst);
-                    requestorName = jso.getString("username");
+                    JSONArray jsoArray = new JSONArray(rst);
+                    for(int i = 0; i < jsoArray.length(); i++) {
+                        JSONObject jso = jsoArray.getJSONObject(i);
 
+                        id = jso.getInt("id");
+                        username = jso.getString("username");
+                        password = jso.getString("password");
+                        contactNo = jso.getInt("contactNo");
+                        email = jso.getString("email");
+                        fulfiller = jso.getString("fulfiller");
+                        picture = jso.getString("picture");
+
+                        account = new Account(id, username, password, contactNo, email, fulfiller, picture);
+
+
+                        fulfillerAccountList.add(account);
+
+
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -163,21 +180,25 @@ public class PendingdetailsRequester extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             dialog.dismiss();
-            if(result){
 
+            if(result) {
+                if(fulfillerAccountList.size() == 1){
+                    Account a = fulfillerAccountList.get(0);
+                    requestorTV.setText(a.getUsername());
+                    productNameTV.setText(productName);
+                    addressTV.setText(address + " " + postal);
+                    priceTV.setText("$" + price + "0");
 
-                requestorTV.setText(requestorName );
-                productNameTV.setText(productName);
-                addressTV.setText(address + " " + postal);
-                priceTV.setText("$" + price + "0");
+                }
 
-
-            }else {
+            }else{
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
 
         }
     }
+
+
 
     private class doReceive extends AsyncTask<String, Void, Boolean> {
 
