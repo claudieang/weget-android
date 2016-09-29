@@ -2,6 +2,7 @@ package com.weget.fuyan.fyp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -11,17 +12,27 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sendbird.android.GroupChannel;
+import com.sendbird.android.GroupChannelListQuery;
+import com.sendbird.android.SendBirdException;
+import com.sendbird.android.User;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyfulfillDetails extends AppCompatActivity {
 
     Request r;
     TextView productNameTV, requestorNameTV, addressTV, priceTV;
+    Button chatBtn;
     String productName, requestorName, address, username, password, authString, requestorIdS, err;
     double price;
     int requestId, myId, requestorId;
@@ -72,6 +83,136 @@ public class MyfulfillDetails extends AppCompatActivity {
         ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
         priceTV.setTypeface(typeFaceLight);
         ((Button)findViewById(R.id.chat_button)).setTypeface(typeFace);
+
+        chatBtn = (Button)findViewById(R.id.chat_button);
+
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d("Hihi", "checking requestor id : " + requestorId);
+                Log.d("Hihi", "checking myId : " + myId);
+
+                List<String> userIds = new ArrayList<>();
+                userIds.add(requestorId +"");
+                userIds.add(myId+"");
+                GroupChannelListQuery mQuery = GroupChannel.createMyGroupChannelListQuery();
+                Log.d("victorious","mquerysize is : " + mQuery.hasNext());
+                if(mQuery == null){
+                    GroupChannel.createChannelWithUserIds(userIds, true, new GroupChannel.GroupChannelCreateHandler() {
+                        @Override
+                        public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                            if(e != null) {
+                                Toast.makeText(MyfulfillDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            Intent intent = new Intent(MyfulfillDetails.this, UserChatActivity.class);
+                            intent.putExtra("channel_url", groupChannel.getUrl());
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                } else{
+
+                    Log.d("geo1","isit we dunnid create a group?");
+
+                    mQuery.setIncludeEmpty(true);
+                    mQuery.next(new GroupChannelListQuery.GroupChannelListQueryResultHandler() {
+                        @Override
+                        public void onResult(List<GroupChannel> list, SendBirdException e) {
+                            if (e != null) {
+                                Toast.makeText(MyfulfillDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            boolean activityStarted = false;
+                            boolean imARequestor = false;
+                            boolean imAFulfiller = false;
+                            boolean haveMyId = false;
+                            int membercount = 0;
+
+                            if((requestorId+"").equals(myId+"")){
+                                imARequestor = true;
+                            } else {
+                                imAFulfiller = true;
+                            }
+
+
+                            if(imAFulfiller) {
+                                Log.d("victorious", "Yes Im a fulfiller!");
+                                Log.d("victorious", "YOYO This person has " + list.size() +" number of channles");
+                                for (GroupChannel gc : list) {
+                                    if (!activityStarted) {
+                                        Log.d("victorious", "Activity not started yet! Running checks before opening channel...");
+                                        Log.d("victorious", "This person has " + list.size() +" number of channles");
+                                        List<User> uList = gc.getMembers();
+                                        for (User u : uList) {
+
+                                            if (u.getUserId().equals(requestorId + "")) {
+                                                membercount++;
+                                            }
+
+                                            if (u.getUserId().equals(myId + "")) {
+                                                membercount++;
+                                                haveMyId = true;
+
+
+                                            }
+
+                                        }
+
+                                        //if im a requestor and channel already exists
+                                        if (membercount == gc.getMemberCount() && haveMyId) {
+                                            Log.d("victorious", "if im a requestor and channel already exists");
+                                            Intent intent = new Intent(MyfulfillDetails.this, UserChatActivity.class);
+                                            intent.putExtra("channel_url", gc.getUrl());
+                                            activityStarted = true;
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                        membercount = 0;
+                                    }
+                                }
+                                Log.d("victorious","activity has started? : " + activityStarted);
+                                Log.d("victorious","HAVE MY ID? : " + haveMyId);
+                                if (!activityStarted){
+                                    Log.d("victorious", "Activity still not started yet! Running checks before creating channel...");
+                                    Log.d("victorious", "if im a fulfiller and channel doesnt exists");
+                                    Log.d("victorious", "so the requestor is : " + requestorId);
+                                    Log.d("victorious", "so the fulfiller is : " + myId);
+
+                                    List<String> uIds = new ArrayList<>();
+                                    uIds.add(requestorId + "");
+                                    uIds.add(myId + "");
+
+                                    GroupChannel.createChannelWithUserIds(uIds, true, new GroupChannel.GroupChannelCreateHandler() {
+                                        @Override
+                                        public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                                            if (e != null) {
+                                                Toast.makeText(MyfulfillDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                return;
+                                            }
+                                            Intent intent = new Intent(MyfulfillDetails.this, UserChatActivity.class);
+                                            Log.d("victorious", "channel_url is : " + groupChannel.getUrl());
+                                            intent.putExtra("channel_url", groupChannel.getUrl());
+
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+                                    activityStarted = true;
+
+                                }
+                            }
+                        }
+                    });
+                }
+
+
+                finish();
+            }
+        });
+
 
 
         new getRequestor().execute(authString + "," + requestorIdS);

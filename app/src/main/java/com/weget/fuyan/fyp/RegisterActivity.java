@@ -382,6 +382,8 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }
 
+
+
         }
     }
 

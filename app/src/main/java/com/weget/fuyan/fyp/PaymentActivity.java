@@ -61,7 +61,7 @@ public class PaymentActivity extends AppCompatActivity {
     EditText cardNumET,cardExpDateET, cardCvcET;
     int cardMonth, cardYear;
     Button paymentBtn;
-    final String TEST_API = "pk_test_bnzsfm0hZEoiXxKSklIkaUHM";
+    final String TEST_API = "pk_test_Jmx4WCkGv8XuSMz2NFSx3HEC";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

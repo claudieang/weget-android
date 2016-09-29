@@ -50,6 +50,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -94,7 +95,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     private CreateRequestActivity mLocationFragment;
     private ProfileActivity mFindFragment;
     private SupportMapFragment mapFragment;
-    private GoogleMap map;
 
 
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
@@ -140,6 +140,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_screen, container, false);
+        Log.d("sigh", "initiate home fragment");
         return view;
     }
 
@@ -315,6 +316,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         @Override
         protected Boolean doInBackground(String... params) {
 
+            checkLocationPermission();
+
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
@@ -442,7 +445,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         //lng = 103.955139;
 
         if(mMap != null) {
-            mMap.clear();
             for (int i = 0; i < latList.size(); i++) {
                 LatLng templatLng = new LatLng(latList.get(i), lngList.get(i));
                 Log.d("Print", "Value of latlist size: " + latList.get(i) + " lolol " + lngList.get(i));
@@ -523,7 +525,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
+        Log.d("circle", "checking for correct behaviour");
         if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
@@ -545,30 +547,32 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             e.printStackTrace();
         }
 //
-//        // Place current location marker
-//        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        // Place current location marker
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 //        MarkerOptions markerOptions = new MarkerOptions();
 //        markerOptions.position(latLng);
 //        markerOptions.title("Your current position");
 //        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
 //        mCurrLocationMarker = mMap.addMarker(markerOptions);
 //
-//        //Create Radius
-//        drawCircle(new LatLng(location.getLatitude(), location.getLongitude()));
-//
-//
-//        //move camera to marker
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-//        //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-//        CameraPosition cmp = new CameraPosition(latLng, 16, 50, 0);
-//
-//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cmp));
-//
-//
-//        //stop location updates
-//        if (mGoogleApiClient != null) {
-//            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-//        }
+        //Create Radius
+        Log.d("circle", "going to draw circle");
+
+        drawCircle(new LatLng(location.getLatitude(), location.getLongitude()));
+
+
+        //move camera to marker
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        CameraPosition cmp = new CameraPosition(latLng, 16, 0, 0);
+
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cmp));
+
+
+        //stop location updates
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }
     }
 
     @Override

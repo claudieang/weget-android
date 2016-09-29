@@ -255,7 +255,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     try {
                         JSONObject jso = new JSONObject(rst);
 
-
                         lng = ((JSONArray) jso.get("results")).getJSONObject(0)
                                 .getJSONObject("geometry").getJSONObject("location")
                                 .getDouble("lng");
@@ -266,7 +265,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                         latList.add(lat);
                         lngList.add(lng);
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();

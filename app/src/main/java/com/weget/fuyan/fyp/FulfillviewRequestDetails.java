@@ -133,6 +133,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 userIds.add(requestorId +"");
                 userIds.add(myId+"");
                 GroupChannelListQuery mQuery = GroupChannel.createMyGroupChannelListQuery();
+                Log.d("victorious","mquerysize is : " + mQuery.hasNext());
                 if(mQuery == null){
                     GroupChannel.createChannelWithUserIds(userIds, true, new GroupChannel.GroupChannelCreateHandler() {
                         @Override
@@ -175,12 +176,14 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
                             if(imAFulfiller) {
                                 Log.d("victorious", "Yes Im a fulfiller!");
+                                Log.d("victorious", "YOYO This person has " + list.size() +" number of channles");
                                 for (GroupChannel gc : list) {
                                     if (!activityStarted) {
                                         Log.d("victorious", "Activity not started yet! Running checks before opening channel...");
                                         Log.d("victorious", "This person has " + list.size() +" number of channles");
                                         List<User> uList = gc.getMembers();
                                         for (User u : uList) {
+
                                             if (u.getUserId().equals(requestorId + "")) {
                                                 membercount++;
                                             }
@@ -206,33 +209,35 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                                         membercount = 0;
                                     }
                                 }
+                                Log.d("victorious","activity has started? : " + activityStarted);
+                                Log.d("victorious","HAVE MY ID? : " + haveMyId);
                                 if (!activityStarted){
                                     Log.d("victorious", "Activity still not started yet! Running checks before creating channel...");
-                                    if (haveMyId) {
-                                        Log.d("victorious", "if im a fulfiller and channel doesnt exists");
-                                        Log.d("victorious", "so the requestor is : " + requestorId);
-                                        Log.d("victorious", "so the fulfiller is : " + myId);
+                                    Log.d("victorious", "if im a fulfiller and channel doesnt exists");
+                                    Log.d("victorious", "so the requestor is : " + requestorId);
+                                    Log.d("victorious", "so the fulfiller is : " + myId);
 
-                                        List<String> uIds = new ArrayList<>();
-                                        uIds.add(requestorId + "");
-                                        uIds.add(myId + "");
+                                    List<String> uIds = new ArrayList<>();
+                                    uIds.add(requestorId + "");
+                                    uIds.add(myId + "");
 
-                                        GroupChannel.createChannelWithUserIds(uIds, true, new GroupChannel.GroupChannelCreateHandler() {
-                                            @Override
-                                            public void onResult(GroupChannel groupChannel, SendBirdException e) {
-                                                if (e != null) {
-                                                    Toast.makeText(FulfillviewRequestDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                    return;
-                                                }
-                                                Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
-                                                intent.putExtra("channel_url", groupChannel.getUrl());
-
-                                                startActivity(intent);
-                                                finish();
+                                    GroupChannel.createChannelWithUserIds(uIds, true, new GroupChannel.GroupChannelCreateHandler() {
+                                        @Override
+                                        public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                                            if (e != null) {
+                                                Toast.makeText(FulfillviewRequestDetails.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                return;
                                             }
-                                        });
-                                        activityStarted = true;
-                                    }
+                                            Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
+                                            Log.d("victorious", "channel_url is : " + groupChannel.getUrl());
+                                            intent.putExtra("channel_url", groupChannel.getUrl());
+
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+                                    activityStarted = true;
+
                                 }
                             }
 
