@@ -368,7 +368,7 @@ public class UploadImageActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Image Uploaded Success!", Toast.LENGTH_LONG).show();
                 editor.putString("picture",encodedImage);
                 editor.commit();
-                Intent i = new Intent (UploadImageActivity.this,UpdateProfileActivity.class);
+                Intent i = new Intent (UploadImageActivity.this,ProfileActivity.class);
                 startActivity(i);
                 finish();
 
