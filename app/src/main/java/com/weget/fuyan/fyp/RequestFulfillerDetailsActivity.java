@@ -285,31 +285,31 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                                 }
                                 if (!activityStarted){
                                     Log.d("victorious", "Activity still not started yet! Running checks before creating channel...");
-                                    if (haveMyId) {
-                                        Log.d("victorious", "if im a fulfiller and channel doesnt exists");
-                                        Log.d("victorious", "so the requestor is : " + requestorId);
-                                        Log.d("victorious", "so the fulfiller is : " + myId);
 
-                                        List<String> uIds = new ArrayList<>();
-                                        uIds.add(requestorId + "");
-                                        uIds.add(myId + "");
+                                    Log.d("victorious", "if im a fulfiller and channel doesnt exists");
+                                    Log.d("victorious", "so the requestor is : " + requestorId);
+                                    Log.d("victorious", "so the fulfiller is : " + myId);
 
-                                        GroupChannel.createChannelWithUserIds(uIds, true, new GroupChannel.GroupChannelCreateHandler() {
-                                            @Override
-                                            public void onResult(GroupChannel groupChannel, SendBirdException e) {
-                                                if (e != null) {
-                                                    Toast.makeText(RequestFulfillerDetailsActivity.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                    return;
-                                                }
-                                                Intent intent = new Intent(RequestFulfillerDetailsActivity.this, UserChatActivity.class);
-                                                intent.putExtra("channel_url", groupChannel.getUrl());
+                                    List<String> uIds = new ArrayList<>();
+                                    uIds.add(requestorId + "");
+                                    uIds.add(myId + "");
 
-                                                startActivity(intent);
-                                                finish();
+                                    GroupChannel.createChannelWithUserIds(uIds, true, new GroupChannel.GroupChannelCreateHandler() {
+                                        @Override
+                                        public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                                            if (e != null) {
+                                                Toast.makeText(RequestFulfillerDetailsActivity.this, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                return;
                                             }
-                                        });
-                                        activityStarted = true;
-                                    }
+                                            Intent intent = new Intent(RequestFulfillerDetailsActivity.this, UserChatActivity.class);
+                                            intent.putExtra("channel_url", groupChannel.getUrl());
+
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+                                    activityStarted = true;
+
                                 }
                             }
 
