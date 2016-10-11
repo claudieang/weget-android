@@ -45,6 +45,7 @@ public class CreateRequestActivity extends AppCompatActivity {
     Context mContext;
 
     private Toolbar toolbar;
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,7 +270,7 @@ public class CreateRequestActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/";
+            String url = URL + "request/";
             JSONObject jsoin = null;
 
             try {

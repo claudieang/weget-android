@@ -30,6 +30,7 @@ public class bank_details extends AppCompatActivity {
     int myId, emptyBank;
     Context mContext;
     Request request;
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +138,7 @@ public class bank_details extends AppCompatActivity {
             //Log.d ("Basic Authentitaion", basicAuth);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId + "/bank/";
+            String url = URL + "account/" + myId + "/bank/";
             JSONObject jsoin = null;
 
             try {

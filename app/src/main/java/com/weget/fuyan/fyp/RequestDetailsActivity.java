@@ -43,6 +43,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
 
     TextView requestorTV, productNameTV, requirementTV, locationTV, postalTV, startTimeTV, endTimeTV, durationTV,
     priceTV, statusTV;
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +146,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + requestId +"/fulfillers/";
+            String url = URL + "request/" + requestId +"/fulfillers/";
 
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
@@ -220,7 +221,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
             //Log.d ("Basic Authentitaion", basicAuth);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/fulfill/";
+            String url = URL + "fulfill/";
             JSONObject jsoin = null;
 
             try {
@@ -276,7 +277,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(auth.getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ rId + "/";
+            String url = URL + "account/"+ rId + "/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {

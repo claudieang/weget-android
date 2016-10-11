@@ -49,6 +49,8 @@ public class ActiveRequestsFragment extends Fragment {
     //private RecyclerView recyclerView;
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestActiveListAdapter mAdapter;
+    final String URL = getString(R.string.webserviceurl);
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,12 +83,16 @@ public class ActiveRequestsFragment extends Fragment {
                 fetchTimelineAsync(0);
             }
         });
+
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-*/
+
+
+        */
+
         SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
@@ -116,82 +122,98 @@ public class ActiveRequestsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
     }
+    /*
+    public void fetchTimelineAsync(int page) {
+        // Send the network request to fetch the updated data
+        // 'client' here is an instance of Android Async HTTP
+        new getMyRequests().execute(authString);
 
-        private class getMyRequests extends AsyncTask<String, Void, Boolean> {
-            ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
+        recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
+        mAdapter = new com.weget.fuyan.fyp.Recycler.RequestActiveListAdapter(myRequestArrayList,counterList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
 
-            @Override
-            protected void onPreExecute() {
-                dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-                dialog.setIndeterminate(true);
-                dialog.setCancelable(false);
-                if(!activity.isFinishing()) {
-                    dialog.show();
-                }
-            }
-            @Override
-            protected Boolean doInBackground(String... params) {
+    }
+    */
 
-                final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+    private class getMyRequests extends AsyncTask<String, Void, Boolean> {
+        ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
 
-                boolean success = false;
-                String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId + "/request/";
-
-                String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-                if (rst == null) {
-                    err = UtilHttp.err;
-                    success = false;
-                } else {
-
-                    myRequestArrayList.clear();
-
-                    try {
-                        JSONArray jsoArray = new JSONArray(rst);
-                        for (int i = 0; i < jsoArray.length(); i++) {
-                            JSONObject jso = jsoArray.getJSONObject(i);
-
-                            int id = jso.getInt("id");
-                            int requestorId = jso.getInt("requestorId");
-                            int imageResource = requestImage;
-                            String productName = jso.getString("productName");
-                            String requirement = jso.getString("requirement");
-                            String location = jso.getString("location");
-                            int postal = jso.getInt("postal");
-                            String startTime = jso.getString("startTime");
-                            int duration = jso.getInt("duration");
-                            String endTime = jso.getString("endTime");
-                            double price = jso.getDouble("price");
-                            String status = jso.getString("status");
-
-                            Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
-                                    postal, startTime, endTime, duration, price, status);
-                            if (status.equals("active")) {
-                                myRequestArrayList.add(request);
-                            }
-
-                            //mAdapter.notifyDataSetChanged();
-
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    success = true;
-                }
-                return success;
-            }
-
-            @Override
-            protected void onPostExecute(Boolean result) {
-
-
-                new getMyRequestFulfiller().execute(myRequestArrayList);
-
-
-                dialog.dismiss();
-
-
+        @Override
+        protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            if(!activity.isFinishing()) {
+                dialog.show();
             }
         }
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = URL + "account/" + myId + "/request/";
+
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+
+                myRequestArrayList.clear();
+
+                try {
+                    JSONArray jsoArray = new JSONArray(rst);
+                    for (int i = 0; i < jsoArray.length(); i++) {
+                        JSONObject jso = jsoArray.getJSONObject(i);
+
+                        int id = jso.getInt("id");
+                        int requestorId = jso.getInt("requestorId");
+                        int imageResource = requestImage;
+                        String productName = jso.getString("productName");
+                        String requirement = jso.getString("requirement");
+                        String location = jso.getString("location");
+                        int postal = jso.getInt("postal");
+                        String startTime = jso.getString("startTime");
+                        int duration = jso.getInt("duration");
+                        String endTime = jso.getString("endTime");
+                        double price = jso.getDouble("price");
+                        String status = jso.getString("status");
+
+                        Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
+                                postal, startTime, endTime, duration, price, status);
+                        if (status.equals("active")) {
+                            myRequestArrayList.add(request);
+                        }
+
+                        //mAdapter.notifyDataSetChanged();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                success = true;
+            }
+            return success;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+
+            new getMyRequestFulfiller().execute(myRequestArrayList);
+
+
+            dialog.dismiss();
+
+
+        }
+    }
 
     private class getMyRequestFulfiller extends AsyncTask< ArrayList <Request> , Void, Boolean> {
 
@@ -214,7 +236,7 @@ public class ActiveRequestsFragment extends Fragment {
             for (Request r : rList) {
                 int rId = r.getId();
 
-                String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + rId + "/fulfillers/";
+                String url = URL + "request/" + rId + "/fulfillers/";
 
                 String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
                 if (rst == null) {

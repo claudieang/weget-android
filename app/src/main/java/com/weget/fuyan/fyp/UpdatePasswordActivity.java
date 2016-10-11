@@ -31,6 +31,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     Button updatePasswordBtn;
     EditText updateOldPassword,updateNewPassword, updateConfirmPassword;
     SharedPreferences.Editor editor = null;
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +161,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             Log.d ("Basic Authentitaion", basicAuth);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" +params[0] +"/";
+            String url = URL + "account/" +params[0] +"/";
             JSONObject jsoin = null;
 
             try {

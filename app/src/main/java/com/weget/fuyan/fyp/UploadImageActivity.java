@@ -44,6 +44,7 @@ public class UploadImageActivity extends AppCompatActivity {
     String encodedImage;
     TextView txtmsg;
 
+    final String URL = getString(R.string.webserviceurl);
     ProgressBar pg;
 
     ResultSet rs;
@@ -54,32 +55,7 @@ public class UploadImageActivity extends AppCompatActivity {
     int contactNo, id;
     static final int RC_PERMISSION_READ_EXTERNAL_STORAGE = 666;
     SharedPreferences.Editor editor = null;
-/*
 
-    @SuppressLint("NewApi")
-    private Connection ConnectionHelper(String user, String password,
-                                        String database, String server) {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                .permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        Connection connection = null;
-        String ConnectionURL = null;
-        try {
-            Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            ConnectionURL = "jdbc:jtds:sqlserver://" + server + ";"
-                    + "databaseName=" + database + ";user=" + user
-                    + ";password=" + password + ";";
-            connection = DriverManager.getConnection(ConnectionURL);
-        } catch (SQLException se) {
-            Log.e("ERRO", se.getMessage());
-        } catch (ClassNotFoundException e) {
-            Log.e("ERRO", e.getMessage());
-        } catch (Exception e) {
-            Log.e("ERRO", e.getMessage());
-        }
-        return connection;
-    }
-*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,13 +82,7 @@ public class UploadImageActivity extends AppCompatActivity {
 
         pg = (ProgressBar) findViewById(R.id.progressBar1);
         pg.setVisibility(View.GONE);
-/*
-        un = "sa";
-        password = "123";
-        db = "MyDB";
-        ip = "192.168.0.100";
-        con = ConnectionHelper(un, password, db, ip);
-*/
+
         btnchooseimage.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -147,15 +117,6 @@ public class UploadImageActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(getBaseContext(), "Please select image!", Toast.LENGTH_LONG).show();
                 }
-
-                /*
-
-                byte[] decodeString = Base64.decode("BASE64 STRING OVER HERE", Base64.DEFAULT);
-                Bitmap decodebitmap = BitmapFactory.decodeByteArray(
-                        decodeString, 0, decodeString.length);
-                img.setImageBitmap(decodebitmap);
-
-                */
 
             }
         });
@@ -197,46 +158,6 @@ public class UploadImageActivity extends AppCompatActivity {
         }
     }
 
-/*
-    public void UploadtoDB() {
-        String msg = "unknown";
-        try {
-
-            con = ConnectionHelper(un, password, db, ip);
-            String commands = "Insert into ImgTbl2 (ImgName,Img) values ('"
-                    + edtname.getText().toString() + "','" + encodedImage
-                    + "')";
-            // encodedImage which is the Base64 String
-            PreparedStatement preStmt = con.prepareStatement(commands);
-            preStmt.executeUpdate();
-            msg = "Inserted Successfully";
-        } catch (SQLException ex) {
-            msg = ex.getMessage().toString();
-            Log.d("hitesh", msg);
-
-        } catch (IOError ex) {
-            // TODO: handle exception
-            msg = ex.getMessage().toString();
-            Log.d("hitesh", msg);
-        } catch (AndroidRuntimeException ex) {
-            msg = ex.getMessage().toString();
-            Log.d("hitesh", msg);
-
-        } catch (NullPointerException ex) {
-            msg = ex.getMessage().toString();
-            Log.d("hitesh", msg);
-        }
-
-        catch (Exception ex) {
-            msg = ex.getMessage().toString();
-            Log.d("hitesh", msg);
-        }
-
-        txtmsg.setText(msg);
-
-    }
-
-*/
 
     //Select Image from Gallery
     public void ChooseImage() {
@@ -332,7 +253,7 @@ public class UploadImageActivity extends AppCompatActivity {
 
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" +params[0] +"/";
+            String url = URL + "account/" +params[0] +"/";
             JSONObject jsoin = null;
 
             try {
@@ -369,6 +290,8 @@ public class UploadImageActivity extends AppCompatActivity {
                 editor.putString("picture",encodedImage);
                 editor.commit();
                 Intent i = new Intent (UploadImageActivity.this,ProfileActivity.class);
+                //i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
                 finish();
 

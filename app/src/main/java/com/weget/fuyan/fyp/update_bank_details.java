@@ -29,6 +29,7 @@ public class update_bank_details extends AppCompatActivity {
     int  myId, bankId, bankUserId;
     Context mContext;
     Boolean bank = true;
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +115,7 @@ public class update_bank_details extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ myId+"/bank/";
+            String url = URL + "account/"+ myId+"/bank/";
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
                 err = UtilHttp.err;
@@ -180,7 +181,7 @@ public class update_bank_details extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId + "/bank/";
+            String url = URL + "account/" + myId + "/bank/";
 
             JSONObject jsoin = null;
 

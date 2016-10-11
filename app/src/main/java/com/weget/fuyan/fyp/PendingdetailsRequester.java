@@ -35,6 +35,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
     Context mContext;
     ProgressDialog dialog;
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +142,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + myRequestId +"/fulfillers/";
+            String url = URL + "request/" + myRequestId +"/fulfillers/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -222,7 +223,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/transaction/" + myRequestId+"/received/";
+            String url = URL + "transaction/" + myRequestId+"/received/";
 
             String rst = UtilHttp.doHttpPostBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -277,7 +278,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/"+myRequestId+"/transaction/";
+            String url = URL + "request/"+myRequestId+"/transaction/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {

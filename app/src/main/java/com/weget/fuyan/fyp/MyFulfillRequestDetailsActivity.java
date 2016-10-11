@@ -41,6 +41,8 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
             priceTV, statusTV, dispute;
 
     ImageView profilePic, itemPic;
+    final String URL = getString(R.string.webserviceurl);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +160,7 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/transaction/" + transactionId+"/dispute/";
+            String url = URL + "transaction/" + transactionId+"/dispute/";
             JSONObject jsoin = null;
             try{
                 jsoin = new JSONObject();
@@ -221,7 +223,7 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/transaction/" + requestId+"/delivered/";
+            String url = URL + "transaction/" + requestId+"/delivered/";
 
             String rst = UtilHttp.doHttpPostBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -272,7 +274,7 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(auth.getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ rId + "/";
+            String url = URL + "account/"+ rId + "/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -341,7 +343,7 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/"+requestId+"/transaction/";
+            String url = URL + "request/"+requestId+"/transaction/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {

@@ -27,6 +27,7 @@ public class dispute extends AppCompatActivity {
     EditText disputeFormET;
     Button submitBtn;
     Context mContext;
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +101,7 @@ public class dispute extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/transaction/" + transactionId+"/dispute/";
+            String url = URL + "transaction/" + transactionId+"/dispute/";
             JSONObject jsoin = null;
             try{
                 jsoin = new JSONObject();

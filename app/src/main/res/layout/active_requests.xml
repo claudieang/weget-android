@@ -14,6 +14,11 @@
     <!--android:layout_alignParentTop="true"-->
     <!--android:layout_alignParentBottom="true"-->
     <!--android:layout_marginBottom="55dp" />-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport
         android:id="@+id/my_request_list"
         android:layout_width="match_parent"
@@ -47,4 +52,6 @@
         android:gravity="center"
         android:visibility="invisible"
         android:text="No requests completed yet." />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

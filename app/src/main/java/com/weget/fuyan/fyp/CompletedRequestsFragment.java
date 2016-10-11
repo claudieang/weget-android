@@ -48,6 +48,7 @@ public class CompletedRequestsFragment extends Fragment {
     Activity activity;
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter mAdapter;
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class CompletedRequestsFragment extends Fragment {
         //myTextView.setTypeface(typeFace);
 
 
-        /*
+
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout)view.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -85,7 +86,7 @@ public class CompletedRequestsFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-*/
+
         SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
@@ -130,6 +131,21 @@ public class CompletedRequestsFragment extends Fragment {
         );
     }
 
+    public void fetchTimelineAsync(int page) {
+        // Send the network request to fetch the updated data
+        // 'client' here is an instance of Android Async HTTP
+        new getMyRequests().execute(authString);
+
+        mAdapter = new com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter(myRequestArrayList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setEmptyView(view.findViewById(R.id.empty_view3));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(mAdapter);
+
+    }
+
 
     private class getMyRequests extends AsyncTask<String, Void, Boolean> {
 
@@ -151,7 +167,7 @@ public class CompletedRequestsFragment extends Fragment {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId + "/request/";
+            String url = URL + "account/" + myId + "/request/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {

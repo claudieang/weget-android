@@ -83,6 +83,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     int requestImage = R.drawable.ordericon;
     ArrayList<Request> requestArrayList = new ArrayList<>();
     int myId;
+    final String URL = getString(R.string.webserviceurl);
 
     RequestAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
@@ -321,7 +322,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/active/";
+            String url = URL + "request/active/";
 
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);

@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private Context mContext;
     private static final String TAG = "LoginActivity";
     final Context context = this;
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... params) {
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/login/";
+            String url = URL + "login/";
             JSONObject jsoin = null;
 
             token = FirebaseInstanceId.getInstance().getToken();
@@ -281,7 +282,7 @@ public class LoginActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... params) {
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/reset/";
+            String url = URL + "reset/";
             JSONObject jsoin = null;
 
             //Log.d("name: ", params[0]);

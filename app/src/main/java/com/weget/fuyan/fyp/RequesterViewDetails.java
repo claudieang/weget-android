@@ -39,6 +39,7 @@ public class RequesterViewDetails extends AppCompatActivity {
     Context mContext;
     Request request;
     private TextView productDescriptionTV;
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +180,7 @@ public class RequesterViewDetails extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(auth.getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ rId + "/";
+            String url = URL + "account/"+ rId + "/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -243,7 +244,7 @@ public class RequesterViewDetails extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + requestId + "/";
+            String url = URL + "request/" + requestId + "/";
 
             String rst = UtilHttp.doHttpDeleteBasicAuthenticaion(mContext, url, basicAuth);
             if (rst == null) {

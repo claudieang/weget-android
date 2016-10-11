@@ -22,6 +22,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView profileUsernameTV, profileEmailTV, profileContactNumberTV;
     ImageView profileImage;
     ImageView updateProfile;
+    final String URL = getString(R.string.webserviceurl);
 
 
 
@@ -29,6 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //font
         //updateProfile = (ImageView)findViewById(R.id.updateprofile_btn);
@@ -87,6 +89,40 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        // put your code here...
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //font
+        //updateProfile = (ImageView)findViewById(R.id.updateprofile_btn);
+        getSupportActionBar().setTitle("Profile");
+
+        profileImage = (ImageView)findViewById(R.id.profile_picture);
+
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+        profilePicture = pref.getString("picture", null);
+
+        if(profilePicture.equals("")){
+
+            profileImage.setImageResource(R.drawable.ic_account_circle_black_48dp);
+        }else{
+
+
+            //this.dpIV.setImageDrawable(roundDrawable);
+            byte[] decodeString = Base64.decode(profilePicture, Base64.NO_WRAP);
+            Bitmap decodebitmap = BitmapFactory.decodeByteArray(
+                    decodeString, 0, decodeString.length);
+            RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(getResources(), decodebitmap);
+            roundDrawable.setCircular(true);
+            profileImage.setImageDrawable(roundDrawable);
+        }
+
 
     }
 

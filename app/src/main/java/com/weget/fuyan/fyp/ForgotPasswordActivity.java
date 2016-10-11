@@ -21,6 +21,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     Button retrieveAccountBtn;
     String email, err;
     Context mContext;
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... params) {
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/reset/";
+            String url = URL + "reset/";
             JSONObject jsoin = null;
 
 

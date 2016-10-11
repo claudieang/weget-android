@@ -52,6 +52,8 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     int rId, myId, fr, fId, requestorId;
     String username, password, authString, err;
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
+    final String URL = mContext.getString(R.string.webserviceurl);
+
 
 
     public RequestListAdapter(List<Request> requestsList, int lol) {
@@ -233,7 +235,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/transaction/" + rId+"/received/";
+            String url = URL + "transaction/" + rId+"/received/";
 
             String rst = UtilHttp.doHttpPostBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -288,7 +290,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/transaction/" + rId+"/delivered/";
+            String url = URL + "transaction/" + rId+"/delivered/";
 
             String rst = UtilHttp.doHttpPostBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -343,7 +345,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
 
             boolean success = false;
             Log.d("lol1", "rId issss : " + rId);
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + rId +"/fulfillers/";
+            String url = URL + "request/" + rId +"/fulfillers/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {

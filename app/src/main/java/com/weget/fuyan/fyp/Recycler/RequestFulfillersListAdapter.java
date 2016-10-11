@@ -38,6 +38,7 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
 
 
 
+
     public RequestFulfillersListAdapter(List<Account> list, List<Integer> fulfillIdList, Request r) {
         this.list = list;
         this.fulfillIdList = fulfillIdList;

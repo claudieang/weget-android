@@ -43,11 +43,13 @@ public class MainActivity extends AppCompatActivity {
     Context mContext;
     private String err, password, authString,username;
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Log.d("sigh","checking for activity behaviour");
@@ -236,6 +238,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+        String profilePicture = pref.getString("picture", null);
+        ImageView profileImage = (ImageView)findViewById(R.id.avatar);;
+
+        if(profilePicture.equals("")){
+            profileImage.setImageResource(R.drawable.ic_profile);
+        }else{
+
+            byte[] decodeString = Base64.decode(profilePicture, Base64.NO_WRAP);
+            Bitmap decodebitmap = BitmapFactory.decodeByteArray(
+                    decodeString, 0, decodeString.length);
+            RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(getResources(), decodebitmap);
+            roundDrawable.setCircular(true);
+            profileImage.setImageDrawable(roundDrawable);
+        }
+
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -289,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ userID + "/logout/";
+            String url = URL + "account/"+ userID + "/logout/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {

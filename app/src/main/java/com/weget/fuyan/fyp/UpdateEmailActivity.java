@@ -43,6 +43,7 @@ public class UpdateEmailActivity extends AppCompatActivity {
                     "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                     ")+"
     );
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +132,7 @@ public class UpdateEmailActivity extends AppCompatActivity {
             Log.d ("Basic Authentitaion", basicAuth);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" +params[0] +"/";
+            String url = URL + "account/" +params[0] +"/";
             JSONObject jsoin = null;
 
             try {

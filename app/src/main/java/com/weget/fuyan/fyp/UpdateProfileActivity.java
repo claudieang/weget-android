@@ -13,6 +13,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     String username;
     TextView updateTitle;
     ImageButton updatePasswordBtn, updateContactBtn,uploadImageBtn;
+    final String URL = getString(R.string.webserviceurl);
 
 
 

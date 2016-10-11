@@ -32,6 +32,8 @@ import java.util.List;
 
 public class UpdateRequestActivity extends AppCompatActivity {
 
+    final String URL = getString(R.string.webserviceurl);
+
     List<Address> fullAddress;
     double latitude, longtitude;
 
@@ -265,7 +267,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + requestId + "/";
+            String url = URL+ "request/" + requestId + "/";
             JSONObject jsoin = null;
 
             try {

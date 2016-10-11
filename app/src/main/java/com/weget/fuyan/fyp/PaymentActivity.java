@@ -62,6 +62,7 @@ public class PaymentActivity extends AppCompatActivity {
     int cardMonth, cardYear;
     Button paymentBtn;
     final String TEST_API = "pk_test_Jmx4WCkGv8XuSMz2NFSx3HEC";
+    final String URL = getString(R.string.webserviceurl);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -295,7 +296,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             boolean success = false;
             final String basicAuth = "Basic " + Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/checkout/";
+            String url = URL + "checkout/";
 
             JSONObject jsoin = null;
 
@@ -366,7 +367,7 @@ public class PaymentActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/fulfill/" + fulfillId + "/";
+            String url = URL + "fulfill/" + fulfillId + "/";
 
             JSONObject jsoin = null;
 
@@ -422,7 +423,6 @@ public class PaymentActivity extends AppCompatActivity {
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.putExtra("after_payment_request_tab", 1);
                 i.putExtra("after_payment_request_swipe", 1);
-                //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 //i.putExtra("transaction", (Serializable)tr);
                 startActivity(i);
                 finish();
