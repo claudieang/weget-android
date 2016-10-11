@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     final Context context = this;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         b1.setTypeface(typeFace);
         b2.setTypeface(typeFace);
 
+
 //        forgotPw.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -72,6 +74,22 @@ public class LoginActivity extends AppCompatActivity {
 //
 //            }
 //        });
+        //check if logged in boolean = true
+        //if true, then log in
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        username = pref.getString("username", null);
+
+        if(username != null){
+            //password = pref.getString("password", "");
+
+            initSendBird();
+
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(i);
+
+            finish();
+            //new getValues().execute(username);
+        }
 
 
         //mButton = (Button) findViewById(R.id.openUserInputDialog);
@@ -148,7 +166,9 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setMessage("Logging in");
             dialog.setIndeterminate(true);
+
             dialog.setCancelable(false);
 
             if(!isFinishing()) {
@@ -218,27 +238,8 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("email", dbEmail);
                 editor.putString("picture", dbProfilePic);
                 editor.commit();
-                SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getApplication().getApplicationContext());
-                SendBird.connect(dbID+"", new SendBird.ConnectHandler() {
-                    @Override
-                    public void onConnected(User user, SendBirdException e) {
-                        if (e != null) {
-                            Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        SendBird.updateCurrentUserInfo(dbUsername, dbProfilePic, new SendBird.UserInfoUpdateHandler() {
-                            @Override
-                            public void onUpdated(SendBirdException e) {
-                                if (e != null) {
-                                    Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                            }
-                        });
 
-
-                    }
-                });
+                initSendBird();
 
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
@@ -321,5 +322,27 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void initSendBird(){
+        SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getApplication().getApplicationContext());
+        SendBird.connect(dbID+"", new SendBird.ConnectHandler() {
+            @Override
+            public void onConnected(User user, SendBirdException e) {
+                if (e != null) {
+                    Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                SendBird.updateCurrentUserInfo(dbUsername, dbProfilePic, new SendBird.UserInfoUpdateHandler() {
+                    @Override
+                    public void onUpdated(SendBirdException e) {
+                        if (e != null) {
+                            Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                });
+            }
+        });
     }
 }
