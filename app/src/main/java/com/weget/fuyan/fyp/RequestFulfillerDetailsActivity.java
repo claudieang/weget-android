@@ -48,7 +48,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
     double price;
     Context mContext;
 
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Fulfiller Details");
 
-
+        URL = getString(R.string.webserviceurl);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);

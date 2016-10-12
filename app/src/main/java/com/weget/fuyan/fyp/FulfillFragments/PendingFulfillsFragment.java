@@ -52,7 +52,7 @@ public class PendingFulfillsFragment extends Fragment {
     Activity activity;
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestListAdapter mAdapter;
-    final String URL = mContext.getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,6 +66,8 @@ public class PendingFulfillsFragment extends Fragment {
         //setContentView(R.layout.activity_my_request);
         view = getView();
         activity = getActivity();
+
+        URL = getString(R.string.webserviceurl);
 
         SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);

@@ -56,7 +56,7 @@ public class CompletedFulfillsFragment extends Fragment {
     Activity activity;
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter mAdapter;
-    final String URL = mContext.getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,11 +71,13 @@ public class CompletedFulfillsFragment extends Fragment {
         view = getView();
         activity = getActivity();
 
+
         SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
         myId = pref.getInt("id", 0);
 
+        URL = getString(R.string.webserviceurl);
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
 
 //        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myFulfillRequestArrayList,3);

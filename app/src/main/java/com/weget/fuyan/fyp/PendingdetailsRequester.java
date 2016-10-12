@@ -35,7 +35,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
     Context mContext;
     ProgressDialog dialog;
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        URL = getString(R.string.webserviceurl);
         dialog = new ProgressDialog(PendingdetailsRequester.this, R.style.MyTheme);
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);

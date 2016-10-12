@@ -37,7 +37,7 @@ public class MyfulfillDetails extends AppCompatActivity {
     double price;
     int requestId, myId, requestorId;
     Context mContext;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class MyfulfillDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        URL = getString(R.string.webserviceurl);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);

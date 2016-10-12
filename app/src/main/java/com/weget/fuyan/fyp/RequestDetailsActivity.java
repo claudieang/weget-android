@@ -43,13 +43,14 @@ public class RequestDetailsActivity extends AppCompatActivity {
 
     TextView requestorTV, productNameTV, requirementTV, locationTV, postalTV, startTimeTV, endTimeTV, durationTV,
     priceTV, statusTV;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_details);
 
+        URL = getString(R.string.webserviceurl);
         Request request = (Request) getIntent().getSerializableExtra("selected_request");
 
         requestId = request.getId();

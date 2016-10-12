@@ -57,7 +57,7 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
     MaterialTabHost tabHost;
     ViewPager viewPager;
     ViewPagerAdapter androidAdapter;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.activity_my_fulfill, container, false);
@@ -90,6 +90,7 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
 //                android.R.color.holo_green_light,
 //                android.R.color.holo_orange_light,
 //                android.R.color.holo_red_light);
+        URL = getString(R.string.webserviceurl);
         tabHost = (MaterialTabHost) view.findViewById(R.id.tabHost);
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 

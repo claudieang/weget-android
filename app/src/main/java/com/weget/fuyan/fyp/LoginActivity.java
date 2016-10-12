@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private Context mContext;
     private static final String TAG = "LoginActivity";
     final Context context = this;
-    final String URL = getString(R.string.webserviceurl);
+    String URL = null;
 
 
     @Override
@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         //ImageView logo_iv = (ImageView)findViewById(R.id.applogo_imageview);
         //logo_iv.setImageResource(R.drawable.weget_logo);
 
-
+        URL = getString(R.string.webserviceurl);
         b1 = (Button)findViewById(R.id.login_button);
         ed1 = (EditText)findViewById(R.id.login_text);
         ed2 = (EditText)findViewById(R.id.password_text);

@@ -48,7 +48,7 @@ public class CompletedRequestsFragment extends Fragment {
     Activity activity;
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter mAdapter;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,9 +66,7 @@ public class CompletedRequestsFragment extends Fragment {
         //TextView myTextView=(TextView)view.findViewById(R.id.my_request_title);
         //Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Quicksand-Bold.otf");
         //myTextView.setTypeface(typeFace);
-
-
-
+/*
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout)view.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -86,6 +84,8 @@ public class CompletedRequestsFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+*/
+        URL = getString(R.string.webserviceurl);
 
         SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);

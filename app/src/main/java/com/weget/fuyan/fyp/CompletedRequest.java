@@ -29,7 +29,7 @@ public class CompletedRequest extends AppCompatActivity {
     int requestId, myId, requestorId, postal;
     Context mContext;
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,8 @@ public class CompletedRequest extends AppCompatActivity {
         toolbar.setTitle("Completed");
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        URL = getString(R.string.webserviceurl);
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);

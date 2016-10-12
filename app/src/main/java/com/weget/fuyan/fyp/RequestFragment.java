@@ -47,7 +47,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
     MaterialTabHost tabHost;
     ViewPager viewPager;
     ViewPagerAdapter androidAdapter;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -61,6 +61,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
         //myTextView.setTypeface(typeFace);
 
         //tab host
+        URL = getString(R.string.webserviceurl);
         tabHost = (MaterialTabHost) view.findViewById(R.id.tabHost);
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 

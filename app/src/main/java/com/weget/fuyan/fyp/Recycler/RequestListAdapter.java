@@ -52,7 +52,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     int rId, myId, fr, fId, requestorId;
     String username, password, authString, err;
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
-    final String URL = mContext.getString(R.string.webserviceurl);
+    String URL;
 
 
 
@@ -192,6 +192,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         b1.setTypeface(typeFace);
         b2.setTypeface(typeFaceLight);
         mContext = parent.getContext();
+        URL = mContext.getString(R.string.webserviceurl);
 
 
 

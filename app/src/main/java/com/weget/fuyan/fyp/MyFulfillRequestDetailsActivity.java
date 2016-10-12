@@ -41,13 +41,15 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
             priceTV, statusTV, dispute;
 
     ImageView profilePic, itemPic;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_fulfill_request_details);
+
+        URL = getString(R.string.webserviceurl);
 
         Request request = (Request) getIntent().getSerializableExtra("selected_request");
 

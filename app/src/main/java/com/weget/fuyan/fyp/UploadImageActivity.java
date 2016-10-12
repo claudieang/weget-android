@@ -44,7 +44,7 @@ public class UploadImageActivity extends AppCompatActivity {
     String encodedImage;
     TextView txtmsg;
 
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
     ProgressBar pg;
 
     ResultSet rs;
@@ -64,6 +64,7 @@ public class UploadImageActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Upload Profile Picture");
 
+        URL = getString(R.string.webserviceurl);
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
         id = pref.getInt("id",0);

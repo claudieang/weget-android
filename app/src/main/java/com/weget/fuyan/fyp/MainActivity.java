@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     Context mContext;
     private String err, password, authString,username;
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         // Update the action bar title with the TypefaceSpan instance
         //ActionBar actionBar = getActionBar();
         getSupportActionBar().setTitle(s);
+
+        URL = getString(R.string.webserviceurl);
 
         mNavItems.add(new NavItem("Profile", "Edit your profile", R.drawable.ic_account_circle_black_36dp));
         mNavItems.add(new NavItem("Bank Settings", "Manage your bank accounts", R.drawable.ic_account_balance_wallet_black_24dp));

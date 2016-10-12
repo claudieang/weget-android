@@ -32,7 +32,7 @@ import java.util.List;
 
 public class UpdateRequestActivity extends AppCompatActivity {
 
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     List<Address> fullAddress;
     double latitude, longtitude;
@@ -62,6 +62,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
 
         rq = (Request)getIntent().getSerializableExtra("selected_request");
 
+        URL = getString(R.string.webserviceurl);
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         requestorId = pref.getInt("id",0);
         username = pref.getString("username", null);

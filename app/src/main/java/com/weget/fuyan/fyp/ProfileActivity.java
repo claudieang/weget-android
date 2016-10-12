@@ -22,7 +22,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView profileUsernameTV, profileEmailTV, profileContactNumberTV;
     ImageView profileImage;
     ImageView updateProfile;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
 
 
@@ -41,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
         change_pw.setPaintFlags(change_pw.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
 
+        URL = getString(R.string.webserviceurl);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         profileUsername = pref.getString("username", null);
         profileEmail = pref.getString ("email",null);

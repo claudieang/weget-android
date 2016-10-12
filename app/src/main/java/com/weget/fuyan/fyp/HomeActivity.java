@@ -80,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     ListView requestList;
     int requestImage = R.drawable.ordericon;
     ArrayList<Request> requestArrayList = new ArrayList<>();
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     RequestAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
@@ -141,6 +141,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_home);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        URL = getString(R.string.webserviceurl);
         TextView b1 = (TextView) findViewById(R.id.my_request_title);
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
         b1.setTypeface(typeFace);

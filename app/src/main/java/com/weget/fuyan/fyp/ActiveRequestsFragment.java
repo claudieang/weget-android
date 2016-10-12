@@ -39,7 +39,7 @@ public class ActiveRequestsFragment extends Fragment {
     int  requestImage = R.drawable.ordericon;
     int myId;
     Context mContext;
-    String err, authString, username, password;
+    String err, authString, username, password, baseURL;
     ArrayList<Request> myRequestArrayList = new ArrayList<>();
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
     ArrayList<Integer> counterList = new ArrayList<>();
@@ -49,8 +49,6 @@ public class ActiveRequestsFragment extends Fragment {
     //private RecyclerView recyclerView;
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestActiveListAdapter mAdapter;
-    final String URL = getString(R.string.webserviceurl);
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,16 +81,13 @@ public class ActiveRequestsFragment extends Fragment {
                 fetchTimelineAsync(0);
             }
         });
-
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
-
-        */
-
+*/
+        baseURL = getString(R.string.webserviceurl);
         SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
@@ -122,22 +117,6 @@ public class ActiveRequestsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
     }
-    /*
-    public void fetchTimelineAsync(int page) {
-        // Send the network request to fetch the updated data
-        // 'client' here is an instance of Android Async HTTP
-        new getMyRequests().execute(authString);
-
-        recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
-        mAdapter = new com.weget.fuyan.fyp.Recycler.RequestActiveListAdapter(myRequestArrayList,counterList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-
-    }
-    */
 
     private class getMyRequests extends AsyncTask<String, Void, Boolean> {
         ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
@@ -157,7 +136,7 @@ public class ActiveRequestsFragment extends Fragment {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = URL + "account/" + myId + "/request/";
+            String url = baseURL+ "account/" + myId + "/request/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -236,7 +215,7 @@ public class ActiveRequestsFragment extends Fragment {
             for (Request r : rList) {
                 int rId = r.getId();
 
-                String url = URL + "request/" + rId + "/fulfillers/";
+                String url = baseURL + "request/" + rId + "/fulfillers/";
 
                 String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
                 if (rst == null) {

@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     int requestImage = R.drawable.ordericon;
     ArrayList<Request> requestArrayList = new ArrayList<>();
     int myId;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     RequestAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
@@ -152,6 +152,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         view = getView();
         activity = getActivity();
 
+        URL = getString(R.string.webserviceurl);
         TextView b1 = (TextView) view.findViewById(R.id.my_request_title);
         Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Roboto-Light.ttf");
         b1.setTypeface(typeFace);

@@ -32,7 +32,7 @@ public class UpdateContactActivity extends AppCompatActivity {
     Button updateContactBtn;
     EditText updateContact;
     SharedPreferences.Editor editor = null;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class UpdateContactActivity extends AppCompatActivity {
         Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
 
 
+        URL = getString(R.string.webserviceurl);
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
         username = pref.getString("username", null);

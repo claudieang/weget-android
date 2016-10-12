@@ -35,7 +35,7 @@ public class MyFulfillActivity extends AppCompatActivity {
     ArrayList<Fulfill> myFulfillList  = new ArrayList<>();
     ArrayList<Request> myFulfillRequestList = new ArrayList<>();
     private SwipeRefreshLayout swipeContainer;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,7 @@ public class MyFulfillActivity extends AppCompatActivity {
                 android.R.color.holo_red_light);
                 */
 
+        URL = getString(R.string.webserviceurl);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);

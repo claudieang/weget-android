@@ -33,7 +33,7 @@ public class MyRequestActivity extends AppCompatActivity {
     String err, authString, username, password;
     ArrayList<Request> myRequestArrayList = new ArrayList<>();
     private SwipeRefreshLayout swipeContainer;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class MyRequestActivity extends AppCompatActivity {
 
          */
 
+        URL = getString(R.string.webserviceurl);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);

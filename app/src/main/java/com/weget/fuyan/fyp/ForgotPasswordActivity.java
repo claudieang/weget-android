@@ -21,7 +21,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     Button retrieveAccountBtn;
     String email, err;
     Context mContext;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
         Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
 
+        URL = getString(R.string.webserviceurl);
         forgotEmailET = (EditText)findViewById(R.id.forget_email_et);
         retrieveAccountBtn = (Button)findViewById(R.id.retrieve_account_btn);
 

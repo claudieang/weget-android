@@ -48,7 +48,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
     TextView dispute;
     private RequestFulfillersListAdapter mAdapter;
     private RecyclerViewEmptySupport recyclerView;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         toolbar.setTitle(s);
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        URL = getString(R.string.webserviceurl);
         myRequest =(Request) getIntent().getSerializableExtra("selected_my_request");
         //tr = (Transaction)getIntent().getSerializableExtra("fulfiller_transaction");
 

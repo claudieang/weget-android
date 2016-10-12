@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                     "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                     ")+"
     );
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     private static final String TAG = "RegisterActivity";
     private CheckBox checkBox;
@@ -74,6 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
 
+        URL = getString(R.string.webserviceurl);
         //set font
         SpannableString s = new SpannableString("Register");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),

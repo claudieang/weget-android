@@ -32,7 +32,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
     Button deliveredBtn, disputeBtn;
     Context mContext;
     ProgressDialog dialog;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        URL = getString(R.string.webserviceurl);
 
         dialog = new ProgressDialog(PendingdetailsFulfiller.this, R.style.MyTheme);
 

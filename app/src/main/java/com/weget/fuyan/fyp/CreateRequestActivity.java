@@ -45,7 +45,7 @@ public class CreateRequestActivity extends AppCompatActivity {
     Context mContext;
 
     private Toolbar toolbar;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class CreateRequestActivity extends AppCompatActivity {
         //Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/TitilliumWeb-Bold.ttf");
         //myTextView.setTypeface(typeFace);
 
-
+        URL = getString(R.string.webserviceurl);
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         requestorId = pref.getInt("id", 0);
         username = pref.getString("username", null);

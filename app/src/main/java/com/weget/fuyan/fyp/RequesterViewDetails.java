@@ -39,7 +39,7 @@ public class RequesterViewDetails extends AppCompatActivity {
     Context mContext;
     Request request;
     private TextView productDescriptionTV;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class RequesterViewDetails extends AppCompatActivity {
         Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
 
 
+        URL = getString(R.string.webserviceurl);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         //toolbar.setTitle("Request Completed");

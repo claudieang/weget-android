@@ -62,7 +62,7 @@ public class PaymentActivity extends AppCompatActivity {
     int cardMonth, cardYear;
     Button paymentBtn;
     final String TEST_API = "pk_test_Jmx4WCkGv8XuSMz2NFSx3HEC";
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +72,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        URL = getString(R.string.webserviceurl);
         fulfillId = getIntent().getIntExtra("fulfill_Id", 0);
         price = getIntent().getDoubleExtra("fulfill_price",0);
         requestString = getIntent().getStringExtra("request_string");

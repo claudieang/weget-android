@@ -49,7 +49,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
     ArrayList<Integer> fulfillerIdList = new ArrayList<>();
     private TextView productDescriptionTV;
-    final String URL = getString(R.string.webserviceurl);
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         // Update the action bar title with the TypefaceSpan instance
         //ActionBar actionBar = getActionBar();
         getSupportActionBar().setTitle(s);
+        URL = getString(R.string.webserviceurl);
 
         request = (Request) getIntent().getSerializableExtra("selected_request");
 
