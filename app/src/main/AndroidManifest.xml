@@ -54,7 +54,8 @@
         <activity android:name="com.weget.fuyan.fyp.UploadImageActivity" />
         <activity
             android:name="com.weget.fuyan.fyp.CreateRequestActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true"/>
         <activity android:name="com.weget.fuyan.fyp.RequestDetailsActivity" />
         <activity android:name="com.weget.fuyan.fyp.MyRequestActivity">
             <intent-filter>

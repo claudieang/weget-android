@@ -424,6 +424,7 @@ public class PaymentActivity extends AppCompatActivity {
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.putExtra("after_payment_request_tab", 1);
                 i.putExtra("after_payment_request_swipe", 1);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 //i.putExtra("transaction", (Serializable)tr);
                 startActivity(i);
                 finish();

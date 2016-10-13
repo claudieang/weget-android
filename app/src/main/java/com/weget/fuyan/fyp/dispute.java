@@ -13,7 +13,9 @@ import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +24,7 @@ import org.json.JSONObject;
 
 public class dispute extends AppCompatActivity {
 
-    String username, password, authString, message, origin, err;
+    String username, password, authString, message, origin, err, reason;
     int myId, transactionId;
     EditText disputeFormET;
     Button submitBtn;
@@ -67,7 +69,7 @@ public class dispute extends AppCompatActivity {
             }
         });
 
-        ((TextView)findViewById(R.id.dipute)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.dipute)).setTypeface(typeFace);
         disputeFormET.setTypeface(typeFace);
         submitBtn.setTypeface(typeFace);
 
@@ -108,6 +110,8 @@ public class dispute extends AppCompatActivity {
                 jsoin = new JSONObject();
                 jsoin.put("accountId", myId);
                 jsoin.put("message", message);
+                jsoin.put("type",origin);
+                jsoin.put("reason",reason);
 
 
             }catch(JSONException e){
@@ -168,5 +172,29 @@ public class dispute extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void onRadioButtonClicked (View view){
+
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_no1:
+                if (checked)
+                    reason = "Fulfiller did not deliver";
+                    break;
+            case R.id.radio_no2:
+                if (checked)
+                    reason = "Requestor refuses confirm/not found";
+                    break;
+            case R.id.radio_no3:
+                if (checked)
+                    reason = "Service not up to standard";
+                    break;
+        }
+
     }
 }

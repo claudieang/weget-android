@@ -162,6 +162,10 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
 
 
 
+
+
+
+
     // view pager adapter
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -206,6 +210,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
         }
     }
 
+    //no more, pull down refresh
     public void fetchTimelineAsync(int page) {
         // Send the network request to fetch the updated data
         // 'client' here is an instance of Android Async HTTP
