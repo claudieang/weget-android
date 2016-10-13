@@ -117,7 +117,7 @@ public class ActiveRequestsFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
     }
 
-        private class getMyRequests extends AsyncTask<String, Void, Boolean> {
+    private class getMyRequests extends AsyncTask<String, Void, Boolean> {
             ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
 
             @Override

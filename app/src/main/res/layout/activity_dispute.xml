@@ -1,62 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bt_very_light_gray"
-    tools:context="com.weget.fuyan.fyp.dispute">
-
+    android:orientation="vertical">
 
     <include
-    android:id="@+id/tool_bar"
-    layout="@layout/tool_bar_blank"></include>
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar_blank"></include>
 
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:id="@+id/pic"
 
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="35dp"/>
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pic"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:id="@+id/dipute"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="WHY ARE YOU REPORTING THIS REQUEST? "
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                android:id="@+id/title"
+                />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RadioButton android:id="@+id/radio_no1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1. Fulfiller did not deliver"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/title"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="30dp"
+                    android:onClick="onRadioButtonClicked"/>
+                <RadioButton android:id="@+id/radio_no2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2. Requestor refuses confirm/not found"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/radio_no1"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="30dp"
+                    android:onClick="onRadioButtonClicked"/>
+                <RadioButton android:id="@+id/radio_no3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3. Service not up to standard"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/radio_no2"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="30dp"
+                    android:onClick="onRadioButtonClicked"/>
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <EditText
+                android:background="@drawable/barbase"
+                android:textColor="@color/black"
+                android:id="@+id/dipute_form"
+                android:layout_height="wrap_content"
+                android:hint=" Feedback Details ..."
+                android:inputType="textMultiLine"
+                android:lines="10"
+                android:layout_width="fill_parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textSize="16sp">
+            </EditText>
+
+        </LinearLayout>
 
 
 
-    <EditText
-        android:background="@drawable/barbase"
-        android:textColor="@color/black"
-        android:id="@+id/dipute_form"
-        android:layout_height="wrap_content"
-        android:hint=" Feedback Details ..."
-        android:inputType="textMultiLine"
-        android:lines="10"
-        android:layout_width="fill_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_below="@+id/dipute"
-        android:textSize="16sp">
-    </EditText>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:foreground="?android:selectableItemBackground"
-        android:fontFamily="normal"
-        android:text="SUBMIT"
-        android:textSize="16sp"
-        android:background="@color/colorPrimary"
-        android:id="@+id/submit"
-        android:layout_alignParentBottom="true" />
+        <LinearLayout
+            android:id="@+id/linear5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.1"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foreground="?android:selectableItemBackground"
+                android:fontFamily="normal"
+                android:text="SUBMIT"
+                android:textSize="16sp"
+                android:background="@color/colorPrimary"
+                android:id="@+id/submit" />
 
-</RelativeLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+
+
+
+
