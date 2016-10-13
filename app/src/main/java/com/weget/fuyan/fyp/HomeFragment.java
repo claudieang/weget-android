@@ -468,10 +468,25 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 public void onInfoWindowClick(Marker marker) {
                     Request request = (Request) marker.getTag();
                     if(request != null){
-                        Intent intent = new Intent(getContext(),FulfillviewRequestDetails.class);
-                        Log.d("geo1", "request marker has data of : " + request);
-                        intent.putExtra("selected_request",request);
-                        startActivity(intent);
+                        SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
+                        String username = pref.getString("username", null);
+                        String password = pref.getString("password", null);
+                        int id = pref.getInt("id",0);
+                        if(request.getRequestorId() == id) {
+                            //if the request viewed is mine
+                            Intent intent = new Intent(getContext(),RequesterViewDetails.class);
+                            Log.d("geo1", "As requestor, request marker has data of : " + request);
+                            intent.putExtra("selected_request",request);
+                            startActivity(intent);
+
+                        } else {
+                            //im a fulfiller
+                            Intent intent = new Intent(getContext(),FulfillviewRequestDetails.class);
+                            Log.d("geo1", "As fulfiller, request marker has data of : " + request);
+                            intent.putExtra("selected_request",request);
+                            startActivity(intent);
+                        }
+
                     }
 
                 }

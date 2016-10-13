@@ -1,5 +1,6 @@
 package com.weget.fuyan.fyp;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FragmentManager fm = getFragmentManager();
+        fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+             @Override
+             public void onBackStackChanged(){
+                 if(getFragmentManager().getBackStackEntryCount() == 0) finish();
+             }
+        });
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -237,6 +247,8 @@ public class MainActivity extends AppCompatActivity {
             bottomNavigationBar.selectTab(notification_fulfill_tab);
         }
 
+
+
     }
 
     @Override
@@ -261,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

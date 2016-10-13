@@ -64,7 +64,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_card_cvc_edit_text"
                 android:drawableRight="@drawable/ic_card_cvc"
-                android:hint="CVC"
+                android:hint="CVV"
                 android:inputType="number"
                 android:padding="16dp"
                 android:textColor="@android:color/black"
