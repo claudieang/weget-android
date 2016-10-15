@@ -141,14 +141,14 @@ public class ChatFragment extends Fragment {
             @Override
             public void onResult(List<GroupChannel> list, SendBirdException e) {
                 if (e != null) {
-                    Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext().getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 mAdapter.addAll(list);
                 mAdapter.notifyDataSetChanged();
 
                 if (mAdapter.getCount() == 0) {
-                    Toast.makeText(getActivity(), "No channels found.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext().getApplicationContext(), "No channels found.", Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
@@ -61,6 +62,7 @@ public class UserChatActivity extends FragmentActivity {
 
     private View mTopBarContainer;
     private View mSettingsContainer;
+    private TextView mHeaderView;
     private String mChannelUrl;
     private String profileId;
     private int dbID;
@@ -208,6 +210,7 @@ public class UserChatActivity extends FragmentActivity {
         private GroupChannel mGroupChannel;
         private PreviousMessageListQuery mPrevMessageListQuery;
         private boolean isUploading;
+        private TextView mHeaderView;
 
         public SendBirdChatFragment() {
         }
@@ -237,6 +240,19 @@ public class UserChatActivity extends FragmentActivity {
                     mAdapter = new SendBirdMessagingAdapter(getActivity(), mGroupChannel);
                     mListView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
+
+                    SharedPreferences pref = getActivity().getSharedPreferences("MyPref", 0);
+
+                    int userID = pref.getInt("id",0);
+                    String channelTitle = "";
+
+                    for(User u: mGroupChannel.getMembers()){
+                        if(!u.getUserId().equals(userID+"")){
+                            channelTitle = u.getNickname();
+                        }
+                    }
+
+                    mHeaderView.setText(channelTitle);
 
                     //updateGroupChannelTitle();
 
@@ -307,6 +323,9 @@ public class UserChatActivity extends FragmentActivity {
         }
 
         private void initUIComponents(View rootView) {
+
+            mHeaderView = (TextView)rootView.findViewById(R.id.chat_name);
+
             mListView = (ListView) rootView.findViewById(R.id.groupchat_list);
             turnOffListViewDecoration(mListView);
 
