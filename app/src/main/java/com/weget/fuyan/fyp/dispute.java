@@ -10,12 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +35,7 @@ public class dispute extends AppCompatActivity {
     Button submitBtn;
     Context mContext;
     String URL;
+    Spinner dropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +87,52 @@ public class dispute extends AppCompatActivity {
         toolbar.setTitle("Dispute Form");
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        //reason dropdown menu
+        dropdown = (Spinner)findViewById(R.id.spinner1);
+        String[] items = new String[]{"reason1", "reason2", "reason3"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items){
+
+
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+
+                ((TextView) v).setTextSize(16);
+                ((TextView) v).setTextColor(
+                        getResources().getColorStateList(R.color.black)
+                );
+
+                return v;
+            }
+
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView, parent);
+                v.setBackgroundResource(R.drawable.barbase);
+
+                ((TextView) v).setTextColor(
+                        getResources().getColorStateList(R.color.black)
+                );
+
+                ((TextView) v).setGravity(Gravity.CENTER);
+
+                return v;
+            }
+
+
+
+        };
+        dropdown.setAdapter(adapter);
+
+
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position,
+                               long id) {
+        dropdown.setSelection(position);
+        String selState = (String) dropdown.getSelectedItem();
+
+        //reason = selState;
     }
 
     private class doDispute extends AsyncTask<String, Void, Boolean> {
