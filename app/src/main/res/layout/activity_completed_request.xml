@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <include
@@ -17,7 +17,17 @@
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/complete" />
+        android:background="@drawable/testing" />
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Your Completed Request"
+        android:layout_gravity="center"
+        android:layout_below="@+id/pic"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="18sp" />
 
 
         <LinearLayout

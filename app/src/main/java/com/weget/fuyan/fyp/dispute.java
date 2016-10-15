@@ -132,7 +132,7 @@ public class dispute extends AppCompatActivity {
         dropdown.setSelection(position);
         String selState = (String) dropdown.getSelectedItem();
 
-        //reason = selState;
+        reason = selState;
     }
 
     private class doDispute extends AsyncTask<String, Void, Boolean> {
@@ -228,7 +228,7 @@ public class dispute extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+/*
     public void onRadioButtonClicked (View view){
 
         // Is the button now checked?
@@ -251,4 +251,5 @@ public class dispute extends AppCompatActivity {
         }
 
     }
+    */
 }
