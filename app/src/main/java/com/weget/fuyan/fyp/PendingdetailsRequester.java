@@ -243,9 +243,11 @@ public class PendingdetailsRequester extends AppCompatActivity {
                 Intent i = new Intent(PendingdetailsRequester.this, MainActivity.class);
                 i.putExtra("after_received_tab", 1);
                 i.putExtra("complete_request_swipe", 2);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Toast.makeText(getApplicationContext(), "Received!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
+                finish();
 
 
             }else{
@@ -308,7 +310,9 @@ public class PendingdetailsRequester extends AppCompatActivity {
                 Intent i = new Intent (PendingdetailsRequester.this, dispute.class);
                 i.putExtra("transaction_id", transactionId);
                 i.putExtra("origin", "requestor");
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
+                //finish();
 
             }else {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
