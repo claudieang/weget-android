@@ -224,9 +224,11 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
                 Intent i = new Intent(PendingdetailsFulfiller.this, MainActivity.class);
                 i.putExtra("after_delivered_tab", 3);
                 i.putExtra("complete_fulfill_swipe",2);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Toast.makeText(getApplicationContext(), "Delivered!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
+                finish();
 
             }else{
 
@@ -286,7 +288,9 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
                 Intent i = new Intent (PendingdetailsFulfiller.this, dispute.class);
                 i.putExtra("transaction_id", transactionId);
                 i.putExtra("origin", "fulfiller");
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
+                //finish();
 
             }else {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();

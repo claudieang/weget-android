@@ -115,10 +115,12 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.weget.fuyan.fyp.PendingdetailsRequester"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name="com.weget.fuyan.fyp.PendingdetailsFulfiller"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity android:name="com.weget.fuyan.fyp.MyfulfillDetails"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.weget.fuyan.fyp.bank_details"
