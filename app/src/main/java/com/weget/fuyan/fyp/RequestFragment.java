@@ -194,7 +194,6 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
                 case 1:
                     ret = "pending";
                     break;
-
                 case 2:
                     ret = "Completed";
                     break;

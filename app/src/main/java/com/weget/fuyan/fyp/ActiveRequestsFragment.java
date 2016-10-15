@@ -13,6 +13,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +21,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HP on 4/4/2016.
@@ -146,33 +146,18 @@ public class ActiveRequestsFragment extends Fragment {
                     myRequestArrayList.clear();
 
                     try {
-                        JSONArray jsoArray = new JSONArray(rst);
-                        for (int i = 0; i < jsoArray.length(); i++) {
-                            JSONObject jso = jsoArray.getJSONObject(i);
+                        Gson gson = new Gson();
+                        List<Request> requestList = gson.fromJson(rst,new TypeToken<List<Request>>(){}.getType());
 
-                            int id = jso.getInt("id");
-                            int requestorId = jso.getInt("requestorId");
-                            int imageResource = requestImage;
-                            String productName = jso.getString("productName");
-                            String requirement = jso.getString("requirement");
-                            String location = jso.getString("location");
-                            int postal = jso.getInt("postal");
-                            String startTime = jso.getString("startTime");
-                            int duration = jso.getInt("duration");
-                            String endTime = jso.getString("endTime");
-                            double price = jso.getDouble("price");
-                            String status = jso.getString("status");
+                        //myRequestArrayList = gson.fromJson(rst,new TypeToken<List<Request>>(){}.getType());
 
-                            Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
-                                    postal, startTime, endTime, duration, price, status);
-                            if (status.equals("active")) {
-                                myRequestArrayList.add(request);
+                        for(Request r : requestList){
+                            if(r.getStatus().equals("active")) {
+                                myRequestArrayList.add(r);
+                                Log.d("GSON:" + r.getProductName(), r.getPrice() + "");
                             }
-
-                            //mAdapter.notifyDataSetChanged();
-
                         }
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     success = true;
@@ -224,26 +209,12 @@ public class ActiveRequestsFragment extends Fragment {
                     fulfillerAccountList.clear();
 
                     try {
-                        JSONArray jsoArray = new JSONArray(rst);
-                        for (int i = 0; i < jsoArray.length(); i++) {
-                            JSONObject jso = jsoArray.getJSONObject(i);
+                        Gson gson = new Gson();
+                        //List<Account> accountList = gson.fromJson(rst,new TypeToken<List<Account>>(){}.getType());
 
-                            id = jso.getInt("id");
-                            username = jso.getString("username");
-                            password = jso.getString("password");
-                            contactNo = jso.getInt("contactNo");
-                            email = jso.getString("email");
-                            fulfiller = jso.getString("fulfiller");
-                            picture = jso.getString("picture");
-
-                            account = new Account(id, username, password, contactNo, email, fulfiller, picture);
-
-
-                            fulfillerAccountList.add(account);
-
-
-                        }
-                    } catch (JSONException e) {
+                        //myRequestArrayList = gson.fromJson(rst,new TypeToken<List<Request>>(){}.getType());
+                        fulfillerAccountList = gson.fromJson(rst, new TypeToken<List<Account>>(){}.getType());
+                    } catch (Exception e) {
                         success = false;
                         e.printStackTrace();
                         err = e.getMessage();

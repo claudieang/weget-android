@@ -46,6 +46,7 @@ android {
         compile 'com.google.android.gms:play-services-gcm:9.4.0'
         compile 'com.sothree.slidinguppanel:library:3.3.0'
         compile 'com.sendbird.sdk:sendbird-android-sdk:3.0.2'
+        compile 'com.google.code.gson:gson:2.3.1'
 
     }
 }

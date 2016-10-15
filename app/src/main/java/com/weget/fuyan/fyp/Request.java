@@ -19,6 +19,10 @@ public class Request implements Serializable{
     double price;
     String status, requestImage;
 
+    public Request(){
+
+    }
+
     public Request(int imageResource, String productName, String requirement){
         this.imageResource = imageResource;
         this.productName = productName;
