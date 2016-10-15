@@ -30,6 +30,7 @@ public class bank_details extends AppCompatActivity {
     int myId, emptyBank;
     Context mContext;
     Request request;
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class bank_details extends AppCompatActivity {
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        URL = getString(R.string.webserviceurl);
         //apply font
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
         Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
@@ -137,7 +139,7 @@ public class bank_details extends AppCompatActivity {
             //Log.d ("Basic Authentitaion", basicAuth);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId + "/bank/";
+            String url = URL + "account/" + myId + "/bank/";
             JSONObject jsoin = null;
 
             try {

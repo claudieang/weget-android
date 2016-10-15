@@ -14,14 +14,17 @@
     <!--android:layout_alignParentTop="true"-->
     <!--android:layout_alignParentBottom="true"-->
     <!--android:layout_marginBottom="55dp" />-->
-    <com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport
-        android:id="@+id/my_request_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:layout_marginBottom="55dp"/>
+
+        <com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport
+            android:id="@+id/my_request_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginBottom="55dp"/>
+
+
 
     <TextView
         android:id="@+id/empty_view"

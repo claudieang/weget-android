@@ -56,6 +56,7 @@ public class CompletedFulfillsFragment extends Fragment {
     Activity activity;
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter mAdapter;
+    String URL;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,11 +71,13 @@ public class CompletedFulfillsFragment extends Fragment {
         view = getView();
         activity = getActivity();
 
+
         SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
         myId = pref.getInt("id", 0);
 
+        URL = getString(R.string.webserviceurl);
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
 
 //        mAdapter = new com.wegot.fuyan.fyp.Recycler.RequestListAdapter(myFulfillRequestArrayList,3);
@@ -126,7 +129,7 @@ public class CompletedFulfillsFragment extends Fragment {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId+"/fulfill/";
+            String url = URL + "account/" + myId+"/fulfill/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -186,7 +189,7 @@ public class CompletedFulfillsFragment extends Fragment {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/active/";
+            String url = URL + "request/active/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -223,7 +226,7 @@ public class CompletedFulfillsFragment extends Fragment {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId+"/fulfill/request/";
+            String url = URL + "account/" + myId+"/fulfill/request/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {

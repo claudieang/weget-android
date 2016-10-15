@@ -32,6 +32,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
     Button deliveredBtn, disputeBtn;
     Context mContext;
     ProgressDialog dialog;
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        URL = getString(R.string.webserviceurl);
 
         dialog = new ProgressDialog(PendingdetailsFulfiller.this, R.style.MyTheme);
 
@@ -142,7 +144,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(auth.getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ rId + "/";
+            String url = URL + "account/"+ rId + "/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -202,7 +204,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/transaction/" + myRequestId+"/delivered/";
+            String url = URL + "transaction/" + myRequestId+"/delivered/";
 
             String rst = UtilHttp.doHttpPostBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -255,7 +257,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/"+myRequestId+"/transaction/";
+            String url = URL + "request/"+myRequestId+"/transaction/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {

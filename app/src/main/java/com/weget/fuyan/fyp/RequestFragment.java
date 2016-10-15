@@ -47,6 +47,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
     MaterialTabHost tabHost;
     ViewPager viewPager;
     ViewPagerAdapter androidAdapter;
+    String URL;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
         //myTextView.setTypeface(typeFace);
 
         //tab host
+        URL = getString(R.string.webserviceurl);
         tabHost = (MaterialTabHost) view.findViewById(R.id.tabHost);
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 
@@ -160,6 +162,10 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
 
 
 
+
+
+
+
     // view pager adapter
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -204,6 +210,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
         }
     }
 
+    //no more, pull down refresh
     public void fetchTimelineAsync(int page) {
         // Send the network request to fetch the updated data
         // 'client' here is an instance of Android Async HTTP
@@ -228,7 +235,7 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/active/";
+            String url = URL + "request/active/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {

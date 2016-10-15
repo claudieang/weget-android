@@ -83,6 +83,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     int requestImage = R.drawable.ordericon;
     ArrayList<Request> requestArrayList = new ArrayList<>();
     int myId;
+    String URL;
 
     RequestAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
@@ -151,6 +152,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         view = getView();
         activity = getActivity();
 
+        URL = getString(R.string.webserviceurl);
         TextView b1 = (TextView) view.findViewById(R.id.my_request_title);
         Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Roboto-Light.ttf");
         b1.setTypeface(typeFace);
@@ -321,7 +323,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/active/";
+            String url = URL + "request/active/";
 
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
@@ -466,10 +468,25 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 public void onInfoWindowClick(Marker marker) {
                     Request request = (Request) marker.getTag();
                     if(request != null){
-                        Intent intent = new Intent(getContext(),FulfillviewRequestDetails.class);
-                        Log.d("geo1", "request marker has data of : " + request);
-                        intent.putExtra("selected_request",request);
-                        startActivity(intent);
+                        SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
+                        String username = pref.getString("username", null);
+                        String password = pref.getString("password", null);
+                        int id = pref.getInt("id",0);
+                        if(request.getRequestorId() == id) {
+                            //if the request viewed is mine
+                            Intent intent = new Intent(getContext(),RequesterViewDetails.class);
+                            Log.d("geo1", "As requestor, request marker has data of : " + request);
+                            intent.putExtra("selected_request",request);
+                            startActivity(intent);
+
+                        } else {
+                            //im a fulfiller
+                            Intent intent = new Intent(getContext(),FulfillviewRequestDetails.class);
+                            Log.d("geo1", "As fulfiller, request marker has data of : " + request);
+                            intent.putExtra("selected_request",request);
+                            startActivity(intent);
+                        }
+
                     }
 
                 }

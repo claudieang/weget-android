@@ -37,6 +37,7 @@ public class MyfulfillDetails extends AppCompatActivity {
     double price;
     int requestId, myId, requestorId;
     Context mContext;
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class MyfulfillDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        URL = getString(R.string.webserviceurl);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
@@ -259,7 +260,7 @@ public class MyfulfillDetails extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(auth.getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ rId + "/";
+            String url = URL + "account/"+ rId + "/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {

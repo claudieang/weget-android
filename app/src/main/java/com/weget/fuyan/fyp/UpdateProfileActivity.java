@@ -13,6 +13,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     String username;
     TextView updateTitle;
     ImageButton updatePasswordBtn, updateContactBtn,uploadImageBtn;
+    String URL;
 
 
 
@@ -28,6 +29,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         //myTextView.setTypeface(typeFace);
 
 
+        URL = getString(R.string.webserviceurl);
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         final SharedPreferences.Editor editor = pref.edit();
         username = pref.getString("username", null);

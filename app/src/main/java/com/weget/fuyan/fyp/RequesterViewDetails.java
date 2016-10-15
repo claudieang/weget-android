@@ -39,6 +39,7 @@ public class RequesterViewDetails extends AppCompatActivity {
     Context mContext;
     Request request;
     private TextView productDescriptionTV;
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class RequesterViewDetails extends AppCompatActivity {
         Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
 
 
+        URL = getString(R.string.webserviceurl);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         //toolbar.setTitle("Request Completed");
@@ -179,7 +181,7 @@ public class RequesterViewDetails extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(auth.getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ rId + "/";
+            String url = URL + "account/"+ rId + "/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -243,7 +245,7 @@ public class RequesterViewDetails extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + requestId + "/";
+            String url = URL + "request/" + requestId + "/";
 
             String rst = UtilHttp.doHttpDeleteBasicAuthenticaion(mContext, url, basicAuth);
             if (rst == null) {

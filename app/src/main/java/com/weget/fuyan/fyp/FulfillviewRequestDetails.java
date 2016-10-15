@@ -49,6 +49,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
     ArrayList<Integer> fulfillerIdList = new ArrayList<>();
     private TextView productDescriptionTV;
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         // Update the action bar title with the TypefaceSpan instance
         //ActionBar actionBar = getActionBar();
         getSupportActionBar().setTitle(s);
+        URL = getString(R.string.webserviceurl);
 
         request = (Request) getIntent().getSerializableExtra("selected_request");
 
@@ -292,7 +294,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(auth.getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ rId + "/";
+            String url = URL + "account/"+ rId + "/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -352,7 +354,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + requestId +"/fulfillers/";
+            String url = URL + "request/" + requestId +"/fulfillers/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -430,7 +432,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             //Log.d ("Basic Authentitaion", basicAuth);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/fulfill/";
+            String url = URL + "fulfill/";
             JSONObject jsoin = null;
 
             try {
@@ -496,7 +498,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ myId+"/bank/";
+            String url = URL + "account/"+ myId+"/bank/";
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
                 err = UtilHttp.err;

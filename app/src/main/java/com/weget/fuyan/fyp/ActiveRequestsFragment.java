@@ -20,13 +20,15 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HP on 4/4/2016.
@@ -39,7 +41,7 @@ public class ActiveRequestsFragment extends Fragment {
     int  requestImage = R.drawable.ordericon;
     int myId;
     Context mContext;
-    String err, authString, username, password;
+    String err, authString, username, password, baseURL;
     ArrayList<Request> myRequestArrayList = new ArrayList<>();
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
     ArrayList<Integer> counterList = new ArrayList<>();
@@ -87,6 +89,7 @@ public class ActiveRequestsFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 */
+        baseURL = getString(R.string.webserviceurl);
         SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
@@ -117,81 +120,84 @@ public class ActiveRequestsFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
     }
 
-        private class getMyRequests extends AsyncTask<String, Void, Boolean> {
-            ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
+    private class getMyRequests extends AsyncTask<String, Void, Boolean> {
+        ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
 
-            @Override
-            protected void onPreExecute() {
-                dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-                dialog.setIndeterminate(true);
-                dialog.setCancelable(false);
-                if(!activity.isFinishing()) {
-                    dialog.show();
-                }
-            }
-            @Override
-            protected Boolean doInBackground(String... params) {
-
-                final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-                boolean success = false;
-                String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" + myId + "/request/";
-
-                String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-                if (rst == null) {
-                    err = UtilHttp.err;
-                    success = false;
-                } else {
-
-                    myRequestArrayList.clear();
-
-                    try {
-                        JSONArray jsoArray = new JSONArray(rst);
-                        for (int i = 0; i < jsoArray.length(); i++) {
-                            JSONObject jso = jsoArray.getJSONObject(i);
-
-                            int id = jso.getInt("id");
-                            int requestorId = jso.getInt("requestorId");
-                            int imageResource = requestImage;
-                            String productName = jso.getString("productName");
-                            String requirement = jso.getString("requirement");
-                            String location = jso.getString("location");
-                            int postal = jso.getInt("postal");
-                            String startTime = jso.getString("startTime");
-                            int duration = jso.getInt("duration");
-                            String endTime = jso.getString("endTime");
-                            double price = jso.getDouble("price");
-                            String status = jso.getString("status");
-
-                            Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
-                                    postal, startTime, endTime, duration, price, status);
-                            if (status.equals("active")) {
-                                myRequestArrayList.add(request);
-                            }
-
-                            //mAdapter.notifyDataSetChanged();
-
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    success = true;
-                }
-                return success;
-            }
-
-            @Override
-            protected void onPostExecute(Boolean result) {
-
-
-                new getMyRequestFulfiller().execute(myRequestArrayList);
-
-
-                dialog.dismiss();
-
-
+        @Override
+        protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            if(!activity.isFinishing()) {
+                dialog.show();
             }
         }
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = baseURL+ "account/" + myId + "/request/";
+
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+
+                myRequestArrayList.clear();
+
+                try {
+  //                  Gson gson = new Gson();
+                    //myRequestArrayList = gson.fromJson(rst, new TypeToken<List<Request>>(){}.getType());
+
+                    JSONArray jsoArray = new JSONArray(rst);
+                    for (int i = 0; i < jsoArray.length(); i++) {
+                        JSONObject jso = jsoArray.getJSONObject(i);
+
+                        int id = jso.getInt("id");
+                        int requestorId = jso.getInt("requestorId");
+                        int imageResource = requestImage;
+                        String productName = jso.getString("productName");
+                        String requirement = jso.getString("requirement");
+                        String location = jso.getString("location");
+                        int postal = jso.getInt("postal");
+                        String startTime = jso.getString("startTime");
+                        int duration = jso.getInt("duration");
+                        String endTime = jso.getString("endTime");
+                        double price = jso.getDouble("price");
+                        String status = jso.getString("status");
+
+                        Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
+                                postal, startTime, endTime, duration, price, status);
+                        if (status.equals("active")) {
+                            myRequestArrayList.add(request);
+                        }
+
+                       // mAdapter.notifyDataSetChanged();
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                success = true;
+            }
+            return success;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+
+            new getMyRequestFulfiller().execute(myRequestArrayList);
+
+
+            dialog.dismiss();
+
+
+        }
+    }
 
     private class getMyRequestFulfiller extends AsyncTask< ArrayList <Request> , Void, Boolean> {
 
@@ -214,7 +220,7 @@ public class ActiveRequestsFragment extends Fragment {
             for (Request r : rList) {
                 int rId = r.getId();
 
-                String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + rId + "/fulfillers/";
+                String url = baseURL + "request/" + rId + "/fulfillers/";
 
                 String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
                 if (rst == null) {
@@ -224,26 +230,28 @@ public class ActiveRequestsFragment extends Fragment {
                     fulfillerAccountList.clear();
 
                     try {
-                        JSONArray jsoArray = new JSONArray(rst);
-                        for (int i = 0; i < jsoArray.length(); i++) {
-                            JSONObject jso = jsoArray.getJSONObject(i);
-
-                            id = jso.getInt("id");
-                            username = jso.getString("username");
-                            password = jso.getString("password");
-                            contactNo = jso.getInt("contactNo");
-                            email = jso.getString("email");
-                            fulfiller = jso.getString("fulfiller");
-                            picture = jso.getString("picture");
-
-                            account = new Account(id, username, password, contactNo, email, fulfiller, picture);
-
-
-                            fulfillerAccountList.add(account);
-
-
-                        }
-                    } catch (JSONException e) {
+                        Gson gson = new Gson();
+                        fulfillerAccountList = gson.fromJson(rst, new TypeToken<List<Account>>(){}.getType());
+//                        JSONArray jsoArray = new JSONArray(rst);
+//                        for (int i = 0; i < jsoArray.length(); i++) {
+//                            JSONObject jso = jsoArray.getJSONObject(i);
+//
+//                            id = jso.getInt("id");
+//                            username = jso.getString("username");
+//                            password = jso.getString("password");
+//                            contactNo = jso.getInt("contactNo");
+//                            email = jso.getString("email");
+//                            fulfiller = jso.getString("fulfiller");
+//                            picture = jso.getString("picture");
+//
+//                            account = new Account(id, username, password, contactNo, email, fulfiller, picture);
+//
+//
+//                            fulfillerAccountList.add(account);
+//
+//
+//                        }
+                    } catch (Exception e) {
                         success = false;
                         e.printStackTrace();
                         err = e.getMessage();

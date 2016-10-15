@@ -21,6 +21,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     Button retrieveAccountBtn;
     String email, err;
     Context mContext;
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
         Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
 
+        URL = getString(R.string.webserviceurl);
         forgotEmailET = (EditText)findViewById(R.id.forget_email_et);
         retrieveAccountBtn = (Button)findViewById(R.id.retrieve_account_btn);
 
@@ -72,7 +74,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... params) {
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/reset/";
+            String url = URL + "reset/";
             JSONObject jsoin = null;
 
 

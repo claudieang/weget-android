@@ -32,6 +32,8 @@ import java.util.List;
 
 public class UpdateRequestActivity extends AppCompatActivity {
 
+    String URL;
+
     List<Address> fullAddress;
     double latitude, longtitude;
 
@@ -60,6 +62,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
 
         rq = (Request)getIntent().getSerializableExtra("selected_request");
 
+        URL = getString(R.string.webserviceurl);
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         requestorId = pref.getInt("id",0);
         username = pref.getString("username", null);
@@ -265,7 +268,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/" + requestId + "/";
+            String url = URL+ "request/" + requestId + "/";
             JSONObject jsoin = null;
 
             try {

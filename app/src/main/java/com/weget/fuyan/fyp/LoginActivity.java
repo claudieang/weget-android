@@ -41,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     private Context mContext;
     private static final String TAG = "LoginActivity";
     final Context context = this;
+    String URL = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         //ImageView logo_iv = (ImageView)findViewById(R.id.applogo_imageview);
         //logo_iv.setImageResource(R.drawable.weget_logo);
 
-
+        URL = getString(R.string.webserviceurl);
         b1 = (Button)findViewById(R.id.login_button);
         ed1 = (EditText)findViewById(R.id.login_text);
         ed2 = (EditText)findViewById(R.id.password_text);
@@ -64,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         b1.setTypeface(typeFace);
         b2.setTypeface(typeFace);
 
+
 //        forgotPw.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -72,6 +75,22 @@ public class LoginActivity extends AppCompatActivity {
 //
 //            }
 //        });
+        //check if logged in boolean = true
+        //if true, then log in
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        username = pref.getString("username", null);
+
+        if(username != null){
+            //password = pref.getString("password", "");
+
+            initSendBird();
+
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(i);
+
+            finish();
+            //new getValues().execute(username);
+        }
 
 
         //mButton = (Button) findViewById(R.id.openUserInputDialog);
@@ -148,7 +167,9 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setMessage("Logging in");
             dialog.setIndeterminate(true);
+
             dialog.setCancelable(false);
 
             if(!isFinishing()) {
@@ -160,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... params) {
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/login/";
+            String url = URL + "login/";
             JSONObject jsoin = null;
 
             token = FirebaseInstanceId.getInstance().getToken();
@@ -218,27 +239,8 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("email", dbEmail);
                 editor.putString("picture", dbProfilePic);
                 editor.commit();
-                SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getApplication().getApplicationContext());
-                SendBird.connect(dbID+"", new SendBird.ConnectHandler() {
-                    @Override
-                    public void onConnected(User user, SendBirdException e) {
-                        if (e != null) {
-                            Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        SendBird.updateCurrentUserInfo(dbUsername, dbProfilePic, new SendBird.UserInfoUpdateHandler() {
-                            @Override
-                            public void onUpdated(SendBirdException e) {
-                                if (e != null) {
-                                    Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                            }
-                        });
 
-
-                    }
-                });
+                initSendBird();
 
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
@@ -281,7 +283,7 @@ public class LoginActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... params) {
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/reset/";
+            String url = URL + "reset/";
             JSONObject jsoin = null;
 
             //Log.d("name: ", params[0]);
@@ -321,5 +323,27 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void initSendBird(){
+        SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getApplication().getApplicationContext());
+        SendBird.connect(dbID+"", new SendBird.ConnectHandler() {
+            @Override
+            public void onConnected(User user, SendBirdException e) {
+                if (e != null) {
+                    Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                SendBird.updateCurrentUserInfo(dbUsername, dbProfilePic, new SendBird.UserInfoUpdateHandler() {
+                    @Override
+                    public void onUpdated(SendBirdException e) {
+                        if (e != null) {
+                            Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                });
+            }
+        });
     }
 }

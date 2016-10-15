@@ -63,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                     "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                     ")+"
     );
+    String URL;
 
     private static final String TAG = "RegisterActivity";
     private CheckBox checkBox;
@@ -73,6 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
 
+        URL = getString(R.string.webserviceurl);
         //set font
         SpannableString s = new SpannableString("Register");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
@@ -319,7 +321,7 @@ public class RegisterActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... params) {
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/";
+            String url = URL + "account/";
             JSONObject jsoin = null;
 
             token = FirebaseInstanceId.getInstance().getToken();

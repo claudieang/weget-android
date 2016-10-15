@@ -48,6 +48,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
     double price;
     Context mContext;
 
+    String URL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Fulfiller Details");
 
-
+        URL = getString(R.string.webserviceurl);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
@@ -355,7 +357,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/active/";
+            String url = URL + "request/active/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -395,7 +397,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/fulfill/"+fulfillId+"/";
+            String url = URL + "fulfill/"+fulfillId+"/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {

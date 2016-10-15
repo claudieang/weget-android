@@ -74,6 +74,8 @@
                 </LinearLayout>
             </RelativeLayout>
 
+
+
             <!-- List of Actions (pages) -->
             <ListView
                 android:id="@+id/navList"
@@ -82,6 +84,8 @@
                 android:layout_below="@+id/profileBox"
                 android:background="#ffffffff"
                 android:choiceMode="singleChoice" />
+
+
 
         </RelativeLayout>
     </android.support.v4.widget.DrawerLayout>

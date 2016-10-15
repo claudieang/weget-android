@@ -1,5 +1,6 @@
 package com.weget.fuyan.fyp;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,11 +44,22 @@ public class MainActivity extends AppCompatActivity {
     Context mContext;
     private String err, password, authString,username;
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FragmentManager fm = getFragmentManager();
+        fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+             @Override
+             public void onBackStackChanged(){
+                 if(getFragmentManager().getBackStackEntryCount() == 0) finish();
+             }
+        });
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Log.d("sigh","checking for activity behaviour");
@@ -58,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         // Update the action bar title with the TypefaceSpan instance
         //ActionBar actionBar = getActionBar();
         getSupportActionBar().setTitle(s);
+
+        URL = getString(R.string.webserviceurl);
 
         mNavItems.add(new NavItem("Profile", "Edit your profile", R.drawable.ic_account_circle_black_36dp));
         mNavItems.add(new NavItem("Bank Settings", "Manage your bank accounts", R.drawable.ic_account_balance_wallet_black_24dp));
@@ -233,7 +247,33 @@ public class MainActivity extends AppCompatActivity {
             bottomNavigationBar.selectTab(notification_fulfill_tab);
         }
 
+
+
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+        String profilePicture = pref.getString("picture", null);
+        ImageView profileImage = (ImageView)findViewById(R.id.avatar);;
+
+        if(profilePicture.equals("")){
+            profileImage.setImageResource(R.drawable.ic_profile);
+        }else{
+
+            byte[] decodeString = Base64.decode(profilePicture, Base64.NO_WRAP);
+            Bitmap decodebitmap = BitmapFactory.decodeByteArray(
+                    decodeString, 0, decodeString.length);
+            RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(getResources(), decodebitmap);
+            roundDrawable.setCircular(true);
+            profileImage.setImageDrawable(roundDrawable);
+        }
+
+
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -289,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/"+ userID + "/logout/";
+            String url = URL + "account/"+ userID + "/logout/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -303,6 +343,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if(result==true){
+                //clear the sharedpreferences
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+
+                editor.clear();
+                editor.commit();
+
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK |

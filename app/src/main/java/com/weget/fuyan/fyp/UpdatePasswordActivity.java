@@ -31,6 +31,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     Button updatePasswordBtn;
     EditText updateOldPassword,updateNewPassword, updateConfirmPassword;
     SharedPreferences.Editor editor = null;
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
         Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
 
+        URL = getString(R.string.webserviceurl);
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
         username = pref.getString("username", null);
@@ -160,7 +162,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             Log.d ("Basic Authentitaion", basicAuth);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/account/" +params[0] +"/";
+            String url = URL + "account/" +params[0] +"/";
             JSONObject jsoin = null;
 
             try {

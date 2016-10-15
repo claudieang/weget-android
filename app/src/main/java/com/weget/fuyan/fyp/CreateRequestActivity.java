@@ -45,6 +45,7 @@ public class CreateRequestActivity extends AppCompatActivity {
     Context mContext;
 
     private Toolbar toolbar;
+    String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class CreateRequestActivity extends AppCompatActivity {
         //Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/TitilliumWeb-Bold.ttf");
         //myTextView.setTypeface(typeFace);
 
-
+        URL = getString(R.string.webserviceurl);
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         requestorId = pref.getInt("id", 0);
         username = pref.getString("username", null);
@@ -269,7 +270,7 @@ public class CreateRequestActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/request/";
+            String url = URL + "request/";
             JSONObject jsoin = null;
 
             try {
