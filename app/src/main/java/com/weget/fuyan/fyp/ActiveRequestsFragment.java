@@ -20,13 +20,15 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HP on 4/4/2016.
@@ -147,6 +149,9 @@ public class ActiveRequestsFragment extends Fragment {
                 myRequestArrayList.clear();
 
                 try {
+  //                  Gson gson = new Gson();
+                    //myRequestArrayList = gson.fromJson(rst, new TypeToken<List<Request>>(){}.getType());
+
                     JSONArray jsoArray = new JSONArray(rst);
                     for (int i = 0; i < jsoArray.length(); i++) {
                         JSONObject jso = jsoArray.getJSONObject(i);
@@ -170,10 +175,10 @@ public class ActiveRequestsFragment extends Fragment {
                             myRequestArrayList.add(request);
                         }
 
-                        //mAdapter.notifyDataSetChanged();
+                       // mAdapter.notifyDataSetChanged();
 
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 success = true;
@@ -225,26 +230,28 @@ public class ActiveRequestsFragment extends Fragment {
                     fulfillerAccountList.clear();
 
                     try {
-                        JSONArray jsoArray = new JSONArray(rst);
-                        for (int i = 0; i < jsoArray.length(); i++) {
-                            JSONObject jso = jsoArray.getJSONObject(i);
-
-                            id = jso.getInt("id");
-                            username = jso.getString("username");
-                            password = jso.getString("password");
-                            contactNo = jso.getInt("contactNo");
-                            email = jso.getString("email");
-                            fulfiller = jso.getString("fulfiller");
-                            picture = jso.getString("picture");
-
-                            account = new Account(id, username, password, contactNo, email, fulfiller, picture);
-
-
-                            fulfillerAccountList.add(account);
-
-
-                        }
-                    } catch (JSONException e) {
+                        Gson gson = new Gson();
+                        fulfillerAccountList = gson.fromJson(rst, new TypeToken<List<Account>>(){}.getType());
+//                        JSONArray jsoArray = new JSONArray(rst);
+//                        for (int i = 0; i < jsoArray.length(); i++) {
+//                            JSONObject jso = jsoArray.getJSONObject(i);
+//
+//                            id = jso.getInt("id");
+//                            username = jso.getString("username");
+//                            password = jso.getString("password");
+//                            contactNo = jso.getInt("contactNo");
+//                            email = jso.getString("email");
+//                            fulfiller = jso.getString("fulfiller");
+//                            picture = jso.getString("picture");
+//
+//                            account = new Account(id, username, password, contactNo, email, fulfiller, picture);
+//
+//
+//                            fulfillerAccountList.add(account);
+//
+//
+//                        }
+                    } catch (Exception e) {
                         success = false;
                         e.printStackTrace();
                         err = e.getMessage();
