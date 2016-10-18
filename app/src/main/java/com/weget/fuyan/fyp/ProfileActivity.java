@@ -225,13 +225,8 @@ public class ProfileActivity extends AppCompatActivity {
                 ratingBar2.setRating(Float.parseFloat(Double.toString(fulfillerRt)));
                 String pad1 = Double.toString(requestorRt)+"00";
                 String pad2 = Double.toString(fulfillerRt)+"00";
-                requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)));
-                fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)));
-
-
-
-
-
+                requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)) + " / 5.0");
+                fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)) + " / 5.0");
 
 
 

@@ -46,7 +46,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
     String fulfillerName, fulfillerEmail, fulfillerPic, fulfillerContactS, productName, requirement,
     location, startTime, endTime, username, password, authString, err, fulfillStatus, requestString;
     int fulfillerContact, requestorId, fulfillerId, postal, duration, fulfillId, requestId, myId;
-    double price;
+    double price, requestorRating, requestorRatingNum, fulfillerRating, fulfillerRatingNum, requestorRt, fulfillerRt;
     Context mContext;
     RatingBar ratingBar1, ratingBar2;
 
@@ -130,6 +130,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         fulfillerNameTV.setText(fulfillerName);
         fulfillerEmailTV.setText(fulfillerEmail);
         fulfillerContactTV.setText("" + fulfillerContactS);
+
+        new getRating().execute(authString);
 
         acceptFulfillerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -454,6 +456,75 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                     finish();
 
                 }
+
+            }else {
+                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+
+    private class getRating extends AsyncTask<String, Void, Boolean> {
+
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = URL + "rating/" + fulfillerId+"/";
+
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+
+
+                try {
+
+                    JSONObject jso = new JSONObject(rst);
+
+                    requestorRating = jso.getDouble("requestTotal");
+                    requestorRatingNum = jso.getDouble("requestNo");
+                    fulfillerRating = jso.getDouble("fulfillTotal");
+                    fulfillerRatingNum = jso.getDouble("fulfillNo");
+                    requestorRt = requestorRating / requestorRatingNum;
+                    fulfillerRt = fulfillerRating / fulfillerRatingNum;
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                success = true;
+            }
+            return success;
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+
+            if(result){
+
+
+
+                ratingBar1.setRating(Float.parseFloat(Double.toString(requestorRt)));
+                ratingBar2.setRating(Float.parseFloat(Double.toString(fulfillerRt)));
+                String pad1 = Double.toString(requestorRt)+"00";
+                String pad2 = Double.toString(fulfillerRt)+"00";
+                requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)) + " / 5.0");
+                fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)) + " / 5.0");
+
+
+
+
 
             }else {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
