@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.icu.text.DecimalFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -37,7 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
     double requestorRating,requestorRatingNum, fulfillerRating, fulfillerRatingNum, overallRt, requestorRt, fulfillerRt;
     Context mContext;
 
-    RatingBar ratingBar;
+    RatingBar ratingBar1, ratingBar2;
     ProgressBar requestorRatingBar, fulfillerRatingBar;
 
 
@@ -56,9 +57,9 @@ public class ProfileActivity extends AppCompatActivity {
         profileImage = (ImageView)findViewById(R.id.profile_picture);
         TextView change_pw = (TextView)findViewById(R.id.change_password);
         change_pw.setPaintFlags(change_pw.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        ratingBar = (RatingBar)findViewById(R.id.ratingBar2);
-        requestorRatingBar = (ProgressBar)findViewById(R.id.requestor_rating_bar);
-        fulfillerRatingBar = (ProgressBar)findViewById(R.id.fulfiller_rating_bar);
+
+        ratingBar1 = (RatingBar)findViewById(R.id.ratingBar1);
+        ratingBar2 = (RatingBar)findViewById(R.id.ratingBar2);
         requestorRtValue = (TextView)findViewById(R.id.requestor_rating_value);
         fulfillerRtValue = (TextView)findViewById(R.id.fulfiller_rating_value);
 
@@ -198,11 +199,11 @@ public class ProfileActivity extends AppCompatActivity {
                     fulfillerRating = jso.getDouble("fulfillTotal");
                     fulfillerRatingNum = jso.getDouble("fulfillNo");
 
-                    overallRt = (requestorRating + fulfillerRating) / (requestorRatingNum + fulfillerRatingNum);
-                    requestorRt = ((requestorRating / requestorRatingNum) / 5) * 100;
-                    requestorRtInt = (int) requestorRt;
-                    fulfillerRt = ((fulfillerRating / fulfillerRatingNum) / 5) * 100;
-                    fulfillerRtInt = (int)fulfillerRt;
+                    //overallRt = (requestorRating + fulfillerRating) / (requestorRatingNum + fulfillerRatingNum);
+                    requestorRt = requestorRating / requestorRatingNum;
+                    //requestorRtInt = (int) requestorRt;
+                    fulfillerRt = fulfillerRating / fulfillerRatingNum;
+                    //fulfillerRtInt = (int)fulfillerRt;
 
 
                 } catch (JSONException e) {
@@ -219,17 +220,14 @@ public class ProfileActivity extends AppCompatActivity {
             if(result){
 
 
-                ratingBar.setRating(Float.parseFloat(Double.toString(overallRt)));
 
+                ratingBar1.setRating(Float.parseFloat(Double.toString(requestorRt)));
+                ratingBar2.setRating(Float.parseFloat(Double.toString(fulfillerRt)));
+                String pad1 = Double.toString(requestorRt)+"00";
+                String pad2 = Double.toString(fulfillerRt)+"00";
+                requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)));
+                fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)));
 
-                requestorRatingBar.setMax(100);
-                requestorRatingBar.setProgress(0);
-                requestorRatingBar.setProgress(requestorRtInt);
-                fulfillerRatingBar.setMax(100);
-                fulfillerRatingBar.setProgress(0);
-                fulfillerRatingBar.setProgress(fulfillerRtInt);
-                requestorRtValue.setText(String.valueOf(requestorRtInt));
-                fulfillerRtValue.setText(String.valueOf(fulfillerRtInt));
 
 
 

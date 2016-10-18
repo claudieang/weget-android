@@ -52,4 +52,10 @@
         <item name="colorControlNormal">@color/colorPrimary</item>
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="RatingBar2"
+        parent="android:style/Widget.Material.RatingBar.Small">
+        <item name="colorControlNormal">@color/request0</item>
+        <item name="colorControlActivated">@color/request2</item>
+    </style>
 </resources>
