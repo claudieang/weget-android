@@ -22,6 +22,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 public class PendingdetailsFulfiller extends AppCompatActivity {
 
     Request myRequest;
@@ -33,6 +35,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
     Context mContext;
     ProgressDialog dialog;
     String URL;
+    Account a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +157,16 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
 
                 try {
                     JSONObject jso = new JSONObject(rst);
+                    int aId = jso.getInt("id");
                     requestorName = jso.getString("username");
+                    String aPw = jso.getString("password");
+                    int aContact = jso.getInt("contactNo");
+                    String aEmail = jso.getString("email");
+                    String aFulfiller = jso.getString("fulfiller");
+                    String aPicture = jso.getString("picture");
+
+                    a = new Account (aId, requestorName, aPw, aContact, aEmail, aFulfiller, aPicture);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -221,11 +233,11 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             dialog.dismiss();
             if(result) {
-                Intent i = new Intent(PendingdetailsFulfiller.this, MainActivity.class);
-                i.putExtra("after_delivered_tab", 3);
-                i.putExtra("complete_fulfill_swipe",2);
+                Intent i = new Intent(PendingdetailsFulfiller.this, Rating_requestor.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.putExtra("selected_request", (Serializable) myRequest);
+                i.putExtra("user_to_rate", (Serializable)a);
                 Toast.makeText(getApplicationContext(), "Delivered!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
                 finish();
