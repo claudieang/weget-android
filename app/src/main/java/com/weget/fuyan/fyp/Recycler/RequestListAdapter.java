@@ -34,6 +34,7 @@ import com.weget.fuyan.fyp.MyfulfillDetails;
 import com.weget.fuyan.fyp.PendingdetailsFulfiller;
 import com.weget.fuyan.fyp.PendingdetailsRequester;
 import com.weget.fuyan.fyp.R;
+import com.weget.fuyan.fyp.Rating_requestor;
 import com.weget.fuyan.fyp.Request;
 import com.weget.fuyan.fyp.UserChatActivity;
 import com.weget.fuyan.fyp.UtilHttp;
@@ -52,7 +53,9 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     int rId, myId, fr, fId, requestorId;
     String username, password, authString, err;
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
-    String URL;
+    String URL, requestorIdS;
+    Request request;
+    Account a;
 
 
 
@@ -133,7 +136,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
 
                                     public void onClick(DialogInterface dialog, int whichButton) {
 
-                                        Request request = requestsList.get(getAdapterPosition());
+                                        request = requestsList.get(getAdapterPosition());
                                         rId = request.getId();
                                         new doReceive().execute(authString);
 
@@ -151,8 +154,10 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
 
                                     public void onClick(DialogInterface dialog, int whichButton) {
 
-                                        Request request = requestsList.get(getAdapterPosition());
+                                        request = requestsList.get(getAdapterPosition());
                                         rId = request.getId();
+                                        requestorId = request.getRequestorId();
+                                        requestorIdS = String.valueOf(requestorId);
                                         new doDeliver().execute(authString);
 
 
@@ -253,14 +258,8 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         protected void onPostExecute(Boolean result) {
             dialog.dismiss();
             if(result) {
-                Intent i = new Intent(mContext, MainActivity.class);
-                i.putExtra("after_received_tab", 1);
-                i.putExtra("complete_request_swipe", 2);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
-                //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Toast.makeText(mContext, "Received!", Toast.LENGTH_SHORT).show();
-                mContext.startActivity(i);
-                //((Activity)mContext).finish();
+                //Account a = fulfillerAccountList.get(0);
+                new getFulfiller().execute(authString);
 
             }else{
 
@@ -309,14 +308,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         protected void onPostExecute(Boolean result) {
             dialog.dismiss();
             if(result) {
-                Intent i = new Intent(mContext, MainActivity.class);
-                i.putExtra("after_delivered_tab", 3);
-                i.putExtra("complete_fulfill_swipe",2);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
-                //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Toast.makeText(mContext, "Delivered!", Toast.LENGTH_SHORT).show();
-                mContext.startActivity(i);
-                //((Activity)mContext).finish();
+                new getRequestor().execute(authString + "," + requestorIdS);
 
             }else{
 
@@ -326,6 +318,153 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         }
 
 
+    }
+
+    private class getRequestor extends AsyncTask<String, Void, Boolean> {
+
+
+
+        @Override
+        protected void onPreExecute() {
+
+
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            String auth = params[0].substring(0, params[0].indexOf(','));
+            String rId = params[0].substring(params[0].indexOf(',') + 1);
+
+            Log.d("auth: ", auth);
+            Log.d("rID: ", rId);
+            final String basicAuth = "Basic " + Base64.encodeToString(auth.getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = URL + "account/"+ rId + "/";
+
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+
+                try {
+                    JSONObject jso = new JSONObject(rst);
+                    int aId = jso.getInt("id");
+                    String requestorName = jso.getString("username");
+                    String aPw = jso.getString("password");
+                    int aContact = jso.getInt("contactNo");
+                    String aEmail = jso.getString("email");
+                    String aFulfiller = jso.getString("fulfiller");
+                    String aPicture = jso.getString("picture");
+
+                    a = new Account (aId, requestorName, aPw, aContact, aEmail, aFulfiller, aPicture);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                success = true;
+            }
+            return success;
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Intent i = new Intent(mContext, Rating_requestor.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
+                //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.putExtra("selected_request", (Serializable) request);
+                i.putExtra("user_to_rate", (Serializable)a);
+                Toast.makeText(mContext, "Delivered!", Toast.LENGTH_SHORT).show();
+                mContext.startActivity(i);
+
+
+            }else {
+                Toast.makeText(mContext, err, Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+    }
+
+    private class getFulfiller extends AsyncTask<String, Void, Boolean> {
+
+        int id, contactNo;
+        String username, password, email, fulfiller, picture;
+        Account account;
+
+        @Override
+        protected void onPreExecute() {
+
+
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            Log.d("lol1", "rId issss : " + rId);
+            String url = URL + "request/" + rId + "/fulfillers/";
+
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+                fulfillerAccountList.clear();
+
+                try {
+                    JSONArray jsoArray = new JSONArray(rst);
+                    for (int i = 0; i < jsoArray.length(); i++) {
+                        JSONObject jso = jsoArray.getJSONObject(i);
+
+                        id = jso.getInt("id");
+                        username = jso.getString("username");
+                        password = jso.getString("password");
+                        contactNo = jso.getInt("contactNo");
+                        email = jso.getString("email");
+                        fulfiller = jso.getString("fulfiller");
+                        picture = jso.getString("picture");
+
+                        account = new Account(id, username, password, contactNo, email, fulfiller, picture);
+
+
+                        fulfillerAccountList.add(account);
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                success = true;
+            }
+            return success;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean result) {
+            Log.d("lol1", "Result issss : " + result);
+            if (result) {
+                Log.d("lol1", "fulfillerAccountList.size() issss : " + fulfillerAccountList.size());
+                if (fulfillerAccountList.size() == 1) {
+                    a = fulfillerAccountList.get(0);
+                    Intent i = new Intent(mContext, Rating_requestor.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    i.putExtra("selected_request", (Serializable) request);
+                    i.putExtra("user_to_rate", (Serializable)a);
+                    Toast.makeText(mContext, "Received!", Toast.LENGTH_SHORT).show();
+                    mContext.startActivity(i);
+                }
+
+            }else{
+                Toast.makeText(mContext, err, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private class getMyRequestFulfiller extends AsyncTask<String, Void, Boolean> {
@@ -391,7 +530,6 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
                 Log.d("lol1", "fulfillerAccountList.size() issss : " + fulfillerAccountList.size());
                 if(fulfillerAccountList.size() == 1){
                     Account a = fulfillerAccountList.get(0);
-                    fId = a.getId();
 
 
                 }
