@@ -98,7 +98,39 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:text="Overall Rating"
+            android:text="As a Requestor Rating"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar1"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/rating_text"
+            android:layout_centerHorizontal="true"
+            android:isIndicator="true"
+            android:theme="@style/RatingBar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/requestor_rating_value"
+            android:layout_below="@+id/ratingBar1"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:textColor="@color/red"/>
+
+        <TextView
+            android:id="@+id/rating_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/requestor_rating_value"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="AS a Fulfiller Rating"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -108,69 +140,25 @@
             android:layout_height="wrap_content"
             android:id="@+id/ratingBar2"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/rating_text"
+            android:layout_below="@+id/rating_text2"
             android:layout_centerHorizontal="true"
             android:isIndicator="true"
-            android:rating="3.5" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/rating_section"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="#FFFFFF"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:id="@+id/past_txn_section"
-        android:layout_above="@+id/linear4">
+            android:theme="@style/RatingBar2"/>
 
         <TextView
-            android:id="@+id/past_txn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:id="@+id/fulfiller_rating_value"
+            android:layout_below="@+id/ratingBar2"
             android:layout_marginTop="10dp"
-            android:text="Past Transactions"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <!--<ListView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_marginBottom="20dp"-->
-        <!--android:layout_marginRight="20dp"-->
-        <!--android:background="@color/bt_very_light_gray"-->
-        <!--android:id="@+id/listView"-->
-        <!--android:layout_alignStart="@+id/past_txn"-->
-        <!--android:layout_below="@+id/past_txn" />-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
-            android:layout_below="@+id/past_txn"
-            android:background="@color/bt_very_light_gray"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="No transactions to show."
-                android:id="@+id/textView11"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-        </RelativeLayout>
-
+            android:textSize="16sp"
+            android:textColor="@color/red"/>
 
     </RelativeLayout>
+
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"

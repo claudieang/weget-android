@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
 
     Request request;
     Account account;
-    TextView fulfillerNameTV, fulfillerEmailTV, fulfillerContactTV;
+    TextView fulfillerNameTV, fulfillerEmailTV, fulfillerContactTV, requestorRtValue, fulfillerRtValue;
     ImageView fulfillerPicIV;
     Button acceptFulfillerBtn, chatBtn;
 
@@ -47,6 +48,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
     int fulfillerContact, requestorId, fulfillerId, postal, duration, fulfillId, requestId, myId;
     double price;
     Context mContext;
+    RatingBar ratingBar1, ratingBar2;
 
     String URL;
 
@@ -54,6 +56,16 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_fulfiller_details);
+
+
+        //rating part
+
+        ratingBar1 = (RatingBar)findViewById(R.id.ratingBar1);
+        ratingBar2 = (RatingBar)findViewById(R.id.ratingBar2);
+        requestorRtValue = (TextView)findViewById(R.id.requestor_rating_value);
+        fulfillerRtValue = (TextView)findViewById(R.id.fulfiller_rating_value);
+
+
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         //toolbar.setTitle("Fulfiller Details");
