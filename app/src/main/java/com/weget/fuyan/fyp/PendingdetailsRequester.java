@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class PendingdetailsRequester extends AppCompatActivity {
@@ -240,11 +241,13 @@ public class PendingdetailsRequester extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if(result) {
-                Intent i = new Intent(PendingdetailsRequester.this, MainActivity.class);
-                i.putExtra("after_received_tab", 1);
-                i.putExtra("complete_request_swipe", 2);
+                dialog.dismiss();
+                Account a = fulfillerAccountList.get(0);
+                Intent i = new Intent(PendingdetailsRequester.this, Rating_requestor.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.putExtra("selected_request", (Serializable) myRequest);
+                i.putExtra("user_to_rate", (Serializable)a);
                 Toast.makeText(getApplicationContext(), "Received!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
                 finish();

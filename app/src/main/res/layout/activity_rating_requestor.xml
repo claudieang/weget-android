@@ -149,8 +149,7 @@
             android:id="@+id/ratingBar"
             android:layout_marginTop="10dp"
             android:layout_below="@+id/past_txn"
-            android:layout_centerHorizontal="true"
-            android:isIndicator="true" />
+            android:layout_centerHorizontal="true" />
 
 
     </RelativeLayout>
