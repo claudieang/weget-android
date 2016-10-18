@@ -109,7 +109,39 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:text="Overall Rating"
+            android:text="Requestor Rating"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar1"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/rating_text"
+            android:layout_centerHorizontal="true"
+            android:isIndicator="true"
+            android:theme="@style/RatingBar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/requestor_rating_value"
+            android:layout_below="@+id/ratingBar1"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:textColor="@color/red"/>
+
+        <TextView
+            android:id="@+id/rating_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/requestor_rating_value"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Fulfiller Rating"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -119,77 +151,23 @@
             android:layout_height="wrap_content"
             android:id="@+id/ratingBar2"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/rating_text"
+            android:layout_below="@+id/rating_text2"
             android:layout_centerHorizontal="true"
-            android:isIndicator="true" />
+            android:isIndicator="true"
+            android:theme="@style/RatingBar2"/>
 
         <TextView
-            android:id="@+id/requestor_rating_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/ratingBar2"
-            android:text="Requestor Rating"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <ProgressBar
-            android:id="@+id/requestor_rating_bar"
-            android:layout_width="150dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/requestor_rating_text"
-            android:layout_alignStart= "@+id/ratingBar2"
-            />
-
-        <TextView
-            android:id="@+id/requestor_rating_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="value"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_alignTop="@+id/requestor_rating_bar"
-            android:layout_alignEnd="@+id/ratingBar2" />
-
-        <TextView
-            android:id="@+id/fulfiller_rating_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/requestor_rating_bar"
-            android:text="Fulfiller Rating"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <ProgressBar
-            android:id="@+id/fulfiller_rating_bar"
-            android:layout_width="150dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/fulfiller_rating_text"
-            android:layout_alignStart= "@+id/ratingBar2"
-            />
-
-        <TextView
             android:id="@+id/fulfiller_rating_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_below="@+id/ratingBar2"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
-            android:text="value"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:textSize="16sp"
-            android:layout_alignTop="@+id/fulfiller_rating_bar"
-            android:layout_alignEnd="@+id/ratingBar2" />
+            android:textColor="@color/red"/>
+
+
 
 
 
