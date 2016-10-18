@@ -33,42 +33,6 @@
                 android:textSize="18sp"
                 android:id="@+id/title"
                 />
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <RadioButton android:id="@+id/radio_no1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1. Fulfiller did not deliver"
-                    android:textColor="@color/black"
-                    android:layout_below="@id/title"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:layout_marginLeft="30dp"
-                    android:onClick="onRadioButtonClicked"/>
-                <RadioButton android:id="@+id/radio_no2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2. Requestor refuses confirm/not found"
-                    android:textColor="@color/black"
-                    android:layout_below="@id/radio_no1"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:layout_marginLeft="30dp"
-                    android:onClick="onRadioButtonClicked"/>
-                <RadioButton android:id="@+id/radio_no3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3. Service not up to standard"
-                    android:textColor="@color/black"
-                    android:layout_below="@id/radio_no2"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:layout_marginLeft="30dp"
-                    android:onClick="onRadioButtonClicked"/>
-            </RadioGroup>
         </LinearLayout>
 
         <LinearLayout

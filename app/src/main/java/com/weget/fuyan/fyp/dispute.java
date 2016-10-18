@@ -91,7 +91,7 @@ public class dispute extends AppCompatActivity {
 
         //reason dropdown menu
         dropdown = (Spinner)findViewById(R.id.spinner1);
-        String[] items = new String[]{"reason1", "reason2", "reason3"};
+        String[] items = new String[]{"1. Fulfiller did not deliver", "2. Requestor refuses confirm/not found", "3. Service not up to standard"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items){
 
 
@@ -133,6 +133,8 @@ public class dispute extends AppCompatActivity {
         String selState = (String) dropdown.getSelectedItem();
 
         reason = selState;
+
+
     }
 
     private class doDispute extends AsyncTask<String, Void, Boolean> {
