@@ -16,16 +16,87 @@
         android:orientation="vertical"
         android:id="@+id/linearLayout">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:background="@color/white"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment Summary"
+                android:textSize="18sp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/darkGray"
+                android:id="@+id/title" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product"
+                android:textSize="16sp"
+                android:layout_below="@+id/title"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/darkGray"
+                android:id="@+id/product_name" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desc"
+                android:textSize="14sp"
+                android:layout_below="@+id/product_name"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/colorGray"
+                android:id="@+id/product_description" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/darkGray"
+                android:id="@+id/total" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/darkGray"
+                android:id="@+id/val" />
+        </RelativeLayout>
+
+
         <EditText
             android:id="@+id/cardNumberEditText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+
             android:layout_marginBottom="0.25dp"
             android:background="@drawable/bg_card_number_edit_text"
             android:drawableRight="@drawable/ic_card_number"
             android:hint="Card number"
             android:inputType="phone"
             android:padding="16dp"
+            android:layout_marginTop="10dp"
             android:textColor="@android:color/black"
             android:textColorHint="@color/colorGray"
             android:textCursorDrawable="@null"
@@ -65,7 +136,7 @@
                 android:background="@drawable/bg_card_cvc_edit_text"
                 android:drawableRight="@drawable/ic_card_cvc"
                 android:hint="CVV"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:padding="16dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/colorGray"
@@ -89,6 +160,16 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/powered_by_stripe"
+            android:paddingTop="15dp"
+            android:layout_gravity="center_horizontal">
+
+        </ImageView>
     </LinearLayout>
 
 

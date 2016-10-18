@@ -5,25 +5,29 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.weget.fuyan.fyp.Util.DateFormatter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CompletedRequest extends AppCompatActivity {
 
     Request r;
-    TextView productNameTV, requestorNameTV, addressTV, priceTV, requestorTitleTV;
+    TextView productNameTV, requestorNameTV, addressTV, priceTV, requestorTitleTV, title, date, fulfillerName, details;
     String productName, requestorName, address, username, password, authString, requestorIdS, err;
     double price;
     int requestId, myId, requestorId, postal;
@@ -65,21 +69,26 @@ public class CompletedRequest extends AppCompatActivity {
         price = r.getPrice();
         postal = r.getPostal();
 
-        productNameTV = (TextView)findViewById(R.id.product_description);
-        requestorNameTV = (TextView)findViewById(R.id.requestor_name);
-        addressTV = (TextView)findViewById(R.id.address_details);
-        priceTV = (TextView)findViewById(R.id.price_detail);
-        requestorTitleTV = (TextView)findViewById(R.id.requestor_tv);
+
+        title = (TextView)findViewById(R.id.title);
+        date = (TextView)findViewById(R.id.date);
+
+        productNameTV = (TextView)findViewById(R.id.product_name);
+        fulfillerName = (TextView)findViewById(R.id.fulfiller_name);
+        requestorNameTV = (TextView)findViewById(R.id.requestor_tv);
+        addressTV = (TextView)findViewById(R.id.address);
+        priceTV = (TextView)findViewById(R.id.price);
+        details = (TextView)findViewById(R.id.info);
 
 
-        ((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);
-        ((TextView)findViewById(R.id.product_description)).setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
-        ((TextView)findViewById(R.id.requestor_name)).setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
-        ((TextView)findViewById(R.id.address_details)).setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
-        ((TextView)findViewById(R.id.price_detail)).setTypeface(typeFaceLight);
+//        ((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);
+//        ((TextView)findViewById(R.id.product_description)).setTypeface(typeFaceLight);
+//        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
+//        ((TextView)findViewById(R.id.requestor_name)).setTypeface(typeFaceLight);
+//        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
+//        ((TextView)findViewById(R.id.address_details)).setTypeface(typeFaceLight);
+//        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
+//        ((TextView)findViewById(R.id.price_detail)).setTypeface(typeFaceLight);
 
 
         if (myId != requestorId) {
@@ -160,11 +169,20 @@ public class CompletedRequest extends AppCompatActivity {
 
             if(result){
 
-
-                requestorNameTV.setText(requestorName );
+//
+//                requestorNameTV.setText(requestorName );
+//                productNameTV.setText(productName);
+//                addressTV.setText(address + " " + postal);
+//                priceTV.setText("$" + price + "0")
+                String status = r.getStatus();
+                status  = status.substring(0, 1).toUpperCase() + status.substring(1);
+                title.setText(status + "d Request");
+                date.setText(DateFormatter.formatDate(r.getStartTime()));
                 productNameTV.setText(productName);
-                addressTV.setText(address + " " + postal);
+                //fulfillerName.setText();
                 priceTV.setText("$" + price + "0");
+                addressTV.setText(address + " " + postal);
+                details.setText(r.getRequirement());
 
 
             }else {
@@ -212,26 +230,29 @@ public class CompletedRequest extends AppCompatActivity {
                 fulfillerAccountList.clear();
 
                 try {
-                    JSONArray jsoArray = new JSONArray(rst);
-                    for(int i = 0; i < jsoArray.length(); i++) {
-                        JSONObject jso = jsoArray.getJSONObject(i);
+                    Gson gson = new Gson();
+                    fulfillerAccountList = gson.fromJson(rst, new TypeToken<List<Account>>() {}.getType());
 
-                        id = jso.getInt("id");
-                        username = jso.getString("username");
-                        password = jso.getString("password");
-                        contactNo = jso.getInt("contactNo");
-                        email = jso.getString("email");
-                        fulfiller = jso.getString("fulfiller");
-                        picture = jso.getString("picture");
-
-                        account = new Account(id, username, password, contactNo, email, fulfiller, picture);
-
-
-                        fulfillerAccountList.add(account);
-
-
-                    }
-                } catch (JSONException e) {
+//                    JSONArray jsoArray = new JSONArray(rst);
+//                    for(int i = 0; i < jsoArray.length(); i++) {
+//                        JSONObject jso = jsoArray.getJSONObject(i);
+//
+//                        id = jso.getInt("id");
+//                        username = jso.getString("username");
+//                        password = jso.getString("password");
+//                        contactNo = jso.getInt("contactNo");
+//                        email = jso.getString("email");
+//                        fulfiller = jso.getString("fulfiller");
+//                        picture = jso.getString("picture");
+//
+//                        account = new Account(id, username, password, contactNo, email, fulfiller, picture);
+//
+//
+//                        fulfillerAccountList.add(account);
+//
+//
+//                    }
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 success = true;
@@ -247,11 +268,23 @@ public class CompletedRequest extends AppCompatActivity {
                     Account a = fulfillerAccountList.get(0);
 
 
-                    requestorTitleTV.setText("Fulfilled by");
-                    requestorNameTV.setText(a.getUsername());
+//                    requestorTitleTV.setText("Fulfilled by");
+//                    requestorNameTV.setText(a.getUsername());
+//                    productNameTV.setText(productName);
+//                    addressTV.setText(address + " " + postal);
+//                    priceTV.setText("$" + price + "0");
+                    String status = r.getStatus();
+                    status  = status.substring(0, 1).toUpperCase() + status.substring(1);
+                    if(status.charAt(status.length() -1 ) != 'd'){
+                        status += "d";
+                    }
+                    title.setText(status + " Request");
+                    date.setText(DateFormatter.formatDateFull(r.getStartTime()));
                     productNameTV.setText(productName);
-                    addressTV.setText(address + " " + postal);
+                    fulfillerName.setText(a.getUsername());
                     priceTV.setText("$" + price + "0");
+                    addressTV.setText(address + " " + postal);
+                    details.setText(r.getRequirement());
 
                 }
 
