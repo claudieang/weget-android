@@ -10,202 +10,216 @@
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar_blank"></include>
 
-    <ImageView
-        android:id="@+id/pic"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/testing" />
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Your Completed Request"
-        android:layout_gravity="center"
-        android:layout_below="@+id/pic"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="18sp" />
+        android:paddingBottom="30dp">
 
+        <ImageView
+            android:id="@+id/pic"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/testing"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Completed Request"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_below="@+id/pic"
+            android:paddingBottom="5dp"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="11 November 2016 10:30pm"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:layout_below="@+id/title"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/bt_very_light_gray"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/linear1"
+            android:id="@+id/linear2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/bt_very_light_gray"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/linear2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/barbase"
-                android:orientation="vertical">
 
             <TextView
                 android:id="@+id/product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:paddingLeft="8dp"
+
                 android:layout_marginTop="2dp"
-                android:layout_weight="1"
-                android:drawablePadding="8dp"
                 android:drawableLeft="@drawable/product"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
                 android:text="Product Name"
-                android:gravity="center_vertical"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/product_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/product_name"
-                android:layout_marginLeft="44dp"
-                android:layout_marginBottom="2dp"
-                android:layout_weight="1"
-                android:textColor="@color/darkGray"
                 android:textSize="16sp"
-                android:textStyle="italic" />
+                />
 
-                </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear3"
-                android:layout_width="match_parent"
+            <RelativeLayout
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linear2"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/barbase"
-                android:orientation="vertical">
-
+                android:layout_width="wrap_content"
+                android:paddingBottom="12dp">
             <TextView
-                android:id="@+id/requestor_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="2dp"
-                android:layout_weight="1"
-                android:drawablePadding="8dp"
-                android:drawableLeft="@drawable/face_icon"
-                android:text="Requested by"
-                android:gravity="center_vertical"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/requestor_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/requestor_tv"
-                android:layout_marginLeft="44dp"
-                android:layout_marginBottom="2dp"
-                android:layout_weight="1"
-                android:textColor="@color/darkGray"
-                android:textSize="16sp"
-                android:textStyle="italic" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/linear3"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/barbase"
-                android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/address"
+                android:id="@+id/fulfiller"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="2dp"
-                android:layout_weight="1"
-                android:drawablePadding="8dp"
-                android:drawableLeft="@drawable/my_location"
-                android:text="Collection Address"
+                android:paddingLeft="45dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/address_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/address"
-                android:layout_marginLeft="44dp"
-                android:layout_marginBottom="2dp"
-                android:layout_weight="1"
+                android:text="fulfilled by"
+                android:textStyle="italic"
                 android:textColor="@color/darkGray"
-                android:textSize="16sp"
-                android:textStyle="italic" />
-            </LinearLayout>
+                android:textSize="14sp" />
 
-            <LinearLayout
-                android:id="@+id/linear5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/linear4"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/barbase"
-                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/fulfiller_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:paddingLeft="4dp"
+                    android:layout_toEndOf="@id/fulfiller"
+                    android:gravity="center_vertical"
+                    android:text="fulfiller name"
+                    android:textStyle="italic"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGray"
+                android:id="@+id/divider"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear2"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/price"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:layout_marginTop="2dp"
-                android:layout_weight="1"
-                android:drawablePadding="8dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="10dp"
                 android:drawableLeft="@drawable/money"
-                android:text="Price"
+                android:drawablePadding="8dp"
                 android:gravity="center_vertical"
+                android:text="$0.00"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                android:paddingBottom="10dp"/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGray"
+                android:id="@+id/divider1"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear3"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/price_detail"
-                android:layout_width="wrap_content"
+                android:id="@+id/address"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/price"
-                android:layout_marginLeft="44dp"
-                android:layout_marginBottom="2dp"
-                android:layout_weight="1"
-                android:textColor="@color/darkGray"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="10dp"
+                android:drawableLeft="@drawable/my_location"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:text="Collection Address"
+                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="italic" />
-                </LinearLayout>
+                android:paddingBottom="10dp"/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGray"
+                android:id="@+id/divider2"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linear4"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="12dp"
+                android:drawableLeft="@drawable/ic_info_outline_black_24dp"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="Details"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/darkGray">
+
+        <TextView
+            android:id="@+id/transferred"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Payment Transferred"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+</LinearLayout>
 
 
 

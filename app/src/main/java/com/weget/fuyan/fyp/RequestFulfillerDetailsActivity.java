@@ -429,6 +429,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                     requestString = String.valueOf(requestId);
                     i.putExtra("fulfill_Id", fulfillId);
                     i.putExtra("fulfill_price", price);
+                    i.putExtra("product_name", productName);
+                    i.putExtra("product_desc", requirement);
                     i.putExtra("request_string", requestString);
                     startActivity(i);
                     finish();

@@ -73,5 +73,14 @@
             android:layout_marginBottom="55dp"
             android:focusable="true" />
 
+        <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/white"
+            android:text="No requests at the moment. :[" />
+
     </RelativeLayout>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

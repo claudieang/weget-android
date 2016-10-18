@@ -103,6 +103,8 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
                                     Intent intent = new Intent(mContext, PaymentActivity.class);
                                     intent.putExtra("fulfill_Id", fulfillId);
                                     intent.putExtra("fulfill_price", r.getPrice());
+                                    intent.putExtra("product_name", r.getProductName());
+                                    intent.putExtra("product_desc", r.getRequirement());
                                     intent.putExtra("request_string", String.valueOf(r.getId()));
                                     mContext.startActivity(intent);
                                     //((Activity)mContext).finish();

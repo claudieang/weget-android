@@ -17,8 +17,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
 import com.stripe.android.model.Card;
@@ -51,7 +53,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     private String clientToken;
     private static final int REQUEST_CODE = Menu.FIRST;
-    String username, password, authString, priceS, requestString, stripeCode, priceCentS, err;
+    String username, password, authString, priceS, requestString, stripeCode, priceCentS, err, productName, productDesc;
     private Context mContext;
     int fulfillId;
     double price;
@@ -63,6 +65,7 @@ public class PaymentActivity extends AppCompatActivity {
     Button paymentBtn;
     final String TEST_API = "pk_test_Jmx4WCkGv8XuSMz2NFSx3HEC";
     String URL;
+    TextView productNameTV, productDescTV, productTitleTV, valTV, totalTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +73,18 @@ public class PaymentActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_payment);
 
+
+
         ButterKnife.bind(this);
 
         URL = getString(R.string.webserviceurl);
         fulfillId = getIntent().getIntExtra("fulfill_Id", 0);
         price = getIntent().getDoubleExtra("fulfill_price",0);
+        productName = getIntent().getStringExtra("product_name");
+        productDesc = getIntent().getStringExtra("product_desc");
         requestString = getIntent().getStringExtra("request_string");
         priceS = String.valueOf(price);
+
 
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
@@ -84,10 +92,33 @@ public class PaymentActivity extends AppCompatActivity {
         password = pref.getString("password", null);
         authString  = username + ":" + password;
 
+
+
         cardNumET = (EditText)findViewById(R.id.cardNumberEditText);
         cardExpDateET = (EditText)findViewById(R.id.cardDateEditText);
         cardCvcET = (EditText)findViewById(R.id.cardCVCEditText);
         paymentBtn = (Button)findViewById(R.id.btn_start);
+        paymentBtn.setTransformationMethod(null);
+
+
+
+        productNameTV = (TextView)findViewById(R.id.product_name);
+        productDescTV = (TextView)findViewById(R.id.product_description);
+        productTitleTV = (TextView)findViewById(R.id.title);
+        valTV = (TextView)findViewById(R.id.val);
+//        totalTV = (TextView)findViewById(R.id.total);
+
+        productNameTV.setText(productName);
+        productDescTV.setText(productDesc);
+        valTV.setText("$" + priceS + "0");
+
+        //set fonts
+//        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+//        productNameTV.setTypeface(typeFace);
+//        productDescTV.setTypeface(typeFace);
+//        productTitleTV.setTypeface(typeFace);
+//        valTV.setTypeface(typeFace);
+//        totalTV.setTypeface(typeFace);
 
         cardNum = cardNumET.getText().toString();
 
@@ -388,22 +419,25 @@ public class PaymentActivity extends AppCompatActivity {
             } else {
                 success = true;
 
-                JSONObject jso = null;
+//                JSONObject jso = null;
                 try{
-                    jso = new JSONObject(rst);
+//                    jso = new JSONObject(rst);
+//
+//                    transactionId = jso.getInt("transactionId");
+//                    requestId = jso.getInt("requestId");
+//                    fulfillId = jso.getInt("fulfillId");
+//                    amount = jso.getDouble("amount");
+//                    stripeCode = jso.getString("stripeCode");
+//                    received = jso.getBoolean("received");
+//                    delivered = jso.getBoolean("delivered");
+//                    status = jso.getString("status");
+//                    tr = new Transaction (transactionId, requestId, fulfillId, amount, stripeCode,
+//                            received, delivered, status);
 
-                    transactionId = jso.getInt("transactionId");
-                    requestId = jso.getInt("requestId");
-                    fulfillId = jso.getInt("fulfillId");
-                    amount = jso.getDouble("amount");
-                    stripeCode = jso.getString("stripeCode");
-                    received = jso.getBoolean("received");
-                    delivered = jso.getBoolean("delivered");
-                    status = jso.getString("status");
-                    tr = new Transaction (transactionId, requestId, fulfillId, amount, stripeCode,
-                            received, delivered, status);
+                Gson gson = new Gson();
+                tr = gson.fromJson(rst, Transaction.class);
 
-                }catch(JSONException e){
+                }catch(Exception e){
                     e.printStackTrace();
                     err = e.getMessage();
                 }
