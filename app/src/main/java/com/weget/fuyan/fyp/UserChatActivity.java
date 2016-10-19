@@ -13,14 +13,17 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,11 +58,11 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
-public class UserChatActivity extends FragmentActivity {
+public class UserChatActivity extends AppCompatActivity {
     private SendBirdChatFragment mSendBirdMessagingFragment;
     String productName, requirement, location, startTime, endTime, status, err, requestorIdS, requestorName,
             username, password, picture;
-
+    static Toolbar toolbar;
     private View mTopBarContainer;
     private View mSettingsContainer;
     private TextView mHeaderView;
@@ -81,25 +84,24 @@ public class UserChatActivity extends FragmentActivity {
         //overridePendingTransition(R.anim.sendbird_slide_in_from_bottom, R.anim.sendbird_slide_out_to_top);
         setContentView(R.layout.activity_groupchat_list);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        //toolbar.setTitle("Request Completed");
-//        setActionBar(toolbar);
-//
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
-        Button btn = (Button)findViewById(R.id.create_btn);
-        btn.setVisibility(View.GONE);
-        ImageButton imgBtn = (ImageButton)findViewById(R.id.close_btn);
+        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        imgBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
 
         initFragment();
         initUIComponents();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -251,8 +253,11 @@ public class UserChatActivity extends FragmentActivity {
                             channelTitle = u.getNickname();
                         }
                     }
-
-                    mHeaderView.setText(channelTitle);
+                    SpannableString s = new SpannableString(channelTitle);
+                    s.setSpan(new TypefaceSpan(getActivity(), "Roboto-Regular.ttf"), 0, s.length(),
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    toolbar.setTitle(s);
+                    // mHeaderView.setText(channelTitle);
 
                     //updateGroupChannelTitle();
 
@@ -323,8 +328,6 @@ public class UserChatActivity extends FragmentActivity {
         }
 
         private void initUIComponents(View rootView) {
-
-            mHeaderView = (TextView)rootView.findViewById(R.id.chat_name);
 
             mListView = (ListView) rootView.findViewById(R.id.groupchat_list);
             turnOffListViewDecoration(mListView);
