@@ -7,32 +7,6 @@
     android:layout_gravity="center_horizontal"
     >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/chat_header"
-        android:orientation="horizontal"
-        android:background="@color/colorAccent1"
-        android:layout_gravity="center"
-
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:id="@+id/chat_name"
-            android:text="Group Chat Name"
-            android:textSize="20dp"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorWhite"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold"
-            >
-        </TextView>
-
-    </RelativeLayout>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

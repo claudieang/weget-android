@@ -25,6 +25,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sendbird.android.SendBird;
+import com.sendbird.android.SendBirdException;
+import com.sendbird.android.User;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -293,6 +297,7 @@ public class UploadImageActivity extends AppCompatActivity {
                 Intent i = new Intent (UploadImageActivity.this,ProfileActivity.class);
                 //i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                initSendBird();
                 startActivity(i);
                 finish();
 
@@ -301,6 +306,32 @@ public class UploadImageActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void initSendBird(){
+        SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getApplication().getApplicationContext());
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+        int dbID = pref.getInt("id",0);
+
+        SendBird.connect(dbID+"", new SendBird.ConnectHandler() {
+            @Override
+            public void onConnected(User user, SendBirdException e) {
+                if (e != null) {
+                    Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                SendBird.updateCurrentUserInfo(username, encodedImage, new SendBird.UserInfoUpdateHandler() {
+                    @Override
+                    public void onUpdated(SendBirdException e) {
+                        if (e != null) {
+                            Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                });
+            }
+        });
     }
 
 }

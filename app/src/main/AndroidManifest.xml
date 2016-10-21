@@ -145,6 +145,14 @@
             android:name=".update_bank_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Rating_requestor"></activity>
+
+        <activity android:name=".RequestPopUp"
+            android:theme="@style/AppTheme.CustomTheme"
+        />
+
+
+
+
     </application>
 
 </manifest>
