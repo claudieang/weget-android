@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.weget.fuyan.fyp.MergedRequest;
 import com.weget.fuyan.fyp.MyRequestFulfillerActivity;
 import com.weget.fuyan.fyp.R;
 import com.weget.fuyan.fyp.Request;
@@ -24,15 +25,19 @@ import java.util.List;
  */
 public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActiveListAdapter.MyActiveViewHolder>{
 
+    private List<MergedRequest> mergedList;
     private List<Request> requestsList;
     private List<Integer> counterList;
     Context mContext;
 
-    public RequestActiveListAdapter(List <Request> requestsList, List <Integer> counterList) {
-        this.requestsList = requestsList;
-        this.counterList = counterList;
-    }
+//    public RequestActiveListAdapter(List <Request> requestsList, List <Integer> counterList) {
+//        this.requestsList = requestsList;
+//        this.counterList = counterList;
+//    }
 
+    public RequestActiveListAdapter(List<MergedRequest> mergedList){
+        this.mergedList = mergedList;
+    }
     public class MyActiveViewHolder extends RecyclerView.ViewHolder{
         public TextView title, details, fulfillerNum, price;
         //public Button fulfiller_btn;
@@ -55,7 +60,8 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
                 @Override
                 public void onClick(View view) {
 
-                    Request request = requestsList.get(getAdapterPosition());
+                    MergedRequest request = mergedList.get(getAdapterPosition());
+                    //Request request = requestsList.get(getAdapterPosition());
                     //Toast.makeText(view.getContext(),"RV clicked " + view.getId() + ", " + R.id.cv2, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(view.getContext(), RequesterViewDetails.class);
                     intent.putExtra("selected_request",(Serializable) request);
@@ -73,7 +79,8 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
 //                    v.getContext().startActivity(intent);
 //                    Toast.makeText(v.getContext(),"Fulfiller button clicked", Toast.LENGTH_SHORT).show();
 
-                    Request rq = requestsList.get(getAdapterPosition());
+                    //Request rq = requestsList.get(getAdapterPosition());
+                    MergedRequest rq = mergedList.get(getAdapterPosition());
                     Intent intent = new Intent(v.getContext(), MyRequestFulfillerActivity.class);
                     intent.putExtra("selected_my_request",(Serializable) rq);
                     v.getContext().startActivity(intent);
@@ -107,17 +114,21 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
 
     @Override
     public int getItemCount() {
-        return requestsList.size();
+        return mergedList.size();
+        //return requestsList.size();
     }
 
     @Override
     public void onBindViewHolder(MyActiveViewHolder holder, int position)  {
-        final Request request = requestsList.get(position);
-        final int count = counterList.get(position);
+        //final Request request = requestsList.get(position);
+        MergedRequest request = mergedList.get(position);
+
         holder.title.setText(request.getProductName());
         String expiryStr = "Expires on: " + DateFormatter.formatDate(request.getEndTime());
         holder.details.setText(expiryStr);
-        holder.fulfillerNum.setText(String.valueOf(count));
+        //holder.fulfillerNum.setText(String.valueOf(counterList.get(position)));
+        holder.fulfillerNum.setText(request.getFulfillerCount() + "");
+        //Log.d("numberss", counterList.get(position) + "");
         holder.price.setText("$" + request.getPrice()+ "0");
         //final int idCheck = holder.fulfillers_btn.getId();
         //holder.fulfillers_btn = (RelativeLayout)itemView.findViewById(R.id.fulfillers_btn);
