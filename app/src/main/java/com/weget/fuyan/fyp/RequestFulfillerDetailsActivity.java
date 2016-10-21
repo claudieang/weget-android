@@ -72,7 +72,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Fulfiller Details");
-
+        getSupportActionBar().setElevation(0);
         URL = getString(R.string.webserviceurl);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
@@ -80,11 +80,10 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         myId = pref.getInt("id",0);
         authString  = username + ":" + password;
 
-        fulfillerNameTV = (TextView)findViewById(R.id.request_fulfiller_name);
-        fulfillerEmailTV = (TextView)findViewById(R.id.request_fulfiller_email);
-        fulfillerContactTV = (TextView)findViewById(R.id.request_fulfiller_contact);
-        fulfillerPicIV = (ImageView)findViewById(R.id.request_fulfiller_image);
+        fulfillerNameTV = (TextView)findViewById(R.id.profile_username);
+        fulfillerPicIV = (ImageView)findViewById(R.id.profile_picture);
         acceptFulfillerBtn = (Button)findViewById(R.id.select_fulfiller_btn);
+        fulfillerContactTV = (TextView)findViewById(R.id.profile_contactNumber);
         Typeface typeFace2=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
         acceptFulfillerBtn.setTypeface(typeFace2);
 
@@ -128,7 +127,6 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         }
 
         fulfillerNameTV.setText(fulfillerName);
-        fulfillerEmailTV.setText(fulfillerEmail);
         fulfillerContactTV.setText("" + fulfillerContactS);
 
         new getRating().execute(authString);
@@ -519,8 +517,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                 ratingBar2.setRating(Float.parseFloat(Double.toString(fulfillerRt)));
                 String pad1 = Double.toString(requestorRt)+"00";
                 String pad2 = Double.toString(fulfillerRt)+"00";
-                requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)) + " / 5.0");
-                fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)) + " / 5.0");
+                requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)));
+                fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)));
 
 
 
