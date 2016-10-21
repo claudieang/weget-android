@@ -19,7 +19,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp">
     <com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport
         android:id="@+id/my_request_list"
         android:layout_width="match_parent"

@@ -50,10 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private Menu optionsMenu;
     private HomeFragment homeFragment;
 
-    public Menu getOptionsMenu(){
-        return optionsMenu;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabSelected(int position) {
+
+
                 switch(position){
                     case 0:
                         SpannableString s = new SpannableString("Weget");
@@ -162,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s);
                         HomeFragment homeFragment = new HomeFragment();
-                        MenuItem refresh = optionsMenu.findItem(R.id.action_refresh);
-                        refresh.setVisible(true);
+                        //MenuItem refresh = optionsMenu.findItem(R.id.action_refresh);
+                        //refresh.setVisible(true);
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, homeFragment).commit();
                         break;
                     case 1:
@@ -172,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s1);
                         RequestFragment requestFragment = new RequestFragment();
-                        MenuItem refresh4 = optionsMenu.findItem(R.id.action_refresh);
-                        refresh4.setVisible(false);
+                        //MenuItem refresh4 = optionsMenu.findItem(R.id.action_refresh);
+                        //refresh4.setVisible(false);
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, requestFragment).commit();
                         //Intent i = new Intent(MainActivity.this, RequestFragment.class);
                         //startActivity(i);
@@ -187,8 +185,8 @@ public class MainActivity extends AppCompatActivity {
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s2);
                         FulfillFragment fulfillFragment = new FulfillFragment();
-                        MenuItem refresh3 = optionsMenu.findItem(R.id.action_refresh);
-                        refresh3.setVisible(false);
+                        //MenuItem refresh3 = optionsMenu.findItem(R.id.action_refresh);
+                        //refresh3.setVisible(false);
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, fulfillFragment).commit();
                         break;
                     case 4:
@@ -197,8 +195,8 @@ public class MainActivity extends AppCompatActivity {
                         s3.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s3.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s3);
-                        MenuItem refresh1 = optionsMenu.findItem(R.id.action_refresh);
-                        refresh1.setVisible(false);
+                        //MenuItem refresh1 = optionsMenu.findItem(R.id.action_refresh);
+                        //refresh1.setVisible(false);
                         ChatFragment chatFragment = new ChatFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, chatFragment).commit();
 
@@ -271,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        //invalidateOptionsMenu();
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         String profilePicture = pref.getString("picture", null);
@@ -336,6 +335,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case 3:
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+                username = pref.getString("username", null);
+                password = pref.getString("password", null);
+                authString  = username + ":" + password;
+
                 new logout().execute(authString);
                 break;
         }

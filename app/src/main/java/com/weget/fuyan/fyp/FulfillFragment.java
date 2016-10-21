@@ -15,6 +15,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -69,6 +71,8 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
         super.onActivityCreated(savedInstanceState);
         view = getView();
         activity = getActivity();
+
+        setHasOptionsMenu(true);
         //font
 //        TextView myTextView=(TextView)view.findViewById(R.id.my_fulfill_title);
 //        Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/TitilliumWeb-Bold.ttf");
@@ -407,6 +411,12 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
             }
 
         }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu){
+        MenuItem refresh1 = menu.findItem(R.id.action_refresh);
+        refresh1.setVisible(false);
     }
     //tab on selected
     @Override
