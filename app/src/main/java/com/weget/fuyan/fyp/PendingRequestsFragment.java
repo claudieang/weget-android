@@ -47,6 +47,7 @@ public class PendingRequestsFragment extends Fragment {
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestListAdapter mAdapter;
     String URL;
+    SwipeRefreshLayout swipeRefresh;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -104,25 +105,44 @@ public class PendingRequestsFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
         //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
 
 
+        swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        swipeRefresh.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+
+                        new getMyRequests(false).execute(authString);
+
+                    }
+                }
+        );
 
         authString  = username + ":" + password;
-        new getMyRequests().execute(authString);
+        new getMyRequests(true).execute(authString);
 
     }
 
     private class getMyRequests extends AsyncTask<String, Void, Boolean> {
-        ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
+        ProgressDialog dialog;
+        Boolean showDialog;
 
+        public getMyRequests(boolean showDialog){
+            this.showDialog = showDialog;
+        }
         @Override
         protected void onPreExecute() {
-            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            if(!activity.isFinishing()) {
-                dialog.show();
+            if(showDialog) {
+                dialog = new ProgressDialog(activity, R.style.MyTheme);
+                dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(false);
+                if (!activity.isFinishing()) {
+                    dialog.show();
+                }
             }
 
         }
@@ -182,9 +202,14 @@ public class PendingRequestsFragment extends Fragment {
         protected void onPostExecute(Boolean result) {
             mAdapter.notifyDataSetChanged();
 
-            recyclerView.setAdapter(mAdapter);
+            if(showDialog) {
+                dialog.dismiss();
+            }
 
-            dialog.dismiss();
+
+            if (swipeRefresh.isRefreshing()) {
+                swipeRefresh.setRefreshing(false);
+            }
 
         }
     }
