@@ -335,6 +335,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 requestArrayList.clear();
                 postalList.clear();
                 requestNameList.clear();
+                latList.clear();
 
                 try {
                     JSONArray jsoArray = new JSONArray(rst);
@@ -445,7 +446,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     protected void addRequestMarkers() throws JSONException {
         //lat = 1.3790849;
         //lng = 103.955139;
-
+        Log.d("LatSize", latList.size() + "");
+        Log.d("NUM", requestNameList.size() +"");
         if(mMap != null) {
             for (int i = 0; i < latList.size(); i++) {
                 LatLng templatLng = new LatLng(latList.get(i), lngList.get(i));
@@ -666,5 +668,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         // Adding the circle to the GoogleMap
         mMap.addCircle(circleOptions);
 
+    }
+
+    public void refresh(){
+        new getRequests().execute(authString);
     }
 }
