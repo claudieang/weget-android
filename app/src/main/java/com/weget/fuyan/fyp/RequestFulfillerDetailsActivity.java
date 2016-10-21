@@ -45,7 +45,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
 
     String fulfillerName, fulfillerEmail, fulfillerPic, fulfillerContactS, productName, requirement,
     location, startTime, endTime, username, password, authString, err, fulfillStatus, requestString;
-    int fulfillerContact, requestorId, fulfillerId, postal, duration, fulfillId, requestId, myId;
+    int fulfillerContact, requestorId, fulfillerId, postal, duration, fulfillId, requestId, myId, indicator;
     double price, requestorRating, requestorRatingNum, fulfillerRating, fulfillerRatingNum, requestorRt, fulfillerRt;
     Context mContext;
     RatingBar ratingBar1, ratingBar2;
@@ -92,6 +92,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
 
         request = (Request) getIntent().getSerializableExtra("selected_request_tofulfull");
         account = (Account) getIntent().getSerializableExtra("selected_fulfiller");
+        indicator = getIntent().getIntExtra("indicator", 0);
         fulfillId = getIntent().getIntExtra("selected_fulfill_id", 0);
         fulfillerName = account.getUsername();
         fulfillerEmail = account.getEmail();
@@ -130,6 +131,12 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         fulfillerContactTV.setText("" + fulfillerContactS);
 
         new getRating().execute(authString);
+
+        if(indicator == 1){
+            acceptFulfillerBtn.setVisibility(View.GONE);
+            chatBtn.setVisibility(View.GONE);
+            getSupportActionBar().setTitle("User Details");
+        }
 
         acceptFulfillerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -493,8 +500,15 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                     requestorRatingNum = jso.getDouble("requestNo");
                     fulfillerRating = jso.getDouble("fulfillTotal");
                     fulfillerRatingNum = jso.getDouble("fulfillNo");
-                    requestorRt = requestorRating / requestorRatingNum;
-                    fulfillerRt = fulfillerRating / fulfillerRatingNum;
+
+                    if(requestorRatingNum == 0.0 || fulfillerRatingNum == 0.0){
+                        requestorRt = 0.0;
+                        fulfillerRt = 0.0;
+
+                    }else {
+                        requestorRt = requestorRating / requestorRatingNum;
+                        fulfillerRt = fulfillerRating / fulfillerRatingNum;
+                    }
 
 
 
