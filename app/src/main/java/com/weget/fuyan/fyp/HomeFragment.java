@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
@@ -57,9 +55,6 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.sendbird.android.SendBird;
-import com.sendbird.android.SendBirdException;
-import com.sendbird.android.User;
 import com.weget.fuyan.fyp.Recycler.DividerItemDecoration;
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 import com.weget.fuyan.fyp.Recycler.RequestAllListAdapter;
@@ -69,9 +64,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by Claudie on 9/3/16.
@@ -94,7 +86,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     String URL;
 
     RequestAdapter adapter;
-    RequestGroupAdapter reqGrpAdapter;
     private SwipeRefreshLayout swipeContainer;
 
     //BOTTOM BAR TESTING
@@ -161,7 +152,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         view = getView();
         activity = getActivity();
 
-
         URL = getString(R.string.webserviceurl);
         TextView b1 = (TextView) view.findViewById(R.id.my_request_title);
         Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Roboto-Light.ttf");
@@ -191,16 +181,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         String password = pref.getString("password", null);
         myId = pref.getInt("id",-1);
         usernameText = "User: " + username;
-        SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getContext());
-        SendBird.connect(myId+"", new SendBird.ConnectHandler() {
-            @Override
-            public void onConnected(User user, SendBirdException e) {
-                if (e != null) {
-                    Toast.makeText(getContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-        });
         //text = (TextView) findViewById(R.id.textview2);
         //text.setText("Welcome, " + username + " ");
         //requestList = (ListView) view.findViewById(R.id.active_request_list);
@@ -224,10 +204,27 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
-
+//        requestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
+//                // Then you start a new Activity via Intent
+//                Request rq = requestArrayList.get(position);
+//
+//                if(myId == rq.getRequestorId()){
+//                    Intent intent = new Intent(activity, RequesterViewDetails.class);
+//                    intent.putExtra("selected_request", (Serializable) rq);
+//                    startActivity(intent);
+//                }else{
+//                    Intent intent = new Intent(activity, FulfillviewRequestDetails.class);
+//                    intent.putExtra("selected_request", (Serializable) rq);
+//                    startActivity(intent);
+//                }
+//
+//            }
+//        });
         mapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));
         //mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
-
 
         if (mapFragment != null) {
             mapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -448,59 +445,17 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     protected void addRequestMarkers() throws JSONException {
         //lat = 1.3790849;
         //lng = 103.955139;
-        HashMap<LatLng,ArrayList<Request>> markerMapList = new HashMap<>();
 
         if(mMap != null) {
             for (int i = 0; i < latList.size(); i++) {
                 LatLng templatLng = new LatLng(latList.get(i), lngList.get(i));
-                Request tempRequest = requestArrayList.get(i);
-
-                //check whether latlng overlaps
-                if(markerMapList.size()==0){
-
-                    ArrayList<Request> reqList = new ArrayList<>();
-                    reqList.add(tempRequest);
-                    markerMapList.put(templatLng,reqList);
-
-                } else if(markerMapList.containsKey(templatLng)){ //means that latlng already exists but is a different request
-
-                    ArrayList<Request> reqList = markerMapList.get(templatLng);
-                    reqList.add(tempRequest);
-                    markerMapList.put(templatLng,reqList);
-
-                } else { //if no latlng has existed yet
-
-                    ArrayList<Request> reqList = new ArrayList<>();
-                    reqList.add(tempRequest);
-                    markerMapList.put(templatLng,reqList);
-
-                }
-
-                //create markers based on latlng
-                if(markerMapList.size()>0){
-                    MarkerOptions markerOptions = new MarkerOptions();
-
-                    Iterator iter = markerMapList.entrySet().iterator();
-
-                    while(iter.hasNext()){
-                        Map.Entry<LatLng,ArrayList<Request>> pair = (Map.Entry)iter.next();
-                        LatLng addLatLng = pair.getKey();
-                        ArrayList<Request> addReqs = pair.getValue();
-
-                        markerOptions.position(addLatLng);
-                        if (addReqs.size() > 1){
-                            markerOptions.title("Request: " + addReqs.size() +" Requests");
-                        } else{
-                            markerOptions.title("Request: " + addReqs.get(0).getProductName());
-                        }
-                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                        Marker mkr = mMap.addMarker(markerOptions);
-                        mkr.setTag(addReqs);
-                        Log.d("Print","addReqs size is : " + addReqs.size());
-                    }
-
-                }
-
+                Log.d("Print", "Value of latlist size: " + latList.get(i) + " lolol " + lngList.get(i));
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(templatLng);
+                markerOptions.title("Request: " + requestNameList.get(i));
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                Marker mkr = mMap.addMarker(markerOptions);
+                mkr.setTag(requestArrayList.get(i));
                 //markerList.add(mkr.getId());
                 //LatLng requestMarker = new LatLng(lat, lng);
                 //mMap.addMarker(new MarkerOptions().position(requestMarker).title("This is a request by: Shafiq"));
@@ -511,16 +466,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                 @Override
                 public void onInfoWindowClick(Marker marker) {
-                    ArrayList<Request> reqList = (ArrayList<Request>)marker.getTag();
-
-
-                    SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
-                    int id = pref.getInt("id",0);
-
-                    if(reqList != null && reqList.size() == 1){
-
-                        Request request = reqList.get(0);
-
+                    Request request = (Request) marker.getTag();
+                    if(request != null){
+                        SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
+                        String username = pref.getString("username", null);
+                        String password = pref.getString("password", null);
+                        int id = pref.getInt("id",0);
                         if(request.getRequestorId() == id) {
                             //if the request viewed is mine
                             Intent intent = new Intent(getContext(),RequesterViewDetails.class);
@@ -536,35 +487,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                             startActivity(intent);
                         }
 
-                    } else { //pop up with list of requests
-
-                        Intent intent = new Intent(getContext(),RequestPopUp.class);
-                        intent.putExtra("reqList",reqList);
-                        startActivity(intent);
-
-                        for(Request r: reqList){
-                            adapter.add(r);
-                        }
-
                     }
 
                 }
             });
-
-            //here123
-            //how can we differentiate the markers to do infoclicklistener or markerclicklistener?
-//            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
-//
-//                @Override
-//                public boolean onMarkerClick(Marker marker) {
-//                    return false;
-//                }
-//            });
-
+            Log.d("geo1", "HIHIIHIHIHIIHIHI");
         }
-
     }
-
 
     /**
      * Manipulates the map once available.
@@ -738,21 +667,4 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         mMap.addCircle(circleOptions);
 
     }
-
-    //resizing marker size based on number of requests
-//    public Bitmap resizeMapIcons(String iconName, int width, int height, int size){
-//        final int small = 2;
-//        final int medium = 5;
-//        final int large = 10;
-//        final int xLarge = 20;
-//
-//
-//
-//        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
-//        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
-//        return resizedBitmap;
-//    }
-
-
-
 }

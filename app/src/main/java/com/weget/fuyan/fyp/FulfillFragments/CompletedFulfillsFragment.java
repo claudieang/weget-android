@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,6 +58,8 @@ public class CompletedFulfillsFragment extends Fragment {
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter mAdapter;
     String URL;
+    SwipeRefreshLayout swipeRefresh;
+    ProgressDialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,7 +94,19 @@ public class CompletedFulfillsFragment extends Fragment {
 
 
         authString  = username + ":" + password;
-        new getRequests().execute(authString);
+        new getRequests(true).execute(authString);
+
+        swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        swipeRefresh.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+
+                        new getRequests(false).execute(authString);
+
+                    }
+                }
+        );
 
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
@@ -111,17 +126,14 @@ public class CompletedFulfillsFragment extends Fragment {
     }
 
     private class getMyFulfill extends AsyncTask<String, Void, Boolean> {
-        ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
 
-        @Override
-        protected void onPreExecute() {
-            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            if(!activity.isFinishing()) {
-                dialog.show();
-            }
+
+        Boolean showDialog;
+
+        public getMyFulfill(boolean showDialog){
+            this.showDialog = showDialog;
         }
+
 
         @Override
         protected Boolean doInBackground(String... params) {
@@ -169,7 +181,7 @@ public class CompletedFulfillsFragment extends Fragment {
             dialog.dismiss();
             if(result){
 
-                new getMyFulfills().execute(authString);
+                new getMyFulfills(showDialog).execute(authString);
             }else {
                 Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
@@ -179,10 +191,24 @@ public class CompletedFulfillsFragment extends Fragment {
 
     private class getRequests extends AsyncTask<String, Void, Boolean> {
 
-        @Override
-        protected void onPreExecute() {
+        Boolean showDialog;
+
+        public getRequests(boolean showDialog){
+            this.showDialog = showDialog;
         }
 
+        @Override
+        protected void onPreExecute() {
+            if(showDialog) {
+                dialog = new ProgressDialog(activity, R.style.MyTheme);
+                dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(false);
+                if (!activity.isFinishing()) {
+                    dialog.show();
+                }
+            }
+        }
         @Override
         protected Boolean doInBackground(String... params) {
 
@@ -205,7 +231,7 @@ public class CompletedFulfillsFragment extends Fragment {
         protected void onPostExecute(Boolean result) {
             if(result){
 
-                new getMyFulfill().execute(authString);
+                new getMyFulfill(showDialog).execute(authString);
 
             }else {
                 Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
@@ -216,8 +242,15 @@ public class CompletedFulfillsFragment extends Fragment {
 
     private class getMyFulfills extends AsyncTask<String, Void, Boolean> {
 
+        Boolean showDialog;
+
+        public getMyFulfills(boolean showDialog){
+            this.showDialog = showDialog;
+        }
+
         @Override
         protected void onPreExecute() {
+
         }
 
         @Override
@@ -274,7 +307,17 @@ public class CompletedFulfillsFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(Boolean result) {
+
+            if(showDialog) {
+                dialog.dismiss();
+            }
+
+            if (swipeRefresh.isRefreshing()) {
+                swipeRefresh.setRefreshing(false);
+            }
+
             if(result){
+
                 boolean check = false;
 
                 //adapter.clear();

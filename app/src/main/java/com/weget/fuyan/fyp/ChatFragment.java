@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -49,6 +51,13 @@ public class ChatFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.sendbird_fragment_group_channel_list, container, false);
         initUIComponents(rootView);
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        setHasOptionsMenu(true);
     }
 
     private void initUIComponents(View rootView) {
@@ -253,6 +262,12 @@ public class ChatFragment extends Fragment {
             mQuery = GroupChannel.createMyGroupChannelListQuery();
             mQuery.setIncludeEmpty(true);
         }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu){
+        MenuItem refresh1 = menu.findItem(R.id.action_refresh);
+        refresh1.setVisible(false);
     }
 
 }

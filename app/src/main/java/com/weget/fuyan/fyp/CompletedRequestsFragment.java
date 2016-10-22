@@ -49,6 +49,7 @@ public class CompletedRequestsFragment extends Fragment {
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter mAdapter;
     String URL;
+    SwipeRefreshLayout swipeRefresh;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -112,7 +113,18 @@ public class CompletedRequestsFragment extends Fragment {
 
 
         authString  = username + ":" + password;
-        new getMyRequests().execute(authString);
+        new getMyRequests(true).execute(authString);
+        swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        swipeRefresh.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+
+                        new getMyRequests(false).execute(authString);
+
+                    }
+                }
+        );
 
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(activity.getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
@@ -131,33 +143,27 @@ public class CompletedRequestsFragment extends Fragment {
         );
     }
 
-    public void fetchTimelineAsync(int page) {
-        // Send the network request to fetch the updated data
-        // 'client' here is an instance of Android Async HTTP
-        new getMyRequests().execute(authString);
 
-        mAdapter = new com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter(myRequestArrayList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setEmptyView(view.findViewById(R.id.empty_view3));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(mAdapter);
-
-    }
 
 
     private class getMyRequests extends AsyncTask<String, Void, Boolean> {
+        Boolean showDialog;
 
-        ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
+        ProgressDialog dialog;
+        public getMyRequests(boolean showDialog){
+            this.showDialog = showDialog;
+        }
 
         @Override
         protected void onPreExecute() {
-            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            if(!activity.isFinishing()) {
-                dialog.show();
+            if(showDialog) {
+                dialog = new ProgressDialog(activity, R.style.MyTheme);
+                dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(false);
+                if (!activity.isFinishing()) {
+                    dialog.show();
+                }
             }
         }
 
@@ -215,7 +221,14 @@ public class CompletedRequestsFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean result) {
             mAdapter.notifyDataSetChanged();
-            dialog.dismiss();
+
+            if(showDialog) {
+                dialog.dismiss();
+            }
+
+            if (swipeRefresh.isRefreshing()) {
+                swipeRefresh.setRefreshing(false);
+            }
 
         }
     }

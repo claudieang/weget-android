@@ -2,6 +2,7 @@ package com.weget.fuyan.fyp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.weget.fuyan.fyp.Util.DateFormatter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class CompletedRequest extends AppCompatActivity {
     Context mContext;
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
     String URL;
+    Account a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class CompletedRequest extends AppCompatActivity {
         productNameTV = (TextView)findViewById(R.id.product_name);
         fulfillerName = (TextView)findViewById(R.id.fulfiller_name);
         requestorNameTV = (TextView)findViewById(R.id.requestor_tv);
+        requestorTitleTV = (TextView)findViewById(R.id.fulfiller);
         addressTV = (TextView)findViewById(R.id.address);
         priceTV = (TextView)findViewById(R.id.price);
         details = (TextView)findViewById(R.id.info);
@@ -105,6 +110,18 @@ public class CompletedRequest extends AppCompatActivity {
             Log.d("R ID:========", ""+requestorId);
             new getMyRequestFulfiller().execute(authString);
         }
+
+        fulfillerName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent (CompletedRequest.this, RequestFulfillerDetailsActivity.class);
+                i.putExtra("indicator", 1);
+                i.putExtra("selected_request_tofulfull", (Serializable) r);
+                i.putExtra("selected_fulfiller", (Serializable)a);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
@@ -153,10 +170,10 @@ public class CompletedRequest extends AppCompatActivity {
             } else {
 
                 try {
-                    JSONObject jso = new JSONObject(rst);
-                    requestorName = jso.getString("username");
+                    Gson gson = new Gson();
+                    a = gson.fromJson(rst,Account.class);
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 success = true;
@@ -174,9 +191,18 @@ public class CompletedRequest extends AppCompatActivity {
 //                productNameTV.setText(productName);
 //                addressTV.setText(address + " " + postal);
 //                priceTV.setText("$" + price + "0")
+
+
+
+
                 String status = r.getStatus();
                 status  = status.substring(0, 1).toUpperCase() + status.substring(1);
-                title.setText(status + "d Request");
+                if(status.charAt(status.length() -1 ) != 'd'){
+                    status += "d";
+                }
+                requestorTitleTV.setText("requested by");
+                fulfillerName.setText(a.getUsername());
+                title.setText(status + " Request");
                 date.setText(DateFormatter.formatDate(r.getStartTime()));
                 productNameTV.setText(productName);
                 //fulfillerName.setText();
@@ -265,7 +291,7 @@ public class CompletedRequest extends AppCompatActivity {
 
             if(result) {
                 if(fulfillerAccountList.size() == 1){
-                    Account a = fulfillerAccountList.get(0);
+                    a = fulfillerAccountList.get(0);
 
 
 //                    requestorTitleTV.setText("Fulfilled by");
@@ -278,7 +304,7 @@ public class CompletedRequest extends AppCompatActivity {
                     if(status.charAt(status.length() -1 ) != 'd'){
                         status += "d";
                     }
-                    title.setText(status + " Request");
+                    title.setText(status + " Fulfill");
                     date.setText(DateFormatter.formatDateFull(r.getStartTime()));
                     productNameTV.setText(productName);
                     fulfillerName.setText(a.getUsername());

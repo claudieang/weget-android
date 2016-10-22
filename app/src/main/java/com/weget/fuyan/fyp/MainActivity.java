@@ -17,6 +17,8 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private String err, password, authString,username;
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
     String URL;
+    private Menu optionsMenu;
+    private HomeFragment homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,9 +146,13 @@ public class MainActivity extends AppCompatActivity {
                 .initialise();
 
 
+
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener(){
+
             @Override
             public void onTabSelected(int position) {
+
+
                 switch(position){
                     case 0:
                         SpannableString s = new SpannableString("Weget");
@@ -152,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s);
                         HomeFragment homeFragment = new HomeFragment();
+                        //MenuItem refresh = optionsMenu.findItem(R.id.action_refresh);
+                        //refresh.setVisible(true);
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, homeFragment).commit();
                         break;
                     case 1:
@@ -160,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s1);
                         RequestFragment requestFragment = new RequestFragment();
+                        //MenuItem refresh4 = optionsMenu.findItem(R.id.action_refresh);
+                        //refresh4.setVisible(false);
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, requestFragment).commit();
                         //Intent i = new Intent(MainActivity.this, RequestFragment.class);
                         //startActivity(i);
@@ -173,6 +185,8 @@ public class MainActivity extends AppCompatActivity {
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s2);
                         FulfillFragment fulfillFragment = new FulfillFragment();
+                        //MenuItem refresh3 = optionsMenu.findItem(R.id.action_refresh);
+                        //refresh3.setVisible(false);
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, fulfillFragment).commit();
                         break;
                     case 4:
@@ -181,7 +195,8 @@ public class MainActivity extends AppCompatActivity {
                         s3.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s3.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s3);
-
+                        //MenuItem refresh1 = optionsMenu.findItem(R.id.action_refresh);
+                        //refresh1.setVisible(false);
                         ChatFragment chatFragment = new ChatFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, chatFragment).commit();
 
@@ -197,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(int position) {
             }
         });
-        HomeFragment homeFragment = new HomeFragment();
+        homeFragment = new HomeFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, homeFragment).commit();
 
         Intent i = getIntent();
@@ -254,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        //invalidateOptionsMenu();
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         String profilePicture = pref.getString("picture", null);
@@ -273,14 +289,31 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.optionsMenu = menu;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_refresh, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
+
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_refresh) {
+            //Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
+            homeFragment.refresh();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -302,6 +335,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case 3:
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+                username = pref.getString("username", null);
+                password = pref.getString("password", null);
+                authString  = username + ":" + password;
+
                 new logout().execute(authString);
                 break;
         }

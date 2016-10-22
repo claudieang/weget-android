@@ -17,8 +17,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -75,7 +73,6 @@ public class UserChatActivity extends FragmentActivity {
     private Context mContext;
     private GroupChannel mGroupChannel;
     private SendBirdMessagingAdapter mAdapter;
-    private static Toolbar toolbar;
 
 
     @Override
@@ -84,11 +81,11 @@ public class UserChatActivity extends FragmentActivity {
         //overridePendingTransition(R.anim.sendbird_slide_in_from_bottom, R.anim.sendbird_slide_out_to_top);
         setContentView(R.layout.activity_groupchat_list);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         //toolbar.setTitle("Request Completed");
-
-        mHeaderView = (TextView)findViewById(R.id.toolbar_title);
+//        setActionBar(toolbar);
+//
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
         Button btn = (Button)findViewById(R.id.create_btn);
         btn.setVisibility(View.GONE);
         ImageButton imgBtn = (ImageButton)findViewById(R.id.close_btn);
@@ -245,6 +242,7 @@ public class UserChatActivity extends FragmentActivity {
                     mAdapter.notifyDataSetChanged();
 
                     SharedPreferences pref = getActivity().getSharedPreferences("MyPref", 0);
+
                     int userID = pref.getInt("id",0);
                     String channelTitle = "";
 
@@ -253,13 +251,8 @@ public class UserChatActivity extends FragmentActivity {
                             channelTitle = u.getNickname();
                         }
                     }
-                    Log.d("title","the group header name is : " + channelTitle);
-                    Log.d("title","does mHeaderView exists? : " + mHeaderView);
-                    SpannableString s = new SpannableString(channelTitle);
-                    s.setSpan(new TypefaceSpan(getActivity(), "Roboto-Regular.ttf"), 0, s.length(),
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    toolbar.setTitle(s);
-                    //mHeaderView.setText(channelTitle);
+
+                    mHeaderView.setText(channelTitle);
 
                     //updateGroupChannelTitle();
 
@@ -331,7 +324,7 @@ public class UserChatActivity extends FragmentActivity {
 
         private void initUIComponents(View rootView) {
 
-            //mHeaderView = (TextView)rootView.findViewById(R.id.toolbar_title);
+            mHeaderView = (TextView)rootView.findViewById(R.id.chat_name);
 
             mListView = (ListView) rootView.findViewById(R.id.groupchat_list);
             turnOffListViewDecoration(mListView);

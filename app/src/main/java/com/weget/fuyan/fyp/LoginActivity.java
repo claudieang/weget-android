@@ -82,7 +82,10 @@ public class LoginActivity extends AppCompatActivity {
 
         if(username != null){
             //password = pref.getString("password", "");
-
+            //instantiate variables used by SendBird
+            dbUsername = username;
+            dbID = pref.getInt("id", 0);
+            dbProfilePic = pref.getString("picture", null);
             initSendBird();
 
             Intent i = new Intent(LoginActivity.this, MainActivity.class);

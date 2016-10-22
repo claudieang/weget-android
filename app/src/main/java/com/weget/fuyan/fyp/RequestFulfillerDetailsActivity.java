@@ -45,7 +45,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
 
     String fulfillerName, fulfillerEmail, fulfillerPic, fulfillerContactS, productName, requirement,
     location, startTime, endTime, username, password, authString, err, fulfillStatus, requestString;
-    int fulfillerContact, requestorId, fulfillerId, postal, duration, fulfillId, requestId, myId;
+    int fulfillerContact, requestorId, fulfillerId, postal, duration, fulfillId, requestId, myId, indicator;
     double price, requestorRating, requestorRatingNum, fulfillerRating, fulfillerRatingNum, requestorRt, fulfillerRt;
     Context mContext;
     RatingBar ratingBar1, ratingBar2;
@@ -72,7 +72,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Fulfiller Details");
-
+        getSupportActionBar().setElevation(0);
         URL = getString(R.string.webserviceurl);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
@@ -80,11 +80,10 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         myId = pref.getInt("id",0);
         authString  = username + ":" + password;
 
-        fulfillerNameTV = (TextView)findViewById(R.id.request_fulfiller_name);
-        fulfillerEmailTV = (TextView)findViewById(R.id.request_fulfiller_email);
-        fulfillerContactTV = (TextView)findViewById(R.id.request_fulfiller_contact);
-        fulfillerPicIV = (ImageView)findViewById(R.id.request_fulfiller_image);
+        fulfillerNameTV = (TextView)findViewById(R.id.profile_username);
+        fulfillerPicIV = (ImageView)findViewById(R.id.profile_picture);
         acceptFulfillerBtn = (Button)findViewById(R.id.select_fulfiller_btn);
+        fulfillerContactTV = (TextView)findViewById(R.id.profile_contactNumber);
         Typeface typeFace2=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
         acceptFulfillerBtn.setTypeface(typeFace2);
 
@@ -93,6 +92,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
 
         request = (Request) getIntent().getSerializableExtra("selected_request_tofulfull");
         account = (Account) getIntent().getSerializableExtra("selected_fulfiller");
+        indicator = getIntent().getIntExtra("indicator", 0);
         fulfillId = getIntent().getIntExtra("selected_fulfill_id", 0);
         fulfillerName = account.getUsername();
         fulfillerEmail = account.getEmail();
@@ -128,10 +128,15 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         }
 
         fulfillerNameTV.setText(fulfillerName);
-        fulfillerEmailTV.setText(fulfillerEmail);
         fulfillerContactTV.setText("" + fulfillerContactS);
 
         new getRating().execute(authString);
+
+        if(indicator == 1){
+            acceptFulfillerBtn.setVisibility(View.GONE);
+            chatBtn.setVisibility(View.GONE);
+            getSupportActionBar().setTitle("User Details");
+        }
 
         acceptFulfillerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -495,8 +500,15 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                     requestorRatingNum = jso.getDouble("requestNo");
                     fulfillerRating = jso.getDouble("fulfillTotal");
                     fulfillerRatingNum = jso.getDouble("fulfillNo");
-                    requestorRt = requestorRating / requestorRatingNum;
-                    fulfillerRt = fulfillerRating / fulfillerRatingNum;
+
+                    if(requestorRatingNum == 0.0 || fulfillerRatingNum == 0.0){
+                        requestorRt = 0.0;
+                        fulfillerRt = 0.0;
+
+                    }else {
+                        requestorRt = requestorRating / requestorRatingNum;
+                        fulfillerRt = fulfillerRating / fulfillerRatingNum;
+                    }
 
 
 
@@ -519,8 +531,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                 ratingBar2.setRating(Float.parseFloat(Double.toString(fulfillerRt)));
                 String pad1 = Double.toString(requestorRt)+"00";
                 String pad2 = Double.toString(fulfillerRt)+"00";
-                requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)) + " / 5.0");
-                fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)) + " / 5.0");
+                requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)));
+                fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)));
 
 
 

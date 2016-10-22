@@ -18,17 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by HP on 4/4/2016.
@@ -44,6 +40,7 @@ public class ActiveRequestsFragment extends Fragment {
     String err, authString, username, password, baseURL;
     ArrayList<Request> myRequestArrayList = new ArrayList<>();
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
+    ArrayList<MergedRequest> mergedList = new ArrayList<>();
     ArrayList<Integer> counterList = new ArrayList<>();
     private SwipeRefreshLayout swipeContainer;
     View view;
@@ -51,6 +48,7 @@ public class ActiveRequestsFragment extends Fragment {
     //private RecyclerView recyclerView;
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestActiveListAdapter mAdapter;
+    SwipeRefreshLayout swipeRefresh;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,72 +62,60 @@ public class ActiveRequestsFragment extends Fragment {
         //setContentView(R.layout.activity_my_request);
         view = getView();
         activity = getActivity();
-        //change font
-        //TextView myTextView=(TextView)view.findViewById(R.id.my_request_title);
-        //Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Quicksand-Bold.otf");
-        //myTextView.setTypeface(typeFace);
 
-
-        /*
-        // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout)view.findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                fetchTimelineAsync(0);
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-*/
         baseURL = getString(R.string.webserviceurl);
         SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
         myId = pref.getInt("id", 0);
 
-        //tr = (Transaction)getIntent().getSerializableExtra("transaction");
-
-
-//        myRequestLV = (ListView)view.findViewById(R.id.my_request_list);
-//        //adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.request_list_layout);
-//        adapter = new RequestListAdapter(activity.getApplicationContext(), R.layout.request_list_layout);
-//        myRequestLV.setAdapter(adapter);
-
-        //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
-
-
-
         authString  = username + ":" + password;
-        new getMyRequests().execute(authString);
-
+        new getMyRequests(true).execute(authString);
 
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
-        mAdapter = new com.weget.fuyan.fyp.Recycler.RequestActiveListAdapter(myRequestArrayList,counterList);
+
+        mAdapter = new com.weget.fuyan.fyp.Recycler.RequestActiveListAdapter(mergedList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-    }
 
+        /*
+ * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
+ * performs a swipe-to-refresh gesture.
+ */
+        swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        swipeRefresh.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+
+                        new getMyRequests(false).execute(authString);
+
+                    }
+                }
+        );
+
+    }
     private class getMyRequests extends AsyncTask<String, Void, Boolean> {
-        ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
+        Boolean showDialog;
+        ProgressDialog dialog;
+
+        public getMyRequests(boolean showDialog){
+            this.showDialog = showDialog;
+        }
 
         @Override
         protected void onPreExecute() {
-            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            if(!activity.isFinishing()) {
-                dialog.show();
+            if(showDialog) {
+                dialog = new ProgressDialog(activity, R.style.MyTheme);
+                dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(false);
+                if (!activity.isFinishing()) {
+                    dialog.show();
+                }
             }
         }
         @Override
@@ -138,7 +124,7 @@ public class ActiveRequestsFragment extends Fragment {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = baseURL+ "account/" + myId + "/request/";
+            String url = baseURL+ "account/" + myId + "/requestVO/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -146,7 +132,7 @@ public class ActiveRequestsFragment extends Fragment {
                 success = false;
             } else {
 
-                myRequestArrayList.clear();
+                mergedList.clear();
 
                 try {
   //                  Gson gson = new Gson();
@@ -162,17 +148,18 @@ public class ActiveRequestsFragment extends Fragment {
                         String productName = jso.getString("productName");
                         String requirement = jso.getString("requirement");
                         String location = jso.getString("location");
-                        int postal = jso.getInt("postal");
+                        int postal = Integer.parseInt(jso.getString("postal"));
                         String startTime = jso.getString("startTime");
                         int duration = jso.getInt("duration");
                         String endTime = jso.getString("endTime");
                         double price = jso.getDouble("price");
                         String status = jso.getString("status");
+                        int count = jso.getInt("count");
 
-                        Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
-                                postal, startTime, endTime, duration, price, status);
+                        MergedRequest request = new MergedRequest(id, requestorId, imageResource, productName, requirement, location,
+                                postal, startTime, endTime, duration, price, status, count);
                         if (status.equals("active")) {
-                            myRequestArrayList.add(request);
+                            mergedList.add(request);
                         }
 
                        // mAdapter.notifyDataSetChanged();
@@ -189,89 +176,19 @@ public class ActiveRequestsFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean result) {
 
-
-            new getMyRequestFulfiller().execute(myRequestArrayList);
-
-
-            dialog.dismiss();
-
-
-        }
-    }
-
-    private class getMyRequestFulfiller extends AsyncTask< ArrayList <Request> , Void, Boolean> {
-
-        int id, contactNo;
-        String username, password, email, fulfiller, picture;
-        Account account;
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Boolean doInBackground(ArrayList<Request>... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
-            ArrayList<Request> rList = params[0];
-            boolean success = true;
-
-
-            for (Request r : rList) {
-                int rId = r.getId();
-
-                String url = baseURL + "request/" + rId + "/fulfillers/";
-
-                String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-                if (rst == null) {
-                    err = UtilHttp.err;
-                    success = false;
-                } else {
-                    fulfillerAccountList.clear();
-
-                    try {
-                        Gson gson = new Gson();
-                        fulfillerAccountList = gson.fromJson(rst, new TypeToken<List<Account>>(){}.getType());
-//                        JSONArray jsoArray = new JSONArray(rst);
-//                        for (int i = 0; i < jsoArray.length(); i++) {
-//                            JSONObject jso = jsoArray.getJSONObject(i);
-//
-//                            id = jso.getInt("id");
-//                            username = jso.getString("username");
-//                            password = jso.getString("password");
-//                            contactNo = jso.getInt("contactNo");
-//                            email = jso.getString("email");
-//                            fulfiller = jso.getString("fulfiller");
-//                            picture = jso.getString("picture");
-//
-//                            account = new Account(id, username, password, contactNo, email, fulfiller, picture);
-//
-//
-//                            fulfillerAccountList.add(account);
-//
-//
-//                        }
-                    } catch (Exception e) {
-                        success = false;
-                        e.printStackTrace();
-                        err = e.getMessage();
-                    }
-                    counterList.add(fulfillerAccountList.size());
-                    success = true;
-                }
-
-
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
             mAdapter.notifyDataSetChanged();
-            if(!result) {
-                Toast.makeText(getContext(), err, Toast.LENGTH_SHORT).show();
+            //new getMyRequestFulfiller().execute(myRequestArrayList);
 
+            if(showDialog) {
+                dialog.dismiss();
+            }
+
+            if (swipeRefresh.isRefreshing()) {
+                swipeRefresh.setRefreshing(false);
             }
 
         }
     }
+
+
 }

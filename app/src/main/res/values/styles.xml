@@ -55,13 +55,13 @@
 
     <style name="RatingBar"
         parent="android:style/Widget.Material.RatingBar.Small">
-        <item name="colorControlNormal">@color/colorPrimary</item>
-        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
     <style name="RatingBar2"
         parent="android:style/Widget.Material.RatingBar.Small">
-        <item name="colorControlNormal">@color/request0</item>
-        <item name="colorControlActivated">@color/request2</item>
+        <item name="colorControlNormal">@color/fulfillBar2</item>
+        <item name="colorControlActivated">@color/fulfillBar</item>
     </style>
 </resources>

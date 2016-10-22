@@ -14,6 +14,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -53,6 +55,8 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //setContentView(R.layout.activity_my_request);
+
+        setHasOptionsMenu(true);
         view = getView();
         activity = getActivity();
         //change font
@@ -259,6 +263,12 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
             }
 
         }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu){
+        MenuItem refresh1 = menu.findItem(R.id.action_refresh);
+        refresh1.setVisible(false);
     }
 
     //tab on selected

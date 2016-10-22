@@ -6,14 +6,12 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
-import android.icu.text.DecimalFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,7 +20,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,13 +44,13 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile_new);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //font
         //updateProfile = (ImageView)findViewById(R.id.updateprofile_btn);
         getSupportActionBar().setTitle("Profile");
-
+        getSupportActionBar().setElevation(0);
         profileImage = (ImageView)findViewById(R.id.profile_picture);
         TextView change_pw = (TextView)findViewById(R.id.change_password);
         change_pw.setPaintFlags(change_pw.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -225,8 +222,8 @@ public class ProfileActivity extends AppCompatActivity {
                 ratingBar2.setRating(Float.parseFloat(Double.toString(fulfillerRt)));
                 String pad1 = Double.toString(requestorRt)+"00";
                 String pad2 = Double.toString(fulfillerRt)+"00";
-                requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)) + " / 5.0");
-                fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)) + " / 5.0");
+                requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)));
+                fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)));
 
 
 
