@@ -32,67 +32,92 @@
 
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HomeActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".RegisterActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProfileActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleInstance" />
         <activity android:name=".UpdateProfileActivity" />
         <activity
             android:name=".UpdatePasswordActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UpdateEmailActivity" />
-        <activity android:name=".UpdateContactActivity" />
-        <activity android:name=".UploadImageActivity" />
+        <activity android:name=".UpdateEmailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UpdateContactActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UploadImageActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CreateRequestActivity"
+            android:screenOrientation="portrait"
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RequestDetailsActivity" />
-        <activity android:name=".MyRequestActivity">
+        <activity android:name=".RequestDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MyRequestActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="request_page" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChatActivity" />
+        <activity android:name=".ChatActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".UserChatActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SendBirdBlockedUserListActivity" />
-        <activity android:name=".SendBirdGroupChannelListActivity" />
-        <activity android:name=".SendBirdGroupChatActivity" />
-        <activity android:name=".SendBirdMemberListActivity" />
+        <activity android:name=".SendBirdBlockedUserListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SendBirdGroupChannelListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SendBirdGroupChatActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SendBirdMemberListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MyRequestFulfillerActivity"
             android:noHistory="true"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RequestFulfillerDetailsActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RequestFulfillerDetailsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".PaymentActivity"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Dialog" />
-        <activity android:name=".MyFulfillActivity">
+        <activity android:name=".MyFulfillActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="fulfill_page" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyFulfillRequestDetailsActivity" />
+        <activity android:name=".MyFulfillRequestDetailsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".UpdateRequestActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
      <activity android:name=".MainPage"></activity> ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -118,41 +143,47 @@
         <activity android:name=".ForgotPasswordActivity" />
         <activity
             android:name=".RequesterViewDetails"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".FulfillviewRequestDetails"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PendingdetailsRequester"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".PendingdetailsFulfiller"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MyfulfillDetails"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".bank_details"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".dispute"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CompletedRequest"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".update_bank_details"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Rating_requestor"></activity>
+        <activity android:name=".Rating_requestor"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".RequestPopUp"
             android:theme="@style/AppTheme.CustomTheme"
         />
-
-
-
-
     </application>
 
 </manifest>

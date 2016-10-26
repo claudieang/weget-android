@@ -667,4 +667,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         mMap.addCircle(circleOptions);
 
     }
+
+    public void refresh(){
+        new getRequests().execute(authString);
+    }
 }
