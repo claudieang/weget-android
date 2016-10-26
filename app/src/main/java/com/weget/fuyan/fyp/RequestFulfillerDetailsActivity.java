@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -115,6 +116,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         if(fulfillerPic.equals("")){
 
             fulfillerPicIV.setImageResource(R.drawable.ic_account_circle_black_48dp);
+            fulfillerPicIV.setColorFilter(Color.argb(255, 255, 255, 255));
         }else{
 
 

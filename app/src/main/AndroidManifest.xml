@@ -51,8 +51,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProfileActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance" />
+            android:screenOrientation="portrait" />
         <activity android:name=".UpdateProfileActivity" />
         <activity
             android:name=".UpdatePasswordActivity"

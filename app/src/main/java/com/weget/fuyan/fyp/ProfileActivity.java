@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -137,9 +138,8 @@ public class ProfileActivity extends AppCompatActivity {
         if(profilePicture.equals("")){
 
             profileImage.setImageResource(R.drawable.ic_account_circle_black_48dp);
+            profileImage.setColorFilter(Color.argb(255, 255, 255, 255));;
         }else{
-
-
             //this.dpIV.setImageDrawable(roundDrawable);
             byte[] decodeString = Base64.decode(profilePicture, Base64.NO_WRAP);
             Bitmap decodebitmap = BitmapFactory.decodeByteArray(
@@ -201,7 +201,12 @@ public class ProfileActivity extends AppCompatActivity {
                     //requestorRtInt = (int) requestorRt;
                     fulfillerRt = fulfillerRating / fulfillerRatingNum;
                     //fulfillerRtInt = (int)fulfillerRt;
-
+                    if(Double.isNaN(requestorRt)){
+                        requestorRt = 0;
+                    }
+                    if(Double.isNaN(fulfillerRt)){
+                        fulfillerRt = 0;
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
