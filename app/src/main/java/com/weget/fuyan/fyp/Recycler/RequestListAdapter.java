@@ -530,7 +530,8 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
                 Log.d("lol1", "fulfillerAccountList.size() issss : " + fulfillerAccountList.size());
                 if(fulfillerAccountList.size() == 1){
                     Account a = fulfillerAccountList.get(0);
-
+                    fId = a.getId();
+                    Log.d("lol1", "fID of this request is : " + fId);
 
                 }
 
@@ -604,7 +605,8 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
 
                                     //if im a requestor and channel already exists
                                     if (membercount == gc.getMemberCount() && haveMyId) {
-                                        Log.d("victorious", "if im a requestor and channel already exists");
+                                        Log.d("victorious", "if im a requestor and channel already exists123");
+                                        Log.d("victorious", "fid is : " + fId);
                                         Intent intent = new Intent(mContext, UserChatActivity.class);
                                         intent.putExtra("channel_url", gc.getUrl());
                                         activityStarted = true;

@@ -190,6 +190,7 @@ public class FulfillActiveListAdapter  extends RecyclerView.Adapter<FulfillActiv
                                             //if im a requestor and channel already exists
                                             if (membercount == gc.getMemberCount() && haveMyId) {
                                                 Log.d("victorious", "if im a requestor and channel already exists");
+                                                Log.d("victorious", "so the requestor is : " + rId);
                                                 Intent intent = new Intent(mContext, UserChatActivity.class);
                                                 intent.putExtra("channel_url", gc.getUrl());
                                                 activityStarted = true;
