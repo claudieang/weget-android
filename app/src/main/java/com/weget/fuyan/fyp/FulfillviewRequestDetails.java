@@ -25,6 +25,7 @@ import com.sendbird.android.GroupChannel;
 import com.sendbird.android.GroupChannelListQuery;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
+import com.weget.fuyan.fyp.Util.DateFormatter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,7 +65,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        SpannableString s = new SpannableString("Active Request");
+        SpannableString s = new SpannableString("");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         // Update the action bar title with the TypefaceSpan instance
@@ -89,7 +90,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
         productNameTV = (TextView)findViewById(R.id.product_name);
         productDescriptionTV = (TextView)findViewById(R.id.product_description);
-        requestorTV = (TextView)findViewById(R.id.requestor_name);
+        requestorTV = (TextView)findViewById(R.id.requestor_tv);
         addressTV = (TextView)findViewById(R.id.address_details);
         expiryTimeTV = (TextView)findViewById(R.id.time_detail);
         priceTV = (TextView)findViewById(R.id.price_detail);
@@ -97,15 +98,15 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         chatBtn = (Button)findViewById(R.id.chat_button);
 
         //apply typeface
-        productNameTV.setTypeface(typeFace);
+        //productNameTV.setTypeface(typeFace);
         productDescriptionTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
         requestorTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.address)).setTypeface(typeFace);
         addressTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.expirytime)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.expirytime)).setTypeface(typeFace);
         expiryTimeTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.price)).setTypeface(typeFace);
         priceTV.setTypeface(typeFaceLight);
         acceptRequestBtn.setTypeface(typeFace);
         chatBtn.setTypeface(typeFace);
@@ -318,10 +319,10 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             dialog.dismiss();
             if(result){
                 //itemPic.setImageResource(R.drawable.ordericon);
-                requestorTV.setText(requestorName );
+                requestorTV.setText("Requested by: "+requestorName );
                 productNameTV.setText(productName);
-                addressTV.setText(location);
-                expiryTimeTV.setText(endTime);
+                addressTV.setText(location + " " + postal);
+                expiryTimeTV.setText(DateFormatter.formatDate(endTime));
                 priceTV.setText("" + price);
                 productDescriptionTV.setText(requirement);
 
