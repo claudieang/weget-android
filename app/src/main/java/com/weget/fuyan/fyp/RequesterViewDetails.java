@@ -58,7 +58,7 @@ public class RequesterViewDetails extends AppCompatActivity {
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        SpannableString s = new SpannableString("Active Request");
+        SpannableString s = new SpannableString("");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         // Update the action bar title with the TypefaceSpan instance
@@ -92,13 +92,13 @@ public class RequesterViewDetails extends AppCompatActivity {
         //apply typeface
         productNameTV.setTypeface(typeFace);
         productDescriptionTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
         requestorTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.address)).setTypeface(typeFace);
         addressTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.expirytime)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.expirytime)).setTypeface(typeFace);
         expiryTimeTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.price)).setTypeface(typeFace);
         priceTV.setTypeface(typeFaceLight);
         editRequestBtn.setTypeface(typeFace);
         deleteRequestBtn.setTypeface(typeFace);
@@ -210,7 +210,7 @@ public class RequesterViewDetails extends AppCompatActivity {
                 productDescriptionTV.setText(request.getRequirement());
                 addressTV.setText(location + " " + postal);
                 expiryTimeTV.setText(DateFormatter.formatDate(endTime));
-                priceTV.setText("$" + price + "0");
+                priceTV.setText("" + price);
 
 
             }else {
