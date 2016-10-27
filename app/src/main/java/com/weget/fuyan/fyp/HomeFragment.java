@@ -64,6 +64,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by Claudie on 9/3/16.
@@ -85,7 +88,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     int myId;
     String URL;
 
-    RequestAdapter adapter;
+    RequestListAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
 
     //BOTTOM BAR TESTING
@@ -154,7 +157,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
         URL = getString(R.string.webserviceurl);
         TextView b1 = (TextView) view.findViewById(R.id.my_request_title);
-        Typeface typeFace=Typeface.createFromAsset(activity.getAssets(),"fonts/Roboto-Light.ttf");
+        Typeface typeFace = Typeface.createFromAsset(activity.getAssets(), "fonts/Roboto-Light.ttf");
         b1.setTypeface(typeFace);
     /*
             // Lookup the swipe container view
@@ -179,7 +182,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
         String username = pref.getString("username", null);
         String password = pref.getString("password", null);
-        myId = pref.getInt("id",-1);
+        myId = pref.getInt("id", -1);
         usernameText = "User: " + username;
         //text = (TextView) findViewById(R.id.textview2);
         //text.setText("Welcome, " + username + " ");
@@ -195,6 +198,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         authString = username + ":" + password;
 
         new getRequests().execute(authString);
+
+        adapter = new RequestListAdapter(getContext(), R.layout.request_popup);
 
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.active_request_list);
         mAdapter = new com.weget.fuyan.fyp.Recycler.RequestAllListAdapter(requestArrayList, myId);
@@ -252,7 +257,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         }
 
         client = new GoogleApiClient.Builder(activity).addApi(AppIndex.API).build();
-
 
 
     }
@@ -335,6 +339,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 requestArrayList.clear();
                 postalList.clear();
                 requestNameList.clear();
+                latList.clear();
+                lngList.clear();
 
                 try {
                     JSONArray jsoArray = new JSONArray(rst);
@@ -423,11 +429,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             mAdapter.notifyDataSetChanged();
             if (result) {
 
-                    try {
-                        addRequestMarkers();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    addRequestMarkers();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 Log.d("Print", "Value: " + requestArrayList.size());
 
@@ -445,52 +451,107 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     protected void addRequestMarkers() throws JSONException {
         //lat = 1.3790849;
         //lng = 103.955139;
+        HashMap<LatLng, ArrayList<Request>> markerMapList = new HashMap<>();
 
-        if(mMap != null) {
+
+        if (mMap != null) {
             for (int i = 0; i < latList.size(); i++) {
+                Log.d("Print", "latlist size is : " + latList.size());
+                Log.d("Print", "lnglist size is : " + lngList.size());
+                Log.d("Print", "requestArrayList size is : " + requestArrayList.size());
                 LatLng templatLng = new LatLng(latList.get(i), lngList.get(i));
-                Log.d("Print", "Value of latlist size: " + latList.get(i) + " lolol " + lngList.get(i));
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(templatLng);
-                markerOptions.title("Request: " + requestNameList.get(i));
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                Marker mkr = mMap.addMarker(markerOptions);
-                mkr.setTag(requestArrayList.get(i));
-                //markerList.add(mkr.getId());
-                //LatLng requestMarker = new LatLng(lat, lng);
-                //mMap.addMarker(new MarkerOptions().position(requestMarker).title("This is a request by: Shafiq"));
+                Request tempRequest = requestArrayList.get(i);
+
+                //check whether latlng overlaps
+                if (markerMapList.size() == 0) {
+
+                    ArrayList<Request> reqList = new ArrayList<>();
+                    reqList.add(tempRequest);
+                    markerMapList.put(templatLng, reqList);
+
+                } else if (markerMapList.containsKey(templatLng)) { //means that latlng already exists but is a different request
+
+                    ArrayList<Request> reqList = markerMapList.get(templatLng);
+                    reqList.add(tempRequest);
+                    markerMapList.put(templatLng, reqList);
+
+                } else { //if no latlng has existed yet
+
+                    ArrayList<Request> reqList = new ArrayList<>();
+                    reqList.add(tempRequest);
+                    markerMapList.put(templatLng, reqList);
+
+                }
             }
+            Log.d("Print", "markerMapList size is : " + markerMapList.size());
+
+            //create markers based on latlng
+            if (markerMapList.size() > 0) {
+                MarkerOptions markerOptions = new MarkerOptions();
+
+                Iterator iter = markerMapList.entrySet().iterator();
+
+                while (iter.hasNext()) {
+                    Map.Entry<LatLng, ArrayList<Request>> pair = (Map.Entry) iter.next();
+                    LatLng addLatLng = pair.getKey();
+                    ArrayList<Request> addReqs = pair.getValue();
+
+                    Log.d("Print", "addReqs size is : " + addReqs.size());
+
+                    markerOptions.position(addLatLng);
+                    if (addReqs.size() > 1) {
+                        markerOptions.title("Request: " + addReqs.size() + " Requests");
+                    } else {
+                        markerOptions.title("Request: " + addReqs.get(0).getProductName());
+                    }
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                    Marker mkr = mMap.addMarker(markerOptions);
+                    mkr.setTag(addReqs);
+                    Log.d("Print", "addReqs size is : " + addReqs.size());
+                }
+
+            }
+            //markerList.add(mkr.getId());
+            //LatLng requestMarker = new LatLng(lat, lng);
+            //mMap.addMarker(new MarkerOptions().position(requestMarker).title("This is a request by: Shafiq"));
+
 
             Log.d("geo1", "mMap is : " + mMap);
             //need to set marker as onclick
             mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                @Override
-                public void onInfoWindowClick(Marker marker) {
-                    Request request = (Request) marker.getTag();
-                    if(request != null){
-                        SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
-                        String username = pref.getString("username", null);
-                        String password = pref.getString("password", null);
-                        int id = pref.getInt("id",0);
-                        if(request.getRequestorId() == id) {
-                            //if the request viewed is mine
-                            Intent intent = new Intent(getContext(),RequesterViewDetails.class);
-                            Log.d("geo1", "As requestor, request marker has data of : " + request);
-                            intent.putExtra("selected_request",request);
-                            startActivity(intent);
+                  @Override
+                  public void onInfoWindowClick(Marker marker) {
 
-                        } else {
-                            //im a fulfiller
-                            Intent intent = new Intent(getContext(),FulfillviewRequestDetails.class);
-                            Log.d("geo1", "As fulfiller, request marker has data of : " + request);
-                            intent.putExtra("selected_request",request);
-                            startActivity(intent);
-                        }
+                      ArrayList<Request> reqList = (ArrayList<Request>) marker.getTag();
 
-                    }
 
-                }
-            });
+                      SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
+                      int id = pref.getInt("id", 0);
+
+                      if (reqList != null && reqList.size() == 1) {
+
+                          Request request = reqList.get(0);
+
+                          if (request.getRequestorId() == id) {
+                              //if the request viewed is mine
+                              Intent intent = new Intent(getContext(), RequesterViewDetails.class);
+
+                              startActivity(intent);
+                          }
+                      } else { //pop up with list of requests
+
+                          Intent intent = new Intent(getContext(), RequestPopUp.class);
+                          intent.putExtra("reqList", reqList);
+                          intent.putExtra("myId", myId);
+
+                          startActivity(intent);
+
+
+                      }
+
+                  }
+              }
+            );
             Log.d("geo1", "HIHIIHIHIHIIHIHI");
         }
     }
@@ -522,7 +583,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-
 
 
     }
@@ -668,7 +728,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
     }
 
-    public void refresh(){
+    public void refresh() {
         new getRequests().execute(authString);
     }
 }
