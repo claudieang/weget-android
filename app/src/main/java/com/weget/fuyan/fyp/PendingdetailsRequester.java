@@ -28,8 +28,8 @@ import java.util.ArrayList;
 public class PendingdetailsRequester extends AppCompatActivity {
 
     Request myRequest;
-    TextView productNameTV, requestorTV, addressTV, priceTV;
-    String productName, requestorName, address, err, username, password, authString, requestorIdS;
+    TextView productNameTV, requestorTV, addressTV, priceTV, productName1;
+    String productName, requestorName, address, err, username, password, authString, requestorIdS, productDescription;
     int myId, requestorId, myRequestId, postal, transactionId;
     double price;
     Button receivedBtn, disputeBtn;
@@ -48,8 +48,9 @@ public class PendingdetailsRequester extends AppCompatActivity {
         Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        toolbar.setTitle("Pending Request");
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+        getSupportActionBar().setElevation(0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -70,7 +71,9 @@ public class PendingdetailsRequester extends AppCompatActivity {
         address = myRequest.getLocation();
         price = myRequest.getPrice();
         postal = myRequest.getPostal();
+        productDescription = myRequest.getRequirement();
 
+        productName1 = (TextView)findViewById(R.id.product_name);
         productNameTV = (TextView)findViewById(R.id.product_description);
         requestorTV = (TextView)findViewById(R.id.requestor_name);
         addressTV = (TextView)findViewById(R.id.address_details);
@@ -78,13 +81,10 @@ public class PendingdetailsRequester extends AppCompatActivity {
         receivedBtn = (Button)findViewById(R.id.receve_button);
         disputeBtn = (Button)findViewById(R.id.dipute_button);
 
-        ((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);
+        productName1.setTypeface(typeFaceLight);
         productNameTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
         requestorTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
         addressTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
         priceTV.setTypeface(typeFaceLight);
 
         receivedBtn.setTypeface(typeFace);
@@ -188,9 +188,10 @@ public class PendingdetailsRequester extends AppCompatActivity {
                 if(fulfillerAccountList.size() == 1){
                     Account a = fulfillerAccountList.get(0);
                     requestorTV.setText(a.getUsername());
-                    productNameTV.setText(productName);
+                    productName1.setText(productName);
+                    productNameTV.setText(productDescription);
                     addressTV.setText(address + " " + postal);
-                    priceTV.setText("$" + price + "0");
+                    priceTV.setText("" + price + "0");
 
                 }
 

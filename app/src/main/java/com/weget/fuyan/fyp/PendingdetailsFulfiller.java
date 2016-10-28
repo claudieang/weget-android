@@ -27,10 +27,10 @@ import java.io.Serializable;
 public class PendingdetailsFulfiller extends AppCompatActivity {
 
     Request myRequest;
-    TextView productNameTV, requestorTV, addressTV, priceTV;
-    String productName, requestorName, address, err, username, password, authString, requestorIdS;
+    TextView productNameTV, requestorTV, addressTV, priceTV, productName1, newPriceTV;
+    String productName, requestorName, address, err, username, password, authString, requestorIdS,requirement;
     int myId, requestorId, myRequestId, postal, transactionId;
-    double price;
+    double price, newprice;
     Button deliveredBtn, disputeBtn;
     Context mContext;
     ProgressDialog dialog;
@@ -48,8 +48,9 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        toolbar.setTitle("Pending Request");
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+        getSupportActionBar().setElevation(0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -71,21 +72,25 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
         address = myRequest.getLocation();
         price = myRequest.getPrice();
         postal = myRequest.getPostal();
+        requirement = myRequest.getRequirement();
 
         productNameTV = (TextView)findViewById(R.id.product_description);
+        productName1 = (TextView)findViewById(R.id.product_name);
         requestorTV = (TextView)findViewById(R.id.requestor_name);
         addressTV = (TextView)findViewById(R.id.address_details);
         priceTV = (TextView)findViewById(R.id.price_detail);
+        newPriceTV = (TextView)findViewById(R.id.price_detail3);
         deliveredBtn = (Button)findViewById(R.id.delivered_button);
         disputeBtn = (Button)findViewById(R.id.dipute_button);
 
-        ((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);
+        productName1.setTypeface(typeFaceLight);
+        //((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);
         productNameTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
         requestorTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.address)).setTypeface(typeFace);
         addressTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
+        //((TextView)findViewById(R.id.price)).setTypeface(typeFace);
         priceTV.setTypeface(typeFaceLight);
 
         deliveredBtn.setTypeface(typeFace);
@@ -180,11 +185,14 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
             dialog.dismiss();
             if(result){
 
-
+                productName1.setText(productName);
                 requestorTV.setText(requestorName );
-                productNameTV.setText(productName);
+                productNameTV.setText(requirement);
                 addressTV.setText(address + " " + postal);
-                priceTV.setText("$" + price + "0");
+                priceTV.setText("" + price + "0");
+
+                newprice = (price-(price*0.029+0.3))*0.9;
+                newPriceTV.setText("$"+String.format("%.2f",newprice));
 
 
             }else {
