@@ -37,10 +37,10 @@ import java.util.List;
 
 public class FulfillviewRequestDetails extends AppCompatActivity {
 
-    TextView productNameTV, requestorTV, addressTV, expiryTimeTV, priceTV;
+    TextView productNameTV, requestorTV, addressTV, expiryTimeTV, priceTV, newPrice;
     String productName, requestorName, location, expiryTime, priceS, requestorIdS, requirement,
             startTime, endTime, status, username, password, authString, err;
-    double price;
+    double price,newprice;
     Button acceptRequestBtn, chatBtn;
     int requestId, requestorId, postal,duration,myId;
     boolean fulfilled = false;
@@ -63,7 +63,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         //toolbar.setTitle("Request Completed");
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
-
+        getSupportActionBar().setElevation(0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SpannableString s = new SpannableString("");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
@@ -88,6 +88,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         price = request.getPrice();
         status = request.getStatus();
 
+        newPrice = (TextView)findViewById(R.id.price_detail3);
         productNameTV = (TextView)findViewById(R.id.product_name);
         productDescriptionTV = (TextView)findViewById(R.id.product_description);
         requestorTV = (TextView)findViewById(R.id.requestor_tv);
@@ -324,6 +325,9 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 addressTV.setText(location + " " + postal);
                 expiryTimeTV.setText(DateFormatter.formatDate(endTime));
                 priceTV.setText("" + price);
+                newprice = (price-(price*0.029+0.3))*0.9;
+                newPrice.setText(String.format("%.2f",newprice));
+
                 productDescriptionTV.setText(requirement);
 
                 new getMyRequestFulfiller().execute(authString);

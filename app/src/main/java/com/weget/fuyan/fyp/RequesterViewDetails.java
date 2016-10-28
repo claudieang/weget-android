@@ -56,7 +56,7 @@ public class RequesterViewDetails extends AppCompatActivity {
         //toolbar.setTitle("Request Completed");
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
 
-
+        getSupportActionBar().setElevation(0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SpannableString s = new SpannableString("");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
