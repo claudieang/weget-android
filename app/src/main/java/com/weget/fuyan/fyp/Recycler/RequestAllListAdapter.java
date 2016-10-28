@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.weget.fuyan.fyp.FulfillviewRequestDetails;
@@ -20,7 +22,7 @@ import java.util.List;
 /**
  * Created by Claudie on 9/19/16.
  */
-public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAdapter.MyActiveViewHolder>{
+public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAdapter.MyActiveViewHolder> implements Filterable {
 
     private List<Request> requestsList;
     private int myId;
@@ -30,6 +32,11 @@ public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAd
     public RequestAllListAdapter(List<Request> requestsList, int myId) {
         this.requestsList = requestsList;
         this.myId = myId;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return null;
     }
 
     public class MyActiveViewHolder extends RecyclerView.ViewHolder{

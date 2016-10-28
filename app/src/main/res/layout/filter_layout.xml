@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bt_very_light_gray"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/radius_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/my_location"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:text="Radius"
+            android:drawableTint="@color/darkGray"
+            android:textColor="@color/darkGray"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/title"
+            android:layout_marginBottom="20dp"
+            android:background="@color/bt_very_light_gray" />
+
+
+            <TextView
+                android:id="@+id/min"
+                android:layout_below="@id/divider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/seekBar"
+                android:text="Min"
+                android:textColor="@color/darkGray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/max"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/seekBar"
+                android:layout_alignEnd="@+id/seekBar"
+                android:text="Max"
+                android:textColor="@color/darkGray"
+                android:textSize="14sp" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_below="@id/min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:max="200"
+                android:progress="60" />
+
+            <Switch
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/seekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enable radius"
+                android:textSize="14sp"
+                android:id="@+id/switch1"
+                android:textColor="@color/darkGray"
+                android:paddingRight="40dp"
+                android:paddingLeft="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="20dp"/>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/switch1"
+            android:background="@color/bt_very_light_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/radius_section"
+        android:id="@+id/price_section"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/title_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/money"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:text="Price Range"
+            android:drawableTint="@color/darkGray"
+            android:textColor="@color/darkGray"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/title_price"
+            android:layout_marginBottom="20dp"
+            android:background="@color/bt_very_light_gray" />
+
+
+        <TextView
+            android:id="@+id/min1"
+            android:layout_below="@id/divider3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/seekBar1"
+            android:text="Min"
+            android:textColor="@color/darkGray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/max1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/seekBar1"
+            android:layout_alignEnd="@+id/seekBar1"
+            android:text="Max"
+            android:textColor="@color/darkGray"
+            android:textSize="14sp" />
+
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_below="@id/min1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="25dp"
+            android:max="200"
+            android:progress="140" />
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/seekBar1"
+            android:layout_marginBottom="20dp"
+            android:background="@color/bt_very_light_gray" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/linear5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/linear4"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.2"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/delivered_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorGray"
+            android:text="Reset"
+            android:textColor="@color/darkGray"
+            android:foreground="?android:selectableItemBackground"
+            android:fontFamily="normal"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/dipute_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:fontFamily="normal"
+            android:text="Apply"
+            android:foreground="?android:selectableItemBackground"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -307,6 +307,11 @@ public class MainActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
+        if(id == R.id.action_filter) {
+            Intent intent = new Intent(MainActivity.this,FilterActivity.class);
+            startActivity(intent);
+        }
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
             //Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
