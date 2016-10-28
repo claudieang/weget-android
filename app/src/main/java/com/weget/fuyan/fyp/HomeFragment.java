@@ -261,10 +261,19 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
     }
 
-    public void fetchTimelineAsync(int page) {
-        // Send the network request to fetch the updated data
-        // 'client' here is an instance of Android Async HTTP
-        new getRequests().execute(authString);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                int result=data.getIntExtra("result", 0);
+                Log.d("returned result", result + "");
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Log.d("returned result", "NO SHIT HERE");
+                //Write your code if there's no result
+            }
+        }
     }
 
     @Override
@@ -731,4 +740,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     public void refresh() {
         new getRequests().execute(authString);
     }
+
+    public void filter(){
+        Intent i = new Intent(getContext(), FilterActivity.class);
+        startActivityForResult(i, 1);
+    }
+
 }

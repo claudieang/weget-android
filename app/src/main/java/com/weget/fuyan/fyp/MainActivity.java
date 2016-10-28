@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, "Home"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_shopping_basket_black_24dp, "My Requests"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_loupe_black_24dp, "Create Request"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_loupe_black_24dp, "Create Requests"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_directions_run_black_24dp, "My Fulfills"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_chat_black_24dp, "Chat"))
                 .setMode(BottomNavigationBar.MODE_SHIFTING)
@@ -308,8 +308,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_filter) {
-            Intent intent = new Intent(MainActivity.this,FilterActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(MainActivity.this,FilterActivity.class);
+//            //startActivity(intent);
+//            startActivityForResult(intent, 1);
+            homeFragment.filter();
         }
 
         //noinspection SimplifiableIfStatement
@@ -408,5 +410,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
 
 }
