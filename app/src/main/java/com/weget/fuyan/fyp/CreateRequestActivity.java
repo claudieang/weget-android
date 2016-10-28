@@ -17,10 +17,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +44,7 @@ public class CreateRequestActivity extends AppCompatActivity {
 
     final int ONE_MINUTE_IN_MILLIS = 60000;
     String productName, requestRequirement, addressLine, requestDurationS, postalCodeS, priceS,
-            startTime, endTime, err, username, password, authString;
+            startTime, endTime, err, username, password, authString, unit;
     int postalCode, requestDuration, requestorId;
     double price;
     EditText etProductName, etRequestRequirement, etPostalCode, etAddressLine, etRequestDuration, etPrice;
@@ -50,6 +55,7 @@ public class CreateRequestActivity extends AppCompatActivity {
     Context mContext;
     double latFromGPS;
     double lngFromGPS;
+    Spinner dropdown;
 
     private Toolbar toolbar;
     String URL;
@@ -316,6 +322,54 @@ public class CreateRequestActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
+        //dropdown list
+
+        //reason dropdown menu
+        dropdown = (Spinner)findViewById(R.id.spinner1);
+        String[] items = new String[]{"Hours", "Minutes"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items){
+
+
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+
+                ((TextView) v).setTextSize(16);
+                ((TextView) v).setTextColor(
+                        getResources().getColorStateList(R.color.black)
+                );
+
+                return v;
+            }
+
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView, parent);
+                v.setBackgroundResource(R.drawable.barbase);
+
+                ((TextView) v).setTextColor(
+                        getResources().getColorStateList(R.color.black)
+                );
+
+                ((TextView) v).setGravity(Gravity.CENTER);
+
+                return v;
+            }
+
+
+
+        };
+        dropdown.setAdapter(adapter);
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position,
+                               long id) {
+        dropdown.setSelection(position);
+        String selState = (String) dropdown.getSelectedItem();
+
+        unit = selState;
+
+
     }
 
     private class createRequest extends AsyncTask<String, Void, Boolean> {

@@ -31,10 +31,10 @@ import java.util.List;
 public class MyfulfillDetails extends AppCompatActivity {
 
     Request r;
-    TextView productNameTV, requestorNameTV, addressTV, priceTV;
+    TextView productNameTV, requestorNameTV, addressTV, priceTV, newPriceTV, productName1;
     Button chatBtn;
-    String productName, requestorName, address, username, password, authString, requestorIdS, err;
-    double price;
+    String productName, requestorName, address, username, password, authString, requestorIdS, err, requirement;
+    double price, newprice;
     int requestId, myId, requestorId;
     Context mContext;
     String URL;
@@ -46,12 +46,12 @@ public class MyfulfillDetails extends AppCompatActivity {
 
         Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
         Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
-        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        toolbar.setTitle("Fulfill Details");
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+        getSupportActionBar().setElevation(0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         URL = getString(R.string.webserviceurl);
@@ -69,19 +69,20 @@ public class MyfulfillDetails extends AppCompatActivity {
         productName = r.getProductName();
         address = r.getLocation();
         price = r.getPrice();
+        requirement = r.getRequirement();
 
+        productName1 = (TextView)findViewById(R.id.product_name);
         productNameTV = (TextView)findViewById(R.id.product_description);
         requestorNameTV = (TextView)findViewById(R.id.requestor_name);
         addressTV = (TextView)findViewById(R.id.address_details);
         priceTV = (TextView)findViewById(R.id.price_detail);
+        newPriceTV = (TextView)findViewById(R.id.price_detail3);
 
-        ((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);
+        productName1.setTypeface(typeFaceLight);
         productNameTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
         requestorNameTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
         addressTV.setTypeface(typeFaceLight);
-        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
+
         priceTV.setTypeface(typeFaceLight);
         ((Button)findViewById(R.id.chat_button)).setTypeface(typeFace);
 
@@ -284,11 +285,14 @@ public class MyfulfillDetails extends AppCompatActivity {
             dialog.dismiss();
             if(result){
 
-
-                requestorNameTV.setText(requestorName );
-                productNameTV.setText(productName);
+                productName1.setText(productName);
+                requestorNameTV.setText(requestorName);
+                productNameTV.setText(requirement);
                 addressTV.setText(address);
-                priceTV.setText("" + price);
+                priceTV.setText("" + price+"0");
+
+                newprice = (price-(price*0.029+0.3))*0.9;
+                newPriceTV.setText("$"+String.format("%.2f",newprice));
 
 
             }else {

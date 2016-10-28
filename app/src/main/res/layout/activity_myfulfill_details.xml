@@ -3,35 +3,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bt_very_light_gray"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <include
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar_blank"></include>
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/pic"
-        android:background="@drawable/mainfulfillbg"/>
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <ImageView
+            android:id="@+id/pic"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/active_request"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Request"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:layout_below="@+id/pic"
+            android:paddingBottom="5dp"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/linear1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/bt_very_light_gray"
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/linear2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linear1"
-            android:background="@drawable/barbase"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:layout_weight="1">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -40,177 +62,192 @@
                 android:drawableLeft="@drawable/product"
                 android:drawablePadding="8dp"
                 android:textSize="18sp"
-                android:gravity="center_vertical"
                 android:id="@+id/product_name"
+                android:gravity="center_vertical"
                 android:textColor="@color/black"
+                android:paddingLeft="8dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 />
-
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:id="@+id/product_description"
                 android:layout_below="@+id/product_name"
+                android:textColor="@color/darkGray"
                 android:layout_marginBottom="2dp"
-                android:layout_marginLeft="44dp"
+                android:layout_marginLeft="48dp"
                 android:layout_weight="1"
-                android:textStyle="italic"
-                android:textColor="@color/darkGray"/>
+                android:textStyle="italic" />
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGray"
+                android:id="@+id/divider"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/linear3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linear2"
-            android:layout_below="@+id/linear1"
-            android:background="@drawable/barbase"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1">
+            android:layout_below="@+id/linear2"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:text="Requested by"
                 android:textSize="18sp"
                 android:drawableLeft="@drawable/face_icon"
-                android:id="@+id/requestor_tv"
-                android:layout_marginTop="2dp"
-                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:id="@+id/requestor_name"
+                android:paddingLeft="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
                 android:drawablePadding="8dp"
                 android:textColor="@color/black"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:id="@+id/requestor_name"
-                android:layout_below="@+id/requestor_tv"
-                android:layout_marginLeft="44dp"
-                android:layout_marginBottom="2dp"
-                android:layout_weight="1"
-                android:textStyle="italic"
-                android:textColor="@color/darkGray"
-                />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGray"
+                android:id="@+id/divider1"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/linear4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/barbase"
-            android:id="@+id/linear3"
-            android:layout_below="@+id/linear2"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1">
+            android:layout_below="@+id/linear3"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:text="Collection Address"
                 android:textSize="18sp"
-                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:drawableLeft="@drawable/my_location"
-                android:id="@+id/address"
-                android:layout_marginTop="2dp"
+                android:id="@+id/address_details"
+                android:paddingLeft="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
                 android:drawablePadding="8dp"
-                android:layout_marginLeft="5dp"
                 android:textColor="@color/black"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="italic"
-                android:id="@+id/address_details"
-                android:layout_below="@+id/address"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="44dp"
-                android:layout_weight="1"
-                android:textColor="@color/darkGray"/>
-            </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGray"
+                android:id="@+id/divider2"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+        </LinearLayout>
+
+
 
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/linear6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/barbase"
-            android:id="@+id/linear4"
-            android:layout_below="@+id/linear3"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1">
-
+            android:layout_below="@+id/linear4"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:text="Price"
-                android:id="@+id/price"
+                android:id="@+id/price_detail"
                 android:textSize="18sp"
+                android:gravity="center_vertical"
                 android:drawableLeft="@drawable/money"
                 android:layout_marginTop="2dp"
                 android:drawablePadding="8dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
+                android:paddingLeft="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:textColor="@color/black"/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGray"
+                android:id="@+id/divider4"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/linear7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear6"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Actual Money you will get from this request:"
+                android:textStyle="italic"
+                android:id="@+id/price_detail2"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="2dp"
+                android:drawablePadding="8dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="11.50"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="italic"
-                android:id="@+id/price_detail"
-                android:layout_marginLeft="44dp"
-                android:layout_marginBottom="2dp"
-                android:layout_weight="1"
-                android:textColor="@color/darkGray"
-                android:layout_below="@+id/price" />
+                android:textStyle="bold"
+                android:id="@+id/price_detail3"
+                android:textSize="20sp"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="11.50"
+                android:textColor="@color/darkred"
+                android:layout_below="@+id/price_detail2"
+                android:layout_toEndOf="@+id/price_detail2"
+                android:layout_marginStart="42dp" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linear5"
-            android:layout_below="@+id/linear4"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="5dp"
-            android:layout_weight="0.2">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="CHAT"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:fontFamily="normal"
-                android:foreground="?android:selectableItemBackground"
-                android:id="@+id/chat_button"
-                android:background="@color/colorPrimary" />
-        </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linear8"
+        android:layout_below="@+id/linear7"
+        android:layout_alignParentStart="true"
+        android:layout_weight="0.1">
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="CHAT"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="normal"
+            android:foreground="?android:selectableItemBackground"
+            android:id="@+id/chat_button"
+            android:background="@color/colorPrimary" />
+    </LinearLayout>
 </LinearLayout>
+
+
 
 
 

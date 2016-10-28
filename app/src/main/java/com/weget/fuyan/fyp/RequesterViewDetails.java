@@ -90,7 +90,7 @@ public class RequesterViewDetails extends AppCompatActivity {
         deleteRequestBtn = (Button)findViewById(R.id.delete_button);
 
         //apply typeface
-        productNameTV.setTypeface(typeFace);
+        productNameTV.setTypeface(typeFaceLight);
         productDescriptionTV.setTypeface(typeFaceLight);
         //((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
         requestorTV.setTypeface(typeFaceLight);
@@ -210,7 +210,7 @@ public class RequesterViewDetails extends AppCompatActivity {
                 productDescriptionTV.setText(request.getRequirement());
                 addressTV.setText(location + " " + postal);
                 expiryTimeTV.setText(DateFormatter.formatDate(endTime));
-                priceTV.setText("" + price);
+                priceTV.setText("" + price+"0");
 
 
             }else {
