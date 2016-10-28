@@ -127,7 +127,7 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
 //        adapter = new RequestAdapter(activity.getApplicationContext(),R.layout.row_layout);
 //        myFulfillRequestLV.setAdapter(adapter);
 
-        new getRequests().execute(authString);
+        //new getRequests().execute(authString);
 
 //        myFulfillRequestLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -206,12 +206,13 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
             return ret;
         }
     }
-
+/*
     public void fetchTimelineAsync(int page) {
         // Send the network request to fetch the updated data
         // 'client' here is an instance of Android Async HTTP
         new getRequests().execute(authString);
     }
+    */
 
     private class getMyFulfill extends AsyncTask<String, Void, Boolean> {
         ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);

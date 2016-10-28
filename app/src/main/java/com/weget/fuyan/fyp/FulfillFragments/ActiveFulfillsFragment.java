@@ -51,8 +51,6 @@ public class ActiveFulfillsFragment extends Fragment {
     Context mContext;
     String err, authString, username, password;
     ArrayList<Request> myFulfillRequestArrayList = new ArrayList<>();
-    ArrayList<Fulfill> myFulfillList  = new ArrayList<>();
-    ArrayList<Request> myFulfillRequestList = new ArrayList<>();
     View view;
     Activity activity;
     private RecyclerViewEmptySupport recyclerView;
@@ -92,7 +90,7 @@ public class ActiveFulfillsFragment extends Fragment {
 
 
         authString  = username + ":" + password;
-        new getRequests(true).execute(authString);
+        new getMyFulfills(true).execute(authString);
 
         swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
         swipeRefresh.setOnRefreshListener(
@@ -100,7 +98,7 @@ public class ActiveFulfillsFragment extends Fragment {
                     @Override
                     public void onRefresh() {
 
-                        new getRequests(false).execute(authString);
+                        new getMyFulfills(false).execute(authString);
 
                     }
                 }
@@ -122,6 +120,8 @@ public class ActiveFulfillsFragment extends Fragment {
                 })
         );
     }
+
+    /*
 
     private class getRequests extends AsyncTask<String, Void, Boolean> {
         Boolean showDialog;
@@ -243,6 +243,7 @@ public class ActiveFulfillsFragment extends Fragment {
 
         }
     }
+    */
 
 
 
@@ -254,9 +255,18 @@ public class ActiveFulfillsFragment extends Fragment {
             this.showDialog = showDialog;
         }
 
+
         @Override
         protected void onPreExecute() {
-
+            if(showDialog) {
+                dialog = new ProgressDialog(activity, R.style.MyTheme);
+                dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(false);
+                if (!activity.isFinishing()) {
+                    dialog.show();
+                }
+            }
         }
 
         @Override
@@ -265,7 +275,7 @@ public class ActiveFulfillsFragment extends Fragment {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = URL + "account/" + myId+"/fulfill/request/";
+            String url = URL + "account/" + myId+"/fulfill/request/active/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -274,7 +284,7 @@ public class ActiveFulfillsFragment extends Fragment {
             } else {
 
                 myFulfillRequestArrayList.clear();
-                myFulfillRequestList.clear();
+                //myFulfillRequestList.clear();
 
                 try {
                     JSONArray jsoArray = new JSONArray(rst);
@@ -323,30 +333,11 @@ public class ActiveFulfillsFragment extends Fragment {
             }
 
             if(result){
-                boolean check = false;
+                //boolean check = false;
 
 
                 //adapter.clear();
-                if(myFulfillRequestArrayList != null && !myFulfillRequestArrayList.isEmpty()){
 
-                    for(Request r: myFulfillRequestArrayList){
-                        int rId = r.getId();
-                        for(Fulfill f : myFulfillList){
-                            if (f.getRequestId() == rId){
-                                check = true;
-                            }
-                        }
-
-                        if(check) {
-
-                            //adapter.add(r);
-                            myFulfillRequestList.add(r);
-                        }
-
-                        check = false;
-
-                    }
-                }
                 Log.d("Print", "Value: " + myFulfillRequestArrayList.size());
                 // Now we call setRefreshing(false) to signal refresh has finished
                 //swipeContainer.setRefreshing(false);
