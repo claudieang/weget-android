@@ -99,7 +99,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         chatBtn = (Button)findViewById(R.id.chat_button);
 
         //apply typeface
-        //productNameTV.setTypeface(typeFace);
+        productNameTV.setTypeface(typeFaceLight);
         productDescriptionTV.setTypeface(typeFaceLight);
         //((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
         requestorTV.setTypeface(typeFaceLight);
@@ -324,7 +324,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 productNameTV.setText(productName);
                 addressTV.setText(location + " " + postal);
                 expiryTimeTV.setText(DateFormatter.formatDate(endTime));
-                priceTV.setText("" + price);
+                priceTV.setText("" + price+"0");
                 newprice = (price-(price*0.029+0.3))*0.9;
                 newPrice.setText(String.format("%.2f",newprice));
 
