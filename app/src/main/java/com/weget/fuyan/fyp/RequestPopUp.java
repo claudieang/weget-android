@@ -35,7 +35,7 @@ public class RequestPopUp extends Activity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
-
+    
 
         ArrayList<Request> reqList = (ArrayList<Request>) getIntent().getSerializableExtra("reqList");
         int myId = (Integer) getIntent().getSerializableExtra("myId");

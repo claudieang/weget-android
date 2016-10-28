@@ -4,10 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -40,9 +44,12 @@ public class CreateRequestActivity extends AppCompatActivity {
     double price;
     EditText etProductName, etRequestRequirement, etPostalCode, etAddressLine, etRequestDuration, etPrice;
     Button createRequestBtn;
-    ImageButton getAddressBtn;
+    Button getAddressBtn;
+    ImageButton getCurrLocBtn;
     Geocoder geocoder;
     Context mContext;
+    double latFromGPS;
+    double lngFromGPS;
 
     private Toolbar toolbar;
     String URL;
@@ -53,9 +60,9 @@ public class CreateRequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_request);
 
 
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
-        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
-        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
 
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
         //font
@@ -80,12 +87,13 @@ public class CreateRequestActivity extends AppCompatActivity {
         etAddressLine = (EditText) findViewById(R.id.address_line_txt);
         etRequestDuration = (EditText) findViewById(R.id.request_duration_txt);
         etPrice = (EditText) findViewById(R.id.request_price_txt);
-        getAddressBtn = (ImageButton) findViewById(R.id.get_address_btn);
+        getAddressBtn = (Button) findViewById(R.id.get_address_btn);
+        getCurrLocBtn = (ImageButton) findViewById(R.id.get_curr_location_btn);
         createRequestBtn = (Button) findViewById(R.id.create_request_btn);
         Button done_Btn = (Button) findViewById(R.id.create_btn);
         ImageButton cancel_Btn = (ImageButton) findViewById(R.id.close_btn);
 
-        ((TextView)findViewById(R.id.request_title)).setTypeface(typeFaceBold);
+        ((TextView) findViewById(R.id.request_title)).setTypeface(typeFaceBold);
         etProductName.setTypeface(typeFace);
         etRequestRequirement.setTypeface(typeFace);
         etPostalCode.setTypeface(typeFace);
@@ -166,6 +174,71 @@ public class CreateRequestActivity extends AppCompatActivity {
             }
         });
 
+        getCurrLocBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // instantiate the location manager, note you will need to request permissions in your manifest
+                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                // get the last know location from your location manager.
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER); //doesnt seem to work
+                Log.d("Print","location data is : " + location);
+                if(location ==  null){
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    Log.d("Print","location data is : " + location);
+                }
+                // now get the lat/lon from the location and do something with it.
+
+                //https://maps.google.com/maps/api/geocode/json?latlng=1.298775,103.848947&key=AIzaSyDNbh3U6jmAeRGQogCmt6EcRXmFnYxbec4
+
+//                String head = "https://maps.google.com/maps/api/geocode/json?";
+//                String base = ""+location.getLatitude()+","+location.getLongitude();
+//                String end = "&key=AIzaSyDNbh3U6jmAeRGQogCmt6EcRXmFnYxbec4";
+
+                try {
+                    List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    Log.d("Print","address list size is : " + address.size());
+
+                    if (address != null && !address.isEmpty()) {
+
+                        String completeAddress = address.get(0).getAddressLine(0);
+                        String city = address.get(0).getLocality();
+                        String state = address.get(0).getAdminArea();
+                        String country = address.get(0).getCountryName();
+                        String postalCode = address.get(0).getPostalCode();
+                        String knownName = address.get(0).getFeatureName();
+
+                        //Log.d("Address line: ", completeAddress);
+                        //Log.d("City: ", city);
+                        //Log.d("State: ", state);
+                        //Log.d("Country: ", country);
+                        //Log.d("Postal Code: ", postalCode);
+
+                        String addressLineResult = completeAddress + ", " + country;
+                        etAddressLine.setText(addressLineResult);
+                        etPostalCode.setText(postalCode);
+                        Log.d("Print", "addressLineResult : " + addressLineResult);
+                        Log.d("Print", "postalCode : " + postalCode);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
         done_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,7 +261,7 @@ public class CreateRequestActivity extends AppCompatActivity {
                             if (addressLine != null && addressLine.trim().length() > 0) {
 
                                 if (requestDurationS != null && requestDurationS.trim().length() > 0) {
-                                    requestDuration = Integer.parseInt(requestDurationS);
+                                    requestDuration = Integer.parseInt(requestDurationS)*60;
 
                                     if (priceS != null && priceS.trim().length() > 0) {
                                         price = Double.parseDouble(priceS);
@@ -318,6 +391,17 @@ public class CreateRequestActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
             }
 
+        }
+    }
+
+    public void onLocationChanged(Location location) {
+        updateGPSCoordinates(location);
+    }
+
+    public void updateGPSCoordinates(Location location) {
+        if (location != null) {
+            latFromGPS = location.getLatitude();
+            lngFromGPS = location.getLongitude();
         }
     }
 
