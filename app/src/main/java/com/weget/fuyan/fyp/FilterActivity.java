@@ -8,15 +8,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.Toast;
 
 /**
  * Created by Claudie on 10/28/16.
  */
 public class FilterActivity extends AppCompatActivity {
-    private SeekBar priceBar;
+    private SeekBar priceBar, radiusBar;
     private Button resetBtn, applyBtn;
     private int result;
+    private static int lastValue;
+    private static boolean lastSwitch;
+    private static boolean hasChanged;
+    private Switch radiusSwitch;
+    private boolean switchEnabled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +32,16 @@ public class FilterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Filter");
 
-        priceBar=(SeekBar)findViewById(R.id.seekBar1);
-        priceBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        radiusBar=(SeekBar)findViewById(R.id.seekBar);
+
+        //radiusBar.setProgress(lastValue);
+
+        radiusBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressChangedValue = 0;
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progressChangedValue = progress;
+                lastValue = progress;
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -44,6 +54,12 @@ public class FilterActivity extends AppCompatActivity {
                 result = progressChangedValue;
             }
         });
+
+        radiusSwitch = (Switch) findViewById(R.id.switch1);
+        if(hasChanged){
+            radiusSwitch.setChecked(lastSwitch);
+        }
+
 
         resetBtn = (Button) findViewById(R.id.reset_button);
         applyBtn = (Button) findViewById(R.id.apply_button);
@@ -60,8 +76,12 @@ public class FilterActivity extends AppCompatActivity {
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hasChanged = true;
+                lastSwitch = radiusSwitch.isChecked();
+
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("result",result);
+                returnIntent.putExtra("radius",result);
+                returnIntent.putExtra("switch", radiusSwitch.isChecked());
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
             }

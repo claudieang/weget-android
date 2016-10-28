@@ -51,6 +51,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -141,6 +142,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     Activity activity;
     private RecyclerViewEmptySupport recyclerView;
     private RequestAllListAdapter mAdapter;
+    private LatLng lastLocation;
+    private Circle circle;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_screen, container, false);
@@ -266,8 +269,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                int result=data.getIntExtra("result", 0);
+                int result=data.getIntExtra("radius", 0);
+                boolean switcher = data.getBooleanExtra("switch", true);
                 Log.d("returned result", result + "");
+
+                circle.remove();
+                if(switcher){
+                    drawCircle(lastLocation, result);
+                }
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Log.d("returned result", "NO SHIT HERE");
@@ -643,8 +652,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 //
         //Create Radius
         Log.d("circle", "going to draw circle");
-
-        drawCircle(new LatLng(location.getLatitude(), location.getLongitude()));
+        lastLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        drawCircle(lastLocation, 500);
 
 
         //move camera to marker
@@ -712,7 +721,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         }
     }
 
-    private void drawCircle(LatLng point) {
+    private void drawCircle(LatLng point, int radius) {
 
         // Instantiating CircleOptions to draw a circle around the marker
         CircleOptions circleOptions = new CircleOptions();
@@ -721,7 +730,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         circleOptions.center(point);
 
         // Radius of the circle
-        circleOptions.radius(500);
+        circleOptions.radius(radius);
 
         // Border color of the circle
         circleOptions.strokeColor(Color.RED);
@@ -733,7 +742,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         circleOptions.strokeWidth(3);
 
         // Adding the circle to the GoogleMap
-        mMap.addCircle(circleOptions);
+        circle = mMap.addCircle(circleOptions);
 
     }
 

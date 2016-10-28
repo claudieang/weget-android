@@ -308,10 +308,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_filter) {
-//            Intent intent = new Intent(MainActivity.this,FilterActivity.class);
-//            //startActivity(intent);
-//            startActivityForResult(intent, 1);
             homeFragment.filter();
+            return true;
         }
 
         //noinspection SimplifiableIfStatement
