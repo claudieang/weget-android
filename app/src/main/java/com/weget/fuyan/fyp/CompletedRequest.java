@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +32,9 @@ import java.util.List;
 public class CompletedRequest extends AppCompatActivity {
 
     Request r;
-    TextView productNameTV, requestorNameTV, addressTV, priceTV, requestorTitleTV, title, date, fulfillerName, details;
+    RelativeLayout transferredLayout;
+    TextView productNameTV, requestorNameTV, addressTV, priceTV, requestorTitleTV,
+            title, date, fulfillerName, details, transferTV;
     String productName, requestorName, address, username, password, authString, requestorIdS, err;
     double price;
     int requestId, myId, requestorId, postal;
@@ -38,6 +42,7 @@ public class CompletedRequest extends AppCompatActivity {
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
     String URL;
     Account a;
+    boolean credited;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,7 @@ public class CompletedRequest extends AppCompatActivity {
 
 
         r = (Request)getIntent().getSerializableExtra("completed_request");
+        credited = (Boolean)getIntent().getBooleanExtra("credited_status",false);
         requestorId = r.getRequestorId();
         requestorIdS = String.valueOf(requestorId);
         requestId = r.getId();
@@ -84,6 +90,16 @@ public class CompletedRequest extends AppCompatActivity {
         addressTV = (TextView)findViewById(R.id.address);
         priceTV = (TextView)findViewById(R.id.price);
         details = (TextView)findViewById(R.id.info);
+        transferTV = (TextView)findViewById(R.id.transferred);
+        transferredLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
+
+        if(credited){
+            transferredLayout.setBackgroundColor(Color.parseColor("#45B39D"));
+
+        }else{
+            transferTV.setVisibility(View.GONE);
+            transferredLayout.setVisibility(View.GONE);
+        }
 
 
 //        ((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);

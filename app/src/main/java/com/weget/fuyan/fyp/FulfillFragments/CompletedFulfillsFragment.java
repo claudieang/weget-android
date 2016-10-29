@@ -51,6 +51,7 @@ public class CompletedFulfillsFragment extends Fragment {
     Context mContext;
     String err, authString, username, password;
     ArrayList<Request> myFulfillRequestArrayList = new ArrayList<>();
+    ArrayList<Boolean> creditedStatusList = new ArrayList<>();
     //ArrayList<Fulfill> myFulfillList  = new ArrayList<>();
     //ArrayList<Request> myFulfillRequestList = new ArrayList<>();
     View view;
@@ -113,8 +114,10 @@ public class CompletedFulfillsFragment extends Fragment {
                     @Override public void onItemClick(View view, int position) {
                         // do whatever
                         Request rq = myFulfillRequestArrayList.get(position);
+                        boolean credited = creditedStatusList.get(position);
                         Intent intent = new Intent(getActivity(), CompletedRequest.class);
                         intent.putExtra("completed_request",(Serializable) rq);
+                        intent.putExtra("credited_status",credited);
                         startActivity(intent);
                     }
 
@@ -297,12 +300,14 @@ public class CompletedFulfillsFragment extends Fragment {
                         String endTime = jso.getString("endTime");
                         double price = jso.getDouble("price");
                         String status = jso.getString("status");
+                        boolean credited = jso.getBoolean("credited");
 
 
                         if(status.equals("completed") || status.equals("dispute")) {
                             Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
                                     postal, startTime, endTime, duration, price, status);
                             myFulfillRequestArrayList.add(request);
+                            creditedStatusList.add(credited);
                         }
 
 
