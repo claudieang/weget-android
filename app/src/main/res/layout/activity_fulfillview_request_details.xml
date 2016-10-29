@@ -270,7 +270,7 @@
             android:textColor="@color/white"
             android:fontFamily="normal"
             android:foreground="?android:selectableItemBackground"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorDarkGray"
             android:layout_weight="1"
             android:typeface="normal" />
 
@@ -283,7 +283,7 @@
             android:fontFamily="normal"
             android:textColor="@color/white"
             android:foreground="?android:selectableItemBackground"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:layout_weight="1"
             android:typeface="normal" />
     </LinearLayout>
