@@ -100,6 +100,7 @@ public class CreateRequestActivity extends AppCompatActivity {
         ImageButton cancel_Btn = (ImageButton) findViewById(R.id.close_btn);
 
         ((TextView) findViewById(R.id.request_title)).setTypeface(typeFaceBold);
+        ((TextView)findViewById(R.id.request_title)).setTypeface(typeFaceBold);
         etProductName.setTypeface(typeFace);
         etRequestRequirement.setTypeface(typeFace);
         etPostalCode.setTypeface(typeFace);
@@ -279,10 +280,18 @@ public class CreateRequestActivity extends AppCompatActivity {
 
                                         Calendar date = Calendar.getInstance();
                                         long t = date.getTimeInMillis();
-                                        Date afterAddingTenMins = new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
-                                        endTime = sdf.format(afterAddingTenMins);
-
-                                        Log.d("End Time: ", endTime);
+                                        unit = dropdown.getSelectedItem().toString();
+                                        if(unit!= null && unit.equals("Minutes")) {
+                                            Date afterAddingTenMins = new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
+                                            endTime = sdf.format(afterAddingTenMins);
+                                            Log.d("Unit: === ", unit);
+                                        }
+                                        if (unit != null && unit.equals("Hours")){
+                                            Date afterAddingTenMins = new Date(t + (requestDuration * 60 * ONE_MINUTE_IN_MILLIS));
+                                            endTime = sdf.format(afterAddingTenMins);
+                                            Log.d("Unit: === ", unit);
+                                        }
+                                        //Log.d("End Time: ", endTime);
 
                                         authString = username + ":" + password;
                                         new createRequest().execute(authString);
@@ -365,7 +374,7 @@ public class CreateRequestActivity extends AppCompatActivity {
     public void onItemSelected(AdapterView<?> parent, View view, int position,
                                long id) {
         dropdown.setSelection(position);
-        String selState = (String) dropdown.getSelectedItem();
+        String selState = (String) dropdown.getSelectedItem().toString();
 
         unit = selState;
 

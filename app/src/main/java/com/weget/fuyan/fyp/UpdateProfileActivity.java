@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class UpdateProfileActivity extends AppCompatActivity {
@@ -14,7 +15,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
     TextView updateTitle;
     ImageButton updatePasswordBtn, updateContactBtn,uploadImageBtn;
     String URL;
-
 
 
     @Override
@@ -40,6 +40,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
         uploadImageBtn = (ImageButton)findViewById(R.id.upload_image_btn);
         updateTitle = (TextView)findViewById(R.id.update_username);
         updateTitle.setText(username);
+
+
 
         updatePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
