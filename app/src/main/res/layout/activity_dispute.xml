@@ -10,6 +10,35 @@
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar_blank"></include>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:paddingBottom="30dp">
+
+        <ImageView
+            android:id="@+id/pic"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/dispute"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/maintitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Dispute Request"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_below="@+id/pic"
+            android:paddingBottom="5dp"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
 
 
     <LinearLayout
@@ -27,9 +56,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="WHY ARE YOU REPORTING THIS REQUEST? "
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/darkGray"
+                android:text="Why are you reporting this request? "
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:id="@+id/title"
                 />
@@ -45,6 +74,9 @@
                 android:id="@+id/spinner1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@android:drawable/btn_dropdown"
                 android:spinnerMode="dropdown" />
         </LinearLayout>
@@ -57,12 +89,14 @@
             android:orientation="vertical">
 
             <EditText
-                android:background="@drawable/barbase"
+                android:background="@drawable/textinputborder"
                 android:textColor="@color/black"
                 android:id="@+id/dipute_form"
                 android:layout_height="wrap_content"
                 android:hint=" Feedback Details ..."
-                android:inputType="textMultiLine"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:gravity="top"
                 android:lines="10"
                 android:layout_width="fill_parent"
                 android:layout_marginTop="15dp"
@@ -90,6 +124,7 @@
                 android:fontFamily="normal"
                 android:text="SUBMIT"
                 android:textSize="16sp"
+                android:textColor="@color/white"
                 android:background="@color/colorPrimary"
                 android:id="@+id/submit" />
 

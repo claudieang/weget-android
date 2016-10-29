@@ -308,7 +308,7 @@ public class CompletedRequest extends AppCompatActivity {
                     date.setText(DateFormatter.formatDateFull(r.getStartTime()));
                     productNameTV.setText(productName);
                     fulfillerName.setText(a.getUsername());
-                    priceTV.setText("$" + price + "0");
+                    priceTV.setText("" + price + "0");
                     addressTV.setText(address + " " + postal);
                     details.setText(r.getRequirement());
 
