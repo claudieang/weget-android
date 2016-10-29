@@ -535,7 +535,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                           if (request.getRequestorId() == id) {
                               //if the request viewed is mine
                               Intent intent = new Intent(getContext(), RequesterViewDetails.class);
-
+                              intent.putExtra("selected_request", request);
                               startActivity(intent);
                           }
                       } else { //pop up with list of requests

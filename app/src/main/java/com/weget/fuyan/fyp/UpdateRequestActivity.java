@@ -13,11 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +54,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
     Context mContext;
     Request rq;
     CheckBox cb;
+    Spinner dropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +101,40 @@ public class UpdateRequestActivity extends AppCompatActivity {
         etAddressLine.setText(rq.getLocation());
         etRequestDuration.setText(String.valueOf(rq.getDuration()));
         etPrice.setText(String.valueOf(rq.getPrice()));
+
+        dropdown = (Spinner)findViewById(R.id.spinner1);
+        String[] items = new String[]{"Hours", "Minutes"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items){
+
+
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+
+                ((TextView) v).setTextSize(16);
+                ((TextView) v).setTextColor(
+                        getResources().getColorStateList(R.color.black)
+                );
+
+                return v;
+            }
+
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView, parent);
+                v.setBackgroundResource(R.drawable.barbase);
+
+                ((TextView) v).setTextColor(
+                        getResources().getColorStateList(R.color.black)
+                );
+
+                ((TextView) v).setGravity(Gravity.CENTER);
+
+                return v;
+            }
+
+
+
+        };
+        dropdown.setAdapter(adapter);
 
 
         getAddressBtn.setOnClickListener(new View.OnClickListener() {
@@ -183,18 +222,28 @@ public class UpdateRequestActivity extends AppCompatActivity {
 
                                         //check if time should be updated
                                         if(cb.isChecked()) {
+
+                                            String unit = dropdown.getSelectedItem().toString();
                                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                             Date now = new Date();
                                             startTime = sdf.format(now);
 
                                             Log.d("Start Time: ", startTime);
 
+
                                             Calendar date = Calendar.getInstance();
                                             long t = date.getTimeInMillis();
-                                            Date afterAddingTenMins = new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
-                                            endTime = sdf.format(afterAddingTenMins);
+                                            if(unit != null && unit.equals("Minutes")) {
+                                                Date afterAddingTenMins = new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
+                                                endTime = sdf.format(afterAddingTenMins);
+                                                Log.d("End Time: ", endTime);
+                                            }
+                                            if(unit != null && unit.equals("Hours")){
+                                                Date afterAddingTenMins = new Date(t + (requestDuration * 60 * ONE_MINUTE_IN_MILLIS));
+                                                endTime = sdf.format(afterAddingTenMins);
+                                                Log.d("End Time: ", endTime);
+                                            }
 
-                                            Log.d("End Time: ", endTime);
 
                                             authString = username + ":" + password;
                                             new updateRequest().execute(authString);

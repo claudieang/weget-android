@@ -16,6 +16,17 @@
         android:background="#e8e8e8"
         android:layout_below="@+id/tool_bar">
 
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
+            android:layout_alignTop="@+id/request_duration_txt"
+            android:layout_alignBottom="@+id/request_duration_txt"
+            android:layout_toEndOf="@+id/request_duration_txt"
+            android:layout_marginRight="5dp"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
