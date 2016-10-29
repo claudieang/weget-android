@@ -9,11 +9,9 @@ import android.util.Log;
 import android.widget.ListView;
 
 import com.weget.fuyan.fyp.Recycler.DividerItemDecoration;
-import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 import com.weget.fuyan.fyp.Recycler.RequestAllListAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by HP on 10/20/2016.

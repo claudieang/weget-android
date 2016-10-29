@@ -125,6 +125,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     ArrayList<Double> lngList = new ArrayList<>();
     ArrayList<String> postalList = new ArrayList<String>();
     ArrayList<String> requestNameList = new ArrayList<>();
+    ArrayList<Request> filteredList = new ArrayList<>();
 
     //private final Context tempContext = getActivity().getApplicationContext();
     /**
@@ -203,7 +204,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         //requestArrayList = new ArrayList<Request>();
         new getRequests().execute(authString);
 
-        adapter = new RequestListAdapter(getContext(), R.layout.request_popup);
+        //adapter = new RequestListAdapter(getContext(), R.layout.request_popup);
 
 
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.active_request_list);
@@ -262,8 +263,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         }
 
         client = new GoogleApiClient.Builder(activity).addApi(AppIndex.API).build();
-
-
     }
 
     @Override
@@ -274,13 +273,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 int result=data.getIntExtra("radius", 0);
                 boolean switcher = data.getBooleanExtra("switch", true);
                 Log.d("returned result", result + "");
-
                 if(circle != null) {
                     circle.remove();
                     if (switcher) {
                         drawCircle(lastLocation, result);
                     }
                 }
+                mAdapter.getFilter().filter("PS");
+
+                Log.d("AFTER SHIT", mAdapter.getItemCount()+"");
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Log.d("returned result", "NO SHIT HERE");
@@ -759,6 +760,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     public void filter(){
         Intent i = new Intent(getContext(), FilterActivity.class);
         startActivityForResult(i, 1);
+    }
+
+    public void filterPrice(){
+
     }
 
 }
