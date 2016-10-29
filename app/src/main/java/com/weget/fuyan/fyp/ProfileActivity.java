@@ -28,13 +28,15 @@ public class ProfileActivity extends AppCompatActivity {
 
     String profileUsername, profileEmail, profilePicture;
     int profileContactNumber;
-    TextView profileUsernameTV, profileEmailTV, profileContactNumberTV, requestorRtValue, fulfillerRtValue;
+    TextView profileUsernameTV, profileEmailTV, profileContactNumberTV, requestorRtValue, fulfillerRtValue,
+    requestSumTV, fulfillSumTV;
     ImageView profileImage;
     ImageView updateProfile;
     String URL, err, password, authString;
     int myId, requestorRtInt, fulfillerRtInt;
     double requestorRating,requestorRatingNum, fulfillerRating, fulfillerRatingNum, overallRt, requestorRt, fulfillerRt;
     Context mContext;
+    int requestTotal, fulfillTotal;
 
     RatingBar ratingBar1, ratingBar2;
     ProgressBar requestorRatingBar, fulfillerRatingBar;
@@ -60,6 +62,8 @@ public class ProfileActivity extends AppCompatActivity {
         ratingBar2 = (RatingBar)findViewById(R.id.ratingBar2);
         requestorRtValue = (TextView)findViewById(R.id.requestor_rating_value);
         fulfillerRtValue = (TextView)findViewById(R.id.fulfiller_rating_value);
+        requestSumTV = (TextView)findViewById(R.id.request_num);
+        fulfillSumTV = (TextView)findViewById(R.id.fulfill_num);
 
 
         URL = getString(R.string.webserviceurl);
@@ -178,7 +182,7 @@ public class ProfileActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = URL + "rating/" + myId+"/";
+            String url = URL + "account/" + myId+"/profileVO/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -195,6 +199,8 @@ public class ProfileActivity extends AppCompatActivity {
                     requestorRatingNum = jso.getDouble("requestNo");
                     fulfillerRating = jso.getDouble("fulfillTotal");
                     fulfillerRatingNum = jso.getDouble("fulfillNo");
+                    requestTotal = jso.getInt("requestMade");
+                    fulfillTotal = jso.getInt("fulfillMade");
 
                     //overallRt = (requestorRating + fulfillerRating) / (requestorRatingNum + fulfillerRatingNum);
                     requestorRt = requestorRating / requestorRatingNum;
@@ -229,6 +235,8 @@ public class ProfileActivity extends AppCompatActivity {
                 String pad2 = Double.toString(fulfillerRt)+"00";
                 requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)));
                 fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)));
+                requestSumTV.setText(String.valueOf(requestTotal));
+                fulfillSumTV.setText(String.valueOf(fulfillTotal));
 
 
 

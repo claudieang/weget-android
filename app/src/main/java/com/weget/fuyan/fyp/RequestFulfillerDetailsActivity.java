@@ -40,13 +40,15 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
 
     Request request;
     Account account;
-    TextView fulfillerNameTV, fulfillerEmailTV, fulfillerContactTV, requestorRtValue, fulfillerRtValue;
+    TextView fulfillerNameTV, fulfillerEmailTV, fulfillerContactTV, requestorRtValue, fulfillerRtValue, requestSumTV,
+    fulfillSumTV;
     ImageView fulfillerPicIV;
     Button acceptFulfillerBtn, chatBtn;
 
     String fulfillerName, fulfillerEmail, fulfillerPic, fulfillerContactS, productName, requirement,
     location, startTime, endTime, username, password, authString, err, fulfillStatus, requestString;
-    int fulfillerContact, requestorId, fulfillerId, postal, duration, fulfillId, requestId, myId, indicator;
+    int fulfillerContact, requestorId, fulfillerId, postal, duration, fulfillId, requestId, myId, indicator,
+    requestTotal, fulfillTotal;
     double price, requestorRating, requestorRatingNum, fulfillerRating, fulfillerRatingNum, requestorRt, fulfillerRt;
     Context mContext;
     RatingBar ratingBar1, ratingBar2;
@@ -65,6 +67,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         ratingBar2 = (RatingBar)findViewById(R.id.ratingBar2);
         requestorRtValue = (TextView)findViewById(R.id.requestor_rating_value);
         fulfillerRtValue = (TextView)findViewById(R.id.fulfiller_rating_value);
+        requestSumTV = (TextView)findViewById(R.id.request_num);
+        fulfillSumTV = (TextView)findViewById(R.id.fulfill_num);
 
 
 
@@ -485,7 +489,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = URL + "rating/" + fulfillerId+"/";
+            String url = URL + "account/" + fulfillerId+"/profileVO/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -502,6 +506,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                     requestorRatingNum = jso.getDouble("requestNo");
                     fulfillerRating = jso.getDouble("fulfillTotal");
                     fulfillerRatingNum = jso.getDouble("fulfillNo");
+                    requestTotal = jso.getInt("requestMade");
+                    fulfillTotal = jso.getInt("fulfillMade");
 
                     if(requestorRatingNum == 0.0 || fulfillerRatingNum == 0.0){
                         requestorRt = 0.0;
@@ -535,7 +541,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                 String pad2 = Double.toString(fulfillerRt)+"00";
                 requestorRtValue.setText(pad1.substring(0,(pad1.indexOf('.')+2)));
                 fulfillerRtValue.setText(pad2.substring(0,(pad1.indexOf('.')+2)));
-
+                requestSumTV.setText(String.valueOf(requestTotal));
+                fulfillSumTV.setText(String.valueOf(fulfillTotal));
 
 
 
