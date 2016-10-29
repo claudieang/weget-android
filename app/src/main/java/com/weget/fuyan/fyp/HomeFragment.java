@@ -86,6 +86,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
     int requestImage = R.drawable.ordericon;
     ArrayList<Request> requestArrayList = new ArrayList<>();
+    //ArrayList<Request> requestArrayList;
     int myId;
     String URL;
 
@@ -199,10 +200,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         fulfillbt = (ImageButton) view.findViewById(R.id.fulfill);
 
         authString = username + ":" + password;
-
+        //requestArrayList = new ArrayList<Request>();
         new getRequests().execute(authString);
 
         adapter = new RequestListAdapter(getContext(), R.layout.request_popup);
+
 
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.active_request_list);
         mAdapter = new com.weget.fuyan.fyp.Recycler.RequestAllListAdapter(requestArrayList, myId);
@@ -273,14 +275,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 boolean switcher = data.getBooleanExtra("switch", true);
                 Log.d("returned result", result + "");
 
-                circle.remove();
-                if(switcher){
-                    drawCircle(lastLocation, result);
+                if(circle != null) {
+                    circle.remove();
+                    if (switcher) {
+                        drawCircle(lastLocation, result);
+                    }
                 }
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Log.d("returned result", "NO SHIT HERE");
                 //Write your code if there's no result
+                if(circle != null){
+                    circle.remove();
+                    drawCircle(lastLocation, 600);
+                }
             }
         }
     }
@@ -355,12 +363,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             } else {
                 //clear all used lists before adding the as markers
                 requestArrayList.clear();
-                postalList.clear();
-                requestNameList.clear();
+                //postalList.clear();
+                //requestNameList.clear();
                 latList.clear();
                 lngList.clear();
 
                 try {
+ //                   Gson gson = new Gson();
+   //                 requestArrayList = gson.fromJson(rst, new TypeToken<List<Request>>(){}.getType());
                     JSONArray jsoArray = new JSONArray(rst);
                     for (int i = 0; i < jsoArray.length(); i++) {
                         JSONObject jso = jsoArray.getJSONObject(i);
@@ -382,28 +392,24 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                                 postal, startTime, endTime, duration, price, status);
 
                         requestArrayList.add(request);
-                        postalList.add("" + postal);
-                        requestNameList.add(productName);
+                        //postalList.add("" + postal);
+                        //requestNameList.add(productName);
 
 
-                    }
+                  }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 success = true;
             }
 
-//            postalList.add("520894");
-//            postalList.add("520899");
-//            postalList.add("520891");
-
-            //GEO starts here
-            int size = postalList.size();
+            //int size = postalList.size();
 
 
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < requestArrayList.size(); i++) {
                 String response;
-                String postal = postalList.get(i);
+      //          String postal = postalList.get(i);
+                String postal = requestArrayList.get(i).getPostal() + "";
                 String baseURL = "https://maps.google.com/maps/api/geocode/json?components=countrySG|postal_code:";
                 String key = "&key=AIzaSyDNbh3U6jmAeRGQogCmt6EcRXmFnYxbec4";
                 //https://maps.google.com/maps/api/geocode/json?components=countrySG|postal_code:519599&key=AIzaSyDNbh3U6jmAeRGQogCmt6EcRXmFnYxbec4

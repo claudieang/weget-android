@@ -65,8 +65,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
-                android:max="2000"
-                android:progress="600" />
+                android:max="2000" />
 
             <Switch
                 android:layout_marginTop="20dp"

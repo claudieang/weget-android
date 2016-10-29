@@ -34,7 +34,7 @@ public class FilterActivity extends AppCompatActivity {
 
         radiusBar=(SeekBar)findViewById(R.id.seekBar);
 
-        //radiusBar.setProgress(lastValue);
+        radiusBar.setProgress(lastValue);
 
         radiusBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressChangedValue = 0;
@@ -67,6 +67,12 @@ public class FilterActivity extends AppCompatActivity {
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                radiusBar.setProgress(600);
+                radiusSwitch.setChecked(true);
+
+                lastValue = radiusBar.getProgress();
+                lastSwitch = radiusSwitch.isChecked();
+
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_CANCELED, returnIntent);
                 finish();
@@ -80,7 +86,7 @@ public class FilterActivity extends AppCompatActivity {
                 lastSwitch = radiusSwitch.isChecked();
 
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("radius",result);
+                returnIntent.putExtra("radius",lastValue);
                 returnIntent.putExtra("switch", radiusSwitch.isChecked());
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
