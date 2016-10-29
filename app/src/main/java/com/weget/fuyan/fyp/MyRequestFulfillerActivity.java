@@ -11,9 +11,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.LoginFilter;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
@@ -49,6 +51,8 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
     private RequestFulfillersListAdapter mAdapter;
     private RecyclerViewEmptySupport recyclerView;
     String URL;
+    TextView emptyView;
+    boolean noFulfillers = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +89,8 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         //myRequestFulfillerLV.setAdapter(adapter);
         new getRequests().execute(authString);
         //new getMyRequestFulfiller().execute(authString);
+
+        emptyView = (TextView)findViewById(R.id.empty_view);
 
         recyclerView = (RecyclerViewEmptySupport) findViewById(R.id.my_request_fulfiller_list);
         mAdapter = new RequestFulfillersListAdapter(fulfillerAccountList,fulfillIdList, myRequest);
@@ -213,6 +219,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+
             if(result) {
 
                 new getMyRequestFulfiller().execute(authString);
@@ -224,6 +231,8 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
             }
 
         }
+
+
 
 
     }
@@ -262,40 +271,54 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
                 success = false;
             } else {
                 fulfillerAccountList.clear();
+                Log.d("Print","rst length is : " + rst.length());
 
                 try {
                     JSONArray jsoArray = new JSONArray(rst);
-                    for(int i = 0; i < jsoArray.length(); i++) {
-                        JSONObject jso = jsoArray.getJSONObject(i);
+                    Log.d("Print","jso length is : " + jsoArray.length());
+                    if(jsoArray.length() > 0){
+                        for(int i = 0; i < jsoArray.length(); i++) {
+                            JSONObject jso = jsoArray.getJSONObject(i);
+                            id = jso.getInt("id");
+                            username = jso.getString("username");
+                            password = jso.getString("password");
+                            contactNo = jso.getInt("contactNo");
+                            email = jso.getString("email");
+                            fulfiller = jso.getString("fulfiller");
+                            picture = jso.getString("picture");
 
-                        id = jso.getInt("id");
-                        username = jso.getString("username");
-                        password = jso.getString("password");
-                        contactNo = jso.getInt("contactNo");
-                        email = jso.getString("email");
-                        fulfiller = jso.getString("fulfiller");
-                        picture = jso.getString("picture");
-
-                        account = new Account(id, username, password, contactNo, email, fulfiller, picture);
-
-
-                        fulfillerAccountList.add(account);
+                            account = new Account(id, username, password, contactNo, email, fulfiller, picture);
 
 
+                            fulfillerAccountList.add(account);
 
 
+
+                        }
+                        noFulfillers = false;
+                    } else {
+                        noFulfillers = true;
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+
                 success = true;
             }
             return success;
         }
         @Override
         protected void onPostExecute(Boolean result) {
+            Log.d("Print","the result is : " + result);
+            Log.d("Print","the noFulfillers is : " + noFulfillers);
+            if(noFulfillers){
+                emptyView.setText("No fulfillers have accepted this request yet.");
+            }
             dialog.dismiss();
             mAdapter.notifyDataSetChanged();
+
             if(!result) {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
 

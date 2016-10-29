@@ -27,6 +27,6 @@
         android:gravity="center"
         android:visibility="invisible"
         android:textColor="@color/darkGray"
-        android:text="No fulfills have been made for this request yet." />
+        android:text="Please wait while we load the page..." />
 
 </RelativeLayout>

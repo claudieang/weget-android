@@ -199,10 +199,10 @@ public class CreateRequestActivity extends AppCompatActivity {
                     return;
                 }
                 Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER); //doesnt seem to work
-                Log.d("Print","location data is : " + location);
+                Log.d("Print","location data1 is : " + location);
                 if(location ==  null){
                     location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    Log.d("Print","location data is : " + location);
+                    Log.d("Print","location data2 is : " + location);
                 }
                 // now get the lat/lon from the location and do something with it.
 

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 
@@ -48,6 +49,8 @@ public class PendingRequestsFragment extends Fragment {
     private com.weget.fuyan.fyp.Recycler.RequestListAdapter mAdapter;
     String URL;
     SwipeRefreshLayout swipeRefresh;
+    TextView emptyView2;
+    boolean hasPendingRequests = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -107,6 +110,8 @@ public class PendingRequestsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
+
+        emptyView2 = (TextView)view.findViewById(R.id.empty_view2);
 
 
         swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
@@ -190,6 +195,13 @@ public class PendingRequestsFragment extends Fragment {
                         //mAdapter.notifyDataSetChanged();
 
                     }
+
+                    if(myRequestArrayList.size() > 0){
+                        hasPendingRequests = true;
+                    } else {
+                        hasPendingRequests = false;
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -201,6 +213,10 @@ public class PendingRequestsFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean result) {
             mAdapter.notifyDataSetChanged();
+
+            if(!hasPendingRequests){
+                emptyView2.setText("No pending requests.");
+            }
 
             if(showDialog) {
                 dialog.dismiss();

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.weget.fuyan.fyp.Recycler.RecyclerItemClickListener;
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
@@ -50,6 +51,8 @@ public class CompletedRequestsFragment extends Fragment {
     private com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter mAdapter;
     String URL;
     SwipeRefreshLayout swipeRefresh;
+    TextView emptyView3;
+    boolean hasCompletedRequests = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -101,6 +104,8 @@ public class CompletedRequestsFragment extends Fragment {
 //        adapter = new RequestListAdapter(activity.getApplicationContext(), R.layout.request_list_layout);
 //        myRequestLV.setAdapter(adapter);
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.my_request_list);
+
+        emptyView3 = (TextView)view.findViewById(R.id.empty_view3);
 
 
         mAdapter = new com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter(myRequestArrayList);
@@ -210,6 +215,13 @@ public class CompletedRequestsFragment extends Fragment {
                         //mAdapter.notifyDataSetChanged();
 
                     }
+
+                    if(myRequestArrayList.size() > 0){
+                        hasCompletedRequests = true;
+                    } else {
+                        hasCompletedRequests = false;
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -221,6 +233,10 @@ public class CompletedRequestsFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean result) {
             mAdapter.notifyDataSetChanged();
+
+            if(!hasCompletedRequests){
+                emptyView3.setText("No requests completed yet.");
+            }
 
             if(showDialog) {
                 dialog.dismiss();

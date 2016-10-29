@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.weget.fuyan.fyp.Fulfill;
@@ -58,6 +59,8 @@ public class ActiveFulfillsFragment extends Fragment {
     String URL;
     SwipeRefreshLayout swipeRefresh;
     ProgressDialog dialog;
+    TextView emptyView;
+    boolean haveActiveFulfills = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,6 +90,8 @@ public class ActiveFulfillsFragment extends Fragment {
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
         //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
+
+        emptyView = (TextView)view.findViewById(R.id.empty_view);
 
 
         authString  = username + ":" + password;
@@ -311,9 +316,14 @@ public class ActiveFulfillsFragment extends Fragment {
                             myFulfillRequestArrayList.add(request);
                         }
 
-
-
                     }
+
+                    if(myFulfillRequestArrayList.size() > 0){
+                        haveActiveFulfills = true;
+                    } else {
+                        haveActiveFulfills = false;
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -342,6 +352,11 @@ public class ActiveFulfillsFragment extends Fragment {
                 // Now we call setRefreshing(false) to signal refresh has finished
                 //swipeContainer.setRefreshing(false);
                 //Toast.makeText(getApplicationContext(), "Populating My Fulfills!", Toast.LENGTH_SHORT).show();
+
+                if(!haveActiveFulfills){
+                    emptyView.setText("No fulfills made yet.");
+                }
+
 
             }else {
                 Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
