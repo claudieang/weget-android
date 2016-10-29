@@ -73,7 +73,7 @@
 
         <EditText
             android:id="@+id/postal_code_txt"
-            android:layout_width="wrap_content"
+            android:layout_width="185dp"
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -90,13 +90,31 @@
             android:textColorHint="#BCBCBC"
             android:textSize="16sp" />
 
-        <ImageButton
+        <Button
             android:id="@+id/get_address_btn"
+            android:layout_width="85dp"
+            android:layout_height="38dp"
+            android:layout_alignTop="@+id/postal_code_txt"
+            android:layout_toEndOf="@+id/postal_code_txt"
+            android:textColor="@color/white"
+            android:fontFamily="normal"
+            android:foreground="?android:selectableItemBackground"
+            android:background="@color/colorPrimary"
+            android:layout_weight="1"
+            android:typeface="normal"
+            android:text="Get Address"
+            android:textSize="10sp"
+            android:layout_marginRight="10dp"/>
+
+
+        <ImageButton
+            android:id="@+id/get_curr_location_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignTop="@+id/postal_code_txt"
-            android:layout_toEndOf="@+id/postal_code_txt"
-            android:background="@drawable/location" />
+            android:layout_toEndOf="@+id/get_address_btn"
+            android:background="@drawable/location"
+            />
 
         <EditText
             android:id="@+id/address_line_txt"
