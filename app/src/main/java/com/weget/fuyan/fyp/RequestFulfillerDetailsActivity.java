@@ -72,7 +72,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
         //toolbar.setTitle("Fulfiller Details");
         //setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Fulfiller Details");
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setElevation(0);
         URL = getString(R.string.webserviceurl);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
