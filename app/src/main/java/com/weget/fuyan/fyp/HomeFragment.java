@@ -55,6 +55,9 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sendbird.android.SendBird;
+import com.sendbird.android.SendBirdException;
+import com.sendbird.android.User;
 import com.weget.fuyan.fyp.Recycler.DividerItemDecoration;
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 import com.weget.fuyan.fyp.Recycler.RequestAllListAdapter;
@@ -209,6 +212,19 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
+
+
+        SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", mContext);
+        SendBird.connect(myId+"", new SendBird.ConnectHandler() {
+            @Override
+            public void onConnected(User user, SendBirdException e) {
+                if (e != null) {
+                    Toast.makeText(mContext, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+        });
+
 //        requestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

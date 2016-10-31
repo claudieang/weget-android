@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.sendbird.android.GroupChannel;
 import com.sendbird.android.GroupChannelListQuery;
+import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
 import com.weget.fuyan.fyp.Util.DateFormatter;
@@ -136,6 +137,9 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 List<String> userIds = new ArrayList<>();
                 userIds.add(requestorId +"");
                 userIds.add(myId+"");
+
+
+
                 GroupChannelListQuery mQuery = GroupChannel.createMyGroupChannelListQuery();
                 Log.d("victorious","mquerysize is : " + mQuery.hasNext());
                 if(mQuery == null){

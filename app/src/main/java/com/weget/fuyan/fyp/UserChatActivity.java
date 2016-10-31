@@ -1,6 +1,8 @@
 package com.weget.fuyan.fyp;
 
 
+import android.*;
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,8 +13,12 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -20,6 +26,7 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -51,6 +58,9 @@ import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
 import com.sendbird.android.UserMessage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,7 +70,7 @@ import java.util.List;
 
 public class UserChatActivity extends AppCompatActivity {
     private SendBirdChatFragment mSendBirdMessagingFragment;
-    String productName, requirement, location, startTime, endTime, status, err, requestorIdS, requestorName,
+    String productName, requirement, location, startTime, endTime, status, requestorIdS, requestorName,
             username, password, picture;
     static Toolbar toolbar;
     private View mTopBarContainer;
@@ -72,10 +82,13 @@ public class UserChatActivity extends AppCompatActivity {
     private String dbUsername;
     private String dbProfilePic = null;
     private String loggedInId;
-    private String friendId = "";
-    private Context mContext;
+    public static String friendId = "";
+    private static Context mContext;
     private GroupChannel mGroupChannel;
     private SendBirdMessagingAdapter mAdapter;
+    private String authString;
+    private static String err;
+    private static int friendNumber;
 
 
     @Override
@@ -84,6 +97,8 @@ public class UserChatActivity extends AppCompatActivity {
         //overridePendingTransition(R.anim.sendbird_slide_in_from_bottom, R.anim.sendbird_slide_out_to_top);
         setContentView(R.layout.activity_groupchat_list);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         //toolbar.setTitle("Request Completed");
 //        setActionBar(toolbar);
@@ -101,6 +116,21 @@ public class UserChatActivity extends AppCompatActivity {
 //                finish();
 //            }
 //        });
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_DIAL );
+                callIntent.setData(Uri.parse("tel:" + friendNumber));
+
+                if (ContextCompat.checkSelfPermission(getApplication().getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+
+
+                }
+
+                startActivity(callIntent);
+            }
+        });
 
         initFragment();
         initUIComponents();
@@ -263,8 +293,22 @@ public class UserChatActivity extends AppCompatActivity {
                     for(User u: mGroupChannel.getMembers()){
                         if(!u.getUserId().equals(userID+"")){
                             channelTitle = u.getNickname();
+                            friendId = u.getUserId();
+
+
+                            String username = pref.getString("username", null);
+                            String password = pref.getString("password", null);
+                            String authString  = username + ":" + password;
+
+                            new initialize().execute(authString);
+
                         }
                     }
+
+
+
+
+
                     SpannableString s = new SpannableString(channelTitle);
                     s.setSpan(new TypefaceSpan(getActivity(), "Roboto-Regular.ttf"), 0, s.length(),
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -917,6 +961,55 @@ public class UserChatActivity extends AppCompatActivity {
             public <T> T getView(String k, Class<T> type) {
                 return type.cast(getView(k));
             }
+        }
+    }
+
+    private static class initialize extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
+
+            boolean success = false;
+            String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/" + "account/" + friendId+"/";
+
+            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+                success = false;
+            } else {
+
+
+                try {
+
+                    JSONObject jso = new JSONObject(rst);
+
+                    friendNumber = jso.getInt("contactNo");
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                success = true;
+            }
+            return success;
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+
+            if(result){
+
+            }else {
+                Toast.makeText(mContext, err, Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 }
