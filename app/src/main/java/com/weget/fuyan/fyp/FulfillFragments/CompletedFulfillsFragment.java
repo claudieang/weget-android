@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.weget.fuyan.fyp.CompletedRequest;
@@ -61,6 +62,8 @@ public class CompletedFulfillsFragment extends Fragment {
     String URL;
     SwipeRefreshLayout swipeRefresh;
     ProgressDialog dialog;
+    TextView emptyView3;
+    boolean hasCompletedFulfills = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,6 +95,8 @@ public class CompletedFulfillsFragment extends Fragment {
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view3));
         //recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
+
+        emptyView3 = (TextView)view.findViewById(R.id.empty_view3);
 
 
         authString  = username + ":" + password;
@@ -310,9 +315,14 @@ public class CompletedFulfillsFragment extends Fragment {
                             creditedStatusList.add(credited);
                         }
 
-
-
                     }
+
+                    if(myFulfillRequestArrayList.size() > 0){
+                        hasCompletedFulfills = true;
+                    } else {
+                        hasCompletedFulfills = false;
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -333,6 +343,9 @@ public class CompletedFulfillsFragment extends Fragment {
 
             if(result){
 
+                if(!hasCompletedFulfills){
+                    emptyView3.setText("No fulfills completed yet.");
+                }
 
                 Log.d("Print", "Value: " + myFulfillRequestArrayList.size());
                 // Now we call setRefreshing(false) to signal refresh has finished

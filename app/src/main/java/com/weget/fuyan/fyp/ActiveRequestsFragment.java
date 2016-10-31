@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 
@@ -49,6 +50,8 @@ public class ActiveRequestsFragment extends Fragment {
     private RecyclerViewEmptySupport recyclerView;
     private com.weget.fuyan.fyp.Recycler.RequestActiveListAdapter mAdapter;
     SwipeRefreshLayout swipeRefresh;
+    TextView emptyView;
+    boolean hasActiveRequests = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,6 +83,8 @@ public class ActiveRequestsFragment extends Fragment {
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+
+        emptyView = (TextView)view.findViewById(R.id.empty_view);
 
         /*
  * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
@@ -165,6 +170,13 @@ public class ActiveRequestsFragment extends Fragment {
                        // mAdapter.notifyDataSetChanged();
 
                     }
+
+                    if (mergedList.size() > 0){
+                        hasActiveRequests = true;
+                    } else {
+                        hasActiveRequests =false;
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -178,6 +190,10 @@ public class ActiveRequestsFragment extends Fragment {
 
             mAdapter.notifyDataSetChanged();
             //new getMyRequestFulfiller().execute(myRequestArrayList);
+
+            if(!hasActiveRequests){
+                emptyView.setText("No requests made yet.");
+            }
 
             if(showDialog) {
                 dialog.dismiss();

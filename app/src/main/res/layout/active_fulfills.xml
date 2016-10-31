@@ -39,7 +39,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="invisible"
-        android:text="No fulfills made yet." />
+        android:text="Loading Active Fulfills" />
 
     <TextView
         android:id="@+id/empty_view2"
@@ -47,7 +47,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="invisible"
-        android:text="No pending fulfills." />
+        android:text="Loading Pending Fulfills" />
 
     <TextView
         android:id="@+id/empty_view3"
@@ -55,7 +55,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="invisible"
-        android:text="No fulfills completed yet." />
+        android:text="Loading Completed Fulfills" />
 
 
 </RelativeLayout>
