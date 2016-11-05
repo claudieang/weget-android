@@ -28,6 +28,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -148,10 +149,46 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     private Circle circle;
     boolean ready = false;
 
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onAttach(activity);
+//        this.activity = activity;
+//    }
+
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        this.activity = null;
+//    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_screen, container, false);
         Log.d("sigh", "initiate home fragment");
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_filter) {
+            filter();
+            return true;
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_refresh) {
+            //Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
+            refresh();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -348,11 +385,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
                         int id = jso.getInt("id");
                         int requestorId = jso.getInt("requestorId");
-                        int imageResource = requestImage;
+                        //int imageResource = requestImage;
+                        int imageResource = 0;
                         String productName = jso.getString("productName");
                         String requirement = jso.getString("requirement");
                         String location = jso.getString("location");
-                        int postal = jso.getInt("postal");
+                        String postal = jso.getString("postal");
                         String startTime = jso.getString("startTime");
                         int duration = jso.getInt("duration");
                         String endTime = jso.getString("endTime");
@@ -399,7 +437,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         protected Boolean doInBackground(String... strings) {
             for (int i = 0; i < requestArrayList.size(); i++) {
                 String response;
-                String postal = requestArrayList.get(i).getPostal() + "";
+                String postal = requestArrayList.get(i).getPostal();
                 String baseURL = "https://maps.google.com/maps/api/geocode/json?components=countrySG|postal_code:";
                 String key = "&key=AIzaSyDNbh3U6jmAeRGQogCmt6EcRXmFnYxbec4";
                 //https://maps.google.com/maps/api/geocode/json?components=countrySG|postal_code:519599&key=AIzaSyDNbh3U6jmAeRGQogCmt6EcRXmFnYxbec4
