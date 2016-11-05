@@ -186,8 +186,11 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".RequestPopUp"
-            android:theme="@style/AppTheme.CustomTheme"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Dialog"
+
         />
     </application>
 
 </manifest>
+<!--android:theme="@style/AppTheme.CustomTheme"-->

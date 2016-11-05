@@ -32,9 +32,9 @@ import java.util.ArrayList;
 public class RequestDetailsActivity extends AppCompatActivity {
 
     ArrayList<Integer> fulfillerIdList = new ArrayList<>();
-    int requestorId, postal, duration, myId, requestId;
+    int requestorId, duration, myId, requestId;
     String productName, requirement, location, startTime, endTime, status, err, requestorIdS, requestorName, authString,
-    username, password, picture;
+    username, password, picture, postal;
     double price;
     Context mContext;
     Button acceptRequestBtn;

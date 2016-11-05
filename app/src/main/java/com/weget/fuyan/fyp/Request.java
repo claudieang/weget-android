@@ -13,7 +13,7 @@ public class Request implements Serializable{
     String productName;
     String requirement;
     String location;
-    int postal;
+    String postal;
     String startTime, endTime;
     int duration;
     double price;
@@ -25,7 +25,7 @@ public class Request implements Serializable{
         this.requirement = requirement;
     }
 
-    public Request(int id, int requestorId, int imageResource, String productName, String requirement, String location, int postal, String startTime,
+    public Request(int id, int requestorId, int imageResource, String productName, String requirement, String location, String postal, String startTime,
     String endTime, int duration, double price, String status){
 
         this.id = id;
@@ -82,11 +82,11 @@ public class Request implements Serializable{
         this.location = location;
     }
 
-    public int getPostal() {
+    public String getPostal() {
         return postal;
     }
 
-    public void setPostal(int postal) {
+    public void setPostal(String postal) {
         this.postal = postal;
     }
 

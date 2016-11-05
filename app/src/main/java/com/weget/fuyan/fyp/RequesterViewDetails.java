@@ -32,10 +32,10 @@ public class RequesterViewDetails extends AppCompatActivity {
 
     TextView productNameTV, requestorTV, addressTV, expiryTimeTV, priceTV;
     String productName, requestorName, location, expiryTime, priceS, requestorIdS, requirement,
-    startTime, endTime, status, username, password, authString, err;
+    startTime, endTime, status, username, password, authString, err, postal;
     double price;
     Button editRequestBtn, deleteRequestBtn;
-    int requestId, requestorId, postal,duration,myId;
+    int requestId, requestorId, duration,myId;
     Context mContext;
     Request request;
     private TextView productDescriptionTV;

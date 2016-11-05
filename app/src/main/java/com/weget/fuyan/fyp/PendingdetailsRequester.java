@@ -29,8 +29,8 @@ public class PendingdetailsRequester extends AppCompatActivity {
 
     Request myRequest;
     TextView productNameTV, requestorTV, addressTV, priceTV, productName1;
-    String productName, requestorName, address, err, username, password, authString, requestorIdS, productDescription;
-    int myId, requestorId, myRequestId, postal, transactionId;
+    String productName, requestorName, address, postal, err, username, password, authString, requestorIdS, productDescription;
+    int myId, requestorId, myRequestId, transactionId;
     double price;
     Button receivedBtn, disputeBtn;
     Context mContext;

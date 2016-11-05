@@ -22,9 +22,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.weget.fuyan.fyp.Util.DateFormatter;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +34,8 @@ public class CompletedRequest extends AppCompatActivity {
             title, date, fulfillerName, details, transferTV;
     String productName, requestorName, address, username, password, authString, requestorIdS, err;
     double price;
-    int requestId, myId, requestorId, postal;
+    String postal;
+    int requestId, myId, requestorId;
     Context mContext;
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
     String URL;

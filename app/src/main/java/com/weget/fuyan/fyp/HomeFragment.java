@@ -542,9 +542,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
                     markerOptions.position(addLatLng);
                     if (addReqs.size() > 1) {
-                        markerOptions.title("Request: " + addReqs.size() + " Requests");
+                        markerOptions.title(addReqs.size() + " Requests");
                     } else {
-                        markerOptions.title("Request: " + addReqs.get(0).getProductName());
+                        markerOptions.title(addReqs.get(0).getProductName());
                     }
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
                     Marker mkr = mMap.addMarker(markerOptions);

@@ -23,7 +23,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.weget.fuyan.fyp.Fulfill;
 import com.weget.fuyan.fyp.MyfulfillDetails;
 import com.weget.fuyan.fyp.R;
 import com.weget.fuyan.fyp.Recycler.RecyclerItemClickListener;
@@ -302,7 +301,7 @@ public class ActiveFulfillsFragment extends Fragment {
                         String productName = jso.getString("productName");
                         String requirement = jso.getString("requirement");
                         String location = jso.getString("location");
-                        int postal = jso.getInt("postal");
+                        String postal = jso.getString("postal");
                         String startTime = jso.getString("startTime");
                         int duration = jso.getInt("duration");
                         String endTime = jso.getString("endTime");

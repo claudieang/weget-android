@@ -14,7 +14,7 @@ public class MergedRequest extends Request implements Serializable {
         this.count = count;
     }
 
-    public MergedRequest(int id, int requestorId, int imageResource, String productName, String requirement, String location, int postal, String startTime,
+    public MergedRequest(int id, int requestorId, int imageResource, String productName, String requirement, String location, String postal, String startTime,
                    String endTime, int duration, double price, String status, int count){
         super(id, requestorId, imageResource, productName, requirement, location, postal, startTime, endTime, duration, price, status);
         this.count = count;

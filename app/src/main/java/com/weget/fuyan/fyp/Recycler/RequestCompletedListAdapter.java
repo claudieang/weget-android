@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.weget.fuyan.fyp.R;
 import com.weget.fuyan.fyp.Request;
-import com.weget.fuyan.fyp.RequestExtended;
 import com.weget.fuyan.fyp.Util.DateFormatter;
 
 import java.util.List;

@@ -273,10 +273,10 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         String profilePicture = pref.getString("picture", null);
-        ImageView profileImage = (ImageView)findViewById(R.id.avatar);;
+            ImageView profileImage = (ImageView)findViewById(R.id.avatar);;
 
-        if(profilePicture.equals("")){
-            profileImage.setImageResource(R.drawable.ic_profile);
+            if(profilePicture.equals("")){
+                profileImage.setImageResource(R.drawable.ic_profile);
         }else{
 
             byte[] decodeString = Base64.decode(profilePicture, Base64.NO_WRAP);
@@ -304,20 +304,22 @@ public class MainActivity extends AppCompatActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
-        int id = item.getItemId();
-
-        if(id == R.id.action_filter) {
-            homeFragment.filter();
-            return true;
-        }
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_refresh) {
-            //Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
-            homeFragment.refresh();
-            return true;
-        }
+//
+//        int id = item.getItemId();
+//
+//        if(id == R.id.action_filter) {
+//            if(homeFragment.isAdded()) {
+//                homeFragment.filter();
+//            }
+//            return true;
+//        }
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_refresh) {
+//            //Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
+//            homeFragment.refresh();
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

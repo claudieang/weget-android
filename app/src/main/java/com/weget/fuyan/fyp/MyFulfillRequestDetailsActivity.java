@@ -30,9 +30,9 @@ import org.json.JSONObject;
 
 public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
 
-    int requestorId, postal, duration, myId, requestId, transactionId;
+    int requestorId, duration, myId, requestId, transactionId;
     String productName, requirement, location, startTime, endTime, status, err, requestorIdS, requestorName, authString,
-            username, password, picture;
+            username, password, picture, postal;
     double price;
     Context mContext;
     Button deliveredBtn;

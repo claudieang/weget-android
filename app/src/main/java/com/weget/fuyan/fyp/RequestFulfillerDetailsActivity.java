@@ -46,8 +46,8 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
     Button acceptFulfillerBtn, chatBtn;
 
     String fulfillerName, fulfillerEmail, fulfillerPic, fulfillerContactS, productName, requirement,
-    location, startTime, endTime, username, password, authString, err, fulfillStatus, requestString;
-    int fulfillerContact, requestorId, fulfillerId, postal, duration, fulfillId, requestId, myId, indicator,
+    location, startTime, endTime, username, password, authString, err, fulfillStatus, requestString, postal;
+    int fulfillerContact, requestorId, fulfillerId, duration, fulfillId, requestId, myId, indicator,
     requestTotal, fulfillTotal;
     double price, requestorRating, requestorRatingNum, fulfillerRating, fulfillerRatingNum, requestorRt, fulfillerRt;
     Context mContext;

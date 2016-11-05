@@ -41,7 +41,6 @@ public class UpdateRequestActivity extends AppCompatActivity {
     List<Address> fullAddress;
     double latitude, longtitude;
 
-    final int ONE_MINUTE_IN_MILLIS = 60000;
     String productName, requestRequirement, addressLine, requestDurationS, postalCodeS,priceS,
             startTime, endTime, err, username, password, authString, requestStatus;
     int postalCode, requestDuration, requestorId, requestId;
@@ -232,17 +231,31 @@ public class UpdateRequestActivity extends AppCompatActivity {
 
 
                                             Calendar date = Calendar.getInstance();
-                                            long t = date.getTimeInMillis();
-                                            if(unit != null && unit.equals("Minutes")) {
-                                                Date afterAddingTenMins = new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
-                                                endTime = sdf.format(afterAddingTenMins);
-                                                Log.d("End Time: ", endTime);
+                                            //long t = date.getTimeInMillis();
+
+                                            date.setTime(now);
+                                            unit = dropdown.getSelectedItem().toString();
+                                            //int num = Integer.parseInt(unit);
+                                            if(unit != null && unit.equals("Minutes")){
+                                                date.add(Calendar.MINUTE, requestDuration);
                                             }
+
                                             if(unit != null && unit.equals("Hours")){
-                                                Date afterAddingTenMins = new Date(t + (requestDuration * 60 * ONE_MINUTE_IN_MILLIS));
-                                                endTime = sdf.format(afterAddingTenMins);
-                                                Log.d("End Time: ", endTime);
+                                                date.add(Calendar.HOUR, requestDuration);
                                             }
+
+                                            Date time = date.getTime();
+                                            endTime = sdf.format(time);
+//                                            if(unit != null && unit.equals("Minutes")) {
+//                                                Date afterAddingTenMins = new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
+//                                                endTime = sdf.format(afterAddingTenMins);
+//                                                Log.d("End Time: ", endTime);
+//                                            }
+//                                            if(unit != null && unit.equals("Hours")){
+//                                                Date afterAddingTenMins = new Date(t + (requestDuration * 60 * ONE_MINUTE_IN_MILLIS));
+//                                                endTime = sdf.format(afterAddingTenMins);
+//                                                Log.d("End Time: ", endTime);
+//                                            }
 
 
                                             authString = username + ":" + password;

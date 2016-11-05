@@ -42,10 +42,9 @@ public class CreateRequestActivity extends AppCompatActivity {
     List<Address> fullAddress;
     double latitude, longtitude;
 
-    final int ONE_MINUTE_IN_MILLIS = 60000;
     String productName, requestRequirement, addressLine, requestDurationS, postalCodeS, priceS,
             startTime, endTime, err, username, password, authString, unit;
-    int postalCode, requestDuration, requestorId;
+    int requestDuration, requestorId;
     double price;
     EditText etProductName, etRequestRequirement, etPostalCode, etAddressLine, etRequestDuration, etPrice;
     Button createRequestBtn;
@@ -126,7 +125,7 @@ public class CreateRequestActivity extends AppCompatActivity {
                 postalCodeS = etPostalCode.getText().toString();
 
                 if (postalCodeS != null && postalCodeS.trim().length() > 0) {
-                    postalCode = Integer.parseInt(postalCodeS);
+                    //postalCode = Integer.parseInt(postalCodeS);
 
                     String zip = postalCodeS;
                     try {
@@ -263,12 +262,12 @@ public class CreateRequestActivity extends AppCompatActivity {
 
                         if (postalCodeS != null && postalCodeS.trim().length() > 0) {
 
-                            postalCode = Integer.parseInt(postalCodeS);
+                            //postalCode = Integer.parseInt(postalCodeS);
 
                             if (addressLine != null && addressLine.trim().length() > 0) {
 
                                 if (requestDurationS != null && requestDurationS.trim().length() > 0) {
-                                    requestDuration = Integer.parseInt(requestDurationS)*60;
+                                    requestDuration = Integer.parseInt(requestDurationS);
 
                                     if (priceS != null && priceS.trim().length() > 0) {
                                         price = Double.parseDouble(priceS);
@@ -277,21 +276,20 @@ public class CreateRequestActivity extends AppCompatActivity {
                                         startTime = sdf.format(now);
 
                                         Log.d("Start Time: ", startTime);
-
                                         Calendar date = Calendar.getInstance();
-                                        long t = date.getTimeInMillis();
+                                        date.setTime(now);
                                         unit = dropdown.getSelectedItem().toString();
-                                        if(unit!= null && unit.equals("Minutes")) {
-                                            Date afterAddingTenMins = new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
-                                            endTime = sdf.format(afterAddingTenMins);
-                                            Log.d("Unit: === ", unit);
+                                        //int num = Integer.parseInt(unit);
+                                        if(unit != null && unit.equals("Minutes")){
+                                            date.add(Calendar.MINUTE, requestDuration);
                                         }
-                                        if (unit != null && unit.equals("Hours")){
-                                            Date afterAddingTenMins = new Date(t + (requestDuration * 60 * ONE_MINUTE_IN_MILLIS));
-                                            endTime = sdf.format(afterAddingTenMins);
-                                            Log.d("Unit: === ", unit);
+
+                                        if(unit != null && unit.equals("Hours")){
+                                            date.add(Calendar.HOUR, requestDuration);
                                         }
-                                        //Log.d("End Time: ", endTime);
+
+                                        Date time = date.getTime();
+                                        endTime = sdf.format(time);
 
                                         authString = username + ":" + password;
                                         new createRequest().execute(authString);
@@ -416,7 +414,7 @@ public class CreateRequestActivity extends AppCompatActivity {
                 jsoin.put("productName", productName);
                 jsoin.put("requirement", requestRequirement);
                 jsoin.put("location", addressLine);
-                jsoin.put("postal", postalCode);
+                jsoin.put("postal", postalCodeS);
                 jsoin.put("startTime", startTime);
                 jsoin.put("duration", requestDuration);
                 jsoin.put("endTime", endTime);

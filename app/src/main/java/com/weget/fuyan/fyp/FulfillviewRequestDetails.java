@@ -7,9 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.sendbird.android.GroupChannel;
 import com.sendbird.android.GroupChannelListQuery;
-import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
 import com.weget.fuyan.fyp.Util.DateFormatter;
@@ -40,10 +39,10 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
     TextView productNameTV, requestorTV, addressTV, expiryTimeTV, priceTV, newPrice;
     String productName, requestorName, location, expiryTime, priceS, requestorIdS, requirement,
-            startTime, endTime, status, username, password, authString, err;
+            startTime, endTime, status, username, password, authString, err, postal;
     double price,newprice;
     Button acceptRequestBtn, chatBtn;
-    int requestId, requestorId, postal,duration,myId;
+    int requestId, requestorId, duration,myId;
     boolean fulfilled = false;
     boolean bank = true;
     Context mContext;

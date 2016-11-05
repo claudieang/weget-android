@@ -36,6 +36,11 @@ public class FilterActivity extends AppCompatActivity {
          * Configures the radius filter as selected by users
          * Radius Switch disables the radius displayed in home screen
          */
+        if(!hasChanged){
+            lastValueRadius = 600;
+            lastValuePrice = 1000;
+        }
+
         radiusBar=(SeekBar)findViewById(R.id.radiusBar);
 
         radiusBar.setProgress(lastValueRadius);

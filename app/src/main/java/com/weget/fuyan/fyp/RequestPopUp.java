@@ -1,11 +1,13 @@
 package com.weget.fuyan.fyp;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Window;
 import android.widget.ListView;
 
 import com.weget.fuyan.fyp.Recycler.DividerItemDecoration;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by HP on 10/20/2016.
  */
-public class RequestPopUp extends Activity {
+public class RequestPopUp extends AppCompatActivity {
 
     RequestAllListAdapter adapter;
     ListView listView;
@@ -25,7 +27,7 @@ public class RequestPopUp extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.request_popup);
 
         recyclerView = (RecyclerView) findViewById(R.id.listView);
@@ -33,7 +35,7 @@ public class RequestPopUp extends Activity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
-    
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         ArrayList<Request> reqList = (ArrayList<Request>) getIntent().getSerializableExtra("reqList");
         int myId = (Integer) getIntent().getSerializableExtra("myId");
@@ -53,7 +55,7 @@ public class RequestPopUp extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         //(int)(height*0.7)
-        getWindow().setLayout((int)(width*0.7), RecyclerView.LayoutParams.WRAP_CONTENT);
+        //getWindow().setLayout((int)(width*0.7), RecyclerView.LayoutParams.WRAP_CONTENT);
 
 
 

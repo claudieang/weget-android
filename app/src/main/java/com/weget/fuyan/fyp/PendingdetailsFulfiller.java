@@ -28,8 +28,8 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
 
     Request myRequest;
     TextView productNameTV, requestorTV, addressTV, priceTV, productName1, newPriceTV;
-    String productName, requestorName, address, err, username, password, authString, requestorIdS,requirement;
-    int myId, requestorId, myRequestId, postal, transactionId;
+    String productName, requestorName, address, err, postal, username, password, authString, requestorIdS,requirement;
+    int myId, requestorId, myRequestId, transactionId;
     double price, newprice;
     Button deliveredBtn, disputeBtn;
     Context mContext;
