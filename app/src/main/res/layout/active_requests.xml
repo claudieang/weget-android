@@ -31,13 +31,15 @@
         android:focusable="true"
         android:layout_marginBottom="55dp"/>
 
+   </android.support.v4.widget.SwipeRefreshLayout>
+
     <TextView
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="invisible"
-        android:text="Loading Active Requests" />
+        android:text="No requests made yet." />
 
     <TextView
         android:id="@+id/empty_view2"
@@ -45,7 +47,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="invisible"
-        android:text="Loading Pending Requests" />
+        android:text="No pending requests." />
 
     <TextView
         android:id="@+id/empty_view3"
@@ -53,6 +55,5 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="invisible"
-        android:text="Loading Completed Requests" />
-   </android.support.v4.widget.SwipeRefreshLayout>
+        android:text="No requests completed yet." />
 </RelativeLayout>

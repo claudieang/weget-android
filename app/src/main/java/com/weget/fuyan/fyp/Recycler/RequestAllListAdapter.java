@@ -26,7 +26,6 @@ public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAd
     private int myId;
     private int requestorId;
 
-
     public RequestAllListAdapter(List<Request> requestsList, int myId) {
         this.requestsList = requestsList;
         this.myId = myId;
@@ -99,5 +98,4 @@ public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAd
         holder.details.setText("Expires on: " + DateFormatter.formatDate(request.getEndTime()));
         holder.price.setText("$" + request.getPrice() + "0");
     }
-
 }

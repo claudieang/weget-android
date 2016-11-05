@@ -269,8 +269,10 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu){
+        MenuItem filter = menu.findItem(R.id.action_filter);
         MenuItem refresh1 = menu.findItem(R.id.action_refresh);
         refresh1.setVisible(false);
+        filter.setVisible(false);
     }
 
     //tab on selected
