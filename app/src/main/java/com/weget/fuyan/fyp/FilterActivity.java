@@ -17,9 +17,9 @@ import android.widget.Toast;
 public class FilterActivity extends AppCompatActivity {
     private SeekBar priceBar, radiusBar;
     private Button resetBtn, applyBtn;
-    private int result;
-    private static int lastValue;
-    private static boolean lastSwitch;
+    private int result, result1;
+    private static int lastValueRadius, lastValuePrice;
+    private static boolean lastSwitchRadius;
     private static boolean hasChanged;
     private Switch radiusSwitch;
     private boolean switchEnabled;
@@ -32,16 +32,20 @@ public class FilterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Filter");
 
-        radiusBar=(SeekBar)findViewById(R.id.seekBar);
+        /*
+         * Configures the radius filter as selected by users
+         * Radius Switch disables the radius displayed in home screen
+         */
+        radiusBar=(SeekBar)findViewById(R.id.radiusBar);
 
-        radiusBar.setProgress(lastValue);
+        radiusBar.setProgress(lastValueRadius);
 
         radiusBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressChangedValue = 0;
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progressChangedValue = progress;
-                lastValue = progress;
+                lastValueRadius = progress;
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -49,7 +53,7 @@ public class FilterActivity extends AppCompatActivity {
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(FilterActivity.this, "Seek bar progress is :" + progressChangedValue,
+                Toast.makeText(FilterActivity.this, "Radius set at " + progressChangedValue + "m",
                         Toast.LENGTH_SHORT).show();
                 result = progressChangedValue;
             }
@@ -57,8 +61,34 @@ public class FilterActivity extends AppCompatActivity {
 
         radiusSwitch = (Switch) findViewById(R.id.switch1);
         if(hasChanged){
-            radiusSwitch.setChecked(lastSwitch);
+            radiusSwitch.setChecked(lastSwitchRadius);
         }
+
+        /*
+         * Configures the price filter as selected by users
+         *
+         */
+
+        priceBar = (SeekBar) findViewById(R.id.priceBar);
+        priceBar.setProgress(lastValuePrice);
+        priceBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progressChangedValue = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChangedValue = progress;
+                lastValuePrice = progress;
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Toast.makeText(FilterActivity.this, "Max price set at $" + progressChangedValue,
+                        Toast.LENGTH_SHORT).show();
+                result1 = progressChangedValue;
+            }
+        });
 
 
         resetBtn = (Button) findViewById(R.id.reset_button);
@@ -69,9 +99,11 @@ public class FilterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 radiusBar.setProgress(600);
                 radiusSwitch.setChecked(true);
+                priceBar.setProgress(priceBar.getMax());
 
-                lastValue = radiusBar.getProgress();
-                lastSwitch = radiusSwitch.isChecked();
+                lastValueRadius = radiusBar.getProgress();
+                lastSwitchRadius = radiusSwitch.isChecked();
+                lastValuePrice = priceBar.getProgress();
 
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_CANCELED, returnIntent);
@@ -83,11 +115,12 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 hasChanged = true;
-                lastSwitch = radiusSwitch.isChecked();
+                lastSwitchRadius = radiusSwitch.isChecked();
 
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("radius",lastValue);
+                returnIntent.putExtra("radius",lastValueRadius);
                 returnIntent.putExtra("switch", radiusSwitch.isChecked());
+                returnIntent.putExtra("price", lastValuePrice);
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
             }

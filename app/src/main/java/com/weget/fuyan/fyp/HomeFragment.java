@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
     int requestImage = R.drawable.ordericon;
     ArrayList<Request> requestArrayList = new ArrayList<>();
-    //ArrayList<Request> requestArrayList;
+    ArrayList<Request> originalList = new ArrayList<>();
     int myId;
     String URL;
 
@@ -123,9 +123,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     double lng;
     ArrayList<Double> latList = new ArrayList<>();
     ArrayList<Double> lngList = new ArrayList<>();
-    ArrayList<String> postalList = new ArrayList<String>();
-    ArrayList<String> requestNameList = new ArrayList<>();
-    ArrayList<Request> filteredList = new ArrayList<>();
 
     //private final Context tempContext = getActivity().getApplicationContext();
     /**
@@ -146,6 +143,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     private RequestAllListAdapter mAdapter;
     private LatLng lastLocation;
     private Circle circle;
+    boolean ready = false;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_screen, container, false);
@@ -164,48 +162,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         TextView b1 = (TextView) view.findViewById(R.id.my_request_title);
         Typeface typeFace = Typeface.createFromAsset(activity.getAssets(), "fonts/Roboto-Light.ttf");
         b1.setTypeface(typeFace);
-    /*
-            // Lookup the swipe container view
-            swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
-            // Setup refresh listener which triggers new data loading
-            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    // Your code to refresh the list here.
-                    // Make sure you call swipeContainer.setRefreshing(false)
-                    // once the network request has completed successfully.
-                    fetchTimelineAsync(0);
 
-                }
-            });
-            // Configure the refreshing colors
-            swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                    android.R.color.holo_green_light,
-                    android.R.color.holo_orange_light,
-                    android.R.color.holo_red_light);
-    */
         SharedPreferences pref = activity.getApplicationContext().getSharedPreferences("MyPref", 0);
         String username = pref.getString("username", null);
         String password = pref.getString("password", null);
         myId = pref.getInt("id", -1);
         usernameText = "User: " + username;
-        //text = (TextView) findViewById(R.id.textview2);
-        //text.setText("Welcome, " + username + " ");
-        //requestList = (ListView) view.findViewById(R.id.active_request_list);
-        //adapter = new RequestAdapter(activity.getApplicationContext(), R.layout.row_layout);
-        //requestList.setAdapter(adapter);
-        //newRequestBtn = (Button)findViewById(R.id.new_request_btn);
-        addRequest = (ImageButton) view.findViewById(R.id.addrequest);
-        homepage = (ImageButton) view.findViewById(R.id.homepage);
-        requestbt = (ImageButton) view.findViewById(R.id.request);
-        fulfillbt = (ImageButton) view.findViewById(R.id.fulfill);
 
         authString = username + ":" + password;
         //requestArrayList = new ArrayList<Request>();
         new getRequests().execute(authString);
-
-        //adapter = new RequestListAdapter(getContext(), R.layout.request_popup);
-
 
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.active_request_list);
         mAdapter = new com.weget.fuyan.fyp.Recycler.RequestAllListAdapter(requestArrayList, myId);
@@ -215,25 +181,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
-//        requestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
-//                // Then you start a new Activity via Intent
-//                Request rq = requestArrayList.get(position);
-//
-//                if(myId == rq.getRequestorId()){
-//                    Intent intent = new Intent(activity, RequesterViewDetails.class);
-//                    intent.putExtra("selected_request", (Serializable) rq);
-//                    startActivity(intent);
-//                }else{
-//                    Intent intent = new Intent(activity, FulfillviewRequestDetails.class);
-//                    intent.putExtra("selected_request", (Serializable) rq);
-//                    startActivity(intent);
-//                }
-//
-//            }
-//        });
+
         mapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));
         //mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
 
@@ -270,26 +218,35 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                int result=data.getIntExtra("radius", 0);
+                //handles radius filter
+                int radiusResult=data.getIntExtra("radius", 0);
+
                 boolean switcher = data.getBooleanExtra("switch", true);
-                Log.d("returned result", result + "");
+                Log.d("returned result", radiusResult + "");
+                mMap.clear();
                 if(circle != null) {
                     circle.remove();
                     if (switcher) {
-                        drawCircle(lastLocation, result);
+                        drawCircle(lastLocation, radiusResult);
                     }
                 }
-                mAdapter.getFilter().filter("PS");
 
-                Log.d("AFTER SHIT", mAdapter.getItemCount()+"");
+                //handle price filter
+                int priceResult = data.getIntExtra("price", 0);
+                filterPrice(priceResult);
+                new getLatlng().execute();
+
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Log.d("returned result", "NO SHIT HERE");
                 //Write your code if there's no result
+                mMap.clear();
                 if(circle != null){
                     circle.remove();
                     drawCircle(lastLocation, 600);
                 }
+                filterReset();
+                new getLatlng().execute();
             }
         }
     }
@@ -344,11 +301,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
             dialog.show();
+            ready = false;
         }
 
         @Override
         protected Boolean doInBackground(String... params) {
-
             checkLocationPermission();
 
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
@@ -366,8 +323,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 requestArrayList.clear();
                 //postalList.clear();
                 //requestNameList.clear();
-                latList.clear();
-                lngList.clear();
+
 
                 try {
  //                   Gson gson = new Gson();
@@ -393,23 +349,42 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                                 postal, startTime, endTime, duration, price, status);
 
                         requestArrayList.add(request);
-                        //postalList.add("" + postal);
-                        //requestNameList.add(productName);
-
-
                   }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 success = true;
             }
+            return success;
+        }
 
-            //int size = postalList.size();
+        @Override
+        protected void onPostExecute(Boolean result) {
+            originalList.clear();
+            originalList.addAll(requestArrayList);
+            dialog.dismiss();
+            mAdapter.notifyDataSetChanged();
+            new getLatlng().execute();
+
+        }
 
 
+    }
+
+    private class getLatlng extends AsyncTask<String, Void, Boolean> {
+        boolean success = false;
+
+        @Override
+        protected void onPreExecute() {
+            latList.clear();
+            lngList.clear();
+            Log.d("Place Markers: (pre) ", requestArrayList.size() + "");
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
             for (int i = 0; i < requestArrayList.size(); i++) {
                 String response;
-      //          String postal = postalList.get(i);
                 String postal = requestArrayList.get(i).getPostal() + "";
                 String baseURL = "https://maps.google.com/maps/api/geocode/json?components=countrySG|postal_code:";
                 String key = "&key=AIzaSyDNbh3U6jmAeRGQogCmt6EcRXmFnYxbec4";
@@ -420,6 +395,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 String maprst = UtilHttp.doHttpGet(mContext, mapurl);
                 if (maprst == null) {
                     error = UtilHttp.err;
+                    success = false;
                 } else {
                     try {
                         JSONObject jso = new JSONObject(maprst);
@@ -444,40 +420,29 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
                 }
             }
-
+            Log.d("Place Markers: ", requestArrayList.size() + "");
             return success;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            dialog.dismiss();
-            mAdapter.notifyDataSetChanged();
             if (result) {
-
                 try {
                     addRequestMarkers();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                Log.d("Print", "Value: " + requestArrayList.size());
-
-                //swipeContainer.setRefreshing(false);
-                //Toast.makeText(getApplicationContext(), "Populating Active Requests!", Toast.LENGTH_SHORT).show();
-
             } else {
                 Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
+            ready = true;
         }
-
-
     }
 
     protected void addRequestMarkers() throws JSONException {
         //lat = 1.3790849;
         //lng = 103.955139;
         HashMap<LatLng, ArrayList<Request>> markerMapList = new HashMap<>();
-
 
         if (mMap != null) {
             for (int i = 0; i < latList.size(); i++) {
@@ -758,12 +723,40 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     }
 
     public void filter(){
-        Intent i = new Intent(getContext(), FilterActivity.class);
-        startActivityForResult(i, 1);
+        if(ready) {
+            Intent i = new Intent(activity, FilterActivity.class);
+            startActivityForResult(i, 1);
+        }
     }
 
-    public void filterPrice(){
+    public void filterPrice(int maxPrice){
+        //stores pre-filter original ArrayList
 
+        //requestArrayList = originalList;
+        requestArrayList.clear();
+        Iterator<Request> setIterator = originalList.iterator();
+        while(setIterator.hasNext()){
+            Request r = setIterator.next();
+            if(r.getPrice() <= maxPrice){
+                requestArrayList.add(r);
+            }
+        }
+
+        mAdapter.notifyDataSetChanged();
     }
 
+    public void filterReset(){
+        if(originalList != null) {
+            //requestArrayList = originalList;
+
+            Log.d("List sizes: ", requestArrayList.size() + ", " + originalList.size());
+
+            requestArrayList.clear();
+            requestArrayList.addAll(originalList);
+
+            mAdapter.notifyDataSetChanged();
+        }else{
+            Log.d("filter reset", requestArrayList.size() + ", " + originalList.size());
+        }
+    }
 }

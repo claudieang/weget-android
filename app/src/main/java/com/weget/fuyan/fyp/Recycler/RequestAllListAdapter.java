@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.weget.fuyan.fyp.FulfillviewRequestDetails;
@@ -17,32 +15,20 @@ import com.weget.fuyan.fyp.RequesterViewDetails;
 import com.weget.fuyan.fyp.Util.DateFormatter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by Claudie on 9/19/16.
  */
-public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAdapter.MyActiveViewHolder> implements Filterable {
+public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAdapter.MyActiveViewHolder>{
 
     private List<Request> requestsList;
-    private List<Request> filteredUserList;
-    private UserFilter userFilter;
     private int myId;
     private int requestorId;
 
     public RequestAllListAdapter(List<Request> requestsList, int myId) {
         this.requestsList = requestsList;
         this.myId = myId;
-        this.filteredUserList = new ArrayList<>();
-    }
-
-    @Override
-    public Filter getFilter() {
-        if(userFilter == null)
-            userFilter = new UserFilter(this, requestsList);
-        return userFilter;
     }
 
     public class MyActiveViewHolder extends RecyclerView.ViewHolder{
@@ -111,49 +97,5 @@ public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAd
         holder.title.setText(request.getProductName());
         holder.details.setText("Expires on: " + DateFormatter.formatDate(request.getEndTime()));
         holder.price.setText("$" + request.getPrice() + "0");
-    }
-
-    private static class UserFilter extends Filter {
-
-        private final RequestAllListAdapter adapter;
-
-        private final List<Request> originalList;
-
-        private final List<Request> filteredList;
-
-        private UserFilter(RequestAllListAdapter adapter, List<Request> originalList) {
-            super();
-            this.adapter = adapter;
-            this.originalList = new LinkedList<>(originalList);
-            this.filteredList = new ArrayList<>();
-        }
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            filteredList.clear();
-            final FilterResults results = new FilterResults();
-
-            if (constraint.length() == 0) {
-                filteredList.addAll(originalList);
-            } else {
-                final String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (final Request request : originalList) {
-                    if (request.getProductName().contains(filterPattern)) {
-                        filteredList.add(request);
-                    }
-                }
-            }
-            results.values = filteredList;
-            results.count = filteredList.size();
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            adapter.filteredUserList.clear();
-            adapter.filteredUserList.addAll((ArrayList<Request>) results.values);
-            adapter.notifyDataSetChanged();
-        }
     }
 }

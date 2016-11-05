@@ -40,7 +40,7 @@
                 android:layout_below="@id/divider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/seekBar"
+                android:layout_alignStart="@+id/radiusBar"
                 android:text="Min"
                 android:textColor="@color/darkGray"
                 android:textSize="14sp" />
@@ -49,14 +49,14 @@
                 android:id="@+id/max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/seekBar"
-                android:layout_alignEnd="@+id/seekBar"
+                android:layout_above="@+id/radiusBar"
+                android:layout_alignEnd="@+id/radiusBar"
                 android:text="Max"
                 android:textColor="@color/darkGray"
                 android:textSize="14sp" />
 
             <SeekBar
-                android:id="@+id/seekBar"
+                android:id="@+id/radiusBar"
                 android:layout_below="@id/min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,11 +65,13 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
-                android:max="2000" />
+                android:max="2000"
+                android:progress="600"
+                android:indeterminate="false" />
 
             <Switch
                 android:layout_marginTop="20dp"
-                android:layout_below="@id/seekBar"
+                android:layout_below="@id/radiusBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Enable radius"
@@ -127,7 +129,7 @@
             android:layout_below="@id/divider3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/seekBar1"
+            android:layout_alignStart="@+id/priceBar"
             android:text="Min"
             android:textColor="@color/darkGray"
             android:textSize="14sp" />
@@ -136,14 +138,14 @@
             android:id="@+id/max1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/seekBar1"
-            android:layout_alignEnd="@+id/seekBar1"
+            android:layout_above="@+id/priceBar"
+            android:layout_alignEnd="@+id/priceBar"
             android:text="Max"
             android:textColor="@color/darkGray"
             android:textSize="14sp" />
 
         <SeekBar
-            android:id="@+id/seekBar1"
+            android:id="@+id/priceBar"
             android:layout_below="@id/min1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -153,13 +155,15 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginBottom="25dp"
-            android:max="1000" />
+            android:progress="500"
+            android:max="500"
+            android:indeterminate="false" />
 
         <View
             android:id="@+id/divider4"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/seekBar1"
+            android:layout_below="@+id/priceBar"
             android:layout_marginBottom="20dp"
             android:background="@color/bt_very_light_gray" />
     </RelativeLayout>
