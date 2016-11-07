@@ -57,6 +57,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
 import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
@@ -91,6 +92,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     int requestImage = R.drawable.ordericon;
     ArrayList<Request> requestArrayList = new ArrayList<>();
     ArrayList<Request> originalList = new ArrayList<>();
+
+    ArrayList<Request> filterList = new ArrayList<>();
     int myId;
     String URL;
 
@@ -121,6 +124,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     protected GoogleApiClient mGoogleApiClient;
     public LocationRequest mLocationRequest;
     public Location mLastLocation;
+    public int radiusVal = -1;
     public Marker mCurrLocationMarker;
     String error;
     double lat;
@@ -280,7 +284,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 if(circle != null) {
                     circle.remove();
                     if (switcher) {
+                        radiusVal = radiusResult;
                         drawCircle(lastLocation, radiusResult);
+                    } else{
+                        radiusVal = -1;
                     }
                 }
 
@@ -530,12 +537,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             //create markers based on latlng
             if (markerMapList.size() > 0) {
                 MarkerOptions markerOptions = new MarkerOptions();
-
+                //markerOptions.
                 Iterator iter = markerMapList.entrySet().iterator();
 
                 while (iter.hasNext()) {
                     Map.Entry<LatLng, ArrayList<Request>> pair = (Map.Entry) iter.next();
                     LatLng addLatLng = pair.getKey();
+
                     ArrayList<Request> addReqs = pair.getValue();
 
                     Log.d("Print", "addReqs size is : " + addReqs.size());
@@ -547,8 +555,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                         markerOptions.title(addReqs.get(0).getProductName());
                     }
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+
+
                     Marker mkr = mMap.addMarker(markerOptions);
                     mkr.setTag(addReqs);
+                    if(radiusVal != -1) {
+                        if (SphericalUtil.computeDistanceBetween(lastLocation, mkr.getPosition()) > radiusVal) {
+                            mkr.setVisible(false);
+                        }
+                    }
                     Log.d("Print", "addReqs size is : " + addReqs.size());
                 }
 
