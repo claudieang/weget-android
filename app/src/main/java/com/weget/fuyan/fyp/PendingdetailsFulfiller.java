@@ -306,7 +306,9 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
             if(result){
 
                 Intent i = new Intent (PendingdetailsFulfiller.this, dispute.class);
+
                 i.putExtra("transaction_id", transactionId);
+                i.putExtra("user_type",0); //zero means fulfiller, 1 means requestor
                 i.putExtra("origin", "fulfiller");
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
