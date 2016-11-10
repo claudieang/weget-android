@@ -316,7 +316,7 @@ public class MyFulfillActivity extends AppCompatActivity {
             if(result){
                 boolean check = false;
 
-                adapter.clear();
+                //adapter.clear();
                 if(myFulfillRequestArrayList != null && !myFulfillRequestArrayList.isEmpty()){
 
                     for(Request r: myFulfillRequestArrayList){

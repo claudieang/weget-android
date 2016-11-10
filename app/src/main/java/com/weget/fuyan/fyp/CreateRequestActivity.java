@@ -1,5 +1,6 @@
 package com.weget.fuyan.fyp;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,34 +12,32 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
+import com.codetroopers.betterpickers.calendardatepicker.MonthAdapter;
+import com.codetroopers.betterpickers.radialtimepicker.RadialTimePickerDialogFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class CreateRequestActivity extends AppCompatActivity {
+public class CreateRequestActivity extends AppCompatActivity implements CalendarDatePickerDialogFragment.OnDateSetListener, RadialTimePickerDialogFragment.OnTimeSetListener {
     List<Address> fullAddress;
     double latitude, longtitude;
 
@@ -46,7 +45,7 @@ public class CreateRequestActivity extends AppCompatActivity {
             startTime, endTime, err, username, password, authString, unit;
     int requestDuration, requestorId;
     double price;
-    EditText etProductName, etRequestRequirement, etPostalCode, etAddressLine, etRequestDuration, etPrice;
+    EditText etProductName, etRequestRequirement, etPostalCode, etAddressLine, etPrice;
     Button createRequestBtn;
     Button getAddressBtn;
     ImageButton getCurrLocBtn;
@@ -54,10 +53,19 @@ public class CreateRequestActivity extends AppCompatActivity {
     Context mContext;
     double latFromGPS;
     double lngFromGPS;
-    Spinner dropdown;
 
     private Toolbar toolbar;
     String URL;
+    String day, month, year, hours, mins;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+
+    private static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
+    private static final String FRAG_TAG_TIME_PICKER = "fragment_time_picker_name";
+    private TextView etRequestDuration;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +98,9 @@ public class CreateRequestActivity extends AppCompatActivity {
         etRequestRequirement = (EditText) findViewById(R.id.product_requirement_txt);
         etPostalCode = (EditText) findViewById(R.id.postal_code_txt);
         etAddressLine = (EditText) findViewById(R.id.address_line_txt);
-        etRequestDuration = (EditText) findViewById(R.id.request_duration_txt);
+        //etRequestDuration = (EditText) findViewById(R.id.request_duration_txt);
+        etRequestDuration = (TextView) findViewById(R.id.request_duration_txt);
+
         etPrice = (EditText) findViewById(R.id.request_price_txt);
         getAddressBtn = (Button) findViewById(R.id.get_address_btn);
         getCurrLocBtn = (ImageButton) findViewById(R.id.get_curr_location_btn);
@@ -99,7 +109,7 @@ public class CreateRequestActivity extends AppCompatActivity {
         ImageButton cancel_Btn = (ImageButton) findViewById(R.id.close_btn);
 
         ((TextView) findViewById(R.id.request_title)).setTypeface(typeFaceBold);
-        ((TextView)findViewById(R.id.request_title)).setTypeface(typeFaceBold);
+        ((TextView) findViewById(R.id.request_title)).setTypeface(typeFaceBold);
         etProductName.setTypeface(typeFace);
         etRequestRequirement.setTypeface(typeFace);
         etPostalCode.setTypeface(typeFace);
@@ -119,6 +129,17 @@ public class CreateRequestActivity extends AppCompatActivity {
 
 
 */
+        Button button = (Button) findViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CalendarDatePickerDialogFragment cdp = new CalendarDatePickerDialogFragment()
+                        .setOnDateSetListener(CreateRequestActivity.this)
+                        .setDateRange(new MonthAdapter.CalendarDay(), new MonthAdapter.CalendarDay(2020, 1, 1));
+                cdp.show(getSupportFragmentManager(), FRAG_TAG_DATE_PICKER);
+            }
+        });
+
         getAddressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,7 +208,7 @@ public class CreateRequestActivity extends AppCompatActivity {
                 // instantiate the location manager, note you will need to request permissions in your manifest
                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 // get the last know location from your location manager.
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
@@ -198,10 +219,10 @@ public class CreateRequestActivity extends AppCompatActivity {
                     return;
                 }
                 Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER); //doesnt seem to work
-                Log.d("Print","location data1 is : " + location);
-                if(location ==  null){
+                Log.d("Print", "location data1 is : " + location);
+                if (location == null) {
                     location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    Log.d("Print","location data2 is : " + location);
+                    Log.d("Print", "location data2 is : " + location);
                 }
                 // now get the lat/lon from the location and do something with it.
 
@@ -213,7 +234,7 @@ public class CreateRequestActivity extends AppCompatActivity {
 
                 try {
                     List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                    Log.d("Print","address list size is : " + address.size());
+                    Log.d("Print", "address list size is : " + address.size());
 
                     if (address != null && !address.isEmpty()) {
 
@@ -267,30 +288,15 @@ public class CreateRequestActivity extends AppCompatActivity {
                             if (addressLine != null && addressLine.trim().length() > 0) {
 
                                 if (requestDurationS != null && requestDurationS.trim().length() > 0) {
-                                    requestDuration = Integer.parseInt(requestDurationS);
+                                    //requestDuration = Integer.parseInt(requestDurationS);
+                                    requestDuration = 0;
+
 
                                     if (priceS != null && priceS.trim().length() > 0) {
                                         price = Double.parseDouble(priceS);
                                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                         Date now = new Date();
                                         startTime = sdf.format(now);
-
-                                        Log.d("Start Time: ", startTime);
-                                        Calendar date = Calendar.getInstance();
-                                        date.setTime(now);
-                                        unit = dropdown.getSelectedItem().toString();
-                                        //int num = Integer.parseInt(unit);
-                                        if(unit != null && unit.equals("Minutes")){
-                                            date.add(Calendar.MINUTE, requestDuration);
-                                        }
-
-                                        if(unit != null && unit.equals("Hours")){
-                                            date.add(Calendar.HOUR, requestDuration);
-                                        }
-
-                                        Date time = date.getTime();
-                                        endTime = sdf.format(time);
-
                                         authString = username + ":" + password;
                                         new createRequest().execute(authString);
 
@@ -299,7 +305,7 @@ public class CreateRequestActivity extends AppCompatActivity {
                                         etPrice.setError("Price required!");
                                     }
                                 } else {
-                                    etRequestDuration.setError("Duration required!");
+                                    etRequestDuration.setError("End Date required!");
                                 }
 
                             } else {
@@ -329,55 +335,49 @@ public class CreateRequestActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
-        //dropdown list
-
-        //reason dropdown menu
-        dropdown = (Spinner)findViewById(R.id.spinner1);
-        String[] items = new String[]{"Hours", "Minutes"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items){
-
-
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View v = super.getView(position, convertView, parent);
-
-                ((TextView) v).setTextSize(16);
-                ((TextView) v).setTextColor(
-                        getResources().getColorStateList(R.color.black)
-                );
-
-                return v;
-            }
-
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View v = super.getDropDownView(position, convertView, parent);
-                v.setBackgroundResource(R.drawable.barbase);
-
-                ((TextView) v).setTextColor(
-                        getResources().getColorStateList(R.color.black)
-                );
-
-                ((TextView) v).setGravity(Gravity.CENTER);
-
-                return v;
-            }
-
-
-
-        };
-        dropdown.setAdapter(adapter);
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view, int position,
-                               long id) {
-        dropdown.setSelection(position);
-        String selState = (String) dropdown.getSelectedItem().toString();
-
-        unit = selState;
-
-
+    @Override
+    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+        //mResultTextView.setText(year + "/" +  monthOfYear + "/" + dayOfMonth);
+        this.year = year + "";
+        this.month = monthOfYear + "";
+        this.day = dayOfMonth + "";
+        Log.d("Date", year + "/" +  monthOfYear + "/" + dayOfMonth);
+        Date now = new Date();
+        RadialTimePickerDialogFragment rtpd = new RadialTimePickerDialogFragment()
+                .setOnTimeSetListener(CreateRequestActivity.this)
+                .setDoneText("Ok")
+                .setStartTime(now.getHours(),now.getMinutes())
+                .setForced12hFormat()
+                .setCancelText("Cancel");
+        rtpd.show(getSupportFragmentManager(), FRAG_TAG_TIME_PICKER);
+        //Log.d("Time", hourOfDay + ":" + minute);
     }
+
+    @Override
+    public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
+        this.hours = hourOfDay + "";
+        this.mins = minute + "";
+        Log.d("Time", hourOfDay + ":" + minute);
+        //"yyyy-MM-dd HH:mm:ss")
+        if(day.length() != 2){
+            day = "0" + day;
+        }
+        if(month.length() != 2){
+            month = "0" + month;
+        }
+        if(hours.length() != 2){
+            hours = "0" + hours;
+        }
+
+        if(mins.length() != 2){
+            mins = "0" + mins;
+        }
+        endTime = year + "-" + month + "-" + day + " " + hours + ":" + mins + ":" + "00" ;
+        etRequestDuration.setText(endTime);
+    }
+
 
     private class createRequest extends AsyncTask<String, Void, Boolean> {
 
@@ -389,7 +389,7 @@ public class CreateRequestActivity extends AppCompatActivity {
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
 
-            if(!isFinishing()) {
+            if (!isFinishing()) {
                 dialog.show();
             }
 

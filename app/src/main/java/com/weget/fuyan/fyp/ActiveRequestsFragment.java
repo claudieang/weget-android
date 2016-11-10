@@ -20,12 +20,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.sendbird.android.shadow.com.google.gson.Gson;
+import com.sendbird.android.shadow.com.google.gson.reflect.TypeToken;
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HP on 4/4/2016.
@@ -143,32 +143,41 @@ public class ActiveRequestsFragment extends Fragment {
   //                  Gson gson = new Gson();
                     //myRequestArrayList = gson.fromJson(rst, new TypeToken<List<Request>>(){}.getType());
 
-                    JSONArray jsoArray = new JSONArray(rst);
-                    for (int i = 0; i < jsoArray.length(); i++) {
-                        JSONObject jso = jsoArray.getJSONObject(i);
+//                    JSONArray jsoArray = new JSONArray(rst);
+//                    for (int i = 0; i < jsoArray.length(); i++) {
+//                        JSONObject jso = jsoArray.getJSONObject(i);
+//
+//                        int id = jso.getInt("id");
+//                        int requestorId = jso.getInt("requestorId");
+//                        int imageResource = requestImage;
+//                        String productName = jso.getString("productName");
+//                        String requirement = jso.getString("requirement");
+//                        String location = jso.getString("location");
+//                        String postal = jso.getString("postal");
+//                        String startTime = jso.getString("startTime");
+//                        int duration = jso.getInt("duration");
+//                        String endTime = jso.getString("endTime");
+//                        double price = jso.getDouble("price");
+//                        String status = jso.getString("status");
+//                        int count = jso.getInt("count");
+//
+//                        MergedRequest request = new MergedRequest(id, requestorId, imageResource, productName, requirement, location,
+//                                postal, startTime, endTime, duration, price, status, count);
+//                        if (status.equals("active")) {
+//                            mergedList.add(request);
+//                        }
+//
+//                       // mAdapter.notifyDataSetChanged();
+//
+//                    }
+                    Gson gson  = new Gson();
+                    ArrayList<MergedRequest> merged = new ArrayList<>();
+                    merged = gson.fromJson(rst, new TypeToken<List<MergedRequest>>(){}.getType());
 
-                        int id = jso.getInt("id");
-                        int requestorId = jso.getInt("requestorId");
-                        int imageResource = requestImage;
-                        String productName = jso.getString("productName");
-                        String requirement = jso.getString("requirement");
-                        String location = jso.getString("location");
-                        String postal = jso.getString("postal");
-                        String startTime = jso.getString("startTime");
-                        int duration = jso.getInt("duration");
-                        String endTime = jso.getString("endTime");
-                        double price = jso.getDouble("price");
-                        String status = jso.getString("status");
-                        int count = jso.getInt("count");
-
-                        MergedRequest request = new MergedRequest(id, requestorId, imageResource, productName, requirement, location,
-                                postal, startTime, endTime, duration, price, status, count);
-                        if (status.equals("active")) {
-                            mergedList.add(request);
+                    for(MergedRequest m : merged){
+                        if(m.getStatus().equals("active")){
+                            mergedList.add(m);
                         }
-
-                       // mAdapter.notifyDataSetChanged();
-
                     }
 
                     if (mergedList.size() > 0){

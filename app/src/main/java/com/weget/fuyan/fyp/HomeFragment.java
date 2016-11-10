@@ -432,7 +432,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
             originalList.clear();
             originalList.addAll(requestArrayList);
-            dialog.dismiss();
+            if(dialog.isShowing()) {
+                dialog.dismiss();
+            }
             mAdapter.notifyDataSetChanged();
             new getLatlng().execute();
 

@@ -6,10 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,9 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +26,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class dispute extends AppCompatActivity {
+public class dispute extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     String username, password, authString, message, origin, err, reason;
     int myId, transactionId;
@@ -92,7 +91,7 @@ public class dispute extends AppCompatActivity {
 
         //reason dropdown menu
         dropdown = (Spinner)findViewById(R.id.spinner1);
-        String[] items = new String[]{"1. Fulfiller did not deliver", "2. Requestor refuses confirm/not found", "3. Service not up to standard"};
+        String[] items = new String[]{"Fulfiller did not turn up", "Requestor refuses confirmation", "Service not up to standard"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items){
 
 
@@ -124,18 +123,23 @@ public class dispute extends AppCompatActivity {
 
         };
         dropdown.setAdapter(adapter);
-
+        dropdown.setOnItemSelectedListener(this);
 
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position,
                                long id) {
         dropdown.setSelection(position);
-        String selState = (String) dropdown.getSelectedItem();
-
+        String selState = dropdown.getSelectedItem().toString();
+        Log.d("string <<< ", selState);
         reason = selState;
 
 
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        reason = "Fulfiller did not turn up";
     }
 
     private class doDispute extends AsyncTask<String, Void, Boolean> {

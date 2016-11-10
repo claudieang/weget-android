@@ -71,7 +71,9 @@ public class RequestFragment extends Fragment implements MaterialTabListener {
 
         //adapter view
         androidAdapter = new ViewPagerAdapter(getFragmentManager());
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(androidAdapter);
+
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int tabposition) {

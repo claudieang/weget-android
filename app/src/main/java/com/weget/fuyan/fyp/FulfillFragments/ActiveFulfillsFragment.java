@@ -23,6 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sendbird.android.shadow.com.google.gson.Gson;
+import com.sendbird.android.shadow.com.google.gson.reflect.TypeToken;
 import com.weget.fuyan.fyp.MyfulfillDetails;
 import com.weget.fuyan.fyp.R;
 import com.weget.fuyan.fyp.Recycler.RecyclerItemClickListener;
@@ -30,12 +32,9 @@ import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 import com.weget.fuyan.fyp.Request;
 import com.weget.fuyan.fyp.UtilHttp;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HP on 4/4/2016.
@@ -291,30 +290,40 @@ public class ActiveFulfillsFragment extends Fragment {
                 //myFulfillRequestList.clear();
 
                 try {
-                    JSONArray jsoArray = new JSONArray(rst);
-                    for(int i = 0; i < jsoArray.length(); i++) {
-                        JSONObject jso = jsoArray.getJSONObject(i);
+//                    JSONArray jsoArray = new JSONArray(rst);
+//                    for(int i = 0; i < jsoArray.length(); i++) {
+//                        JSONObject jso = jsoArray.getJSONObject(i);
+//
+//                        int id = jso.getInt("id");
+//                        int requestorId = jso.getInt("requestorId");
+//                        int imageResource = fulfillRequestImage;
+//                        String productName = jso.getString("productName");
+//                        String requirement = jso.getString("requirement");
+//                        String location = jso.getString("location");
+//                        String postal = jso.getString("postal");
+//                        String startTime = jso.getString("startTime");
+//                        int duration = jso.getInt("duration");
+//                        String endTime = jso.getString("endTime");
+//                        double price = jso.getDouble("price");
+//                        String status = jso.getString("status");
+//
+//
+//                        if(status.equals("active")) {
+//                            Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
+//                                    postal, startTime, endTime, duration, price, status);
+//                            myFulfillRequestArrayList.add(request);
+//                        }
+//
+//                    }
 
-                        int id = jso.getInt("id");
-                        int requestorId = jso.getInt("requestorId");
-                        int imageResource = fulfillRequestImage;
-                        String productName = jso.getString("productName");
-                        String requirement = jso.getString("requirement");
-                        String location = jso.getString("location");
-                        String postal = jso.getString("postal");
-                        String startTime = jso.getString("startTime");
-                        int duration = jso.getInt("duration");
-                        String endTime = jso.getString("endTime");
-                        double price = jso.getDouble("price");
-                        String status = jso.getString("status");
+                    Gson gson  = new Gson();
+                    ArrayList<Request> merged = new ArrayList<>();
+                    merged = gson.fromJson(rst, new TypeToken<List<Request>>(){}.getType());
 
-
-                        if(status.equals("active")) {
-                            Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
-                                    postal, startTime, endTime, duration, price, status);
-                            myFulfillRequestArrayList.add(request);
+                    for(Request m : merged){
+                        if(m.getStatus().equals("active")){
+                            myFulfillRequestArrayList.add(m);
                         }
-
                     }
 
                     if(myFulfillRequestArrayList.size() > 0){
@@ -323,7 +332,7 @@ public class ActiveFulfillsFragment extends Fragment {
                         haveActiveFulfills = false;
                     }
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 success = true;

@@ -25,160 +25,180 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/request_title"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="Details"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:text="Create a Request"
             android:textSize="20sp"
             android:textColor="@color/darkGray"
             />
 
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/request_subtitle"
+            android:layout_marginTop="12dp"
+            android:paddingLeft="10dp"
+            android:text="Details"
+            android:textSize="16sp"
+            android:layout_below="@+id/request_title"
+            android:textColor="@color/darkGray"
+            />
         <EditText
             android:id="@+id/product_name_txt"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/request_title"
-            android:background="@drawable/barbase"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/request_subtitle"
+            android:background="#FFFFFF"
             android:inputType="textCapWords"
-            android:hint=" Product Name"
+            android:hint=" What are you requesting for?"
             android:paddingStart="10dp"
             android:maxLength="30"
             android:singleLine="true"
             android:drawableLeft="@drawable/product_icon"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimaryDark"
             android:textColorHint="#BCBCBC"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_alignParentStart="true" />
 
         <EditText
+            android:layout_marginTop="3dp"
             android:id="@+id/product_requirement_txt"
+            android:background="#FFFFFF"
+            android:hint=" Describe your request in greater detail."
+            android:paddingStart="10dp"
+            android:drawableLeft="@drawable/info_icon"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHint="#BCBCBC"
+            android:textSize="16sp"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:paddingBottom="45dp"
+            android:layout_below="@+id/product_name_txt"
+            android:layout_alignStart="@+id/product_name_txt" />
+
+
+
+        <EditText
+            android:id="@+id/request_price_txt"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/product_name_txt"
-            android:background="@drawable/barbase"
-            android:inputType="textCapSentences"
-            android:hint=" Additional Info"
+            android:background="#FFFFFF"
+            android:ems="10"
+            android:layout_marginTop="3dp"
+            android:hint=" How much are you willing to pay? (SGD)"
+            android:drawableLeft="@drawable/money_light"
+            android:inputType="numberDecimal|numberSigned"
             android:paddingStart="10dp"
-            android:singleLine="true"
-            android:drawableLeft="@drawable/info_icon"
             android:textColor="@color/black"
             android:textColorHint="#BCBCBC"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_below="@+id/product_requirement_txt" />
+
+        <TextView
+            android:id="@+id/request_duration_txt"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:background="#FFFFFF"
+            android:layout_marginTop="3dp"
+            android:hint=" Request End Time"
+            android:drawableLeft="@drawable/timer_light"
+            android:paddingStart="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="#BCBCBC"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:layout_below="@id/request_price_txt"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Date"
+            android:id="@+id/button2"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:foreground="?android:selectableItemBackground"
+            android:background="@color/colorPrimary"
+            android:layout_alignTop="@+id/request_duration_txt"
+            android:layout_alignBottom="@+id/request_duration_txt"
+            android:layout_toRightOf="@+id/request_duration_txt"
+            android:layout_alignParentEnd="true" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/request_subtitle2"
+            android:layout_marginTop="18dp"
+            android:paddingLeft="10dp"
+            android:text="Location/Meet-up"
+            android:textSize="16sp"
+            android:layout_below="@+id/request_duration_txt"
+            android:textColor="@color/darkGray"
+            />
 
         <EditText
             android:id="@+id/postal_code_txt"
             android:layout_width="150dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/product_requirement_txt"
-            android:background="@drawable/barbase"
+            android:background="#FFFFFF"
             android:ems="10"
+            android:layout_marginTop="8dp"
             android:hint=" Postal"
             android:inputType="number"
             android:paddingStart="10dp"
             android:singleLine="true"
             android:drawableLeft="@drawable/my_location_light"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimary"
             android:textColorHint="#BCBCBC"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_below="@+id/request_subtitle2" />
+
 
         <Button
             android:id="@+id/get_address_btn"
             android:layout_width="85dp"
-            android:layout_height="38dp"
-            android:layout_alignTop="@+id/postal_code_txt"
-            android:layout_toEndOf="@+id/postal_code_txt"
+            android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:fontFamily="normal"
             android:foreground="?android:selectableItemBackground"
             android:background="@color/colorPrimary"
-            android:layout_weight="1"
-            android:typeface="normal"
-            android:text="Get Address"
+            android:text="Find Address"
             android:textSize="10sp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignTop="@+id/postal_code_txt"
+            android:layout_alignBottom="@+id/postal_code_txt"
+            android:layout_toEndOf="@+id/postal_code_txt" />
 
 
         <ImageButton
             android:id="@+id/get_curr_location_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignTop="@+id/postal_code_txt"
-            android:layout_toEndOf="@+id/get_address_btn"
             android:background="@drawable/location"
-            />
+            android:layout_above="@+id/address_line_txt"
+            android:layout_toEndOf="@+id/get_address_btn" />
 
         <EditText
             android:id="@+id/address_line_txt"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/postal_code_txt"
-            android:background="@drawable/barbase"
+            android:background="#FFFFFF"
             android:hint=" Address"
             android:drawableLeft="@drawable/map_icon"
             android:paddingStart="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimary"
             android:textColorHint="#BCBCBC"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/request_duration_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/address_line_txt"
-            android:background="@drawable/barbase"
-            android:ems="10"
-            android:hint=" Duration"
-            android:drawableLeft="@drawable/timer_light"
-            android:inputType="number"
-            android:paddingStart="10dp"
-            android:textColor="@color/black"
-            android:textColorHint="#BCBCBC"
-            android:textSize="16sp" />
-
-        <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"
-            android:layout_alignTop="@+id/request_duration_txt"
-            android:layout_alignBottom="@+id/request_duration_txt"
-            android:layout_toEndOf="@+id/request_duration_txt"
-            android:layout_marginRight="5dp"/>
-
-
-        <EditText
-            android:id="@+id/request_price_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/request_duration_txt"
-            android:background="@drawable/barbase"
-            android:ems="10"
-            android:hint=" Price (SGD)"
-            android:drawableLeft="@drawable/money_light"
-            android:inputType="numberDecimal|numberSigned"
-            android:paddingStart="10dp"
-            android:textColor="@color/black"
-            android:textColorHint="#BCBCBC"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_marginTop="3dp"
+            android:layout_below="@+id/postal_code_txt"
+            android:layout_alignParentStart="true" />
 
 
     </RelativeLayout>

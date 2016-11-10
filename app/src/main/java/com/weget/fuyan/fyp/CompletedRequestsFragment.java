@@ -21,15 +21,14 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.sendbird.android.shadow.com.google.gson.Gson;
+import com.sendbird.android.shadow.com.google.gson.reflect.TypeToken;
 import com.weget.fuyan.fyp.Recycler.RecyclerItemClickListener;
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HP on 4/4/2016.
@@ -189,40 +188,48 @@ public class CompletedRequestsFragment extends Fragment {
                 myRequestArrayList.clear();
 
                 try {
-                    JSONArray jsoArray = new JSONArray(rst);
-                    for (int i = 0; i < jsoArray.length(); i++) {
-                        JSONObject jso = jsoArray.getJSONObject(i);
+//                    JSONArray jsoArray = new JSONArray(rst);
+//                    for (int i = 0; i < jsoArray.length(); i++) {
+//                        JSONObject jso = jsoArray.getJSONObject(i);
+//
+//                        int id = jso.getInt("id");
+//                        int requestorId = jso.getInt("requestorId");
+//                        int imageResource = requestImage;
+//                        String productName = jso.getString("productName");
+//                        String requirement = jso.getString("requirement");
+//                        String location = jso.getString("location");
+//                        String postal = jso.getString("postal");
+//                        String startTime = jso.getString("startTime");
+//                        int duration = jso.getInt("duration");
+//                        String endTime = jso.getString("endTime");
+//                        double price = jso.getDouble("price");
+//                        String status = jso.getString("status");
+//
+//                        Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
+//                                postal, startTime, endTime, duration, price, status);
+//                        if (status.equals("completed") || status.equals("dispute")) {
+//                            myRequestArrayList.add(request);
+//                        }
+//
+//                        //mAdapter.notifyDataSetChanged();
+//
+//                    }
+                    Gson gson  = new Gson();
+                    ArrayList<Request> merged = new ArrayList<>();
+                    merged = gson.fromJson(rst, new TypeToken<List<Request>>(){}.getType());
 
-                        int id = jso.getInt("id");
-                        int requestorId = jso.getInt("requestorId");
-                        int imageResource = requestImage;
-                        String productName = jso.getString("productName");
-                        String requirement = jso.getString("requirement");
-                        String location = jso.getString("location");
-                        String postal = jso.getString("postal");
-                        String startTime = jso.getString("startTime");
-                        int duration = jso.getInt("duration");
-                        String endTime = jso.getString("endTime");
-                        double price = jso.getDouble("price");
-                        String status = jso.getString("status");
-
-                        Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
-                                postal, startTime, endTime, duration, price, status);
-                        if (status.equals("completed") || status.equals("dispute")) {
-                            myRequestArrayList.add(request);
+                    for(Request m : merged){
+                        if(m.getStatus().equals("completed") || m.getStatus().equals("dispute")){
+                            myRequestArrayList.add(m);
                         }
-
-                        //mAdapter.notifyDataSetChanged();
-
                     }
-
                     if(myRequestArrayList.size() > 0){
                         hasCompletedRequests = true;
                     } else {
                         hasCompletedRequests = false;
                     }
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 success = true;
