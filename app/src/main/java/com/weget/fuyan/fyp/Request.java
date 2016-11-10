@@ -42,6 +42,23 @@ public class Request implements Serializable{
         this.status = status;
 
     }
+
+    public Request(int id, int requestorId, String productName, String requirement, String location, String postal, String startTime, String endTime, int duration, double price, String status, String requestImage) {
+        this.id = id;
+        this.requestorId = requestorId;
+        this.productName = productName;
+        this.requirement = requirement;
+        this.location = location;
+        this.postal = postal;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.duration = duration;
+        this.price = price;
+        this.status = status;
+        this.requestImage = requestImage;
+        this.imageResource = 0;
+    }
+
     public int getId() {
         return id;
     }
