@@ -21,7 +21,7 @@
             android:layout_height="90dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_pending"
+            android:src="@drawable/completed_pending"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
@@ -193,7 +193,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Actual Money you will get from this request:"
+                android:text="After service deductions:"
                 android:textStyle="italic"
                 android:id="@+id/price_detail2"
                 android:textSize="12sp"
