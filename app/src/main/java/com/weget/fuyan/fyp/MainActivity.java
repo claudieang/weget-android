@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s1);
                         RequestFragment requestFragment = new RequestFragment();
+
                         //MenuItem refresh4 = optionsMenu.findItem(R.id.action_refresh);
                         //refresh4.setVisible(false);
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_id, requestFragment).commit();
