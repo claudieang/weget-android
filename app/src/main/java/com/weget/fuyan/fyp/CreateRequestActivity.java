@@ -104,7 +104,7 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
         etPrice = (EditText) findViewById(R.id.request_price_txt);
         getAddressBtn = (Button) findViewById(R.id.get_address_btn);
 
-        createRequestBtn = (Button) findViewById(R.id.create_request_btn);
+        //createRequestBtn = (Button) findViewById(R.id.create_request_btn);
         Button done_Btn = (Button) findViewById(R.id.create_btn);
         ImageButton cancel_Btn = (ImageButton) findViewById(R.id.close_btn);
 
@@ -116,7 +116,7 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
         etAddressLine.setTypeface(typeFace);
         etRequestDuration.setTypeface(typeFace);
         etPrice.setTypeface(typeFace);
-        createRequestBtn.setTypeface(typeFace);
+        //createRequestBtn.setTypeface(typeFace);
 
 
         geocoder = new Geocoder(this);
