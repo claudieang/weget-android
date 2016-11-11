@@ -253,6 +253,7 @@ public class MyRequestActivity extends AppCompatActivity {
 
 
             if(result){
+                /*
                 adapter.clear();
 
                 if(myRequestArrayList != null && !myRequestArrayList.isEmpty()){
@@ -262,11 +263,12 @@ public class MyRequestActivity extends AppCompatActivity {
                         adapter.add(r);
 
                     }
-                }
+                }  */
                 Log.d("Print", "Value: " + myRequestArrayList.size());
                 // Now we call setRefreshing(false) to signal refresh has finished
-                swipeContainer.setRefreshing(false);
+                //swipeContainer.setRefreshing(false);
                 //Toast.makeText(getApplicationContext(), "Populating My Requests!", Toast.LENGTH_SHORT).show();
+
 
             }else {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
