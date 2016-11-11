@@ -159,21 +159,37 @@ public class MainActivity extends AppCompatActivity {
                         s.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s);
-                        HomeFragment homeFragment = new HomeFragment();
+                        //HomeFragment homeFragment = new HomeFragment();
                         //MenuItem refresh = optionsMenu.findItem(R.id.action_refresh);
                         //refresh.setVisible(true);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, homeFragment).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .show(getSupportFragmentManager().findFragmentByTag("home")).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        if(getSupportFragmentManager().findFragmentByTag("chat") != null){
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("chat")).commit();
+                        }
+
                         break;
                     case 1:
                         SpannableString s1 = new SpannableString("My Requests");
                         s1.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s1.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s1);
-                        RequestFragment requestFragment = new RequestFragment();
-
-                        //MenuItem refresh4 = optionsMenu.findItem(R.id.action_refresh);
-                        //refresh4.setVisible(false);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, requestFragment).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .hide(getSupportFragmentManager().findFragmentByTag("home")).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .show(getSupportFragmentManager().findFragmentByTag("request")).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        if(getSupportFragmentManager().findFragmentByTag("chat") != null){
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("chat")).commit();
+                        }
+                        //getSupportFragmentManager().findFragmentByTag()
                         //Intent i = new Intent(MainActivity.this, RequestFragment.class);
                         //startActivity(i);
                         break;
@@ -185,10 +201,19 @@ public class MainActivity extends AppCompatActivity {
                         s2.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s2.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s2);
-                        FulfillFragment fulfillFragment = new FulfillFragment();
+                        //FulfillFragment fulfillFragment = new FulfillFragment();
                         //MenuItem refresh3 = optionsMenu.findItem(R.id.action_refresh);
                         //refresh3.setVisible(false);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, fulfillFragment).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .hide(getSupportFragmentManager().findFragmentByTag("home")).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .show(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        if(getSupportFragmentManager().findFragmentByTag("chat") != null){
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("chat")).commit();
+                        }
                         break;
                     case 4:
 
@@ -198,8 +223,14 @@ public class MainActivity extends AppCompatActivity {
                         getSupportActionBar().setTitle(s3);
                         //MenuItem refresh1 = optionsMenu.findItem(R.id.action_refresh);
                         //refresh1.setVisible(false);
-                        ChatFragment chatFragment = new ChatFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, chatFragment).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .hide(getSupportFragmentManager().findFragmentByTag("home")).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .show(getSupportFragmentManager().findFragmentByTag("chat")).commit();
 
                         //startActivity(new Intent(MainActivity.this, ChatActivity.class));
                         break;
@@ -213,8 +244,25 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(int position) {
             }
         });
-        homeFragment = new HomeFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, homeFragment).commit();
+
+
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.content_id, new RequestFragment(), "request")
+                .addToBackStack(null)
+                .commit();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.content_id, new FulfillFragment(), "fulfill")
+                .addToBackStack(null)
+                .commit();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.content_id, new ChatFragment(), "chat")
+                .addToBackStack(null)
+                .commit();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.content_id, new HomeFragment(), "home")
+                .addToBackStack(null)
+                .commit();
 
         Intent i = getIntent();
         int tabToOpen = i.getIntExtra("after_payment_request_tab",-1);

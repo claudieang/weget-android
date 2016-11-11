@@ -99,7 +99,7 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 
         //adapter view
-        androidAdapter = new ViewPagerAdapter(getFragmentManager());
+        androidAdapter = new ViewPagerAdapter(getChildFragmentManager());
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(androidAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
