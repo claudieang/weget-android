@@ -29,7 +29,7 @@ import org.json.JSONObject;
 public class dispute extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     String username, password, authString, message, origin, err, reason;
-    int myId, transactionId;
+    int myId, transactionId, usertype;
     EditText disputeFormET;
     Button submitBtn;
     Context mContext;
@@ -55,6 +55,7 @@ public class dispute extends AppCompatActivity implements AdapterView.OnItemSele
 
         transactionId = getIntent().getIntExtra("transaction_id", -1);
         origin = getIntent().getStringExtra("origin");
+        usertype = getIntent().getIntExtra("user_type",-1);
 
         disputeFormET = (EditText)findViewById(R.id.dipute_form);
         submitBtn = (Button)findViewById(R.id.submit);
@@ -91,7 +92,16 @@ public class dispute extends AppCompatActivity implements AdapterView.OnItemSele
 
         //reason dropdown menu
         dropdown = (Spinner)findViewById(R.id.spinner1);
-        String[] items = new String[]{"Fulfiller did not turn up", "Requestor refuses confirmation", "Service not up to standard"};
+        String[] items = new String[0];
+
+        //zero means fulfiller, 1 means requestor
+        if(usertype==0){
+            items = new String[]{"Requestor refuses confirmation", "Requestor is difficult to handle", "Requestor refuses to accept item", "Requestor was unresponsive"};
+        } else {
+            items = new String[]{"Fulfiller did not turn up", "Fulfiller came very late", "Fulfiller was unresponsive", "Service not up to standard"};
+        }
+
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items){
 
 

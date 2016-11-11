@@ -43,11 +43,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
-            <intent-filter>
-                <action android:name="request" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            android:screenOrientation="portrait">
+        <intent-filter>
+            <category android:name="android.intent.category.DEFAULT" />
+            <action android:name="request_page" />
+            <action android:name="fulfill_page" />
+        </intent-filter>
+            </activity>
         <activity android:name=".HomeActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -75,14 +77,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RequestDetailsActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".MyRequestActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="request_page" />
-
-
-            </intent-filter>
-        </activity>
         <activity android:name=".ChatActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -109,10 +103,6 @@
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Dialog" />
-        <activity android:name=".MyFulfillActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
         <activity android:name=".MyFulfillRequestDetailsActivity"
             android:screenOrientation="portrait"/>
         <activity

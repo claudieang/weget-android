@@ -104,7 +104,7 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
 
         etPrice = (EditText) findViewById(R.id.request_price_txt);
         getAddressBtn = (Button) findViewById(R.id.get_address_btn);
-        getCurrLocBtn = (ImageButton) findViewById(R.id.get_curr_location_btn);
+
         createRequestBtn = (Button) findViewById(R.id.create_request_btn);
         Button done_Btn = (Button) findViewById(R.id.create_btn);
         ImageButton cancel_Btn = (ImageButton) findViewById(R.id.close_btn);
@@ -196,76 +196,52 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-
-
-            }
-        });
-
-        getCurrLocBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // instantiate the location manager, note you will need to request permissions in your manifest
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                // get the last know location from your location manager.
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER); //doesnt seem to work
-                Log.d("Print", "location data1 is : " + location);
-                if (location == null) {
-                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    Log.d("Print", "location data2 is : " + location);
-                }
-                // now get the lat/lon from the location and do something with it.
-
-                //https://maps.google.com/maps/api/geocode/json?latlng=1.298775,103.848947&key=AIzaSyDNbh3U6jmAeRGQogCmt6EcRXmFnYxbec4
-
-//                String head = "https://maps.google.com/maps/api/geocode/json?";
-//                String base = ""+location.getLatitude()+","+location.getLongitude();
-//                String end = "&key=AIzaSyDNbh3U6jmAeRGQogCmt6EcRXmFnYxbec4";
-
-                try {
-                    List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                    Log.d("Print", "address list size is : " + address.size());
-
-                    if (address != null && !address.isEmpty()) {
-
-                        String completeAddress = address.get(0).getAddressLine(0);
-                        String city = address.get(0).getLocality();
-                        String state = address.get(0).getAdminArea();
-                        String country = address.get(0).getCountryName();
-                        String postalCode = address.get(0).getPostalCode();
-                        String knownName = address.get(0).getFeatureName();
-
-                        //Log.d("Address line: ", completeAddress);
-                        //Log.d("City: ", city);
-                        //Log.d("State: ", state);
-                        //Log.d("Country: ", country);
-                        //Log.d("Postal Code: ", postalCode);
-
-                        String addressLineResult = completeAddress + ", " + country;
-                        etAddressLine.setText(addressLineResult);
-                        etPostalCode.setText(postalCode);
-                        Log.d("Print", "addressLineResult : " + addressLineResult);
-                        Log.d("Print", "postalCode : " + postalCode);
+                } else{
+                    // instantiate the location manager, note you will need to request permissions in your manifest
+                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                    // get the last know location from your location manager.
+                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER); //doesnt seem to work
+                    Log.d("Print", "location data1 is : " + location);
+                    if (location == null) {
+                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        Log.d("Print", "location data2 is : " + location);
                     }
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    try {
+                        List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        Log.d("Print", "address list size is : " + address.size());
+
+                        if (address != null && !address.isEmpty()) {
+
+                            String completeAddress = address.get(0).getAddressLine(0);
+                            String country = address.get(0).getCountryName();
+                            String postalCode = address.get(0).getPostalCode();
+
+                            String addressLineResult = completeAddress + ", " + country;
+                            etAddressLine.setText(addressLineResult);
+                            etPostalCode.setText(postalCode);
+
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
 
             }
         });
+
 
         done_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
