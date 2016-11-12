@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.sendbird.android.AdminMessage;
 import com.sendbird.android.BaseChannel;
 import com.sendbird.android.BaseMessage;
@@ -343,6 +344,20 @@ public class SendBirdGroupChannelListActivity extends FragmentActivity {
                         }
                         mQuery = GroupChannel.createMyGroupChannelListQuery();
                         mQuery.setIncludeEmpty(true);
+
+
+                        //sendbird notification
+                        if (FirebaseInstanceId.getInstance().getToken() == null) return;
+                        SendBird.registerPushTokenForCurrentUser(FirebaseInstanceId.getInstance().getToken(),
+                                new SendBird.RegisterPushTokenWithStatusHandler() {
+                                    @Override
+                                    public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
+                                        if (e != null) {
+                                            // Error.
+                                            return;
+                                        }
+                                    }
+                                });
                     }
                 });
             } else {

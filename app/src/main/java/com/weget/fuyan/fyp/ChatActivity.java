@@ -26,6 +26,7 @@ import android.widget.Toast;
  * Created by Shafiq on 9/13/2016.
  */
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.sendbird.android.AdminMessage;
 import com.sendbird.android.BaseChannel;
 import com.sendbird.android.BaseMessage;
@@ -194,6 +195,19 @@ public class ChatActivity extends FragmentActivity {
                     addConnectionStatus(true);
                     return;
                 }
+
+                //sendbird notification
+                if (FirebaseInstanceId.getInstance().getToken() == null) return;
+                SendBird.registerPushTokenForCurrentUser(FirebaseInstanceId.getInstance().getToken(),
+                        new SendBird.RegisterPushTokenWithStatusHandler() {
+                            @Override
+                            public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
+                                if (e != null) {
+                                    // Error.
+                                    return;
+                                }
+                            }
+                        });
             }
         });
 
@@ -415,6 +429,19 @@ public class ChatActivity extends FragmentActivity {
                         mQuery = GroupChannel.createMyGroupChannelListQuery();
                         mQuery.setIncludeEmpty(true);
 
+
+                        //sendbird notification
+                        if (FirebaseInstanceId.getInstance().getToken() == null) return;
+                        SendBird.registerPushTokenForCurrentUser(FirebaseInstanceId.getInstance().getToken(),
+                                new SendBird.RegisterPushTokenWithStatusHandler() {
+                                    @Override
+                                    public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
+                                        if (e != null) {
+                                            // Error.
+                                            return;
+                                        }
+                                    }
+                                });
 
                     }
                 });

@@ -316,6 +316,7 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
     @Override
     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
         //mResultTextView.setText(year + "/" +  monthOfYear + "/" + dayOfMonth);
+        monthOfYear=monthOfYear+1;
         this.year = year + "";
         this.month = monthOfYear + "";
         this.day = dayOfMonth + "";
