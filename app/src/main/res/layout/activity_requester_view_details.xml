@@ -91,13 +91,13 @@
                 android:layout_height="wrap_content"
                 android:text="Details"
                 android:textSize="18sp"
-                android:drawableLeft="@drawable/ic_info_outline_black_24dp"
+                android:drawableLeft="@drawable/ic_info"
                 android:gravity="center_vertical"
                 android:id="@+id/product_description"
-                android:paddingLeft="12dp"
+                android:paddingLeft="8dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
-                android:drawablePadding="10dp"
+                android:drawablePadding="8dp"
                 android:textColor="@color/black"
                 android:layout_weight="1" />
 
