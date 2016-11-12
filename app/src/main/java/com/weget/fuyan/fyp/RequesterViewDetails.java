@@ -82,7 +82,7 @@ public class RequesterViewDetails extends AppCompatActivity {
 
         productNameTV = (TextView)findViewById(R.id.product_name);
         productDescriptionTV = (TextView)findViewById(R.id.product_description);
-        requestorTV = (TextView)findViewById(R.id.requestor_name);
+        //requestorTV = (TextView)findViewById(R.id.requestor_name);
         addressTV = (TextView)findViewById(R.id.address_details);
         expiryTimeTV = (TextView)findViewById(R.id.time_detail);
         priceTV = (TextView)findViewById(R.id.price_detail);
@@ -93,7 +93,7 @@ public class RequesterViewDetails extends AppCompatActivity {
         productNameTV.setTypeface(typeFaceLight);
         productDescriptionTV.setTypeface(typeFaceLight);
         //((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
-        requestorTV.setTypeface(typeFaceLight);
+        //requestorTV.setTypeface(typeFaceLight);
         //((TextView)findViewById(R.id.address)).setTypeface(typeFace);
         addressTV.setTypeface(typeFaceLight);
         //((TextView)findViewById(R.id.expirytime)).setTypeface(typeFace);
@@ -205,7 +205,7 @@ public class RequesterViewDetails extends AppCompatActivity {
             dialog.dismiss();
             if(result){
                 //itemPic.setImageResource(R.drawable.ordericon);
-                requestorTV.setText(requestorName );
+                //requestorTV.setText(requestorName );
                 productNameTV.setText(productName);
                 productDescriptionTV.setText(request.getRequirement());
                 addressTV.setText(location + " " + postal);

@@ -24,11 +24,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/request_title"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:paddingLeft="10dp"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:textColor="@color/darkGray"
+            android:text="Create a request"
+            android:textColor="@color/black"
             />
 
 
@@ -36,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/request_subtitle"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="5dp"
             android:paddingLeft="10dp"
             android:text="Details"
             android:textSize="16sp"
