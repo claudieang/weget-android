@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     String URL;
     private Menu optionsMenu;
     private HomeFragment homeFragment;
+    final String FAQURL = "https://weget-2015is203g2t2.rhcloud.com/weget/faq";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -329,6 +331,7 @@ public class MainActivity extends AppCompatActivity {
         int notification_chat_tab = i.getIntExtra("notification_chat_tab",-1);
 
 
+
         if (tabToOpen != -1) {
             bottomNavigationBar.selectTab(tabToOpen);
         }
@@ -367,6 +370,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("","Chat Notification-------");
         }
 
+
     }
 
     @Override
@@ -377,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         String profilePicture = pref.getString("picture", null);
         ImageView profileImage = (ImageView) findViewById(R.id.avatar);
-        ;
+
 
         if (profilePicture.equals("")) {
             profileImage.setImageResource(R.drawable.ic_profile);
@@ -442,7 +446,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case 2:
-
+                Uri uriUrl = Uri.parse(FAQURL);
+                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                startActivity(launchBrowser);
                 break;
 
             case 3:

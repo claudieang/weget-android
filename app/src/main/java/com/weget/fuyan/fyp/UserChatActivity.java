@@ -247,7 +247,7 @@ public class UserChatActivity extends AppCompatActivity {
         private ListView mListView;
         private SendBirdMessagingAdapter mAdapter;
         private EditText mEtxtMessage;
-        private Button mBtnSend;
+        private Button mBtnSend, mBtnCall;
         private ImageButton mBtnUpload;
         private ProgressBar mProgressBtnUpload;
         private String mChannelUrl;
@@ -391,9 +391,25 @@ public class UserChatActivity extends AppCompatActivity {
             turnOffListViewDecoration(mListView);
 
             mBtnSend = (Button) rootView.findViewById(R.id.btn_send);
+            mBtnCall = (Button) rootView.findViewById(R.id.btn_call);
 //            mBtnUpload = (ImageButton) rootView.findViewById(R.id.btn_upload);
 //            mProgressBtnUpload = (ProgressBar) rootView.findViewById(R.id.progress_btn_upload);
             mEtxtMessage = (EditText) rootView.findViewById(R.id.etxt_message);
+
+            mBtnCall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL );
+                    callIntent.setData(Uri.parse("tel:" + friendNumber));
+
+                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+
+
+                    }
+
+                    startActivity(callIntent);
+                }
+            });
 
             mBtnSend.setEnabled(false);
             mBtnSend.setOnClickListener(new View.OnClickListener() {

@@ -53,6 +53,8 @@ public class RegisterActivity extends AppCompatActivity {
     byte[] byteArray;
     String encodedImage;
     static final int RC_PERMISSION_READ_EXTERNAL_STORAGE = 666;
+    final String TermURL = "https://weget-2015is203g2t2.rhcloud.com/weget/toc";
+    TextView toc;
 
     final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
             "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
@@ -91,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
         email1 = (EditText) findViewById(R.id.email);
         dpIV = (ImageView)findViewById(R.id.profile_pic_iv);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
+        toc = (TextView) findViewById(R.id.tocText);
         //dpIV.setImageResource(R.drawable.ic_profile);
 
         t1.setTypeface(typeFace);
@@ -107,6 +110,14 @@ public class RegisterActivity extends AppCompatActivity {
 
 //        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/TitilliumWeb-Regular.ttf");
 //        b2.setTypeface(typeFace);
+        toc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uriUrl = Uri.parse(TermURL);
+                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                startActivity(launchBrowser);
+            }
+        });
 
         done_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
