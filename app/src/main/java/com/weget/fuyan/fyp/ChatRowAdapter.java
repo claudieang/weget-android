@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by HP on 9/12/2016.
  */
-public class ChatRowAdapter extends ArrayAdapter {
+public class    ChatRowAdapter extends ArrayAdapter {
     List list = new ArrayList();
     String currUserId;
 

@@ -57,6 +57,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.maps.android.SphericalUtil;
 import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
@@ -242,6 +243,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                     //Toast.makeText(mContext, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+
+                //sendbird notification
+                if (FirebaseInstanceId.getInstance().getToken() == null) return;
+                SendBird.registerPushTokenForCurrentUser(FirebaseInstanceId.getInstance().getToken(),
+                        new SendBird.RegisterPushTokenWithStatusHandler() {
+                            @Override
+                            public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
+                                if (e != null) {
+                                    // Error.
+                                    return;
+                                }
+                            }
+                        });
             }
         });
 
@@ -605,6 +620,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                           if (request.getRequestorId() == id) {
                               //if the request viewed is mine
                               Intent intent = new Intent(getContext(), RequesterViewDetails.class);
+                              intent.putExtra("selected_request", request);
+                              startActivity(intent);
+                          } else { //if the request viewed is someone elses
+                              Intent intent = new Intent(getContext(), FulfillviewRequestDetails.class);
                               intent.putExtra("selected_request", request);
                               startActivity(intent);
                           }

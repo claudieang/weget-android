@@ -14,6 +14,9 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -43,7 +46,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Log.d(TAG, "Message data payload: lalalallal" + remoteMessage.getData());
+            String message = remoteMessage.getData().get("message");
+            Log.d("hah",message);
+            //String tag = remoteMessage.getNotification().getTag();
+            //Log.d("taggg",tag);
         }
 
         // Check if message contains a notification payload.
@@ -52,45 +59,55 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         }
 
+        if(remoteMessage.getNotification()!= null) {
+
+            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("request")) {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("notification_request_tab", 1);
+                intent.putExtra("notification_request_swipe", 0);
+
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+                notificationBuilder.setContentTitle("Weget");
+                notificationBuilder.setContentText(remoteMessage.getNotification().getBody());
+                notificationBuilder.setAutoCancel(true);
+                notificationBuilder.setSmallIcon(R.drawable.ic_weget_notif);
+                notificationBuilder.setContentIntent(pendingIntent);
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(0, notificationBuilder.build());
+            }
+
+            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("fulfill")) {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("notification_fulfill_tab", 3);
+                intent.putExtra("notification_fulfill_swipe", 0);
 
 
-        if (remoteMessage.getNotification().getTag().equalsIgnoreCase("request")){
-            Intent intent = new Intent(this,MainActivity.class);
-            intent.putExtra("notification_request_tab", 1);
-            intent.putExtra("notification_request_swipe", 0);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-            notificationBuilder.setContentTitle("Weget");
-            notificationBuilder.setContentText(remoteMessage.getNotification().getBody());
-            notificationBuilder.setAutoCancel(true);
-            notificationBuilder.setSmallIcon(R.drawable.ic_weget_notif);
-            notificationBuilder.setContentIntent(pendingIntent);
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(0,notificationBuilder.build());
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+                notificationBuilder.setContentTitle("Weget");
+                notificationBuilder.setContentText(remoteMessage.getNotification().getBody());
+                notificationBuilder.setAutoCancel(true);
+                notificationBuilder.setSmallIcon(R.drawable.ic_weget_notif);
+                notificationBuilder.setContentIntent(pendingIntent);
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(0, notificationBuilder.build());
+            }
         }
 
-        if (remoteMessage.getNotification().getTag().equalsIgnoreCase("fulfill")){
-            Intent intent = new Intent(this,MainActivity.class);
-            intent.putExtra("notification_fulfill_tab", 3);
-            intent.putExtra("notification_fulfill_swipe", 0);
+        else {
+            Log.d("taggg","tesinglkjlk");
+            String message = remoteMessage.getData().get("message");
+            String name = remoteMessage.getData().get("sender");
+            JsonElement payload = new JsonParser().parse(remoteMessage.getData().get("sendbird"));
+            sendNotification(message, payload);
 
 
-
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-            notificationBuilder.setContentTitle("Weget");
-            notificationBuilder.setContentText(remoteMessage.getNotification().getBody());
-            notificationBuilder.setAutoCancel(true);
-            notificationBuilder.setSmallIcon(R.drawable.ic_weget_notif);
-            notificationBuilder.setContentIntent(pendingIntent);
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(0,notificationBuilder.build());
         }
 
 
@@ -109,10 +126,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
 
-    private void sendNotification(String messageBody) {
+    private void sendNotification(String messageBody,JsonElement payload) {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("notification_request_tab", 1);
-        intent.putExtra("notification_request_swipe", 0);
+        intent.putExtra("notification_chat_tab", 4);
+
+        JsonObject message = payload.getAsJsonObject();
+        JsonElement name1 = message.get("sender");
+        JsonObject message2 = name1.getAsJsonObject();
+        String name = message2.get("name").toString();
+
+
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -120,8 +144,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_weget_notif)
-                .setContentTitle("FCM Message")
-                .setContentText(messageBody)
+                .setContentTitle("Weget")
+                .setContentText(name+" sent you a message: "+messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);

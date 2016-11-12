@@ -312,7 +312,6 @@ public class MainActivity extends AppCompatActivity {
 //                .commit();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content_id, new HomeFragment(), "home")
-                .addToBackStack(null)
                 .commit();
 
         Intent i = getIntent();
@@ -325,8 +324,9 @@ public class MainActivity extends AppCompatActivity {
         int tabToOpen7 = i.getIntExtra("accepted_fulfill_tab", -1);
         int tabToOpen8 = i.getIntExtra("after_dispute_request_tab", -1);
 
-        int notificationRequesttab = i.getIntExtra("notification_request_tab", -1);
-        int notification_fulfill_tab = i.getIntExtra("notification_fulfill_tab", -1);
+        int notificationRequesttab = i.getIntExtra("notification_request_tab",-1);
+        int notification_fulfill_tab = i.getIntExtra("notification_fulfill_tab",-1);
+        int notification_chat_tab = i.getIntExtra("notification_chat_tab",-1);
 
 
         if (tabToOpen != -1) {
@@ -356,11 +356,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (notificationRequesttab != -1) {
             bottomNavigationBar.selectTab(notificationRequesttab);
+            Log.d("","Testing Notification-------");
         }
         if (notification_fulfill_tab != -1) {
             bottomNavigationBar.selectTab(notification_fulfill_tab);
+            Log.d("","Testing Notification-------");
         }
-
+        if(notification_chat_tab!=-1){
+            bottomNavigationBar.selectTab(notification_chat_tab);
+            Log.d("","Chat Notification-------");
+        }
 
     }
 
@@ -388,7 +393,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.optionsMenu = menu;
@@ -427,7 +431,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void selectItemFromDrawer(int position) {
 
-        switch (position) {
+        switch(position){
 
             case 0:
                 startActivity(new Intent(this, ProfileActivity.class));
@@ -446,7 +450,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
                 username = pref.getString("username", null);
                 password = pref.getString("password", null);
-                authString = username + ":" + password;
+                authString  = username + ":" + password;
 
                 new logout().execute(authString);
                 break;
