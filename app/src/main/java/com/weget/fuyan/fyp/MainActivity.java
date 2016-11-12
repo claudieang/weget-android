@@ -303,7 +303,6 @@ public class MainActivity extends AppCompatActivity {
 //                .commit();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content_id, new HomeFragment(), "home")
-                .addToBackStack(null)
                 .commit();
 
         Intent i = getIntent();
