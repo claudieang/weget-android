@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class PendingdetailsRequester extends AppCompatActivity {
 
     Request myRequest;
-    TextView productNameTV, requestorTV, addressTV, priceTV, productName1;
+    TextView productNameTV, requestorTV, addressTV, priceTV, productName1, fulfillerName;
     String productName, requestorName, address, postal, err, username, password, authString, requestorIdS, productDescription;
     int myId, requestorId, myRequestId, transactionId;
     double price;
@@ -37,6 +37,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
     ProgressDialog dialog;
     ArrayList<Account> fulfillerAccountList = new ArrayList<>();
     String URL;
+    Account a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +76,12 @@ public class PendingdetailsRequester extends AppCompatActivity {
 
         productName1 = (TextView)findViewById(R.id.product_name);
         productNameTV = (TextView)findViewById(R.id.product_description);
-        requestorTV = (TextView)findViewById(R.id.requestor_name);
+        requestorTV = (TextView)findViewById(R.id.fulfiller_name);
         addressTV = (TextView)findViewById(R.id.address_details);
         priceTV = (TextView)findViewById(R.id.price_detail);
         receivedBtn = (Button)findViewById(R.id.receve_button);
         disputeBtn = (Button)findViewById(R.id.dipute_button);
+        //fulfillerName = (TextView)findViewById(R.id.fulfiller_name);
 
         productName1.setTypeface(typeFaceLight);
         productNameTV.setTypeface(typeFaceLight);
@@ -113,6 +115,16 @@ public class PendingdetailsRequester extends AppCompatActivity {
             public void onClick(View v) {
 
                 new getTransaction().execute(authString);
+            }
+        });
+        requestorTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent (PendingdetailsRequester.this, RequestFulfillerDetailsActivity.class);
+                i.putExtra("indicator", 1);
+                i.putExtra("selected_request_tofulfull", (Serializable) myRequest);
+                i.putExtra("selected_fulfiller", (Serializable)a);
+                startActivity(i);
             }
         });
 
@@ -186,7 +198,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
 
             if(result) {
                 if(fulfillerAccountList.size() == 1){
-                    Account a = fulfillerAccountList.get(0);
+                    a = fulfillerAccountList.get(0);
                     requestorTV.setText(a.getUsername());
                     productName1.setText(productName);
                     productNameTV.setText(productDescription);
@@ -243,7 +255,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             if(result) {
                 dialog.dismiss();
-                Account a = fulfillerAccountList.get(0);
+                a = fulfillerAccountList.get(0);
                 Intent i = new Intent(PendingdetailsRequester.this, Rating_requestor.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);

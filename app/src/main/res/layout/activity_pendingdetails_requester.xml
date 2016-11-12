@@ -81,20 +81,20 @@
                     android:layout_marginTop="2dp"
                     android:paddingLeft="45dp"
                     android:gravity="center_vertical"
-                    android:text="requested by "
+                    android:text="filfilled by "
                     android:textStyle="italic"
                     android:textColor="@color/darkGray"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/requestor_name"
+                    android:id="@+id/fulfiller_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:paddingLeft="4dp"
                     android:layout_toEndOf="@id/requestor"
                     android:gravity="center_vertical"
-                    android:text="requestor name"
+                    android:text="fulfiller name"
                     android:textStyle="italic"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp" />
