@@ -123,21 +123,20 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/linear2"
             android:orientation="vertical">
-
             <TextView
-                android:id="@+id/price"
+                android:id="@+id/info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:paddingLeft="8dp"
+                android:paddingLeft="12dp"
                 android:paddingTop="10dp"
-                android:drawableLeft="@drawable/money"
-                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/ic_info_outline_black_24dp"
+                android:drawablePadding="12dp"
                 android:gravity="center_vertical"
-                android:text="$0.00"
+                android:text="Details"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:paddingBottom="10dp"/>
+                android:paddingBottom="10dp"
+                android:textSize="16sp" />
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
@@ -187,18 +186,19 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/info"
+                android:id="@+id/price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:paddingLeft="12dp"
+                android:paddingLeft="8dp"
                 android:paddingTop="10dp"
-                android:drawableLeft="@drawable/ic_info_outline_black_24dp"
-                android:drawablePadding="12dp"
+                android:drawableLeft="@drawable/money"
+                android:drawablePadding="8dp"
                 android:gravity="center_vertical"
-                android:text="Details"
+                android:text="$0.00"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:paddingBottom="10dp"/>
 
         </LinearLayout>
 

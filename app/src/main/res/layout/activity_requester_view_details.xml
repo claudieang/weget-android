@@ -68,17 +68,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_weight="1"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:id="@+id/product_description"
-                android:layout_below="@+id/product_name"
-                android:textColor="@color/darkGray"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="47dp"
-                android:layout_weight="1"
-                android:textStyle="italic" />
+
 
             <View
                 android:layout_width="fill_parent"
@@ -99,15 +89,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Requested by"
+                android:text="Details"
                 android:textSize="18sp"
-                android:drawableLeft="@drawable/face_icon"
+                android:drawableLeft="@drawable/ic_info_outline_black_24dp"
                 android:gravity="center_vertical"
-                android:id="@+id/requestor_name"
-                android:paddingLeft="8dp"
+                android:id="@+id/product_description"
+                android:paddingLeft="12dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
-                android:drawablePadding="8dp"
+                android:drawablePadding="10dp"
                 android:textColor="@color/black"
                 android:layout_weight="1" />
 
