@@ -166,12 +166,23 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I accept the Terms of Services and Privacy Policy"
+            android:text=""
             android:textSize="10sp"
             android:id="@+id/checkBox"
             android:buttonTint="@color/colorPrimary"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/tocText"
+            android:text="I accept the Terms of Services and Privacy Policy"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/checkBox"
+            android:layout_alignBottom="@+id/checkBox"
+            android:layout_toEndOf="@+id/checkBox"
+            android:textColor="@color/colorPrimary"
+            />
 
 
     </RelativeLayout>

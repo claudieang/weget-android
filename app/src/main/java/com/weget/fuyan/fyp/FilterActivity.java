@@ -37,8 +37,8 @@ public class FilterActivity extends AppCompatActivity {
          * Radius Switch disables the radius displayed in home screen
          */
         if(!hasChanged){
-            lastValueRadius = 600;
-            lastValuePrice = 1000;
+            lastValueRadius = 500;
+            lastValuePrice = 10;
         }
 
         radiusBar=(SeekBar)findViewById(R.id.radiusBar);
@@ -102,7 +102,7 @@ public class FilterActivity extends AppCompatActivity {
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                radiusBar.setProgress(600);
+                radiusBar.setProgress(500);
                 radiusSwitch.setChecked(true);
                 priceBar.setProgress(priceBar.getMax());
 
