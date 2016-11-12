@@ -112,6 +112,7 @@
             android:layout_marginLeft="10dp"
             android:textColorHint="#BCBCBC"
             android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
             android:gravity="center_vertical"
             android:layout_below="@id/request_price_txt"
             android:layout_alignParentStart="true" />
