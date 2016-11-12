@@ -25,12 +25,27 @@
             android:drawableTint="@color/darkGray"
             android:textColor="@color/darkGray"
             android:textSize="18sp" />
+        <TextView
+            android:id="@+id/radius_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_below="@+id/title"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:text="Change the size of the radius displayed on the map. Only Requests within the radius will be displayed"
+            android:drawableTint="@color/darkGray"
+            android:textColor="@color/colorDarkGray"
+            android:textStyle="italic"
+            android:textSize="14sp" />
 
         <View
             android:id="@+id/divider"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/title"
+            android:layout_below="@+id/radius_description"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:background="@color/bt_very_light_gray" />
 
@@ -41,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/radiusBar"
-                android:text="Min"
+                android:text="0.5km"
                 android:textColor="@color/darkGray"
                 android:textSize="14sp" />
 
@@ -51,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/radiusBar"
                 android:layout_alignEnd="@+id/radiusBar"
-                android:text="Max"
+                android:text="3km"
                 android:textColor="@color/darkGray"
                 android:textSize="14sp" />
 
@@ -65,8 +80,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
-                android:max="5000"
-                android:progress="600"
+                android:max="3000"
+                android:progress="10"
                 android:indeterminate="false" />
 
             <Switch
@@ -114,12 +129,27 @@
             android:drawableTint="@color/darkGray"
             android:textColor="@color/darkGray"
             android:textSize="18sp" />
+        <TextView
+            android:id="@+id/price_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_below="@+id/title_price"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:text="Change the maximum price displayed. Only requests that are less than or equal to the price set will be displayed"
+            android:drawableTint="@color/darkGray"
+            android:textColor="@color/colorDarkGray"
+            android:textStyle="italic"
+            android:textSize="14sp" />
 
         <View
             android:id="@+id/divider3"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/title_price"
+            android:layout_below="@+id/price_description"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:background="@color/bt_very_light_gray" />
 
@@ -130,7 +160,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/priceBar"
-            android:text="Min"
+            android:text="Less than $10"
             android:textColor="@color/darkGray"
             android:textSize="14sp" />
 
@@ -140,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/priceBar"
             android:layout_alignEnd="@+id/priceBar"
-            android:text="Max"
+            android:text="Less than $500"
             android:textColor="@color/darkGray"
             android:textSize="14sp" />
 
@@ -155,7 +185,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginBottom="25dp"
-            android:progress="500"
+            android:progress="10"
             android:max="500"
             android:indeterminate="false" />
 
