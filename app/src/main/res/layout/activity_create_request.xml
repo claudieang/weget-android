@@ -95,7 +95,7 @@
             android:drawableLeft="@drawable/money_light"
             android:inputType="numberDecimal|numberSigned"
             android:paddingStart="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimary"
             android:textColorHint="#BCBCBC"
             android:textSize="16sp"
             android:layout_below="@+id/product_requirement_txt" />

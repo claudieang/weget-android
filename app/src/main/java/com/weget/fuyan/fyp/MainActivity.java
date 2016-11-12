@@ -164,10 +164,16 @@ public class MainActivity extends AppCompatActivity {
                         //refresh.setVisible(true);
                         getSupportFragmentManager().beginTransaction()
                                 .show(getSupportFragmentManager().findFragmentByTag("home")).commit();
-                        getSupportFragmentManager().beginTransaction()
-                                .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
-                        getSupportFragmentManager().beginTransaction()
-                                .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        if(getSupportFragmentManager().findFragmentByTag("request") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
+                        }
+
+                        if(getSupportFragmentManager().findFragmentByTag("fulfill") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        }
+
                         if(getSupportFragmentManager().findFragmentByTag("chat") != null){
                             getSupportFragmentManager().beginTransaction()
                                     .hide(getSupportFragmentManager().findFragmentByTag("chat")).commit();
@@ -181,10 +187,22 @@ public class MainActivity extends AppCompatActivity {
                         getSupportActionBar().setTitle(s1);
                         getSupportFragmentManager().beginTransaction()
                                 .hide(getSupportFragmentManager().findFragmentByTag("home")).commit();
-                        getSupportFragmentManager().beginTransaction()
-                                .show(getSupportFragmentManager().findFragmentByTag("request")).commit();
-                        getSupportFragmentManager().beginTransaction()
-                                .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        if(getSupportFragmentManager().findFragmentByTag("request") != null){
+                            getSupportFragmentManager().beginTransaction()
+                                    .show(getSupportFragmentManager().findFragmentByTag("request")).commit();
+
+                        }else{
+                            getSupportFragmentManager().beginTransaction()
+                                    .add(R.id.content_id, new RequestFragment(), "request")
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+
+                        if(getSupportFragmentManager().findFragmentByTag("fulfill") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        }
+
                         if(getSupportFragmentManager().findFragmentByTag("chat") != null){
                             getSupportFragmentManager().beginTransaction()
                                     .hide(getSupportFragmentManager().findFragmentByTag("chat")).commit();
@@ -206,10 +224,24 @@ public class MainActivity extends AppCompatActivity {
                         //refresh3.setVisible(false);
                         getSupportFragmentManager().beginTransaction()
                                 .hide(getSupportFragmentManager().findFragmentByTag("home")).commit();
-                        getSupportFragmentManager().beginTransaction()
-                                .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
-                        getSupportFragmentManager().beginTransaction()
-                                .show(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+
+                        if(getSupportFragmentManager().findFragmentByTag("request") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
+                        }
+                        if(getSupportFragmentManager().findFragmentByTag("fulfill") != null){
+                            getSupportFragmentManager().beginTransaction()
+                                    .show(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+
+                        }else{
+                            getSupportFragmentManager().beginTransaction()
+                                    .add(R.id.content_id, new FulfillFragment(), "fulfill")
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+
+                        //getSupportFragmentManager().beginTransaction()
+                        //        .show(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
                         if(getSupportFragmentManager().findFragmentByTag("chat") != null){
                             getSupportFragmentManager().beginTransaction()
                                     .hide(getSupportFragmentManager().findFragmentByTag("chat")).commit();
@@ -227,10 +259,14 @@ public class MainActivity extends AppCompatActivity {
                         //refresh1.setVisible(false);
                         getSupportFragmentManager().beginTransaction()
                                 .hide(getSupportFragmentManager().findFragmentByTag("home")).commit();
-                        getSupportFragmentManager().beginTransaction()
-                                .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
-                        getSupportFragmentManager().beginTransaction()
-                                .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        if(getSupportFragmentManager().findFragmentByTag("request") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
+                        }
+                        if(getSupportFragmentManager().findFragmentByTag("fulfill") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        }
 //                        getSupportFragmentManager().beginTransaction()
 //                                .show(getSupportFragmentManager().findFragmentByTag("chat")).commit();
                         getSupportFragmentManager().beginTransaction()
@@ -253,14 +289,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.content_id, new RequestFragment(), "request")
-                .addToBackStack(null)
-                .commit();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.content_id, new FulfillFragment(), "fulfill")
-                .addToBackStack(null)
-                .commit();
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.content_id, new RequestFragment(), "request")
+//                .addToBackStack(null)
+//                .commit();
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.content_id, new FulfillFragment(), "fulfill")
+//                .addToBackStack(null)
+//                .commit();
 //        getSupportFragmentManager().beginTransaction()
 //                .add(R.id.content_id, new ChatFragment(), "chat")
 //                .addToBackStack(null)
