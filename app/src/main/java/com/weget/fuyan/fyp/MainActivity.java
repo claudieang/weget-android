@@ -317,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
 
         int notificationRequesttab = i.getIntExtra("notification_request_tab",-1);
         int notification_fulfill_tab = i.getIntExtra("notification_fulfill_tab",-1);
+        int notification_chat_tab = i.getIntExtra("notification_chat_tab",-1);
 
 
 
@@ -347,11 +348,16 @@ public class MainActivity extends AppCompatActivity {
 
         if(notificationRequesttab!=-1){
             bottomNavigationBar.selectTab(notificationRequesttab);
+            Log.d("","Testing Notification-------");
         }
         if(notification_fulfill_tab!=-1){
             bottomNavigationBar.selectTab(notification_fulfill_tab);
+            Log.d("","Testing Notification-------");
         }
-
+        if(notification_chat_tab!=-1){
+            bottomNavigationBar.selectTab(notification_chat_tab);
+            Log.d("","Chat Notification-------");
+        }
 
 
     }

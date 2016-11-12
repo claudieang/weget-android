@@ -323,7 +323,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             dialog.dismiss();
             if(result){
                 //itemPic.setImageResource(R.drawable.ordericon);
-                requestorTV.setText("Requested by: "+requestorName );
+                requestorTV.setText(requestorName );
                 productNameTV.setText(productName);
                 addressTV.setText(location + " " + postal);
                 expiryTimeTV.setText(DateFormatter.formatDate(endTime));

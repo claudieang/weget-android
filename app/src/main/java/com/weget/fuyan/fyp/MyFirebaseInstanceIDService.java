@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.sendbird.android.SendBird;
+import com.sendbird.android.SendBirdException;
 
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
@@ -24,6 +26,22 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         sendRegistrationToServer(refreshedToken);
+
+
+        //send to sendbird server
+        SendBird.registerPushTokenForCurrentUser(refreshedToken, new SendBird.RegisterPushTokenWithStatusHandler() {
+            @Override
+            public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
+                if (e != null) {
+                    // Error.
+                    return;
+                }
+
+                if (status == SendBird.PushTokenRegistrationStatus.PENDING) {
+                    // Try registration after connection is established.
+                }
+            }
+        });
     }
     // [END refresh_token]
 
