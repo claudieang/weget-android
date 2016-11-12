@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.sendbird.android.GroupChannel;
 import com.sendbird.android.GroupChannelListQuery;
 import com.sendbird.android.SendBirdException;
@@ -47,6 +48,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
     boolean bank = true;
     Context mContext;
     Request request;
+    Account a;
 
     ArrayList<Integer> fulfillerIdList = new ArrayList<>();
     private TextView productDescriptionTV;
@@ -125,6 +127,17 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 new getBank().execute(authString);
             }
         });
+        requestorTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent (FulfillviewRequestDetails.this, RequestFulfillerDetailsActivity.class);
+                i.putExtra("indicator", 1);
+                i.putExtra("selected_request_tofulfull", (Serializable) request);
+                i.putExtra("selected_fulfiller", (Serializable)a);
+                startActivity(i);
+            }
+        });
+
 
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,10 +321,12 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             } else {
 
                 try {
-                    JSONObject jso = new JSONObject(rst);
-                    requestorName = jso.getString("username");
 
-                } catch (JSONException e) {
+                    Gson gson = new Gson();
+                    a = gson.fromJson(rst,Account.class);
+                    requestorName = a.getUsername();
+
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 success = true;

@@ -13,10 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -25,16 +22,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
+import com.codetroopers.betterpickers.calendardatepicker.MonthAdapter;
+import com.codetroopers.betterpickers.radialtimepicker.RadialTimePickerDialogFragment;
+import com.weget.fuyan.fyp.Util.DateFormatter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class UpdateRequestActivity extends AppCompatActivity {
+public class UpdateRequestActivity extends AppCompatActivity  implements CalendarDatePickerDialogFragment.OnDateSetListener, RadialTimePickerDialogFragment.OnTimeSetListener  {
 
     String URL;
 
@@ -42,18 +42,22 @@ public class UpdateRequestActivity extends AppCompatActivity {
     double latitude, longtitude;
 
     String productName, requestRequirement, addressLine, requestDurationS, postalCodeS,priceS,
-            startTime, endTime, err, username, password, authString, requestStatus;
-    int postalCode, requestDuration, requestorId, requestId;
+            startTime, endTime, err, username, password, authString, requestStatus, postalCode;
+    int requestDuration, requestorId, requestId;
     double price;
-    EditText etProductName, etRequestRequirement, etPostalCode, etAddressLine, etRequestDuration, etPrice;
+    EditText etProductName, etRequestRequirement, etPostalCode, etAddressLine, etPrice;
     //Button getAddressBtn, updateRequestBtn;
     Button updateRequestBtn;
-    ImageButton getAddressBtn;
+    Button getAddressBtn;
     Geocoder geocoder;
     Context mContext;
     Request rq;
     CheckBox cb;
     Spinner dropdown;
+    String day, month, year, hours, mins;
+    private static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
+    private static final String FRAG_TAG_TIME_PICKER = "fragment_time_picker_name";
+    private TextView etRequestDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,15 +86,14 @@ public class UpdateRequestActivity extends AppCompatActivity {
         toolbarTitle.setTypeface(typeFace);
         updateRequestBtn.setText("UPDATE");
 
-        cb = (CheckBox)findViewById(R.id.checkBox2);
         etProductName = (EditText)findViewById(R.id.product_name_txt);
         etRequestRequirement = (EditText)findViewById(R.id.product_requirement_txt);
         etPostalCode = (EditText)findViewById(R.id.postal_code_txt);
         etAddressLine = (EditText)findViewById(R.id.address_line_txt);
-        etRequestDuration = (EditText)findViewById(R.id.request_duration_txt);
+
         etPrice = (EditText)findViewById(R.id.request_price_txt);
-        //getAddressBtn = (Button)findViewById(R.id.get_address_btn);
-        getAddressBtn = (ImageButton)findViewById(R.id.get_address_btn);
+        getAddressBtn = (Button)findViewById(R.id.get_address_btn);
+        etRequestDuration = (TextView)findViewById(R.id.request_duration_txt);
         //updateRequestBtn = (Button)findViewById(R.id.update_request_btn);
         geocoder = new Geocoder(this);
 
@@ -98,43 +101,25 @@ public class UpdateRequestActivity extends AppCompatActivity {
         etRequestRequirement.setText(rq.getRequirement());
         etPostalCode.setText(String.valueOf(rq.getPostal()));
         etAddressLine.setText(rq.getLocation());
-        etRequestDuration.setText(String.valueOf(rq.getDuration()));
+
+        endTime = rq.getEndTime();
+
+        //etRequestDuration.setText("test");
+        etRequestDuration.setText(DateFormatter.formatDate(rq.getEndTime()));
+        etRequestDuration.setTextSize(12);
+
         etPrice.setText(String.valueOf(rq.getPrice()));
 
-        dropdown = (Spinner)findViewById(R.id.spinner1);
-        String[] items = new String[]{"Hours", "Minutes"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items){
-
-
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View v = super.getView(position, convertView, parent);
-
-                ((TextView) v).setTextSize(16);
-                ((TextView) v).setTextColor(
-                        getResources().getColorStateList(R.color.black)
-                );
-
-                return v;
+        Button button = (Button) findViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CalendarDatePickerDialogFragment cdp = new CalendarDatePickerDialogFragment()
+                        .setOnDateSetListener(UpdateRequestActivity.this)
+                        .setDateRange(new MonthAdapter.CalendarDay(), new MonthAdapter.CalendarDay(2020, 1, 1));
+                cdp.show(getSupportFragmentManager(), FRAG_TAG_DATE_PICKER);
             }
-
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View v = super.getDropDownView(position, convertView, parent);
-                v.setBackgroundResource(R.drawable.barbase);
-
-                ((TextView) v).setTextColor(
-                        getResources().getColorStateList(R.color.black)
-                );
-
-                ((TextView) v).setGravity(Gravity.CENTER);
-
-                return v;
-            }
-
-
-
-        };
-        dropdown.setAdapter(adapter);
-
+        });
 
         getAddressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,8 +127,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
                 postalCodeS = etPostalCode.getText().toString();
 
                 if(postalCodeS != null && postalCodeS.trim().length() >0) {
-                    postalCode = Integer.parseInt(postalCodeS);
-
+                    postalCode = postalCodeS;
                     String zip = postalCodeS;
                     try {
                         List<Address> addresses = geocoder.getFromLocationName(zip, 1);
@@ -199,7 +183,7 @@ public class UpdateRequestActivity extends AppCompatActivity {
                 requestRequirement = etRequestRequirement.getText().toString();
                 postalCodeS = etPostalCode.getText().toString();
                 addressLine = etAddressLine.getText().toString();
-                requestDurationS = etRequestDuration.getText().toString();
+                //endTime = etRequestDuration.getText().toString();
                 priceS = etPrice.getText().toString();
                 //requestDuration = Integer.parseInt(requestDurationS);
 
@@ -208,72 +192,24 @@ public class UpdateRequestActivity extends AppCompatActivity {
                     if(requestRequirement != null && requestRequirement.trim().length() >0){
 
                         if(postalCodeS != null && postalCodeS.trim().length() >0){
-
-                            postalCode = Integer.parseInt(postalCodeS);
+                            postalCode = postalCodeS;
 
                             if(addressLine != null && addressLine.trim().length()>0){
+                                    requestDuration = 0;
+                                    if(etRequestDuration.getText().toString().isEmpty()){
+                                        etRequestDuration.setError("EMPTY");
 
-                                if(requestDurationS != null && requestDurationS.trim().length() > 0){
-                                    requestDuration = Integer.parseInt(requestDurationS);
-
+                                    }
                                     if(priceS!=null && priceS.trim().length()>0){
                                         price = Double.parseDouble(priceS);
+                                        startTime = rq.getStartTime();
 
-                                        //check if time should be updated
-                                        if(cb.isChecked()) {
-
-                                            String unit = dropdown.getSelectedItem().toString();
-                                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                            Date now = new Date();
-                                            startTime = sdf.format(now);
-
-                                            Log.d("Start Time: ", startTime);
-
-
-                                            Calendar date = Calendar.getInstance();
-                                            //long t = date.getTimeInMillis();
-
-                                            date.setTime(now);
-                                            unit = dropdown.getSelectedItem().toString();
-                                            //int num = Integer.parseInt(unit);
-                                            if(unit != null && unit.equals("Minutes")){
-                                                date.add(Calendar.MINUTE, requestDuration);
-                                            }
-
-                                            if(unit != null && unit.equals("Hours")){
-                                                date.add(Calendar.HOUR, requestDuration);
-                                            }
-
-                                            Date time = date.getTime();
-                                            endTime = sdf.format(time);
-//                                            if(unit != null && unit.equals("Minutes")) {
-//                                                Date afterAddingTenMins = new Date(t + (requestDuration * ONE_MINUTE_IN_MILLIS));
-//                                                endTime = sdf.format(afterAddingTenMins);
-//                                                Log.d("End Time: ", endTime);
-//                                            }
-//                                            if(unit != null && unit.equals("Hours")){
-//                                                Date afterAddingTenMins = new Date(t + (requestDuration * 60 * ONE_MINUTE_IN_MILLIS));
-//                                                endTime = sdf.format(afterAddingTenMins);
-//                                                Log.d("End Time: ", endTime);
-//                                            }
-
-
-                                            authString = username + ":" + password;
-                                            new updateRequest().execute(authString);
-                                        } else{
-                                            startTime = rq.getStartTime();
-                                            endTime = rq.getEndTime();
-                                            //if not checked, do not process new start/end
-                                            authString = username + ":" + password;
-                                            new updateRequest().execute(authString);
-                                        }
+                                        authString = username + ":" + password;
+                                        new updateRequest().execute(authString);
 
                                     }else{
                                         etPrice.setError("Price required!");
                                     }
-                                }else{
-                                    etRequestDuration.setError("Duration required!");
-                                }
 
                             }else{
                                 etAddressLine.setError("Address required!");
@@ -298,11 +234,53 @@ public class UpdateRequestActivity extends AppCompatActivity {
         cancel_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(UpdateRequestActivity.this, MainActivity.class);
+                //Intent i = new Intent(UpdateRequestActivity.this, MainActivity.class);
                 onBackPressed();
 
             }
         });
+    }
+
+    @Override
+    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+        //mResultTextView.setText(year + "/" +  monthOfYear + "/" + dayOfMonth);
+        this.year = year + "";
+        this.month = (monthOfYear + 1) + "";
+        this.day = dayOfMonth + "";
+        Log.d("Date", year + "/" +  monthOfYear + "/" + dayOfMonth);
+        Date now = new Date();
+        RadialTimePickerDialogFragment rtpd = new RadialTimePickerDialogFragment()
+                .setOnTimeSetListener(UpdateRequestActivity.this)
+                .setDoneText("Ok")
+                .setStartTime(now.getHours(),now.getMinutes())
+                .setForced12hFormat()
+                .setCancelText("Cancel");
+        rtpd.show(getSupportFragmentManager(), FRAG_TAG_TIME_PICKER);
+        //Log.d("Time", hourOfDay + ":" + minute);
+    }
+
+    @Override
+    public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
+        this.hours = hourOfDay + "";
+        this.mins = minute + "";
+        Log.d("Time", hourOfDay + ":" + minute);
+        //"yyyy-MM-dd HH:mm:ss")
+        if(day.length() != 2){
+            day = "0" + day;
+        }
+        if(month.length() != 2){
+            month = "0" + month;
+        }
+        if(hours.length() != 2){
+            hours = "0" + hours;
+        }
+
+        if(mins.length() != 2){
+            mins = "0" + mins;
+        }
+        endTime = year + "-" + month + "-" + day + " " + hours + ":" + mins + ":" + "00" ;
+        etRequestDuration.setText(DateFormatter.formatDate(endTime));
+        etRequestDuration.setTextSize(12);
     }
 
     private class updateRequest extends AsyncTask<String, Void, Boolean> {

@@ -239,7 +239,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             @Override
             public void onConnected(User user, SendBirdException e) {
                 if (e != null) {
-                    Toast.makeText(mContext, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -619,6 +619,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                           if (request.getRequestorId() == id) {
                               //if the request viewed is mine
                               Intent intent = new Intent(getContext(), RequesterViewDetails.class);
+                              intent.putExtra("selected_request", request);
+                              startActivity(intent);
+                          } else { //if the request viewed is someone elses
+                              Intent intent = new Intent(getContext(), FulfillviewRequestDetails.class);
                               intent.putExtra("selected_request", request);
                               startActivity(intent);
                           }

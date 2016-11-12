@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private int userID;
     Context mContext;
-    private String err, password, authString,username;
+    private String err, password, authString, username;
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
     String URL;
     private Menu optionsMenu;
@@ -59,16 +59,16 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fm = getFragmentManager();
         fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-             @Override
-             public void onBackStackChanged(){
-                 if(getFragmentManager().getBackStackEntryCount() == 0) finish();
-             }
+            @Override
+            public void onBackStackChanged() {
+                if (getFragmentManager().getBackStackEntryCount() == 0) finish();
+            }
         });
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Log.d("sigh","checking for activity behaviour");
+        Log.d("sigh", "checking for activity behaviour");
 
         SpannableString s = new SpannableString("Weget");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.app_name, R.string.app_name);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name);
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
@@ -109,20 +109,21 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
 
-        userID = pref.getInt("id",0);
+        userID = pref.getInt("id", 0);
         password = pref.getString("password", null);
-        authString  = username + ":" + password;
+        authString = username + ":" + password;
 
 
         TextView nav_tv = (TextView) findViewById(R.id.userName);
         nav_tv.setText(username);
         //set profile pic
         String profilePicture = pref.getString("picture", null);
-        ImageView profileImage = (ImageView)findViewById(R.id.avatar);;
+        ImageView profileImage = (ImageView) findViewById(R.id.avatar);
+        ;
 
-        if(profilePicture.equals("")){
+        if (profilePicture.equals("")) {
             profileImage.setImageResource(R.drawable.ic_profile);
-        }else{
+        } else {
 
             byte[] decodeString = Base64.decode(profilePicture, Base64.NO_WRAP);
             Bitmap decodebitmap = BitmapFactory.decodeByteArray(
@@ -148,34 +149,72 @@ public class MainActivity extends AppCompatActivity {
                 .initialise();
 
 
-
-        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener(){
+        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
 
             @Override
             public void onTabSelected(int position) {
 
 
-                switch(position){
+                switch (position) {
                     case 0:
                         SpannableString s = new SpannableString("Weget");
                         s.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s);
-                        HomeFragment homeFragment = new HomeFragment();
+                        //HomeFragment homeFragment = new HomeFragment();
                         //MenuItem refresh = optionsMenu.findItem(R.id.action_refresh);
                         //refresh.setVisible(true);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, homeFragment).commit();
+                        if (getSupportFragmentManager().findFragmentByTag("home") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .show(getSupportFragmentManager().findFragmentByTag("home")).commit();
+                        }
+                        if (getSupportFragmentManager().findFragmentByTag("request") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
+                        }
+
+                        if (getSupportFragmentManager().findFragmentByTag("fulfill") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        }
+
+                        if (getSupportFragmentManager().findFragmentByTag("chat") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("chat")).commit();
+                        }
+
                         break;
                     case 1:
                         SpannableString s1 = new SpannableString("My Requests");
                         s1.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s1.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s1);
-                        RequestFragment requestFragment = new RequestFragment();
 
-                        //MenuItem refresh4 = optionsMenu.findItem(R.id.action_refresh);
-                        //refresh4.setVisible(false);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, requestFragment).commit();
+                        if (getSupportFragmentManager().findFragmentByTag("home") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("home")).commit();
+                        }
+                        if (getSupportFragmentManager().findFragmentByTag("request") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .show(getSupportFragmentManager().findFragmentByTag("request")).commit();
+
+                        } else {
+                            getSupportFragmentManager().beginTransaction()
+                                    .add(R.id.content_id, new RequestFragment(), "request")
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+
+                        if (getSupportFragmentManager().findFragmentByTag("fulfill") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        }
+
+                        if (getSupportFragmentManager().findFragmentByTag("chat") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("chat")).commit();
+                        }
+                        //getSupportFragmentManager().findFragmentByTag()
                         //Intent i = new Intent(MainActivity.this, RequestFragment.class);
                         //startActivity(i);
                         break;
@@ -187,10 +226,34 @@ public class MainActivity extends AppCompatActivity {
                         s2.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s2.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s2);
-                        FulfillFragment fulfillFragment = new FulfillFragment();
+                        //FulfillFragment fulfillFragment = new FulfillFragment();
                         //MenuItem refresh3 = optionsMenu.findItem(R.id.action_refresh);
                         //refresh3.setVisible(false);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, fulfillFragment).commit();
+                        if (getSupportFragmentManager().findFragmentByTag("home") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("home")).commit();
+                        }
+                        if (getSupportFragmentManager().findFragmentByTag("request") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
+                        }
+                        if (getSupportFragmentManager().findFragmentByTag("fulfill") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .show(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+
+                        } else {
+                            getSupportFragmentManager().beginTransaction()
+                                    .add(R.id.content_id, new FulfillFragment(), "fulfill")
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+
+                        //getSupportFragmentManager().beginTransaction()
+                        //        .show(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        if (getSupportFragmentManager().findFragmentByTag("chat") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("chat")).commit();
+                        }
                         break;
                     case 4:
 
@@ -198,32 +261,67 @@ public class MainActivity extends AppCompatActivity {
                         s3.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s3.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s3);
+
+
                         //MenuItem refresh1 = optionsMenu.findItem(R.id.action_refresh);
                         //refresh1.setVisible(false);
-                        ChatFragment chatFragment = new ChatFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, chatFragment).commit();
+                        if (getSupportFragmentManager().findFragmentByTag("home") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("home")).commit();
+                        }
+                        if (getSupportFragmentManager().findFragmentByTag("request") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
+                        }
+                        if (getSupportFragmentManager().findFragmentByTag("fulfill") != null) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+                        }
+//                        getSupportFragmentManager().beginTransaction()
+//                                .show(getSupportFragmentManager().findFragmentByTag("chat")).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.content_id_2, new ChatFragment(), "chat")
+                                .addToBackStack(null)
+                                .commit();
 
                         //startActivity(new Intent(MainActivity.this, ChatActivity.class));
                         break;
 
                 }
             }
+
             @Override
             public void onTabUnselected(int position) {
             }
+
             @Override
             public void onTabReselected(int position) {
             }
         });
-        homeFragment = new HomeFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_id, homeFragment).commit();
+
+
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.content_id, new RequestFragment(), "request")
+//                .addToBackStack(null)
+//                .commit();
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.content_id, new FulfillFragment(), "fulfill")
+//                .addToBackStack(null)
+//                .commit();
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.content_id, new ChatFragment(), "chat")
+//                .addToBackStack(null)
+//                .commit();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.content_id, new HomeFragment(), "home")
+                .commit();
 
         Intent i = getIntent();
-        int tabToOpen = i.getIntExtra("after_payment_request_tab",-1);
-        int tabToOpen2 = i.getIntExtra("after_received_tab",-1);
-        int tabToOpen3 = i.getIntExtra("after_delivered_tab",-1);
-        int tabToOpen4 = i.getIntExtra("after_dispute_tab",-1);
-        int tabToOpen5 = i.getIntExtra("after_dispute_fulfill_tab",-1);
+        int tabToOpen = i.getIntExtra("after_payment_request_tab", -1);
+        int tabToOpen2 = i.getIntExtra("after_received_tab", -1);
+        int tabToOpen3 = i.getIntExtra("after_delivered_tab", -1);
+        int tabToOpen4 = i.getIntExtra("after_dispute_tab", -1);
+        int tabToOpen5 = i.getIntExtra("after_dispute_fulfill_tab", -1);
         int tabToOpen6 = i.getIntExtra("updated_request_tab", -1);
         int tabToOpen7 = i.getIntExtra("accepted_fulfill_tab", -1);
         int tabToOpen8 = i.getIntExtra("after_dispute_request_tab", -1);
@@ -234,36 +332,36 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if(tabToOpen!=-1){
+        if (tabToOpen != -1) {
             bottomNavigationBar.selectTab(tabToOpen);
         }
-        if(tabToOpen2!=-1){
+        if (tabToOpen2 != -1) {
             bottomNavigationBar.selectTab(tabToOpen2);
         }
-        if(tabToOpen3!=-1){
+        if (tabToOpen3 != -1) {
             bottomNavigationBar.selectTab(tabToOpen3);
         }
-        if(tabToOpen4!=-1){
+        if (tabToOpen4 != -1) {
             bottomNavigationBar.selectTab(tabToOpen4);
         }
-        if(tabToOpen5!=-1){
+        if (tabToOpen5 != -1) {
             bottomNavigationBar.selectTab(tabToOpen5);
         }
-        if(tabToOpen6!=-1){
+        if (tabToOpen6 != -1) {
             bottomNavigationBar.selectTab(tabToOpen6);
         }
-        if(tabToOpen7!=-1){
+        if (tabToOpen7 != -1) {
             bottomNavigationBar.selectTab(tabToOpen7);
         }
-        if(tabToOpen8!=-1){
+        if (tabToOpen8 != -1) {
             bottomNavigationBar.selectTab(tabToOpen8);
         }
 
-        if(notificationRequesttab!=-1){
+        if (notificationRequesttab != -1) {
             bottomNavigationBar.selectTab(notificationRequesttab);
             Log.d("","Testing Notification-------");
         }
-        if(notification_fulfill_tab!=-1){
+        if (notification_fulfill_tab != -1) {
             bottomNavigationBar.selectTab(notification_fulfill_tab);
             Log.d("","Testing Notification-------");
         }
@@ -276,17 +374,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         //invalidateOptionsMenu();
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         String profilePicture = pref.getString("picture", null);
-            ImageView profileImage = (ImageView)findViewById(R.id.avatar);;
+        ImageView profileImage = (ImageView) findViewById(R.id.avatar);
 
-            if(profilePicture.equals("")){
-                profileImage.setImageResource(R.drawable.ic_profile);
-        }else{
+
+        if (profilePicture.equals("")) {
+            profileImage.setImageResource(R.drawable.ic_profile);
+        } else {
 
             byte[] decodeString = Base64.decode(profilePicture, Base64.NO_WRAP);
             Bitmap decodebitmap = BitmapFactory.decodeByteArray(
@@ -374,7 +473,6 @@ public class MainActivity extends AppCompatActivity {
     private class logout extends AsyncTask<String, Void, Boolean> {
 
 
-
         @Override
         protected void onPreExecute() {
 
@@ -386,7 +484,7 @@ public class MainActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = URL + "account/"+ userID + "/logout/";
+            String url = URL + "account/" + userID + "/logout/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
             if (rst == null) {
@@ -397,9 +495,10 @@ public class MainActivity extends AppCompatActivity {
             }
             return success;
         }
+
         @Override
         protected void onPostExecute(Boolean result) {
-            if(result==true){
+            if (result == true) {
                 //clear the sharedpreferences
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
@@ -407,13 +506,12 @@ public class MainActivity extends AppCompatActivity {
                 editor.clear();
                 editor.commit();
 
-                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK |
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-            }
-            else{
+            } else {
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
 
             }

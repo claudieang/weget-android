@@ -21,7 +21,7 @@
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:src="@drawable/active_request"
+            android:src="@drawable/completed_fulfill"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
@@ -30,13 +30,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Request"
+            android:text="Request Details"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:layout_below="@+id/pic"
             android:paddingBottom="5dp"
             android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Awaiting acceptance:"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_below="@+id/title"
+            android:paddingBottom="5dp"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -194,7 +206,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Actual Money you will get from this request:"
+                android:text="After service deductions:"
                 android:textStyle="italic"
                 android:id="@+id/price_detail2"
                 android:textSize="12sp"

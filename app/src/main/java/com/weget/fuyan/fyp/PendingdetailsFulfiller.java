@@ -121,6 +121,18 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
                 new getTransaction().execute(authString);
             }
         });
+
+        requestorTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent (PendingdetailsFulfiller.this, RequestFulfillerDetailsActivity.class);
+                i.putExtra("indicator", 1);
+                i.putExtra("selected_request_tofulfull", (Serializable) myRequest);
+                i.putExtra("selected_fulfiller", (Serializable)a);
+                startActivity(i);
+            }
+        });
+
     }
 
     private class getRequestor extends AsyncTask<String, Void, Boolean> {

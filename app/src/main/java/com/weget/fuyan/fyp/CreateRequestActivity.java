@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.codetroopers.betterpickers.calendardatepicker.MonthAdapter;
 import com.codetroopers.betterpickers.radialtimepicker.RadialTimePickerDialogFragment;
+import com.weget.fuyan.fyp.Util.DateFormatter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -318,7 +319,7 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
         //mResultTextView.setText(year + "/" +  monthOfYear + "/" + dayOfMonth);
         monthOfYear=monthOfYear+1;
         this.year = year + "";
-        this.month = monthOfYear + "";
+        this.month = (monthOfYear + 1) + "";
         this.day = dayOfMonth + "";
         Log.d("Date", year + "/" +  monthOfYear + "/" + dayOfMonth);
         Date now = new Date();
@@ -352,7 +353,8 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
             mins = "0" + mins;
         }
         endTime = year + "-" + month + "-" + day + " " + hours + ":" + mins + ":" + "00" ;
-        etRequestDuration.setText(endTime);
+        etRequestDuration.setText(DateFormatter.formatDate(endTime));
+        etRequestDuration.setTextSize(12);
     }
 
 
