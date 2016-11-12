@@ -255,11 +255,11 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content_id, new RequestFragment(), "request")
-                .addToBackStack(null)
+                //.addToBackStack(null)
                 .commit();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content_id, new FulfillFragment(), "fulfill")
-                .addToBackStack(null)
+                //.addToBackStack(null)
                 .commit();
 //        getSupportFragmentManager().beginTransaction()
 //                .add(R.id.content_id, new ChatFragment(), "chat")
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
 //                .commit();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content_id, new HomeFragment(), "home")
-                .addToBackStack(null)
+                //.addToBackStack(null)
                 .commit();
 
         Intent i = getIntent();
