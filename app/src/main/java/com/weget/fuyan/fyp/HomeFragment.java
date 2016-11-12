@@ -239,7 +239,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             @Override
             public void onConnected(User user, SendBirdException e) {
                 if (e != null) {
-                    Toast.makeText(mContext, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     return;
                 }
             }

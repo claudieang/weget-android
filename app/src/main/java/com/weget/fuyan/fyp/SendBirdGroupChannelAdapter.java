@@ -122,7 +122,7 @@ public class SendBirdGroupChannelAdapter extends BaseAdapter {
 
                 accountId = u.getUserId();
 
-                new getUser().execute(authString);
+                //new getUser().execute(authString);
             }
         }
 

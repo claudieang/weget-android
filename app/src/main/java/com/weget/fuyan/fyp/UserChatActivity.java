@@ -976,6 +976,7 @@ public class UserChatActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
+            Log.d("Chapting","error here");
             String url = "https://weget-2015is203g2t2.rhcloud.com/webservice/" + "account/" + friendId+"/";
 
             String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);

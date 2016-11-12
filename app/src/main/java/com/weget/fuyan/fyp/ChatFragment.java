@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,22 +44,25 @@ public class ChatFragment extends Fragment {
     private int myId;
 
 
-    public ChatFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+       // getActivity().getSupportFragmentManager().addOnBackStackChangedListener(getListener());
         View rootView = inflater.inflate(R.layout.sendbird_fragment_group_channel_list, container, false);
         initUIComponents(rootView);
         return rootView;
+
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        //getActivity().getSupportFragmentManager().addOnBackStackChangedListener(getListener());
         setHasOptionsMenu(true);
     }
+
+
 
     private void initUIComponents(View rootView) {
         mListView = (ListView) rootView.findViewById(R.id.list);

@@ -318,7 +318,7 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
         //mResultTextView.setText(year + "/" +  monthOfYear + "/" + dayOfMonth);
         this.year = year + "";
-        this.month = monthOfYear + "";
+        this.month = (monthOfYear + 1) + "";
         this.day = dayOfMonth + "";
         Log.d("Date", year + "/" +  monthOfYear + "/" + dayOfMonth);
         Date now = new Date();

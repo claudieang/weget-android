@@ -221,6 +221,8 @@ public class MainActivity extends AppCompatActivity {
                         s3.setSpan(new TypefaceSpan(getApplicationContext(), "Roboto-Regular.ttf"), 0, s3.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         getSupportActionBar().setTitle(s3);
+
+
                         //MenuItem refresh1 = optionsMenu.findItem(R.id.action_refresh);
                         //refresh1.setVisible(false);
                         getSupportFragmentManager().beginTransaction()
@@ -229,8 +231,12 @@ public class MainActivity extends AppCompatActivity {
                                 .hide(getSupportFragmentManager().findFragmentByTag("request")).commit();
                         getSupportFragmentManager().beginTransaction()
                                 .hide(getSupportFragmentManager().findFragmentByTag("fulfill")).commit();
+//                        getSupportFragmentManager().beginTransaction()
+//                                .show(getSupportFragmentManager().findFragmentByTag("chat")).commit();
                         getSupportFragmentManager().beginTransaction()
-                                .show(getSupportFragmentManager().findFragmentByTag("chat")).commit();
+                            .replace(R.id.content_id_2, new ChatFragment(), "chat")
+                            .addToBackStack(null)
+                            .commit();
 
                         //startActivity(new Intent(MainActivity.this, ChatActivity.class));
                         break;
@@ -255,10 +261,10 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.content_id, new FulfillFragment(), "fulfill")
                 .addToBackStack(null)
                 .commit();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.content_id, new ChatFragment(), "chat")
-                .addToBackStack(null)
-                .commit();
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.content_id, new ChatFragment(), "chat")
+//                .addToBackStack(null)
+//                .commit();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content_id, new HomeFragment(), "home")
                 .addToBackStack(null)
