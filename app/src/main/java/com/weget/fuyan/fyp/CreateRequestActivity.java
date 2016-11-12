@@ -353,6 +353,7 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
         }
         endTime = year + "-" + month + "-" + day + " " + hours + ":" + mins + ":" + "00" ;
         etRequestDuration.setText(DateFormatter.formatDateShort(endTime));
+        etRequestDuration.setTextSize(11);
     }
 
 
