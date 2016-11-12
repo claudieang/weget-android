@@ -234,7 +234,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
 
-
         SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", mContext);
         SendBird.connect(myId+"", new SendBird.ConnectHandler() {
             @Override
