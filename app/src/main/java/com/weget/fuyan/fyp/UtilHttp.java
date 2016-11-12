@@ -443,7 +443,7 @@ public class UtilHttp {
             conn.connect();
             int responseCode = conn.getResponseCode();
             Log.v(TAG, "Return code = " + responseCode);
-            if (responseCode == 200 || responseCode == 400 ||responseCode == 201) {
+            if (responseCode == 200 ||responseCode == 201) {
                 in = new BufferedInputStream(conn.getInputStream());
                 String encoding = conn.getContentEncoding() == null ? "UTF-8"
                         : conn.getContentEncoding();
