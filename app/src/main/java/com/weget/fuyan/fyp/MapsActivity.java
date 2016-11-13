@@ -61,6 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     protected View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkLocationPermission();
         StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();

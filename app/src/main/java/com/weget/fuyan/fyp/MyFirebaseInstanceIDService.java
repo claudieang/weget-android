@@ -29,6 +29,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
 
         //send to sendbird server
+        SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getApplication().getApplicationContext());
         SendBird.registerPushTokenForCurrentUser(refreshedToken, new SendBird.RegisterPushTokenWithStatusHandler() {
             @Override
             public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
