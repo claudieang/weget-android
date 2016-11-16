@@ -3,7 +3,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <include
@@ -13,6 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:paddingBottom="30dp">
 
         <ImageView
@@ -42,7 +42,7 @@
         android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="1.36"
         android:background="@color/bt_very_light_gray"
         android:orientation="vertical"
         android:weightSum="1">
@@ -189,7 +189,6 @@
                 android:drawablePadding="8dp"
                 android:paddingLeft="8dp"
                 android:paddingTop="3dp"
-                android:paddingBottom="3dp"
                 android:textColor="@color/black"/>
 
         </LinearLayout>
@@ -201,11 +200,9 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:id="@+id/linear8"
-        android:layout_below="@+id/linear7"
-        android:layout_alignParentStart="true"
-        android:weightSum="2">
+        android:layout_below="@+id/linear7">
 
         <Button
             android:layout_width="wrap_content"
