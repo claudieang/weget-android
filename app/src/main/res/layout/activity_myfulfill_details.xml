@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Awaiting acceptance:"
+            android:text="Awaiting acceptance"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:layout_below="@+id/title"

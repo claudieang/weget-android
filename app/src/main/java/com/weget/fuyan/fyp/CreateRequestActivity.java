@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -274,8 +275,25 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
                                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                         Date now = new Date();
                                         startTime = sdf.format(now);
-                                        authString = username + ":" + password;
-                                        new createRequest().execute(authString);
+
+                                        if(endTime.length() != 0) {
+                                            Date end = null;
+                                            try {
+                                                end = sdf.parse(endTime);
+
+                                            } catch (ParseException pe) {
+                                                etRequestDuration.setError("Invalid End Date");
+                                            }
+                                            if (end.before(now)) {
+                                                etRequestDuration.setError("Invalid End Date");
+                                            } else {
+                                                authString = username + ":" + password;
+                                                new createRequest().execute(authString);
+                                            }
+                                        } else {
+                                            etRequestDuration.setError("Invalid End Date");
+                                        }
+
 
 
                                     } else {
@@ -319,7 +337,7 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
         //mResultTextView.setText(year + "/" +  monthOfYear + "/" + dayOfMonth);
         monthOfYear=monthOfYear+1;
         this.year = year + "";
-        this.month = (monthOfYear + 1) + "";
+        this.month = monthOfYear + "";
         this.day = dayOfMonth + "";
         Log.d("Date", year + "/" +  monthOfYear + "/" + dayOfMonth);
         Date now = new Date();
