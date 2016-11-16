@@ -1,92 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ac51cc3-112a-4e24-a1cc-cab754f3fbe6" name="Default" comment="" />
+    <list default="true" id="f0d45d86-2f34-44d4-81c4-45560d72908b" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="app.iws" />
     <ignored path=".idea/workspace.xml" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/assets/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/blame/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/builds/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/bundles/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/classes/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/dependency-cache/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/design/23.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.ashokvarma.android/bottom-navigation-bar/1.3.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads-lite/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics-impl/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast-framework/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-clearcut/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-contextmanager/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-gass/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-iid/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-places/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager-api/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-auth-common/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-auth-module/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-config/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-core/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-crash/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-database-connection/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-database/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-storage-common/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-storage/9.4.0/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.roughike/bottom-bar/1.3.9/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.stripe/stripe-android/1.0.5/jars/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/incremental/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/incremental-classes/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/incremental-runtime-classes/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/incremental-safeguard/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/incremental-verifier/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/instant-run-support/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/jniLibs/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/manifests/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/reload-dex/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/res/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/restart-dex/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/rs/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/shaders/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/symbols/" />
-    <ignored path="$PROJECT_DIR$/build/intermediates/transforms/" />
-    <ignored path="$PROJECT_DIR$/build/outputs/" />
-    <ignored path="$PROJECT_DIR$/build/tmp/" />
+    <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -110,22 +40,12 @@
     <favorites_list name="app" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="local.properties" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/local.properties">
+    <leaf>
+      <file leaf-file-name="MainPage.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/weget/fuyan/fyp/MainPage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42525774">
-              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="238">
+              <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -133,18 +53,22 @@
       </file>
     </leaf>
   </component>
+  <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
       <projects_view />
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="70" />
-    <option name="y" value="23" />
-    <option name="width" value="1147" />
-    <option name="height" value="777" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1378" />
+    <option name="height" value="744" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -169,6 +93,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -176,9 +102,15 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -188,21 +120,106 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.NonAndroidModuleNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="weget" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fuyan" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fyp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="ProjectPane" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
-    <property name="android.project.structure.last.selected" value="SDK Location" />
-    <property name="android.project.structure.proportion" value="0.15" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/GitHub/PortableGit_63435a79518b44808827aa3194b76bea96231189/cmd/git.exe" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="Application" factoryName="Application">
@@ -290,39 +307,46 @@
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
     </configuration>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1ac51cc3-112a-4e24-a1cc-cab754f3fbe6" name="Default" comment="" />
-      <created>1472806484662</created>
+      <changelist id="f0d45d86-2f34-44d4-81c4-45560d72908b" name="Default" comment="" />
+      <created>1478935168176</created>
       <option name="number" value="Default" />
-      <updated>1472806484662</updated>
+      <option name="presentableId" value="Default" />
+      <updated>1478935168176</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="70" y="23" width="1147" height="777" extended-state="0" />
+    <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.4908953" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5058565" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.48786038" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32843137" sideWeight="0.4969651" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32843137" sideWeight="0.5030349" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24977376" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962063" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -341,34 +365,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/local.properties">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weget/fuyan/fyp/MainPage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42525774">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        <state relative-caret-position="238">
+          <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
           <folding />
         </state>
       </provider>
