@@ -39,7 +39,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import java.util.ArrayList;
 
 /**
- * Created by Claudie on 9/3/16.
+ * Created by Claudie on 9/3/16. SHAFIQ SUPPORTS!!!
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -562,5 +562,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d("on received", intent.getAction());
+    }
 }
