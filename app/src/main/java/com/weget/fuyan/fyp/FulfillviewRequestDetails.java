@@ -344,7 +344,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 addressTV.setText(location + " " + postal);
                 expiryTimeTV.setText(DateFormatter.formatDate(endTime));
                 priceTV.setText(priceS);
-                newprice = (price-(price*0.029+0.3))*0.9;
+                newprice = price-(price*0.029+0.3);
                 newPrice.setText("$ " + String.format("%.2f",newprice));
 
                 productDescriptionTV.setText(requirement);
