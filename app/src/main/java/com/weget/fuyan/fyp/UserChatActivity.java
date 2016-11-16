@@ -1024,7 +1024,7 @@ public class UserChatActivity extends AppCompatActivity {
             if(result){
 
             }else {
-                Toast.makeText(mContext, err, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, err, Toast.LENGTH_SHORT).show();
             }
 
         }
