@@ -28,7 +28,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
 
     Request myRequest;
     TextView productNameTV, requestorTV, addressTV, priceTV, productName1, newPriceTV;
-    String productName, requestorName, address, err, postal, username, password, authString, requestorIdS,requirement;
+    String productName, requestorName, address, err, postal, username, password, authString, requestorIdS,requirement, priceS;
     int myId, requestorId, myRequestId, transactionId;
     double price, newprice;
     Button deliveredBtn, disputeBtn;
@@ -71,6 +71,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
         productName = myRequest.getProductName();
         address = myRequest.getLocation();
         price = myRequest.getPrice();
+        priceS = String.format("%.2f", price);
         postal = myRequest.getPostal();
         requirement = myRequest.getRequirement();
 
@@ -201,10 +202,10 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
                 requestorTV.setText(requestorName );
                 productNameTV.setText(requirement);
                 addressTV.setText(address + " " + postal);
-                priceTV.setText("" + price + "0");
+                priceTV.setText(priceS);
 
                 newprice = (price-(price*0.029+0.3))*0.9;
-                newPriceTV.setText("$"+String.format("%.2f",newprice));
+                newPriceTV.setText("$ " +String.format("%.2f",newprice));
 
 
             }else {

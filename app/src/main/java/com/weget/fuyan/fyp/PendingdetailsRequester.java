@@ -29,7 +29,8 @@ public class PendingdetailsRequester extends AppCompatActivity {
 
     Request myRequest;
     TextView productNameTV, requestorTV, addressTV, priceTV, productName1, fulfillerName;
-    String productName, requestorName, address, postal, err, username, password, authString, requestorIdS, productDescription;
+    String productName, requestorName, address, postal, err, priceS,
+            username, password, authString, requestorIdS, productDescription;
     int myId, requestorId, myRequestId, transactionId;
     double price;
     Button receivedBtn, disputeBtn;
@@ -71,6 +72,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
         productName = myRequest.getProductName();
         address = myRequest.getLocation();
         price = myRequest.getPrice();
+        priceS = String.format("%.2f", price);
         postal = myRequest.getPostal();
         productDescription = myRequest.getRequirement();
 
@@ -136,7 +138,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
 
         int id, contactNo;
         String username, password, email, fulfiller, picture;
-        Account account;
+        AccountExtended account;
         ProgressDialog dialog = new ProgressDialog(PendingdetailsRequester.this, R.style.MyTheme);
 
         @Override
@@ -172,13 +174,20 @@ public class PendingdetailsRequester extends AppCompatActivity {
 
                         id = jso.getInt("id");
                         username = jso.getString("username");
-                        password = jso.getString("password");
+                        //password = jso.getString("password");
                         contactNo = jso.getInt("contactNo");
                         email = jso.getString("email");
                         fulfiller = jso.getString("fulfiller");
                         picture = jso.getString("picture");
+                        double requestTotal = jso.getDouble("requestTotal");
+                        double requestNo = jso.getDouble("requestNo");
+                        double fulfillTotal = jso.getDouble("fulfillTotal");
+                        double fulfillNo = jso.getDouble("fulfillNo");
+                        double requestMade = jso.getDouble("requestMade");
+                        double fulfillMade = jso.getDouble("fulfillMade");
 
-                        account = new Account(id, username, password, contactNo, email, fulfiller, picture);
+
+                        account = new AccountExtended(id, username, password, contactNo, email, fulfiller, picture,requestTotal, requestNo, fulfillTotal, fulfillNo, requestMade, fulfillMade);
 
 
                         fulfillerAccountList.add(account);
@@ -203,7 +212,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
                     productName1.setText(productName);
                     productNameTV.setText(productDescription);
                     addressTV.setText(address + " " + postal);
-                    priceTV.setText("" + price + "0");
+                    priceTV.setText(priceS);
 
                 }
 
@@ -253,8 +262,9 @@ public class PendingdetailsRequester extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+
             if(result) {
-                dialog.dismiss();
                 a = fulfillerAccountList.get(0);
                 Intent i = new Intent(PendingdetailsRequester.this, Rating_requestor.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);

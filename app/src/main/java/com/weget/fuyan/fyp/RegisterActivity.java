@@ -38,6 +38,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Pattern;
 
 
@@ -244,6 +245,30 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case RC_PERMISSION_READ_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    ChooseImage();
+
+
+                } else {
+
+                    Toast.makeText(getBaseContext(), "Permission Denied!", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+        }
+    }
+
     public void ChooseImage() {
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)
@@ -271,8 +296,8 @@ public class RegisterActivity extends AppCompatActivity {
             Bitmap originBitmap = null;
             Bitmap resized = null;
             Uri selectedImage = data.getData();
-            Toast.makeText(RegisterActivity.this, selectedImage.toString(),
-                    Toast.LENGTH_SHORT).show();
+            //Toast.makeText(RegisterActivity.this, selectedImage.toString(),
+                    //Toast.LENGTH_SHORT).show();
             //txtmsg.setText(selectedImage.toString());
             InputStream imageStream;
             try {
@@ -299,16 +324,26 @@ public class RegisterActivity extends AppCompatActivity {
                     byteArray = stream.toByteArray();
 
                     encodedImage = Base64.encodeToString(byteArray, Base64.NO_WRAP);
-                    Toast.makeText(RegisterActivity.this, "Conversion Done",
-                            Toast.LENGTH_SHORT).show();
-                    Log.d("BASE46: ", encodedImage);
+                    try {
+                        encodedImage.getBytes("UTF-8");
+                    }catch(UnsupportedEncodingException e){
+                        Log.d("Wrong encoding type", "");
+                    }
+//                    Toast.makeText(RegisterActivity.this, "Conversion Done",
+//                            Toast.LENGTH_SHORT).show();
+//                    Log.d("BASE46: ", encodedImage);
                 }else if (resized.compress(Bitmap.CompressFormat.PNG, 100, stream)){
                     byteArray = stream.toByteArray();
 
                     encodedImage = Base64.encodeToString(byteArray, Base64.NO_WRAP);
-                    Toast.makeText(RegisterActivity.this, "Conversion Done",
-                            Toast.LENGTH_SHORT).show();
-                    Log.d("BASE46: ", encodedImage);
+                    try {
+                        encodedImage.getBytes("UTF-8");
+                    }catch(UnsupportedEncodingException e){
+                        Log.d("Wrong encoding type", "");
+                    }
+//                    Toast.makeText(RegisterActivity.this, "Conversion Done",
+//                            Toast.LENGTH_SHORT).show();
+//                    Log.d("BASE46: ", encodedImage);
                 }
 
 
@@ -358,6 +393,11 @@ public class RegisterActivity extends AppCompatActivity {
                     jsoin.put("fcm",token);
                 }else{
 
+//                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_account_circle_black_48dp);
+//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+//                    byte[] byteArray = byteArrayOutputStream .toByteArray();
+//                    encodedImage =  Base64.encodeToString(byteArray, Base64.DEFAULT);
                     jsoin = new JSONObject();
                     jsoin.put("username", user_name);
                     jsoin.put("password", user_pass);

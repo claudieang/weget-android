@@ -70,19 +70,32 @@
 
             android:layout_alignParentEnd="true"/>
 
-        <RatingBar
-            style="@style/RatingBar"
+
+        <TextView
+            android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5"
-            android:rating="3.5"
-            android:stepSize="0.5"
-            android:progressBackgroundTint="#000000"
-            android:progressTint="@color/black"
-            android:secondaryProgressTint="#000000"
-            android:id="@+id/ratingBar"
-            android:paddingBottom="4dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"/>
+            android:layout_below="@+id/request_date"
+            android:layout_margin="4dp"
+            android:text="price"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+
+            android:layout_alignParentEnd="true"/>
+
+        <!--<RatingBar-->
+            <!--style="@style/RatingBar"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:numStars="5"-->
+            <!--android:rating="3.5"-->
+            <!--android:stepSize="0.5"-->
+            <!--android:progressBackgroundTint="#000000"-->
+            <!--android:progressTint="@color/black"-->
+            <!--android:secondaryProgressTint="#000000"-->
+            <!--android:id="@+id/ratingBar"-->
+            <!--android:paddingBottom="4dp"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentBottom="true"/>-->
     </RelativeLayout>
 </android.support.v7.widget.CardView>

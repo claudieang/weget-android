@@ -11,6 +11,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.weget.fuyan.fyp.Account;
+import com.weget.fuyan.fyp.AccountExtended;
 import com.weget.fuyan.fyp.PaymentActivity;
 import com.weget.fuyan.fyp.R;
 import com.weget.fuyan.fyp.Request;
@@ -31,7 +33,7 @@ import java.util.List;
  * Created by Claudie on 9/11/16.
  */
 public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFulfillersListAdapter.FulfillerListViewHolder>{
-    List<Account> list;
+    List<AccountExtended> list;
     List<Integer> fulfillIdList;
     Request r;
     Context mContext;
@@ -39,13 +41,13 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
 
 
 
-    public RequestFulfillersListAdapter(List<Account> list, List<Integer> fulfillIdList, Request r) {
+    public RequestFulfillersListAdapter(List<AccountExtended> list, List<Integer> fulfillIdList, Request r) {
         this.list = list;
         this.fulfillIdList = fulfillIdList;
         this.r = r;
     }
 
-    public RequestFulfillersListAdapter(List<Account> list){
+    public RequestFulfillersListAdapter(List<AccountExtended> list){
         this.list= list;
     }
 
@@ -138,9 +140,11 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
 
     @Override
     public void onBindViewHolder(FulfillerListViewHolder holder, int position) {
-        Account account = list.get(position);
+        AccountExtended account = list.get(position);
 
-
+        double fulfillRating = account.getFulfillTotal() / account.getFulfillNo();
+        Log.d("fulfill", account.getFulfillTotal() + " | " + account.getFulfillNo());
+        Log.d("Rating =======", "" + fulfillRating);
         byte[] decodeString = Base64.decode(account.getPicture(), Base64.NO_WRAP);
         Bitmap decodebitmap = BitmapFactory.decodeByteArray(
                 decodeString, 0, decodeString.length);
@@ -149,7 +153,7 @@ public class RequestFulfillersListAdapter extends RecyclerView.Adapter<RequestFu
         holder.accountImage.setImageDrawable(roundDrawable);
         //holder.accountImage.setBitmap(account.getPicture());
         holder.accountName.setText(account.getUsername());
-        holder.rating.setRating((float) 3.5);
+        holder.rating.setRating(Float.parseFloat(Double.toString(fulfillRating)) );
 
         //Log.d("BVH","Name: " + holder.accountName.toString());
     }

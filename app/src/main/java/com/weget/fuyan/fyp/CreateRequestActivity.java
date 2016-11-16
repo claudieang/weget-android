@@ -14,8 +14,11 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +40,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CreateRequestActivity extends AppCompatActivity implements CalendarDatePickerDialogFragment.OnDateSetListener, RadialTimePickerDialogFragment.OnTimeSetListener {
     List<Address> fullAddress;
@@ -65,6 +70,7 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
 
     private static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
     private static final String FRAG_TAG_TIME_PICKER = "fragment_time_picker_name";
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private TextView etRequestDuration;
 
 
@@ -120,6 +126,7 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
         //createRequestBtn.setTypeface(typeFace);
 
 
+        etPrice.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
         geocoder = new Geocoder(this);
 /*
         productName = etProductName.getText().toString();
@@ -197,45 +204,60 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
                         e.printStackTrace();
                     }
                 } else{
-                    // instantiate the location manager, note you will need to request permissions in your manifest
-                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    // get the last know location from your location manager.
-                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
-                    }
-                    Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER); //doesnt seem to work
-                    Log.d("Print", "location data1 is : " + location);
-                    if (location == null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        Log.d("Print", "location data2 is : " + location);
-                    }
 
-                    try {
-                        List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                        Log.d("Print", "address list size is : " + address.size());
-
-                        if (address != null && !address.isEmpty()) {
-
-                            String completeAddress = address.get(0).getAddressLine(0);
-                            String country = address.get(0).getCountryName();
-                            String postalCode = address.get(0).getPostalCode();
-
-                            String addressLineResult = completeAddress + ", " + country;
-                            etAddressLine.setText(addressLineResult);
-                            etPostalCode.setText(postalCode);
-
+                    if (ContextCompat.checkSelfPermission(CreateRequestActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        // instantiate the location manager, note you will need to request permissions in your manifest
+                        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        // get the last know location from your location manager.
+                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER); //doesnt seem to work
+                        Log.d("Print", "location data1 is : " + location);
+                        if (location == null) {
+                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            Log.d("Print", "location data2 is : " + location);
                         }
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        try {
+                            List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            Log.d("Print", "address list size is : " + address.size());
+
+                            if (address != null && !address.isEmpty()) {
+
+                                String completeAddress = address.get(0).getAddressLine(0);
+                                String country = address.get(0).getCountryName();
+                                String postalCode = address.get(0).getPostalCode();
+
+                                String addressLineResult = completeAddress + ", " + country;
+                                etAddressLine.setText(addressLineResult);
+                                etPostalCode.setText(postalCode);
+
+                            }
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(CreateRequestActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                            //Prompt user once we show explanation
+                            ActivityCompat.requestPermissions(CreateRequestActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+
+                        } else {
+                            //No need to explain
+                            ActivityCompat.requestPermissions(CreateRequestActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+                        }
                     }
+
                 }
 
 
@@ -355,6 +377,22 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
         endTime = year + "-" + month + "-" + day + " " + hours + ":" + mins + ":" + "00" ;
         etRequestDuration.setText(DateFormatter.formatDate(endTime));
         etRequestDuration.setTextSize(12);
+    }
+
+
+    public class DecimalDigitsInputFilter implements InputFilter {
+        Pattern mPattern;
+        public DecimalDigitsInputFilter(int digitsAfterZero) {
+            mPattern=Pattern.compile("[0-9]+((\\.[0-9]{0," + (digitsAfterZero-1) + "})?)||(\\.)?");
+        }
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            Matcher matcher=mPattern.matcher(dest);
+            if(!matcher.matches())
+                return "";
+            return null;
+        }
     }
 
 

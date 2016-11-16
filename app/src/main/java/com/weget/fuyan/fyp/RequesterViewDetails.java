@@ -79,6 +79,7 @@ public class RequesterViewDetails extends AppCompatActivity {
         duration = request.getDuration();
         price = request.getPrice();
         status = request.getStatus();
+        priceS = String.format("%.2f", price);
 
         productNameTV = (TextView)findViewById(R.id.product_name);
         productDescriptionTV = (TextView)findViewById(R.id.product_description);
@@ -210,7 +211,7 @@ public class RequesterViewDetails extends AppCompatActivity {
                 productDescriptionTV.setText(request.getRequirement());
                 addressTV.setText(location + " " + postal);
                 expiryTimeTV.setText(DateFormatter.formatDate(endTime));
-                priceTV.setText("" + price+"0");
+                priceTV.setText(priceS);
 
 
             }else {

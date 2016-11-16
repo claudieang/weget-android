@@ -29,19 +29,19 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
 
         //send to sendbird server
-        SendBird.registerPushTokenForCurrentUser(refreshedToken, new SendBird.RegisterPushTokenWithStatusHandler() {
-            @Override
-            public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
-                if (e != null) {
-                    // Error.
-                    return;
-                }
-
-                if (status == SendBird.PushTokenRegistrationStatus.PENDING) {
-                    // Try registration after connection is established.
-                }
-            }
-        });
+//        SendBird.registerPushTokenForCurrentUser(refreshedToken, new SendBird.RegisterPushTokenWithStatusHandler() {
+//            @Override
+//            public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
+//                if (e != null) {
+//                    // Error.
+//                    return;
+//                }
+//
+//                if (status == SendBird.PushTokenRegistrationStatus.PENDING) {
+//                    // Try registration after connection is established.
+//                }
+//            }
+//        });
     }
     // [END refresh_token]
 

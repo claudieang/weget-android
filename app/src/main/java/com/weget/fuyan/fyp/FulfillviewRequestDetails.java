@@ -88,6 +88,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
         endTime = request.getEndTime();
         duration = request.getDuration();
         price = request.getPrice();
+        priceS = String.format("%.2f", price);
         status = request.getStatus();
 
         newPrice = (TextView)findViewById(R.id.price_detail3);
@@ -342,9 +343,9 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                 productNameTV.setText(productName);
                 addressTV.setText(location + " " + postal);
                 expiryTimeTV.setText(DateFormatter.formatDate(endTime));
-                priceTV.setText("" + price+"0");
+                priceTV.setText(priceS);
                 newprice = (price-(price*0.029+0.3))*0.9;
-                newPrice.setText(String.format("%.2f",newprice));
+                newPrice.setText("$ " + String.format("%.2f",newprice));
 
                 productDescriptionTV.setText(requirement);
 

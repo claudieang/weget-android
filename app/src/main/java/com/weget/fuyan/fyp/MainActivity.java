@@ -119,12 +119,10 @@ public class MainActivity extends AppCompatActivity {
         //set profile pic
         String profilePicture = pref.getString("picture", null);
         ImageView profileImage = (ImageView) findViewById(R.id.avatar);
-        ;
 
         if (profilePicture.equals("")) {
             profileImage.setImageResource(R.drawable.ic_profile);
         } else {
-
             byte[] decodeString = Base64.decode(profilePicture, Base64.NO_WRAP);
             Bitmap decodebitmap = BitmapFactory.decodeByteArray(
                     decodeString, 0, decodeString.length);

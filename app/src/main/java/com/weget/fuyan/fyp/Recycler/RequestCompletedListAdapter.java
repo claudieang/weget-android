@@ -26,7 +26,7 @@ public class RequestCompletedListAdapter  extends RecyclerView.Adapter<RequestCo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView title, details, date;
+        public TextView title, details, date, price;
         //public Button fulfiller_btn;
         //public RelativeLayout fulfillers_btn;
         //public View.OnClickListener mListener;
@@ -37,6 +37,7 @@ public class RequestCompletedListAdapter  extends RecyclerView.Adapter<RequestCo
             title = (TextView) view.findViewById(R.id.request_title);
             details = (TextView) view.findViewById(R.id.request_requirement);
             date = (TextView) view.findViewById(R.id.request_date);
+            price = (TextView)view.findViewById(R.id.price);
             //fulfiller_btn = (Button) view.findViewById(R.id.view_fulfill_btn);
             //fulfillers_btn = (RelativeLayout)view.findViewById(R.id.fulfillers_btn);
             //view.setOnClickListener(this);
@@ -74,6 +75,7 @@ public class RequestCompletedListAdapter  extends RecyclerView.Adapter<RequestCo
         holder.title.setText(request.getProductName());
         holder.details.setText(request.getRequirement());
         holder.date.setText(DateFormatter.formatDateShort(request.getEndTime()));
+        holder.price.setText("$ " + String.format("%.2f",request.getPrice()));
         //final int idCheck = holder.fulfillers_btn.getId();
         //holder.fulfillers_btn = (RelativeLayout)itemView.findViewById(R.id.fulfillers_btn);
 

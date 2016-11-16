@@ -32,7 +32,7 @@ public class CompletedRequest extends AppCompatActivity {
     RelativeLayout transferredLayout;
     TextView productNameTV, requestorNameTV, addressTV, priceTV, requestorTitleTV,
             title, date, fulfillerName, details, transferTV;
-    String productName, requestorName, address, username, password, authString, requestorIdS, err;
+    String productName, requestorName, address, username, password, authString, requestorIdS, err, priceS;
     double price;
     String postal;
     int requestId, myId, requestorId;
@@ -75,6 +75,7 @@ public class CompletedRequest extends AppCompatActivity {
         productName = r.getProductName();
         address = r.getLocation();
         price = r.getPrice();
+        priceS = String.format("%.2f", price);
         postal = r.getPostal();
 
 
@@ -95,8 +96,8 @@ public class CompletedRequest extends AppCompatActivity {
             transferredLayout.setBackgroundColor(Color.parseColor("#45B39D"));
 
         }else{
-            transferTV.setVisibility(View.GONE);
-            transferredLayout.setVisibility(View.GONE);
+            transferTV.setText("Not Transferred");
+            transferredLayout.setBackgroundColor(Color.GRAY);
         }
 
 
@@ -220,7 +221,7 @@ public class CompletedRequest extends AppCompatActivity {
                 date.setText(DateFormatter.formatDate(r.getStartTime()));
                 productNameTV.setText(productName);
                 //fulfillerName.setText();
-                priceTV.setText("$" + price + "0");
+                priceTV.setText("$" + priceS);
                 addressTV.setText(address + " " + postal);
                 details.setText(r.getRequirement());
 

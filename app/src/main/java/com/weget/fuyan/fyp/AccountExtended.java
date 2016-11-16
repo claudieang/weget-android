@@ -7,9 +7,9 @@ import java.io.Serializable;
  * Created by FU YAN on 7/13/2016.
  */
 public class AccountExtended extends Account implements Serializable {
-    int requestTotal, requestNo, fulfillTotal, fulfillNo, requestMade, fulfillMade;
+    double requestTotal, requestNo, fulfillTotal, fulfillNo, requestMade, fulfillMade;
 
-    public AccountExtended(int id, String username, String password, int contactNo, String email, String fulfiller, String picture, int requestTotal, int requestNo, int fulfillTotal, int fulfillNo, int requestMade, int fulfillMade) {
+    public AccountExtended(int id, String username, String password, int contactNo, String email, String fulfiller, String picture, double requestTotal, double requestNo, double fulfillTotal, double fulfillNo, double requestMade, double fulfillMade) {
         super(id, username, password, contactNo, email, fulfiller, picture);
         this.requestTotal = requestTotal;
         this.requestNo = requestNo;
@@ -19,7 +19,7 @@ public class AccountExtended extends Account implements Serializable {
         this.fulfillMade = fulfillMade;
     }
 
-    public int getRequestTotal() {
+    public double getRequestTotal() {
         return requestTotal;
     }
 
@@ -27,7 +27,7 @@ public class AccountExtended extends Account implements Serializable {
         this.requestTotal = requestTotal;
     }
 
-    public int getRequestNo() {
+    public double getRequestNo() {
         return requestNo;
     }
 
@@ -35,7 +35,7 @@ public class AccountExtended extends Account implements Serializable {
         this.requestNo = requestNo;
     }
 
-    public int getFulfillTotal() {
+    public double getFulfillTotal() {
         return fulfillTotal;
     }
 
@@ -43,7 +43,7 @@ public class AccountExtended extends Account implements Serializable {
         this.fulfillTotal = fulfillTotal;
     }
 
-    public int getFulfillNo() {
+    public double getFulfillNo() {
         return fulfillNo;
     }
 
@@ -51,7 +51,7 @@ public class AccountExtended extends Account implements Serializable {
         this.fulfillNo = fulfillNo;
     }
 
-    public int getRequestMade() {
+    public double getRequestMade() {
         return requestMade;
     }
 
@@ -59,7 +59,7 @@ public class AccountExtended extends Account implements Serializable {
         this.requestMade = requestMade;
     }
 
-    public int getFulfillMade() {
+    public double getFulfillMade() {
         return fulfillMade;
     }
 

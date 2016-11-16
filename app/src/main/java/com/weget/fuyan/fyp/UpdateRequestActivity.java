@@ -11,6 +11,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +35,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UpdateRequestActivity extends AppCompatActivity  implements CalendarDatePickerDialogFragment.OnDateSetListener, RadialTimePickerDialogFragment.OnTimeSetListener  {
 
@@ -95,6 +99,7 @@ public class UpdateRequestActivity extends AppCompatActivity  implements Calenda
         getAddressBtn = (Button)findViewById(R.id.get_address_btn);
         etRequestDuration = (TextView)findViewById(R.id.request_duration_txt);
         //updateRequestBtn = (Button)findViewById(R.id.update_request_btn);
+        etPrice.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
         geocoder = new Geocoder(this);
 
         etProductName.setText(rq.getProductName());
@@ -283,6 +288,20 @@ public class UpdateRequestActivity extends AppCompatActivity  implements Calenda
         etRequestDuration.setTextSize(12);
     }
 
+    public class DecimalDigitsInputFilter implements InputFilter {
+        Pattern mPattern;
+        public DecimalDigitsInputFilter(int digitsAfterZero) {
+            mPattern=Pattern.compile("[0-9]+((\\.[0-9]{0," + (digitsAfterZero-1) + "})?)||(\\.)?");
+        }
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            Matcher matcher=mPattern.matcher(dest);
+            if(!matcher.matches())
+                return "";
+            return null;
+        }
+    }
     private class updateRequest extends AsyncTask<String, Void, Boolean> {
 
         ProgressDialog dialog = new ProgressDialog(UpdateRequestActivity.this, R.style.MyTheme);

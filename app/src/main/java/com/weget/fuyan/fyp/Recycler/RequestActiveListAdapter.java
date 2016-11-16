@@ -122,14 +122,14 @@ public class RequestActiveListAdapter extends RecyclerView.Adapter<RequestActive
     public void onBindViewHolder(MyActiveViewHolder holder, int position)  {
         //final Request request = requestsList.get(position);
         MergedRequest request = mergedList.get(position);
-
+        String priceS = String.format("%.2f", request.getPrice());
         holder.title.setText(request.getProductName());
         String expiryStr = "Expires on: " + DateFormatter.formatDate(request.getEndTime());
         holder.details.setText(expiryStr);
         //holder.fulfillerNum.setText(String.valueOf(counterList.get(position)));
         holder.fulfillerNum.setText(request.getFulfillerCount() + "");
         //Log.d("numberss", counterList.get(position) + "");
-        holder.price.setText("$" + request.getPrice()+ "0");
+        holder.price.setText("$" + priceS);
         //final int idCheck = holder.fulfillers_btn.getId();
         //holder.fulfillers_btn = (RelativeLayout)itemView.findViewById(R.id.fulfillers_btn);
 

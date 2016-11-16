@@ -154,7 +154,7 @@ public class UploadImageActivity extends AppCompatActivity {
 
                 } else {
 
-                    Toast.makeText(getBaseContext(), "Permission Denied! LEL!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Permission Denied!", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
@@ -193,9 +193,9 @@ public class UploadImageActivity extends AppCompatActivity {
             Bitmap originBitmap = null;
             Bitmap resized = null;
             Uri selectedImage = data.getData();
-            Toast.makeText(UploadImageActivity.this, selectedImage.toString(),
-                    Toast.LENGTH_SHORT).show();
-            txtmsg.setText(selectedImage.toString());
+//            Toast.makeText(UploadImageActivity.this, selectedImage.toString(),
+//                    Toast.LENGTH_SHORT).show();
+//            txtmsg.setText(selectedImage.toString());
             InputStream imageStream;
             try {
 
@@ -216,16 +216,16 @@ public class UploadImageActivity extends AppCompatActivity {
                     byteArray = stream.toByteArray();
 
                     encodedImage = Base64.encodeToString(byteArray, Base64.NO_WRAP);
-                    Toast.makeText(UploadImageActivity.this, "Conversion Done",
-                            Toast.LENGTH_SHORT).show();
-                    Log.d("BASE46: ", encodedImage);
+//                    Toast.makeText(UploadImageActivity.this, "Conversion Done",
+//                            Toast.LENGTH_SHORT).show();
+//                    Log.d("BASE46: ", encodedImage);
                 }else if (resized.compress(Bitmap.CompressFormat.PNG, 100, stream)){
                     byteArray = stream.toByteArray();
 
                     encodedImage = Base64.encodeToString(byteArray, Base64.NO_WRAP);
-                    Toast.makeText(UploadImageActivity.this, "Conversion Done",
-                            Toast.LENGTH_SHORT).show();
-                    Log.d("BASE46: ", encodedImage);
+//                    Toast.makeText(UploadImageActivity.this, "Conversion Done",
+//                            Toast.LENGTH_SHORT).show();
+//                    Log.d("BASE46: ", encodedImage);
                 }
 
 

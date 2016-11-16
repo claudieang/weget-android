@@ -42,7 +42,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
     int myId, myRequestId, selectedId, transactionId;
     Context mContext;
     Account a = null;
-    ArrayList <Account> fulfillerAccountList = new ArrayList<>();
+    ArrayList <AccountExtended> fulfillerAccountList = new ArrayList<>();
     ArrayList <Integer> fulfillIdList = new ArrayList<>();
     ArrayList <Fulfill> fulfillList = new ArrayList<>();
     Transaction tr;
@@ -243,7 +243,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
 
         int id, contactNo;
         String username, password, email, fulfiller, picture;
-        Account account;
+        AccountExtended account;
         ProgressDialog dialog = new ProgressDialog(MyRequestFulfillerActivity.this, R.style.MyTheme);
 
         @Override
@@ -281,13 +281,19 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
                             JSONObject jso = jsoArray.getJSONObject(i);
                             id = jso.getInt("id");
                             username = jso.getString("username");
-                            password = jso.getString("password");
+                            //password = jso.getString("password");
                             contactNo = jso.getInt("contactNo");
                             email = jso.getString("email");
                             fulfiller = jso.getString("fulfiller");
                             picture = jso.getString("picture");
+                            double requestTotal = jso.getDouble("requestTotal");
+                            double requestNo = jso.getDouble("requestNo");
+                            double fulfillTotal = jso.getDouble("fulfillTotal");
+                            double fulfillNo = jso.getDouble("fulfillNo");
+                            double requestMade = jso.getDouble("requestMade");
+                            double fulfillMade = jso.getDouble("fulfillMade");
 
-                            account = new Account(id, username, password, contactNo, email, fulfiller, picture);
+                            account = new AccountExtended(id, username, password, contactNo, email, fulfiller, picture,requestTotal, requestNo, fulfillTotal, fulfillNo, requestMade, fulfillMade);
 
 
                             fulfillerAccountList.add(account);
