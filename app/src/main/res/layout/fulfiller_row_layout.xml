@@ -28,8 +28,13 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/accountImage"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_toRightOf="@+id/accountImage"
+        android:layout_toLeftOf="@+id/divider" />
 
     <RatingBar
         style="@style/RatingBar"

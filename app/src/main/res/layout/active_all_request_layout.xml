@@ -15,12 +15,15 @@
         android:text="Product Name"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textStyle="bold"
-        android:paddingLeft="16dp"
-        android:paddingTop="18dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="18dp"
         android:layout_marginRight="10dp"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/fulfillers_btn"/>
+        android:layout_toLeftOf="@+id/request_price"/>
 
     <TextView
         android:id="@+id/request_requirement"
@@ -30,10 +33,15 @@
         android:text="Product Expiry"
         android:textColor="@color/black"
         android:textSize="14sp"
-        android:paddingLeft="16dp"
-        android:paddingBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginRight="10dp"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_toLeftOf="@+id/request_price"/>
 
     <TextView
         android:id="@+id/request_price"

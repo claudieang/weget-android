@@ -409,33 +409,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 ArrayList<Request> ret = new ArrayList<>();
                 ret = gson.fromJson(rst, new TypeToken<ArrayList<Request>>(){}.getType());
                 requestArrayList.addAll(ret);
-//                try {
-//                    JSONArray jsoArray = new JSONArray(rst);
-//                    for (int i = 0; i < jsoArray.length(); i++) {
-//                        JSONObject jso = jsoArray.getJSONObject(i);
-//
-//                        int id = jso.getInt("id");
-//                        int requestorId = jso.getInt("requestorId");
-//                        //int imageResource = requestImage;
-//                        int imageResource = 0;
-//                        String productName = jso.getString("productName");
-//                        String requirement = jso.getString("requirement");
-//                        String location = jso.getString("location");
-//                        String postal = jso.getString("postal");
-//                        String startTime = jso.getString("startTime");
-//                        int duration = jso.getInt("duration");
-//                        String endTime = jso.getString("endTime");
-//                        double price = jso.getDouble("price");
-//                        String status = jso.getString("status");
-//
-//                        Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
-//                                postal, startTime, endTime, duration, price, status);
-//
-//                        requestArrayList.add(request);
-//                  }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+
                 success = true;
             }
             return success;
