@@ -6,14 +6,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +61,7 @@ public class bank_details extends AppCompatActivity {
         authString  = username + ":" + password;
 
         accountHolderNameET = (EditText)findViewById(R.id.payee_name_detail);
-        accountBankNameET = (EditText)findViewById(R.id.payee_bank_detail);
+        //accountBankNameET = (EditText)findViewById(R.id.payee_bank_detail);
         accountNumberET = (EditText)findViewById(R.id.account_number_detail);
         submitBtn = (Button)findViewById(R.id.submit_button);
 
@@ -67,19 +70,45 @@ public class bank_details extends AppCompatActivity {
         ((TextView)findViewById(R.id.payee_name)).setTypeface(typeFace);
         accountHolderNameET.setTypeface(typeFace);
         ((TextView)findViewById(R.id.bank_name)).setTypeface(typeFace);
-        accountBankNameET.setTypeface(typeFace);
+        //accountBankNameET.setTypeface(typeFace);
         ((TextView)findViewById(R.id.account_number)).setTypeface(typeFace);
         accountNumberET.setTypeface(typeFace);
         submitBtn.setTypeface(typeFace);
 
+        Spinner staticSpinner = (Spinner) findViewById(R.id.static_spinner);
 
+        // Create an ArrayAdapter using the string array and a default spinner
+        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
+                .createFromResource(this, R.array.bank_name,
+                        R.layout.my_spinner_style);
+
+        // Specify the layout to use when the list of choices appears
+        staticAdapter
+                .setDropDownViewResource(R.layout.my_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        staticSpinner.setAdapter(staticAdapter);
+
+        staticSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                //Log.v("item", (String) parent.getItemAtPosition(position));
+                accountBankName = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
 
         accountHolderNameET.setText(username);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 accountHolderName = accountHolderNameET.getText().toString();
-                accountBankName = accountBankNameET.getText().toString();
+                //accountBankName = accountBankNameET.getText().toString();
                 accountNumber = accountNumberET.getText().toString();
 
                 if(accountHolderName!=null && accountHolderName.trim().length()!= 0){

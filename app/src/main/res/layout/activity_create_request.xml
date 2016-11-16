@@ -70,6 +70,7 @@
             android:background="#FFFFFF"
             android:hint=" Describe your request in greater detail."
             android:paddingStart="10dp"
+            android:inputType="textCapSentences"
             android:drawableLeft="@drawable/info_icon"
             android:textColor="@color/colorPrimary"
             android:textColorHint="#BCBCBC"
