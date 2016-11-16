@@ -136,66 +136,71 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if(user_name.indexOf(" ") == -1) {
 
-                        if (user_pass != null && user_pass.trim().length() > 0) { //check if password is filled in
+                        if(user_name.trim().length() > 5 &&user_name.trim().length() < 45) {
+
+                            if (user_pass != null && user_pass.trim().length() > 0) { //check if password is filled in
 
 
-                            if (user_pass.trim().length() >= 8 && user_pass.indexOf(" ") == -1) { // check if password is at least 8 characters long
+                                if (user_pass.trim().length() >= 8 && user_pass.indexOf(" ") == -1) { // check if password is at least 8 characters long
 
 
-                                if (confirm_pass != null && confirm_pass.trim().length() > 0) {// check empty confirmed password
+                                    if (confirm_pass != null && confirm_pass.trim().length() > 0) {// check empty confirmed password
 
 
-                                    if (confirm_pass.equals(user_pass)) { // check if confirmed password matches password
+                                        if (confirm_pass.equals(user_pass)) { // check if confirmed password matches password
 
 
-                                        if (contactNumS != null && contactNumS.trim().length() > 0) { // Check if contact number is empty
+                                            if (contactNumS != null && contactNumS.trim().length() > 0) { // Check if contact number is empty
 
 
-                                            contactNumS = contactNumS.trim().replaceAll("\\s", "");//Remove all white spaces in contact number
+                                                contactNumS = contactNumS.trim().replaceAll("\\s", "");//Remove all white spaces in contact number
 
-                                            if (contactNumS.matches("[0-9]+")) { // check if contact number only contains integer
+                                                if (contactNumS.matches("[0-9]+")) { // check if contact number only contains integer
 
-                                                contactNum = Integer.parseInt(contactNumS);//convert input into integers
+                                                    contactNum = Integer.parseInt(contactNumS);//convert input into integers
 
-                                                if (email != null && email.trim().length() > 0) {//check empty email
-                                                    email = email.toLowerCase();
+                                                    if (email != null && email.trim().length() > 0) {//check empty email
+                                                        email = email.toLowerCase();
 
-                                                    if (EMAIL_ADDRESS_PATTERN.matcher(email).matches()) { // email pattern validation
+                                                        if (EMAIL_ADDRESS_PATTERN.matcher(email).matches()) { // email pattern validation
 
-                                                        //check TOS checkbox
-                                                        if (checkBox.isChecked()) {
-                                                            new storeValue().execute(user_name); //execute webservice register!
+                                                            //check TOS checkbox
+                                                            if (checkBox.isChecked()) {
+                                                                new storeValue().execute(user_name); //execute webservice register!
+                                                            } else {
+                                                                checkBox.setError("You need to agree to the Terms & Services to register!");
+                                                            }
+
                                                         } else {
-                                                            checkBox.setError("You need to agree to the Terms & Services to register!");
+                                                            email1.setError("Invalid email format!");
                                                         }
 
                                                     } else {
-                                                        email1.setError("Invalid email format!");
+                                                        email1.setError("Email is required!");
                                                     }
 
                                                 } else {
-                                                    email1.setError("Email is required!");
+                                                    contact.setError("Invalid contact number!");
                                                 }
-
                                             } else {
-                                                contact.setError("Invalid contact number!");
+                                                contact.setError("Contact number is required!");
                                             }
                                         } else {
-                                            contact.setError("Contact number is required!");
+                                            t3.setError("Password mismatch!");
                                         }
                                     } else {
-                                        t3.setError("Password mismatch!");
+                                        t3.setError("Confirm password is required!");
                                     }
+
                                 } else {
-                                    t3.setError("Confirm password is required!");
+                                    t2.setError("Invalid password!");
                                 }
 
                             } else {
-                                t2.setError("Invalid password!");
+                                t2.setError("Password is required!");
                             }
-
-                        } else {
-                            t2.setError("Password is required!");
+                        }else{
+                            t1.setError("Invalid user name!");
                         }
                     }else{
                         t1.setError("Invalid user name!");

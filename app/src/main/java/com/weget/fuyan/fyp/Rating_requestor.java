@@ -34,7 +34,7 @@ public class Rating_requestor extends AppCompatActivity {
     RatingBar ratingBar;
     String username, password, authString, profilePicture, baseURL, ratingType, err;
     int myId, requestId , requestorId, acctId;
-    Button submitBtn;
+    Button submitBtn, skipBtn;
     Float ratingNum;
     String ratingString;
     Context mContext;
@@ -53,6 +53,7 @@ public class Rating_requestor extends AppCompatActivity {
         rateYourTitle = (TextView)findViewById(R.id.past_txn);
         ratingBar = (RatingBar)findViewById(R.id.ratingBar);
         submitBtn = (Button)findViewById(R.id.submit);
+        skipBtn = (Button)findViewById(R.id.skip_button);
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
@@ -102,6 +103,17 @@ public class Rating_requestor extends AppCompatActivity {
                 }
             });
 
+            skipBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent i = new Intent(Rating_requestor.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+
+                }
+            });
+
 
         }else{
 
@@ -134,6 +146,16 @@ public class Rating_requestor extends AppCompatActivity {
                     Log.d("Float 2:==", ""+ratingNum);
                     Log.d("String 2:==", "" + ratingString);
                     new createRating().execute(authString);
+
+                }
+            });
+            skipBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent i = new Intent(Rating_requestor.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
 
                 }
             });
