@@ -424,7 +424,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
 
                         id = jso.getInt("id");
                         username = jso.getString("username");
-                        password = jso.getString("password");
+                        //password = jso.getString("password");
                         contactNo = jso.getInt("contactNo");
                         email = jso.getString("email");
                         fulfiller = jso.getString("fulfiller");
