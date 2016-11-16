@@ -3,7 +3,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <include
@@ -13,6 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:paddingBottom="30dp">
 
         <ImageView
@@ -288,7 +288,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Accept"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:id="@+id/accept_button"
             android:textColor="@color/white"
             android:fontFamily="normal"
@@ -301,7 +301,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Chat"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:id="@+id/chat_button"
             android:fontFamily="normal"
             android:textColor="@color/white"
