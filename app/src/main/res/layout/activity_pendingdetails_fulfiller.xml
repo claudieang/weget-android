@@ -21,7 +21,7 @@
             android:layout_height="90dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_pending"
+            android:src="@drawable/completed_fulfill"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Pending Request"
+            android:text="Pending Fulfill"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_below="@+id/pic"

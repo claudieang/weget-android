@@ -33,6 +33,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -208,9 +210,26 @@ public class UpdateRequestActivity extends AppCompatActivity  implements Calenda
                                     if(priceS!=null && priceS.trim().length()>0){
                                         price = Double.parseDouble(priceS);
                                         startTime = rq.getStartTime();
+                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-                                        authString = username + ":" + password;
-                                        new updateRequest().execute(authString);
+                                        if(endTime.length() != 0) {
+                                            Date end = null;
+                                            try {
+                                                end = sdf.parse(endTime);
+
+                                            } catch (ParseException pe) {
+                                                etRequestDuration.setError("Invalid End Date");
+                                            }
+
+                                            if (end.before(new Date())) {
+                                                etRequestDuration.setError("Invalid End Date");
+                                            } else {
+                                                authString = username + ":" + password;
+                                                new updateRequest().execute(authString);
+                                            }
+                                        } else {
+                                            etRequestDuration.setError("Invalid End Date");
+                                        }
 
                                     }else{
                                         etPrice.setError("Price required!");

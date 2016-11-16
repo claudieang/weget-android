@@ -311,37 +311,38 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void initSendBird(){
+        Log.d("username","username is now : " + dbUsername);
         SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getApplication().getApplicationContext());
         SendBird.connect(dbID+"", new SendBird.ConnectHandler() {
             @Override
             public void onConnected(User user, SendBirdException e) {
-                if (e != null) {
-                    Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            if (e != null) {
+                Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                //sendbird notification
-                if (FirebaseInstanceId.getInstance().getToken() == null) return;
-                SendBird.registerPushTokenForCurrentUser(FirebaseInstanceId.getInstance().getToken(),
-                        new SendBird.RegisterPushTokenWithStatusHandler() {
-                            @Override
-                            public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
-                                if (e != null) {
-                                    // Error.
-                                    return;
-                                }
-                            }
-                        });
-
-                SendBird.updateCurrentUserInfo(dbUsername, dbProfilePic, new SendBird.UserInfoUpdateHandler() {
-                    @Override
-                    public void onUpdated(SendBirdException e) {
-                        if (e != null) {
-                            Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
+            SendBird.updateCurrentUserInfo(dbUsername, dbProfilePic, new SendBird.UserInfoUpdateHandler() {
+                @Override
+                public void onUpdated(SendBirdException e) {
+                    if (e != null) {
+                        Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                });
+                }
+            });
+
+            //sendbird notification
+            if (FirebaseInstanceId.getInstance().getToken() == null) return;
+            SendBird.registerPushTokenForCurrentUser(FirebaseInstanceId.getInstance().getToken(),
+            new SendBird.RegisterPushTokenWithStatusHandler() {
+                @Override
+                public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
+                    if (e != null) {
+                        // Error.
+                        return;
+                    }
+                }
+            });
             }
         });
     }
