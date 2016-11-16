@@ -57,30 +57,36 @@
             android:textColor="@color/darkGray"
             android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/payee_bank_detail"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/bank_name"
+        <RelativeLayout
+            android:layout_below="@+id/bank_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bank_spinner"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:background="@drawable/barbase"
-            android:hint="Bank Name"
-            android:imeOptions="actionDone"
-            android:lines="1"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="10dp"
-            android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/money"
-            android:drawableTint="@color/colorGray"
-            android:singleLine="true"
-            android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/colorGray"
-            android:textSize="16sp" />
+            android:background="@drawable/barbase">
+
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:tint="@color/colorGray"
+                android:id="@+id/pic"
+                android:paddingTop="5dp"
+                android:paddingLeft="5dp"
+                android:src="@drawable/money"/>
+
+            <Spinner
+                android:layout_toRightOf="@+id/pic"
+                android:id="@+id/static_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:theme="@style/SpinnerStyle"
+                />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/account_number"
-            android:layout_below="@+id/payee_bank_detail"
+            android:layout_below="@+id/bank_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"

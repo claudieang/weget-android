@@ -12,8 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,8 @@ public class update_bank_details extends AppCompatActivity {
     Context mContext;
     Boolean bank = true;
     String URL;
+    private Spinner staticSpinner;
+    private ArrayAdapter<CharSequence> staticAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +58,47 @@ public class update_bank_details extends AppCompatActivity {
         authString  = username + ":" + password;
 
         accountHolderNameET = (EditText)findViewById(R.id.payee_name_detail);
-        accountBankNameET = (EditText)findViewById(R.id.payee_bank_detail);
+        //accountBankNameET = (EditText)findViewById(R.id.payee_bank_detail);
         accountNumberET = (EditText)findViewById(R.id.account_number_detail);
         updateBankBtn = (Button)findViewById(R.id.update_button);
 
         ((TextView)findViewById(R.id.payee_name)).setTypeface(typeFace);
         accountHolderNameET.setTypeface(typeFaceLight);
         ((TextView)findViewById(R.id.bank_name)).setTypeface(typeFace);
-        accountBankNameET.setTypeface(typeFaceLight);
+       // accountBankNameET.setTypeface(typeFaceLight);
         ((TextView)findViewById(R.id.account_number)).setTypeface(typeFace);
         accountNumberET.setTypeface(typeFaceLight);
 
         updateBankBtn.setTypeface(typeFace);
+
+        staticSpinner = (Spinner) findViewById(R.id.static_spinner);
+
+        // Create an ArrayAdapter using the string array and a default spinner
+        staticAdapter = ArrayAdapter
+                .createFromResource(this, R.array.bank_name,
+                        R.layout.my_spinner_style);
+
+        // Specify the layout to use when the list of choices appears
+        staticAdapter
+                .setDropDownViewResource(R.layout.my_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        staticSpinner.setAdapter(staticAdapter);
+
+
+        staticSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                //Log.v("item", (String) parent.getItemAtPosition(position));
+                accountBankName = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
 
 
         new getBank().execute(authString);
@@ -73,7 +107,7 @@ public class update_bank_details extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 accountHolderName = accountHolderNameET.getText().toString();
-                accountBankName = accountBankNameET.getText().toString();
+                //accountBankName = accountBankNameET.getText().toString();
                 accountNumber = accountNumberET.getText().toString();
 
                 if(accountHolderName!=null && accountHolderName.trim().length()!= 0){
@@ -145,7 +179,12 @@ public class update_bank_details extends AppCompatActivity {
             if(result){
                 bank = true;
                 accountHolderNameET.setText(bankUserName);
-                accountBankNameET.setText(bankName);
+
+                if (!bankName.equals(null)) {
+                    int spinnerPosition = staticAdapter.getPosition(bankName);
+                    staticSpinner.setSelection(spinnerPosition);
+                }
+
                 accountNumberET.setText(String.valueOf(bankAccNumber));
 
             }else {

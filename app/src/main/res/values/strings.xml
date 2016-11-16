@@ -6,6 +6,16 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="webserviceurl">https://weget-xihe2014.rhcloud.com/webservice/</string>
+    <string-array name="bank_name">
+        <item>POSB</item>
+        <item>DBS</item>
+        <item>OCBC</item>
+        <item>UOB</item>
+        <item>Standard Chartered</item>
+        <item>Citibank</item>
+        <item>Maybank</item>
+        <item>HSBC</item>
+    </string-array>
 </resources>
 
 
