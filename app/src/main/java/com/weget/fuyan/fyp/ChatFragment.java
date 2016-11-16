@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -68,6 +70,7 @@ public class ChatFragment extends Fragment {
     private void initUIComponents(View rootView) {
         mListView = (ListView) rootView.findViewById(R.id.list);
         mAdapter = new SendBirdGroupChannelAdapter(getActivity());
+        //mListView.setDivider(new Div);
         mListView.setAdapter(mAdapter);
 //            mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
