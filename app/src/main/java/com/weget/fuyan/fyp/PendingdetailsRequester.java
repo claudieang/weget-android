@@ -203,7 +203,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
                     productName1.setText(productName);
                     productNameTV.setText(productDescription);
                     addressTV.setText(address + " " + postal);
-                    priceTV.setText("" + price + "0");
+                    priceTV.setText("" + price);
 
                 }
 

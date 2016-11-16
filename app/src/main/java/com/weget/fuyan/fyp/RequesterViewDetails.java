@@ -210,7 +210,7 @@ public class RequesterViewDetails extends AppCompatActivity {
                 productDescriptionTV.setText(request.getRequirement());
                 addressTV.setText(location + " " + postal);
                 expiryTimeTV.setText(DateFormatter.formatDate(endTime));
-                priceTV.setText("" + price+"0");
+                priceTV.setText("" + price);
 
 
             }else {

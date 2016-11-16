@@ -220,7 +220,7 @@ public class CompletedRequest extends AppCompatActivity {
                 date.setText(DateFormatter.formatDate(r.getStartTime()));
                 productNameTV.setText(productName);
                 //fulfillerName.setText();
-                priceTV.setText("$" + price + "0");
+                priceTV.setText("" + price);
                 addressTV.setText(address + " " + postal);
                 details.setText(r.getRequirement());
 

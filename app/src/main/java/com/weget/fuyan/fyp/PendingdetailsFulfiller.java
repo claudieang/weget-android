@@ -201,7 +201,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
                 requestorTV.setText(requestorName );
                 productNameTV.setText(requirement);
                 addressTV.setText(address + " " + postal);
-                priceTV.setText("" + price + "0");
+                priceTV.setText("" + price);
 
                 newprice = (price-(price*0.029+0.3))*0.9;
                 newPriceTV.setText("$"+String.format("%.2f",newprice));
