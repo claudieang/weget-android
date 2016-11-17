@@ -59,6 +59,7 @@ public class ChatActivity extends FragmentActivity {
     private View mSettingsContainer;
     private String err;
     private boolean connectionStatus = false;
+    private static TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +69,10 @@ public class ChatActivity extends FragmentActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         initFragment();
         initUIComponents();
+        textView = (TextView)findViewById(R.id.loading_text);
 
         //new initialize().equals("");
-        Toast.makeText(this, "Loading your chat groups.", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Loading your chat groups.", Toast.LENGTH_LONG).show();
     }
 
     private class initialize extends AsyncTask<String, Void, Boolean> {
@@ -223,6 +225,7 @@ public class ChatActivity extends FragmentActivity {
         private String username;
         private String password;
         private int myId;
+        private TextView loadTxt;
 
 
         public SendBirdGroupChannelListFragment() {
@@ -231,6 +234,7 @@ public class ChatActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.sendbird_fragment_group_channel_list, container, false);
+            loadTxt = (TextView)rootView.findViewById(R.id.loading_text);
             initUIComponents(rootView);
             return rootView;
         }
@@ -332,7 +336,8 @@ public class ChatActivity extends FragmentActivity {
                     mAdapter.notifyDataSetChanged();
 
                     if (mAdapter.getCount() == 0) {
-                        Toast.makeText(getActivity(), "No channels found.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getActivity(), "No channels found.", Toast.LENGTH_LONG).show();
+                        loadTxt.setText("You have no chat channels found.");
                     }
                 }
             });

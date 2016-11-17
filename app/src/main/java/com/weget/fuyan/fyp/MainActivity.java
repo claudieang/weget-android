@@ -35,6 +35,10 @@ import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.sendbird.android.SendBird;
+import com.sendbird.android.SendBirdException;
+import com.sendbird.android.User;
 
 import java.util.ArrayList;
 
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Log.d("sigh", "checking for activity behaviour");
+
 
         SpannableString s = new SpannableString("Weget");
         s.setSpan(new TypefaceSpan(this, "Roboto-Regular.ttf"), 0, s.length(),
@@ -116,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         userID = pref.getInt("id", 0);
         password = pref.getString("password", null);
         authString = username + ":" + password;
+        initSendBird();
 
 
         TextView nav_tv = (TextView) findViewById(R.id.userName);
@@ -541,6 +547,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if (result == true) {
+                //disconnect from sendbird
+                SendBird.disconnect(new SendBird.DisconnectHandler() {
+                    @Override
+                    public void onDisconnected() {
+                        Log.d("SB", "sendbird disconnected");
+                    }
+                });
+
                 //clear the sharedpreferences
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
@@ -567,4 +581,47 @@ public class MainActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         Log.d("on received", intent.getAction());
     }
+
+    public void initSendBird(){
+        Log.d("mainn","userid is now : " + userID);
+        SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getApplication().getApplicationContext());
+        SendBird.connect(userID+"", new SendBird.ConnectHandler() {
+            @Override
+            public void onConnected(User user, SendBirdException e) {
+                Log.d("main","Sendbird has connected!");
+                if (e != null) {
+                    Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //onconnected update information
+                Log.d("mainn","Sendbird has a connection state of : " + SendBird.getConnectionState());
+                SendBird.updateCurrentUserInfo(username, null, new SendBird.UserInfoUpdateHandler() {
+                    @Override
+                    public void onUpdated(SendBirdException e) {
+                        Log.d("mainn","username after update is now : " + username);
+                        if (e != null) {
+                            Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                });
+
+                //sendbird notification
+                if (FirebaseInstanceId.getInstance().getToken() == null) return;
+                SendBird.registerPushTokenForCurrentUser(FirebaseInstanceId.getInstance().getToken(),
+                        new SendBird.RegisterPushTokenWithStatusHandler() {
+                            @Override
+                            public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
+                                if (e != null) {
+                                    // Error.
+                                    return;
+                                }
+                            }
+                        });
+            }
+        });
+
+    }
+
 }

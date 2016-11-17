@@ -436,7 +436,10 @@ public class RegisterActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             dialog.dismiss();
             if(result) {
-                Toast.makeText(getBaseContext(), "Registration Success!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "A confirmation email has been sent to you!!", Toast.LENGTH_LONG).show();
+
+
+
                 Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(i);
                 finish();
@@ -448,8 +451,5 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
     }
-
-
-
 
 }

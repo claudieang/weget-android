@@ -8,13 +8,23 @@
     >
     <RelativeLayout
         android:layout_width="match_parent"
-
         android:layout_height="match_parent">
 
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="55dp"
+
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please wait while we load your chat list..."
+            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
+            android:textColor="@color/darkGray"
+            android:id="@+id/loading_text"
+            android:layout_alignParentBottom="true" />
     </RelativeLayout>
 </LinearLayout>

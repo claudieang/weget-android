@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(i);
 
             finish();
-            //new getValues().execute(username);
+            new getValues().execute(username);
         }
 
 
@@ -243,13 +243,13 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("picture", dbProfilePic);
                 editor.commit();
 
-                initSendBird();
+                initSendBirdLogin();
 
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+//                startActivity(i);
                 Log.d("Profile Picture:", dbProfilePic);
 
-                finish();
+
 
             }else {
                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
@@ -316,20 +316,15 @@ public class LoginActivity extends AppCompatActivity {
         SendBird.connect(dbID+"", new SendBird.ConnectHandler() {
             @Override
             public void onConnected(User user, SendBirdException e) {
+                Log.d("username","Sendbird has connected!");
             if (e != null) {
                 Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            SendBird.updateCurrentUserInfo(dbUsername, dbProfilePic, new SendBird.UserInfoUpdateHandler() {
-                @Override
-                public void onUpdated(SendBirdException e) {
-                    if (e != null) {
-                        Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-            });
+                //onconnected update information
+
+
 
             //sendbird notification
             if (FirebaseInstanceId.getInstance().getToken() == null) return;
@@ -343,7 +338,71 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
             });
+
+//                Log.d("username","Sendbird has a connection state of : " + SendBird.getConnectionState());
+//                Log.d("username","Sendbird current user is 11111: " + SendBird.getCurrentUser());
+            SendBird.updateCurrentUserInfo(dbUsername, dbProfilePic, new SendBird.UserInfoUpdateHandler() {
+                @Override
+                public void onUpdated(SendBirdException e) {
+                    Log.d("username","username after update is now : " + dbUsername);
+                    if (e != null) {
+                        //Toast.makeText(getApplicationContext(), "ISSUE 1 IS : " + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            });
             }
         });
+
+    }
+
+    public void initSendBirdLogin(){
+        Log.d("username","username is now : " + dbUsername);
+        SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getApplication().getApplicationContext());
+        SendBird.connect(dbID+"", new SendBird.ConnectHandler() {
+            @Override
+            public void onConnected(User user, SendBirdException e) {
+                Log.d("username","Sendbird has connected!");
+                if (e != null) {
+                    Toast.makeText(getApplicationContext(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //sendbird notification
+                if (FirebaseInstanceId.getInstance().getToken() == null) return;
+                SendBird.registerPushTokenForCurrentUser(FirebaseInstanceId.getInstance().getToken(),
+                        new SendBird.RegisterPushTokenWithStatusHandler() {
+                            @Override
+                            public void onRegistered(SendBird.PushTokenRegistrationStatus status, SendBirdException e) {
+                                if (e != null) {
+                                    // Error.
+                                    return;
+                                }
+                            }
+                        });
+
+                //onconnected update information
+                Log.d("username","Sendbird has a connection state of : " + SendBird.getConnectionState());
+                Log.d("username","Sendbird current user is : " + SendBird.getCurrentUser());
+                SendBird.updateCurrentUserInfo(dbUsername, dbProfilePic, new SendBird.UserInfoUpdateHandler() {
+                    @Override
+                    public void onUpdated(SendBirdException e) {
+                        Log.d("username","username after update is now : " + dbUsername);
+                        //cant seem to update leh
+                        if (e != null) {
+                            //Toast.makeText(getApplicationContext(), "ISSUE 2 IS : " + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    }
+                });
+
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+
+
+        });
+
     }
 }
