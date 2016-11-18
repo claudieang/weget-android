@@ -118,23 +118,8 @@
             android:textColor="@color/colorPrimaryDark"
             android:gravity="center_vertical"
             android:layout_below="@id/request_price_txt"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choose Date"
-            android:id="@+id/button2"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="2dp"
-            android:foreground="?android:selectableItemBackground"
-            android:background="@color/colorPrimary"
-            android:layout_alignTop="@+id/request_duration_txt"
-            android:layout_alignBottom="@+id/request_duration_txt"
-            android:layout_toRightOf="@+id/request_duration_txt"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/request_price_txt" />
 
 
         <TextView

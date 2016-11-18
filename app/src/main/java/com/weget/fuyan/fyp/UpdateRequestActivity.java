@@ -160,8 +160,7 @@ public class UpdateRequestActivity extends AppCompatActivity  implements Calenda
             alt.show();
         }
 
-        Button button = (Button) findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
+        etRequestDuration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CalendarDatePickerDialogFragment cdp = new CalendarDatePickerDialogFragment()
@@ -347,7 +346,6 @@ public class UpdateRequestActivity extends AppCompatActivity  implements Calenda
         }
         endTime = year + "-" + month + "-" + day + " " + hours + ":" + mins + ":" + "00" ;
         etRequestDuration.setText(DateFormatter.formatDate(endTime));
-        etRequestDuration.setTextSize(12);
     }
 
     public class DecimalDigitsInputFilter implements InputFilter {

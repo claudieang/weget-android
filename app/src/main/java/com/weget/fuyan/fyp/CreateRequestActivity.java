@@ -180,8 +180,7 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
             alt.show();
         }
 
-        Button button = (Button) findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
+        etRequestDuration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CalendarDatePickerDialogFragment cdp = new CalendarDatePickerDialogFragment()
@@ -437,7 +436,6 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
         }
         endTime = year + "-" + month + "-" + day + " " + hours + ":" + mins + ":" + "00" ;
         etRequestDuration.setText(DateFormatter.formatDate(endTime));
-        etRequestDuration.setTextSize(12);
     }
 
 
