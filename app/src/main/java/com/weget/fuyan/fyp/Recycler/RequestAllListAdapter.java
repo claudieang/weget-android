@@ -96,6 +96,6 @@ public class RequestAllListAdapter extends RecyclerView.Adapter<RequestAllListAd
         final Request request = requestsList.get(position);
         holder.title.setText(request.getProductName());
         holder.details.setText("Expires on: " + DateFormatter.formatDate(request.getEndTime()));
-        holder.price.setText("$" + request.getPrice() + "0");
+        holder.price.setText("$ " + String.format("%.2f",request.getPrice()));
     }
 }

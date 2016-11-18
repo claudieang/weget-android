@@ -169,66 +169,6 @@ public class UpdateContactActivity extends AppCompatActivity {
         }
     }
 
-    //Menu Bar
-
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.bottombar, menu);
-        return true;
-    }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        switch (item.getItemId())
-        {
-            case R.id.home_item:
-                // Single menu item is selected do something
-                // Ex: launching new activity/screen or show alert message
-                Intent homeIntent = new Intent (this, MainActivity.class);
-                startActivity(homeIntent);
-                Toast.makeText(this, "Redirecting to Home Page", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.search_item:
-                Toast.makeText(this, "Search is selected", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.profile_item:
-                //Toast.makeText(HomeActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, ProfileActivity.class);
-                startActivity(i);
-                Toast.makeText(this, "Redirecting to Profile Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_request_item:
-                Intent myRequestIntent = new Intent (this, MyRequestActivity.class);
-                startActivity(myRequestIntent);
-                Toast.makeText(this, "Redirecting to My Request Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.my_fulfill_item:
-                Intent myFulfillIntent = new Intent (this, MyFulfillActivity.class);
-                startActivity(myFulfillIntent);
-                Toast.makeText(this, "Redirecting to My Fulfill Page.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.logout_item:
-
-                Intent logoutIntent = new Intent (this, LoginActivity.class);
-                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(logoutIntent);
-                finish();
-
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

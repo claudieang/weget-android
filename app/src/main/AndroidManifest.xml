@@ -51,8 +51,6 @@
 
         </intent-filter>
             </activity>
-        <activity android:name=".HomeActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".RegisterActivity"
             android:screenOrientation="portrait"
@@ -60,13 +58,11 @@
         <activity
             android:name=".ProfileActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".UpdateProfileActivity" />
         <activity
             android:name=".UpdatePasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UpdateEmailActivity"
-            android:screenOrientation="portrait"/>
+
         <activity android:name=".UpdateContactActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".UploadImageActivity"
@@ -76,8 +72,6 @@
             android:screenOrientation="portrait"
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RequestDetailsActivity"
-            android:screenOrientation="portrait"/>
         <activity android:name=".ChatActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -98,14 +92,13 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
         <activity android:name=".RequestFulfillerDetailsActivity"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".PaymentActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Dialog" />
-        <activity android:name=".MyFulfillRequestDetailsActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".UpdateRequestActivity"
             android:screenOrientation="portrait"
@@ -157,11 +150,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".bank_details"
+            android:name=".BankDetails"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".dispute"
+            android:name=".Dispute"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -169,10 +162,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".update_bank_details"
+            android:name=".UpdateBankDetails"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Rating_requestor"
+        <activity android:name=".RatingRequestor"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".RequestPopUp"

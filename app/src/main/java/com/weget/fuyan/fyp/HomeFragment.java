@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     //------------------------------------------------------
     private BottomNavigationBar bottomNavigationBar;
     int lastSelectedPosition = 0;
-    private String TAG = HomeActivity.class.getSimpleName();
+    //private String TAG = HomeActivity.class.getSimpleName();
     private CreateRequestActivity mLocationFragment;
     private ProfileActivity mFindFragment;
     private SupportMapFragment mapFragment;

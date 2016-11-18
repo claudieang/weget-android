@@ -461,7 +461,7 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                     finish();
 
                 }else{
-                    Intent i = new Intent (RequestFulfillerDetailsActivity.this, MyRequestActivity.class);
+                    Intent i = new Intent (RequestFulfillerDetailsActivity.this, MainActivity.class);
                     Toast.makeText(getApplicationContext(), "Request Expired!", Toast.LENGTH_SHORT).show();
                     startActivity(i);
                     finish();

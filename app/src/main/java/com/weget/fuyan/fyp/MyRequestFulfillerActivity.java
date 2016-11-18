@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.weget.fuyan.fyp.Recycler.DividerItemDecoration;
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
 import com.weget.fuyan.fyp.Recycler.RequestFulfillersListAdapter;
@@ -31,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyRequestFulfillerActivity extends AppCompatActivity {
 
@@ -53,7 +56,8 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
     String URL;
     TextView emptyView;
     boolean noFulfillers = false;
-    ProgressDialog dialog = new ProgressDialog(MyRequestFulfillerActivity.this, R.style.MyTheme);;
+    ProgressDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         URL = getString(R.string.webserviceurl);
         myRequest =(Request) getIntent().getSerializableExtra("selected_my_request");
         //tr = (Transaction)getIntent().getSerializableExtra("fulfiller_transaction");
+        dialog = new ProgressDialog(MyRequestFulfillerActivity.this, R.style.MyTheme);
 
         myRequestId = myRequest.getId();
         requestStatus = myRequest.getStatus();
@@ -83,13 +88,9 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
 
         authString  = username + ":" + password;
 
-        //myRequestFulfillerLV = (ListView)findViewById(R.id.my_request_fulfiller_list);
-        //receiveBtn = (Button)findViewById(R.id.receive_button);
-        //updateBtn = (Button)findViewById(R.id.udpate_button);
-        //adapter = new AccountAdapter(getApplicationContext(),R.layout.row_layout);
-        //myRequestFulfillerLV.setAdapter(adapter);
-        new getRequests().execute(authString);
-        //new getMyRequestFulfiller().execute(authString);
+
+        new getMyRequestFulfill().execute(authString);
+
 
         emptyView = (TextView)findViewById(R.id.empty_view);
 
@@ -103,9 +104,6 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
 
-
-
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -116,20 +114,13 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    /*
-
-    public void fetchTimelineAsync(int page) {
-        // Send the network request to fetch the updated data
-        // 'client' here is an instance of Android Async HTTP
-        new getRequests().execute(authString);
-    }
-
-  */
 
 
 
-    private class getRequests extends AsyncTask<String, Void, Boolean> {
 
+    private class getMyRequestFulfill extends AsyncTask<String, Void, Boolean> {
+        int fulfillId, requestId, fulfillerId;
+        String status;
 
         @Override
         protected void onPreExecute() {
@@ -140,47 +131,6 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
             if(!isFinishing()) {
                 dialog.show();
             }
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = URL + "request/active/";
-
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
-
-                success = true;
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-
-            if(result){
-
-
-                new getMyRequestFulfill().execute(authString);
-
-            }else {
-                Toast.makeText(getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
-
-    private class getMyRequestFulfill extends AsyncTask<String, Void, Boolean> {
-        int fulfillId, requestId, fulfillerId;
-        String status;
-
-        @Override
-        protected void onPreExecute() {
         }
 
         @Override
@@ -276,39 +226,46 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
                 Log.d("Print","rst length is : " + rst.length());
 
                 try {
-                    JSONArray jsoArray = new JSONArray(rst);
-                    Log.d("Print","jso length is : " + jsoArray.length());
-                    if(jsoArray.length() > 0){
-                        for(int i = 0; i < jsoArray.length(); i++) {
-                            JSONObject jso = jsoArray.getJSONObject(i);
-                            id = jso.getInt("id");
-                            username = jso.getString("username");
-                            //password = jso.getString("password");
-                            contactNo = jso.getInt("contactNo");
-                            email = jso.getString("email");
-                            fulfiller = jso.getString("fulfiller");
-                            picture = jso.getString("picture");
-                            double requestTotal = jso.getDouble("requestTotal");
-                            double requestNo = jso.getDouble("requestNo");
-                            double fulfillTotal = jso.getDouble("fulfillTotal");
-                            double fulfillNo = jso.getDouble("fulfillNo");
-                            double requestMade = jso.getDouble("requestMade");
-                            double fulfillMade = jso.getDouble("fulfillMade");
-
-                            account = new AccountExtended(id, username, password, contactNo, email, fulfiller, picture,requestTotal, requestNo, fulfillTotal, fulfillNo, requestMade, fulfillMade);
-
-
-                            fulfillerAccountList.add(account);
+//                    JSONArray jsoArray = new JSONArray(rst);
+//                    Log.d("Print","jso length is : " + jsoArray.length());
+//                    if(jsoArray.length() > 0){
+//                        for(int i = 0; i < jsoArray.length(); i++) {
+//                            JSONObject jso = jsoArray.getJSONObject(i);
+//                            id = jso.getInt("id");
+//                            username = jso.getString("username");
+//                            contactNo = jso.getInt("contactNo");
+//                            email = jso.getString("email");
+//                            fulfiller = jso.getString("fulfiller");
+//                            picture = jso.getString("picture");
+//                            double requestTotal = jso.getDouble("requestTotal");
+//                            double requestNo = jso.getDouble("requestNo");
+//                            double fulfillTotal = jso.getDouble("fulfillTotal");
+//                            double fulfillNo = jso.getDouble("fulfillNo");
+//                            double requestMade = jso.getDouble("requestMade");
+//                            double fulfillMade = jso.getDouble("fulfillMade");
 
 
 
-                        }
+//                            account = new AccountExtended(id, username, password, contactNo, email, fulfiller, picture,requestTotal, requestNo, fulfillTotal, fulfillNo, requestMade, fulfillMade);
+//
+//
+//                            fulfillerAccountList.add(account);
+//
+                    Gson gson = new Gson();
+                    ArrayList<AccountExtended> list = gson.fromJson(rst,new TypeToken<List<AccountExtended>>(){}.getType());
+                    fulfillerAccountList.addAll(list);
+                       // }
+//                        noFulfillers = false;
+//                    } else {
+//                        noFulfillers = true;
+//                    }
+                    if(fulfillerAccountList.size() == 0){
                         noFulfillers = false;
-                    } else {
+                    }else{
                         noFulfillers = true;
                     }
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -319,8 +276,6 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Boolean result) {
-            Log.d("Print","the result is : " + result);
-            Log.d("Print","the noFulfillers is : " + noFulfillers);
             if(noFulfillers){
                 emptyView.setText("No fulfillers have accepted this request yet.");
             }
