@@ -7,12 +7,14 @@
     <include
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar_blank"></include>
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/linear1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/bt_very_light_gray"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_weight="5">
+
 
         <TextView
             android:id="@+id/payee_name"
@@ -116,10 +118,20 @@
             android:textColorHint="@color/colorGray"
             android:textSize="16sp" />
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/linear1"
+        android:layout_weight="0.5">
         <Button
             android:id="@+id/update_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/colorPrimaryDark"
             android:fontFamily="normal"
             android:foreground="?android:selectableItemBackground"
@@ -129,7 +141,12 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"/>
-    </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
 
 
 
