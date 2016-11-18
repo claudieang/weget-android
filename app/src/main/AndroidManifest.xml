@@ -48,6 +48,7 @@
             <category android:name="android.intent.category.DEFAULT" />
             <action android:name="request_page" />
             <action android:name="fulfill_page" />
+
         </intent-filter>
             </activity>
         <activity android:name=".HomeActivity"
@@ -179,6 +180,7 @@
             android:theme="@style/Theme.AppCompat.Dialog"
 
         />
+
     </application>
 
 </manifest>

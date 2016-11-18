@@ -145,26 +145,28 @@ public class MainActivity extends AppCompatActivity {
 
         if(!gps_enabled && !network_enabled) {
             // notify user
-            AlertDialog.Builder dialog = new AlertDialog.Builder(getApplicationContext());
+            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
             dialog.setMessage("GPS Network has not been enabled.");
             dialog.setPositiveButton("Enable", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                     // TODO Auto-generated method stub
                     Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(myIntent);
                     //get gps
                 }
             });
-//            dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//
-//                @Override
-//                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-//                    // TODO Auto-generated method stub
-//
-//                }
-//            });
-            dialog.show();
+            dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    // TODO Auto-generated method stub
+
+                }
+            });
+            AlertDialog alt = dialog.create();
+            alt.show();
         }
 
 
