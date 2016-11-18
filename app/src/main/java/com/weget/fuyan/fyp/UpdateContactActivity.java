@@ -167,6 +167,7 @@ public class UpdateContactActivity extends AppCompatActivity {
                 editor.putInt("contactnumber",updatedContactNo);
                 editor.commit();
                 Intent i = new Intent(UpdateContactActivity.this, ProfileActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();
             }else{

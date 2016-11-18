@@ -200,7 +200,6 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                 editor.commit();
                 //Intent i = new Intent(UpdatePasswordActivity.this, ProfileActivity.class);
                 //startActivity(i);
-
                 finish();
             }else{
                 Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
