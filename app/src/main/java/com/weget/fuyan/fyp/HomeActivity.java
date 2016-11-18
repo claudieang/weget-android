@@ -267,17 +267,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
         */
-        requestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
-                // Then you start a new Activity via Intent
-                Request rq = requestArrayList.get(position);
-                Intent intent = new Intent(HomeActivity.this, RequestDetailsActivity.class);
-                intent.putExtra("selected_request", (Serializable) rq);
-                startActivity(intent);
-            }
-        });
+
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
 

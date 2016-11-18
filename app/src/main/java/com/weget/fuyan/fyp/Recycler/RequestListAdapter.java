@@ -29,12 +29,11 @@ import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
 import com.weget.fuyan.fyp.Account;
 import com.weget.fuyan.fyp.CompletedRequest;
-import com.weget.fuyan.fyp.MainActivity;
 import com.weget.fuyan.fyp.MyfulfillDetails;
 import com.weget.fuyan.fyp.PendingdetailsFulfiller;
 import com.weget.fuyan.fyp.PendingdetailsRequester;
 import com.weget.fuyan.fyp.R;
-import com.weget.fuyan.fyp.Rating_requestor;
+import com.weget.fuyan.fyp.RatingRequestor;
 import com.weget.fuyan.fyp.Request;
 import com.weget.fuyan.fyp.UserChatActivity;
 import com.weget.fuyan.fyp.UtilHttp;
@@ -372,7 +371,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         @Override
         protected void onPostExecute(Boolean result) {
             if(result){
-                Intent i = new Intent(mContext, Rating_requestor.class);
+                Intent i = new Intent(mContext, RatingRequestor.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.putExtra("selected_request", (Serializable) request);
@@ -452,7 +451,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
                 Log.d("lol1", "fulfillerAccountList.size() issss : " + fulfillerAccountList.size());
                 if (fulfillerAccountList.size() == 1) {
                     a = fulfillerAccountList.get(0);
-                    Intent i = new Intent(mContext, Rating_requestor.class);
+                    Intent i = new Intent(mContext, RatingRequestor.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                     //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     i.putExtra("selected_request", (Serializable) request);

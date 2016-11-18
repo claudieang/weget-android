@@ -23,34 +23,37 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class update_bank_details extends AppCompatActivity {
+import java.io.Serializable;
+
+public class BankDetails extends AppCompatActivity {
 
     EditText accountHolderNameET, accountBankNameET, accountNumberET;
-    Button updateBankBtn;
-    String accountHolderName, accountBankName, accountNumber, username, password, authString, bankUserName, bankName,
-            err, bankAccNumber;
-    int  myId, bankId, bankUserId;
+    Button submitBtn;
+    String username,password, authString, accountHolderName, accountBankName, accountNumber, err;
+    int myId, emptyBank;
     Context mContext;
-    Boolean bank = true;
+    Request request;
     String URL;
-    private Spinner staticSpinner;
-    private ArrayAdapter<CharSequence> staticAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_bank_details);
-
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
-        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
-        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+        setContentView(R.layout.activity_bank_details);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        toolbar.setTitle("Update Bank Details");
+        toolbar.setTitle("Bank Details");
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         URL = getString(R.string.webserviceurl);
+        //apply font
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+
+        emptyBank = getIntent().getIntExtra("empty_bank",0);
+        request = (Request) getIntent().getSerializableExtra("selected_request");
+
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         username = pref.getString("username", null);
         password = pref.getString("password", null);
@@ -60,21 +63,22 @@ public class update_bank_details extends AppCompatActivity {
         accountHolderNameET = (EditText)findViewById(R.id.payee_name_detail);
         //accountBankNameET = (EditText)findViewById(R.id.payee_bank_detail);
         accountNumberET = (EditText)findViewById(R.id.account_number_detail);
-        updateBankBtn = (Button)findViewById(R.id.update_button);
+        submitBtn = (Button)findViewById(R.id.submit_button);
 
+        //((TextView)findViewById(R.id.title1)).setTypeface(typeFaceBold);
+        //((TextView)findViewById(R.id.title2)).setTypeface(typeFaceBold);
         ((TextView)findViewById(R.id.payee_name)).setTypeface(typeFace);
-        accountHolderNameET.setTypeface(typeFaceLight);
+        accountHolderNameET.setTypeface(typeFace);
         ((TextView)findViewById(R.id.bank_name)).setTypeface(typeFace);
-       // accountBankNameET.setTypeface(typeFaceLight);
+        //accountBankNameET.setTypeface(typeFace);
         ((TextView)findViewById(R.id.account_number)).setTypeface(typeFace);
-        accountNumberET.setTypeface(typeFaceLight);
+        accountNumberET.setTypeface(typeFace);
+        submitBtn.setTypeface(typeFace);
 
-        updateBankBtn.setTypeface(typeFace);
-
-        staticSpinner = (Spinner) findViewById(R.id.static_spinner);
+        Spinner staticSpinner = (Spinner) findViewById(R.id.static_spinner);
 
         // Create an ArrayAdapter using the string array and a default spinner
-        staticAdapter = ArrayAdapter
+        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
                 .createFromResource(this, R.array.bank_name,
                         R.layout.my_spinner_style);
 
@@ -84,7 +88,6 @@ public class update_bank_details extends AppCompatActivity {
 
         // Apply the adapter to the spinner
         staticSpinner.setAdapter(staticAdapter);
-
 
         staticSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -100,10 +103,8 @@ public class update_bank_details extends AppCompatActivity {
             }
         });
 
-
-        new getBank().execute(authString);
-
-        updateBankBtn.setOnClickListener(new View.OnClickListener() {
+        accountHolderNameET.setText(username);
+        submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 accountHolderName = accountHolderNameET.getText().toString();
@@ -114,7 +115,7 @@ public class update_bank_details extends AppCompatActivity {
                     if(accountBankName!=null && accountBankName.trim().length()!=0){
                         if(accountNumber != null && accountNumber.trim().length()!=0){
                             //accountNum = Integer.parseInt(accountNumber);
-                            new updateBank().execute(authString);
+                            new setBank().execute(authString);
 
                         }else{
                             accountNumberET.setError("Please enter account number!");
@@ -125,145 +126,13 @@ public class update_bank_details extends AppCompatActivity {
                 }else{
                     accountHolderNameET.setError("Please enter your name!");
                 }
+
+                //new getBank().execute(authString);
             }
         });
 
 
-    }
 
-    private class getBank extends AsyncTask<String, Void, Boolean> {
-
-        ProgressDialog dialog = new ProgressDialog(update_bank_details.this, R.style.MyTheme);
-
-        @Override
-        protected void onPreExecute() {
-
-            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            dialog.show();
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = URL + "account/"+ myId+"/bank/";
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
-
-                success = true;
-                try {
-                    JSONObject jso = new JSONObject(rst);
-                    bankId = jso.getInt("id");
-                    bankUserId = jso.getInt("userId");
-                    bankUserName = jso.getString("accountHolder");
-                    bankAccNumber = jso.getString("accountNumber");
-                    bankName = jso.getString("bankName");
-                }catch (JSONException e){
-                    e.printStackTrace();
-                    success = false;
-                    bank = false;
-                }
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            dialog.dismiss();
-            if(result){
-                bank = true;
-                accountHolderNameET.setText(bankUserName);
-
-                if (!bankName.equals(null)) {
-                    int spinnerPosition = staticAdapter.getPosition(bankName);
-                    staticSpinner.setSelection(spinnerPosition);
-                }
-
-                accountNumberET.setText(String.valueOf(bankAccNumber));
-
-            }else {
-                if(!bank){
-
-                    Intent i = new Intent (update_bank_details.this, bank_details.class);
-                    i.putExtra("empty_bank", 2);
-                    startActivity(i);
-                    finish();
-
-                }
-
-            }
-
-        }
-    }
-
-    private class updateBank extends AsyncTask<String, Void, Boolean> {
-
-        ProgressDialog dialog = new ProgressDialog(update_bank_details.this, R.style.MyTheme);
-
-        @Override
-        protected void onPreExecute() {
-
-            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            dialog.show();
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = URL + "account/" + myId + "/bank/";
-
-            JSONObject jsoin = null;
-
-            try {
-                jsoin = new JSONObject();
-                jsoin.put("id", bankId);
-                jsoin.put("userId",myId);
-                jsoin.put("accountHolder",accountHolderName);
-                jsoin.put("accountNumber",accountNumber);
-                jsoin.put("bankName", accountBankName);
-
-
-
-
-            } catch(JSONException e) {
-                e.printStackTrace();
-                err = e.getMessage();
-            }
-
-            String rst = UtilHttp.doHttpPutBasicAuthentication(mContext, url, jsoin.toString()+ basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-            } else {
-                success = true;
-            }
-            return success;
-
-
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            dialog.dismiss();
-            if(result) {
-                Toast.makeText(getBaseContext(), "Bank Update!", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(update_bank_details.this, MainActivity.class);
-                startActivity(i);
-                finish();
-            }else{
-                Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
-            }
-
-        }
     }
 
     @Override
@@ -275,5 +144,79 @@ public class update_bank_details extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
 
+    }
+
+    private class setBank extends AsyncTask<String, Void, Boolean> {
+
+        ProgressDialog dialog = new ProgressDialog(BankDetails.this, R.style.MyTheme);
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+
+
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String authString  = params[0];
+            //authString = "admin:password";
+            final String basicAuth = "Basic " + Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
+            //Log.d ("Basic Authentitaion", basicAuth);
+
+            boolean success = false;
+            String url = URL + "account/" + myId + "/bank/";
+            JSONObject jsoin = null;
+
+            try {
+                jsoin = new JSONObject();
+                jsoin.put("userId", myId);
+                jsoin.put("accountHolder", accountHolderName);
+                jsoin.put("accountNumber", accountNumber);
+                jsoin.put("bankName", accountBankName);
+
+
+            } catch(JSONException e) {
+                e.printStackTrace();
+                err = e.getMessage();
+            }
+
+            String rst = UtilHttp.doHttpPostBasicAuthentication(mContext, url, jsoin.toString()+ basicAuth);
+            if (rst == null) {
+                err = UtilHttp.err;
+            } else {
+                success = true;
+
+            }
+            return success;
+
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+
+            if(result){
+                if(emptyBank == 1){
+                    Toast.makeText(getBaseContext(), "Bank Created!", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(BankDetails.this,FulfillviewRequestDetails.class);
+                    i.putExtra("selected_request", (Serializable) request);
+                    startActivity(i);
+                    finish();
+
+                }else if(emptyBank == 2){
+                    Toast.makeText(getBaseContext(), "Bank Created!", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(BankDetails.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+
+            }else{
+                Toast.makeText(getBaseContext(), err, Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
 }

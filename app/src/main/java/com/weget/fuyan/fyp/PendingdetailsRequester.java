@@ -266,7 +266,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
 
             if(result) {
                 a = fulfillerAccountList.get(0);
-                Intent i = new Intent(PendingdetailsRequester.this, Rating_requestor.class);
+                Intent i = new Intent(PendingdetailsRequester.this, RatingRequestor.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.putExtra("selected_request", (Serializable) myRequest);
@@ -333,7 +333,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
             dialog.dismiss();
             if(result){
 
-                Intent i = new Intent (PendingdetailsRequester.this, dispute.class);
+                Intent i = new Intent (PendingdetailsRequester.this, Dispute.class);
                 i.putExtra("transaction_id", transactionId);
                 i.putExtra("user_type",0); //zero means fulfiller, 1 means requestor
                 i.putExtra("origin", "requestor");

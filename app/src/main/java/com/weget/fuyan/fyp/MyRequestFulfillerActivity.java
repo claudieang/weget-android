@@ -53,6 +53,7 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
     String URL;
     TextView emptyView;
     boolean noFulfillers = false;
+    ProgressDialog dialog = new ProgressDialog(MyRequestFulfillerActivity.this, R.style.MyTheme);;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +130,16 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
 
     private class getRequests extends AsyncTask<String, Void, Boolean> {
 
+
         @Override
         protected void onPreExecute() {
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+
+            if(!isFinishing()) {
+                dialog.show();
+            }
         }
 
         @Override
@@ -244,17 +253,10 @@ public class MyRequestFulfillerActivity extends AppCompatActivity {
         int id, contactNo;
         String username, password, email, fulfiller, picture;
         AccountExtended account;
-        ProgressDialog dialog = new ProgressDialog(MyRequestFulfillerActivity.this, R.style.MyTheme);
 
         @Override
         protected void onPreExecute() {
-            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
 
-            if(!isFinishing()) {
-                dialog.show();
-            }
         }
 
         @Override

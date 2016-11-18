@@ -130,7 +130,6 @@ public class RegisterActivity extends AppCompatActivity {
                 contactNumS = contact.getText().toString();
 
                 email = email1.getText().toString();
-                DatabaseOperations DB = new DatabaseOperations(ctx);
 
                 if(user_name != null && user_name.trim().length()> 0){ //check if username is filled in
 

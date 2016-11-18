@@ -563,7 +563,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
             }else {
                 if(!bank){
-                    Intent i = new Intent (FulfillviewRequestDetails.this, bank_details.class);
+                    Intent i = new Intent (FulfillviewRequestDetails.this, BankDetails.class);
                     i.putExtra("selected_request", (Serializable) request);
                     i.putExtra("empty_bank", 1);
                     startActivity(i);

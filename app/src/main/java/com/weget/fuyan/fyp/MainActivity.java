@@ -490,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case 1:
-                startActivity(new Intent(this, update_bank_details.class));
+                startActivity(new Intent(this, UpdateBankDetails.class));
                 break;
 
             case 2:

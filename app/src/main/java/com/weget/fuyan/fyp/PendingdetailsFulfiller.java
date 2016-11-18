@@ -254,7 +254,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             dialog.dismiss();
             if(result) {
-                Intent i = new Intent(PendingdetailsFulfiller.this, Rating_requestor.class);
+                Intent i = new Intent(PendingdetailsFulfiller.this, RatingRequestor.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.putExtra("selected_request", (Serializable) myRequest);
@@ -318,7 +318,7 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
             dialog.dismiss();
             if(result){
 
-                Intent i = new Intent (PendingdetailsFulfiller.this, dispute.class);
+                Intent i = new Intent (PendingdetailsFulfiller.this, Dispute.class);
 
                 i.putExtra("transaction_id", transactionId);
                 i.putExtra("user_type",0); //zero means fulfiller, 1 means requestor

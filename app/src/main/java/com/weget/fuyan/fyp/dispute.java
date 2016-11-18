@@ -26,7 +26,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class dispute extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Dispute extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     String username, password, authString, message, origin, err, reason;
     int myId, transactionId, usertype;
@@ -154,7 +154,7 @@ public class dispute extends AppCompatActivity implements AdapterView.OnItemSele
 
     private class doDispute extends AsyncTask<String, Void, Boolean> {
 
-        ProgressDialog dialog = new ProgressDialog(dispute.this, R.style.MyTheme);
+        ProgressDialog dialog = new ProgressDialog(Dispute.this, R.style.MyTheme);
 
         @Override
         protected void onPreExecute() {
@@ -173,7 +173,7 @@ public class dispute extends AppCompatActivity implements AdapterView.OnItemSele
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = URL + "transaction/" + transactionId+"/dispute/";
+            String url = URL + "transaction/" + transactionId+"/Dispute/";
             JSONObject jsoin = null;
             try{
                 jsoin = new JSONObject();
@@ -203,7 +203,7 @@ public class dispute extends AppCompatActivity implements AdapterView.OnItemSele
         protected void onPostExecute(Boolean result) {
             dialog.dismiss();
             if(result) {
-                Intent i = new Intent(dispute.this, MainActivity.class);
+                Intent i = new Intent(Dispute.this, MainActivity.class);
 
                 if(origin.equals("fulfiller")){
                     i.putExtra("after_dispute_fulfill_tab", 3);

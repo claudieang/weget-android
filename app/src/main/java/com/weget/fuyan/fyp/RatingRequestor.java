@@ -17,16 +17,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
-
-public class Rating_requestor extends AppCompatActivity {
+public class RatingRequestor extends AppCompatActivity {
     Request request;
     Account account;
     TextView userTitle, userName, productName, productPrice, rateYourTitle;
@@ -107,7 +104,7 @@ public class Rating_requestor extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent i = new Intent(Rating_requestor.this, MainActivity.class);
+                    Intent i = new Intent(RatingRequestor.this, MainActivity.class);
                     startActivity(i);
                     finish();
 
@@ -153,7 +150,7 @@ public class Rating_requestor extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent i = new Intent(Rating_requestor.this, MainActivity.class);
+                    Intent i = new Intent(RatingRequestor.this, MainActivity.class);
                     startActivity(i);
                     finish();
 
@@ -166,7 +163,7 @@ public class Rating_requestor extends AppCompatActivity {
 
     private class createRating extends AsyncTask<String, Void, Boolean> {
 
-        ProgressDialog dialog = new ProgressDialog(Rating_requestor.this, R.style.MyTheme);
+        ProgressDialog dialog = new ProgressDialog(RatingRequestor.this, R.style.MyTheme);
 
         @Override
         protected void onPreExecute() {
@@ -223,7 +220,7 @@ public class Rating_requestor extends AppCompatActivity {
             if (result) {
                 Toast.makeText(getBaseContext(), "User Rated!", Toast.LENGTH_LONG).show();
                 //Intent i = new Intent(CreateRequestActivity.this, HomeActivity.class);
-                Intent i = new Intent(Rating_requestor.this, MainActivity.class);
+                Intent i = new Intent(RatingRequestor.this, MainActivity.class);
                 startActivity(i);
                 finish();
             } else {

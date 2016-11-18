@@ -170,7 +170,7 @@ public class CompletedFulfillsFragment extends Fragment {
                         String status = jso.getString("status");
 
                         Fulfill f = new Fulfill(id,requestId, fulfillerId,status);
-                        if(status.equals("pending")||status.equals("completed")||status.equals("dispute")) {
+                        if(status.equals("pending")||status.equals("completed")||status.equals("Dispute")) {
                             myFulfillList.add(f);
                         }
 
@@ -307,7 +307,7 @@ public class CompletedFulfillsFragment extends Fragment {
                         boolean credited = jso.getBoolean("credited");
 
 
-                        if(status.equals("completed") || status.equals("dispute")) {
+                        if(status.equals("completed") || status.equals("Dispute")) {
                             Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
                                     postal, startTime, endTime, duration, price, status);
                             myFulfillRequestArrayList.add(request);

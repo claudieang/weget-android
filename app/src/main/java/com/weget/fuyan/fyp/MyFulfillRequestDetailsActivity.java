@@ -109,7 +109,7 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
             }
         });
 
-        //dispute
+        //Dispute
         dispute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,7 +162,7 @@ public class MyFulfillRequestDetailsActivity extends AppCompatActivity {
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = URL + "transaction/" + transactionId+"/dispute/";
+            String url = URL + "transaction/" + transactionId+"/Dispute/";
             JSONObject jsoin = null;
             try{
                 jsoin = new JSONObject();

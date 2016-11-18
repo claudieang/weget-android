@@ -207,7 +207,7 @@ public class CompletedRequestsFragment extends Fragment {
 //
 //                        Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
 //                                postal, startTime, endTime, duration, price, status);
-//                        if (status.equals("completed") || status.equals("dispute")) {
+//                        if (status.equals("completed") || status.equals("Dispute")) {
 //                            myRequestArrayList.add(request);
 //                        }
 //
@@ -219,7 +219,7 @@ public class CompletedRequestsFragment extends Fragment {
                     merged = gson.fromJson(rst, new TypeToken<List<Request>>(){}.getType());
 
                     for(Request m : merged){
-                        if(m.getStatus().equals("completed") || m.getStatus().equals("dispute")){
+                        if(m.getStatus().equals("completed") || m.getStatus().equals("Dispute")){
                             myRequestArrayList.add(m);
                         }
                     }
