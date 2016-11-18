@@ -4,18 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,18 +28,20 @@ public class UpdateContactActivity extends AppCompatActivity {
     private Context mContext;
     TextView updateTitle;
     Button updateContactBtn;
-    EditText updateContact;
+    //EditText updateContact;
     SharedPreferences.Editor editor = null;
     String URL;
+    private EditText contactNoBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_contact);
 
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
-        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
 
         URL = getString(R.string.webserviceurl);
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
@@ -55,46 +55,53 @@ public class UpdateContactActivity extends AppCompatActivity {
         idString = String.valueOf(id);
         picture = pref.getString("picture", null);
 
-        updateContactBtn = (Button)findViewById(R.id.confirm_update_contact_btn);
-        updateContact = (EditText)findViewById(R.id.update_contact_txt);
-        updateTitle = (TextView)findViewById(R.id.update_username);
-        updateTitle.setText("User Name: " + username);
-        updateContact.setHint(contactNoS);
+        contactNoBtn = (EditText) findViewById(R.id.update_contact);
+        Button updateBtn = (Button)findViewById(R.id.create_btn);
+        updateBtn.setText("UPDATE");
 
-        ((TextView)findViewById(R.id.title1)).setTypeface(typeFaceBold);
-        ((TextView)findViewById(R.id.title2)).setTypeface(typeFaceBold);
-        updateTitle.setTypeface(typeFace);
-        ((TextView)findViewById(R.id.contact_title)).setTypeface(typeFaceBold);
-        updateContact.setTypeface(typeFace);
-        updateContactBtn.setTypeface(typeFace);
+        contactNoBtn.setText(contactNo + "");
 
-
-
-        updateContactBtn.setOnClickListener(new View.OnClickListener() {
+        updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updatedContact = updateContact.getText().toString();
+                updatedContact = contactNoBtn.getText().toString();
 
                 if(updatedContact != null && updatedContact.trim().length() > 0){
                     updatedContact = updatedContact.trim().replaceAll("\\s", "");
                     if(updatedContact.matches("[0-9]+")){
                         if(!updatedContact.equals(contactNoS)){
-                            updatedContactNo = Integer.parseInt(updatedContact);
-                            new updateValue().execute(idString);
+                            boolean error = false;
+                            try {
+                                updatedContactNo = Integer.parseInt(updatedContact);
+                            }catch(Exception e){
+                                error = true;
+                                contactNoBtn.setError("Invalid contact!");
+                            }
+                            if(!error) {
+                                new updateValue().execute(idString);
+                            }
 
                         }else{
-                            updateContact.setError("Same as old contact!");
+                            contactNoBtn.setError("Same as old contact!");
                         }
 
                     }else{
-                        updateContact.setError("Invalid contact number!");
+                        contactNoBtn.setError("Invalid contact number!");
                     }
 
                 }else{
-                    updateContact.setError("Contact number is required!");
+                    contactNoBtn.setError("Contact number is required!");
                 }
 
 
+            }
+        });
+
+        ImageButton close_btn = (ImageButton)findViewById(R.id.close_btn);
+        close_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }
@@ -119,7 +126,7 @@ public class UpdateContactActivity extends AppCompatActivity {
             String authString  = username + ":" + password;
             //authString = "admin:password";
             final String basicAuth = "Basic " + Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
-            Log.d ("Basic Authentitaion", basicAuth);
+            Log.d ("Basic Authentication", basicAuth);
 
             boolean success = false;
             String url = URL + "account/" +params[0] +"/";

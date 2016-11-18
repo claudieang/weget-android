@@ -94,6 +94,8 @@ public class ProfileActivity extends AppCompatActivity {
         profileUsernameTV = (TextView)findViewById(R.id.profile_username);
         profileEmailTV = (TextView)findViewById(R.id.profile_email);
         profileContactNumberTV = (TextView)findViewById(R.id.profile_contactNumber);
+        profileContactNumberTV.setPaintFlags(change_pw.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
 
         String displayUserName = profileUsername;
         String displayEmail = profileEmail;
@@ -121,6 +123,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        profileContactNumberTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent (ProfileActivity.this, UpdateContactActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
