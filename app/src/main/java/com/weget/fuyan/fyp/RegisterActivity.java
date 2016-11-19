@@ -97,11 +97,11 @@ public class RegisterActivity extends AppCompatActivity {
         toc = (TextView) findViewById(R.id.tocText);
         //dpIV.setImageResource(R.drawable.ic_profile);
 
-        t1.setTypeface(typeFace);
-        t2.setTypeface(typeFace);
-        t3.setTypeface(typeFace);
-        contact.setTypeface(typeFace);
-        email1.setTypeface(typeFace);
+//        t1.setTypeface(typeFace);
+//        t2.setTypeface(typeFace);
+//        t3.setTypeface(typeFace);
+//        contact.setTypeface(typeFace);
+//        email1.setTypeface(typeFace);
 
 
 

@@ -99,7 +99,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 notificationManager.notify(0, notificationBuilder.build());
             }
 
-            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("request1")) {
+            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("fulfill1")) {
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("notification_request_tab", 1);
                 intent.putExtra("notification_request_swipe", 2);
@@ -119,7 +119,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
 
 
-            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("fulfill1")) {
+            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("request1")) {
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("notification_fulfill_tab", 3);
                 intent.putExtra("notification_fulfill_swipe", 2);

@@ -48,7 +48,8 @@
             <category android:name="android.intent.category.DEFAULT" />
             <action android:name="request_page" />
             <action android:name="fulfill_page" />
-
+            <action android:name="request_page1" />
+            <action android:name="fulfill_page1" />
         </intent-filter>
             </activity>
         <activity

@@ -14,7 +14,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_close_white_24dp"
-        android:background="?selectableItemBackgroundBorderless"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:background="?android:selectableItemBackground"
         android:layout_gravity="left"
         android:id="@+id/close_btn"
         android:clickable="true" />
@@ -37,7 +40,6 @@
         android:textSize="16sp"
         android:paddingRight="8dp"
         android:paddingLeft="8dp"
-
         android:background="?selectableItemBackgroundBorderless"
         android:layout_gravity="right"
         android:textColor="@color/abc_primary_text_disable_only_material_dark"

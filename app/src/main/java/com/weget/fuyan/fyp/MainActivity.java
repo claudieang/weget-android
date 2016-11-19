@@ -1,6 +1,5 @@
 package com.weget.fuyan.fyp;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -65,14 +64,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentManager fm = getFragmentManager();
-        fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-            @Override
-            public void onBackStackChanged() {
-                if (getFragmentManager().getBackStackEntryCount() == 0) finish();
-            }
-        });
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -88,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
 
         URL = getString(R.string.webserviceurl);
 
-        mNavItems.add(new NavItem("Profile", "Edit your profile", R.drawable.ic_account_circle_black_36dp));
-        mNavItems.add(new NavItem("Bank Settings", "Manage your bank accounts", R.drawable.ic_account_balance_wallet_black_24dp));
-        mNavItems.add(new NavItem("About", "Get to know Weget", R.drawable.ic_info_outline_black_24dp));
-        mNavItems.add(new NavItem("Logout", "Sign out from Weget", R.drawable.ic_exit_to_app_black_24dp));
+        mNavItems.add(new NavItem("PROFILE", "Edit your profile", R.drawable.ic_account_circle_black_36dp));
+        mNavItems.add(new NavItem("BANK SETTINGS", "Manage your bank accounts", R.drawable.ic_attach_money_white_36dp));
+        mNavItems.add(new NavItem("ABOUT", "Get to know Weget", R.drawable.ic_info_outline_black_24dp));
+        mNavItems.add(new NavItem("LOGOUT", "Sign out from Weget", R.drawable.ic_exit_to_app_black_24dp));
         // DrawerLayout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
@@ -349,19 +340,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-//        getSupportFragmentManager().beginTransaction()
-//                .add(R.id.content_id, new RequestFragment(), "request")
-//                .addToBackStack(null)
-//                .commit();
-//        getSupportFragmentManager().beginTransaction()
-//                .add(R.id.content_id, new FulfillFragment(), "fulfill")
-//                .addToBackStack(null)
-//                .commit();
-//        getSupportFragmentManager().beginTransaction()
-//                .add(R.id.content_id, new ChatFragment(), "chat")
-//                .addToBackStack(null)
-//                .commit();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content_id, new HomeFragment(), "home")
                 .commit();
@@ -462,22 +440,6 @@ public class MainActivity extends AppCompatActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-//
-//        int id = item.getItemId();
-//
-//        if(id == R.id.action_filter) {
-//            if(homeFragment.isAdded()) {
-//                homeFragment.filter();
-//            }
-//            return true;
-//        }
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_refresh) {
-//            //Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
-//            homeFragment.refresh();
-//            return true;
-//        }
 
         return super.onOptionsItemSelected(item);
     }

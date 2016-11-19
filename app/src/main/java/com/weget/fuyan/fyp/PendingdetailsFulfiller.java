@@ -7,12 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -160,8 +159,8 @@ public class PendingdetailsFulfiller extends AppCompatActivity {
             String auth = params[0].substring(0, params[0].indexOf(','));
             String rId = params[0].substring(params[0].indexOf(',') + 1);
 
-            Log.d("auth: ", auth);
-            Log.d("rID: ", rId);
+//            Log.d("auth: ", auth);
+//            Log.d("rID: ", rId);
             final String basicAuth = "Basic " + Base64.encodeToString(auth.getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
