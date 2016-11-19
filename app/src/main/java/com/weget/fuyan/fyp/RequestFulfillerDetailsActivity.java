@@ -509,16 +509,18 @@ public class RequestFulfillerDetailsActivity extends AppCompatActivity {
                     requestTotal = jso.getInt("requestMade");
                     fulfillTotal = jso.getInt("fulfillMade");
 
-                    if(requestorRatingNum == 0.0 || fulfillerRatingNum == 0.0){
+                    if(requestorRatingNum == 0.0){
                         requestorRt = 0.0;
-                        fulfillerRt = 0.0;
-
                     }else {
                         requestorRt = requestorRating / requestorRatingNum;
-                        fulfillerRt = fulfillerRating / fulfillerRatingNum;
                     }
 
 
+                    if( fulfillerRatingNum == 0.0){
+                        fulfillerRt = 0.0;
+                    }else {
+                        fulfillerRt = fulfillerRating / fulfillerRatingNum;
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
