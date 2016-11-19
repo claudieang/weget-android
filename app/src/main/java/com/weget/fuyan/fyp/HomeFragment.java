@@ -436,6 +436,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
         @Override
         protected void onPreExecute() {
+            //mMap.clear();
             latList.clear();
             lngList.clear();
             Log.d("Place Markers: (pre) ", requestArrayList.size() + "");
@@ -791,7 +792,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     }
 
     public void refresh() {
+        mMap.clear();
         new getRequests().execute(authString);
+        //LatLng lastLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        drawCircle(lastLocation, 500);
+
     }
 
     public void filter(){

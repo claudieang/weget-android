@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.content_id, new RequestFragment(), "request")
-                                    .addToBackStack(null)
+                                    //.addToBackStack(null)
                                     .commit();
                         }
 
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.content_id, new FulfillFragment(), "fulfill")
-                                    .addToBackStack(null)
+                                    //.addToBackStack(null)
                                     .commit();
                         }
 
@@ -330,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
 //                                .show(getSupportFragmentManager().findFragmentByTag("chat")).commit();
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.content_id_2, new ChatFragment(), "chat")
-                                .addToBackStack(null)
+                                //.addToBackStack(null)
                                 .commit();
 
                         //startActivity(new Intent(MainActivity.this, ChatActivity.class));
