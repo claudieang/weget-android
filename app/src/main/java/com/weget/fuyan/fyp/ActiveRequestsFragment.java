@@ -97,13 +97,16 @@ public class ActiveRequestsFragment extends Fragment {
                     public void onRefresh() {
 
                         new getMyRequests(false).execute(authString);
+                        RequestFragment parentFragment = (RequestFragment)getParentFragment();
+                        parentFragment.getPend().new getMyRequests(false).execute(authString);
+                        parentFragment.getCompleted().new getMyRequests(false).execute(authString);
 
                     }
                 }
         );
 
     }
-    private class getMyRequests extends AsyncTask<String, Void, Boolean> {
+    public class getMyRequests extends AsyncTask<String, Void, Boolean> {
         Boolean showDialog;
         ProgressDialog dialog;
 
@@ -140,36 +143,6 @@ public class ActiveRequestsFragment extends Fragment {
                 mergedList.clear();
 
                 try {
-  //                  Gson gson = new Gson();
-                    //myRequestArrayList = gson.fromJson(rst, new TypeToken<List<Request>>(){}.getType());
-
-//                    JSONArray jsoArray = new JSONArray(rst);
-//                    for (int i = 0; i < jsoArray.length(); i++) {
-//                        JSONObject jso = jsoArray.getJSONObject(i);
-//
-//                        int id = jso.getInt("id");
-//                        int requestorId = jso.getInt("requestorId");
-//                        int imageResource = requestImage;
-//                        String productName = jso.getString("productName");
-//                        String requirement = jso.getString("requirement");
-//                        String location = jso.getString("location");
-//                        String postal = jso.getString("postal");
-//                        String startTime = jso.getString("startTime");
-//                        int duration = jso.getInt("duration");
-//                        String endTime = jso.getString("endTime");
-//                        double price = jso.getDouble("price");
-//                        String status = jso.getString("status");
-//                        int count = jso.getInt("count");
-//
-//                        MergedRequest request = new MergedRequest(id, requestorId, imageResource, productName, requirement, location,
-//                                postal, startTime, endTime, duration, price, status, count);
-//                        if (status.equals("active")) {
-//                            mergedList.add(request);
-//                        }
-//
-//                       // mAdapter.notifyDataSetChanged();
-//
-//                    }
                     Gson gson  = new Gson();
                     ArrayList<MergedRequest> merged = new ArrayList<>();
                     merged = gson.fromJson(rst, new TypeToken<List<MergedRequest>>(){}.getType());

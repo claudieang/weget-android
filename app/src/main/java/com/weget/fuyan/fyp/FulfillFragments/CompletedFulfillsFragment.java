@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.weget.fuyan.fyp.CompletedRequest;
+import com.weget.fuyan.fyp.FulfillFragment;
 import com.weget.fuyan.fyp.R;
 import com.weget.fuyan.fyp.Recycler.RecyclerItemClickListener;
 import com.weget.fuyan.fyp.Recycler.RecyclerViewEmptySupport;
@@ -108,6 +109,9 @@ public class CompletedFulfillsFragment extends Fragment {
                     public void onRefresh() {
 
                         new getMyFulfills(false).execute(authString);
+                        FulfillFragment parentFragment = (FulfillFragment)getParentFragment();
+                        parentFragment.getPending().new getMyFulfills(false).execute(authString);
+                        parentFragment.getActive().new getMyFulfills(false).execute(authString);
 
                     }
                 }
@@ -131,126 +135,8 @@ public class CompletedFulfillsFragment extends Fragment {
                 })
         );
     }
-    /*
 
-    private class getMyFulfill extends AsyncTask<String, Void, Boolean> {
-
-
-        Boolean showDialog;
-
-        public getMyFulfill(boolean showDialog){
-            this.showDialog = showDialog;
-        }
-
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = URL + "account/" + myId+"/fulfill/";
-
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
-
-                myFulfillRequestArrayList.clear();
-
-                try {
-                    JSONArray jsoArray = new JSONArray(rst);
-                    for(int i = 0; i < jsoArray.length(); i++) {
-                        JSONObject jso = jsoArray.getJSONObject(i);
-
-                        int id = jso.getInt("id");
-                        int requestId = jso.getInt("requestId");
-                        int fulfillerId = jso.getInt("fulfillerId");
-                        String status = jso.getString("status");
-
-                        Fulfill f = new Fulfill(id,requestId, fulfillerId,status);
-                        if(status.equals("pending")||status.equals("completed")||status.equals("Dispute")) {
-                            myFulfillList.add(f);
-                        }
-
-
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                success = true;
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            dialog.dismiss();
-            if(result){
-
-                new getMyFulfills(showDialog).execute(authString);
-            }else {
-                Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
-
-    private class getRequests extends AsyncTask<String, Void, Boolean> {
-
-        Boolean showDialog;
-
-        public getRequests(boolean showDialog){
-            this.showDialog = showDialog;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            if(showDialog) {
-                dialog = new ProgressDialog(activity, R.style.MyTheme);
-                dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-                dialog.setIndeterminate(true);
-                dialog.setCancelable(false);
-                if (!activity.isFinishing()) {
-                    dialog.show();
-                }
-            }
-        }
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
-
-            boolean success = false;
-            String url = URL + "request/active/";
-
-            String rst = UtilHttp.doHttpGetBasicAuthentication(mContext, url, basicAuth);
-            if (rst == null) {
-                err = UtilHttp.err;
-                success = false;
-            } else {
-
-                success = true;
-            }
-            return success;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if(result){
-
-                new getMyFulfill(showDialog).execute(authString);
-
-            }else {
-                Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
-
-    */
-
-    private class getMyFulfills extends AsyncTask<String, Void, Boolean> {
+    public class getMyFulfills extends AsyncTask<String, Void, Boolean> {
         Boolean showDialog;
 
         public getMyFulfills(boolean showDialog){
