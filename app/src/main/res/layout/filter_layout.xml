@@ -84,7 +84,7 @@
                 android:progress="10"
                 android:indeterminate="false" />
 
-            <Switch
+        <Switch
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/radiusBar"
                 android:layout_width="wrap_content"
@@ -106,6 +106,17 @@
             android:layout_height="1dp"
             android:layout_below="@+id/switch1"
             android:background="@color/bt_very_light_gray" />
+
+        <TextView
+            android:text="$0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radiusRange"
+            android:visibility="invisible"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@+id/radiusBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -138,7 +149,7 @@
             android:layout_below="@+id/title_price"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:text="Change the maximum price displayed. Only requests that are less than or equal to the price set will be displayed"
+            android:text="Change the maximum price range. Only requests which are within the price range will be displayed"
             android:drawableTint="@color/darkGray"
             android:textColor="@color/colorDarkGray"
             android:textStyle="italic"
@@ -160,7 +171,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/priceBar"
-            android:text="Less than $10"
+            android:text="$0"
             android:textColor="@color/darkGray"
             android:textSize="14sp" />
 
@@ -170,7 +181,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/priceBar"
             android:layout_alignEnd="@+id/priceBar"
-            android:text="Less than $500"
+            android:text="$500"
             android:textColor="@color/darkGray"
             android:textSize="14sp" />
 
@@ -196,6 +207,17 @@
             android:layout_below="@+id/priceBar"
             android:layout_marginBottom="20dp"
             android:background="@color/bt_very_light_gray" />
+
+        <TextView
+            android:text="$0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/priceRange"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_above="@+id/divider4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:visibility="invisible" />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/linear5"

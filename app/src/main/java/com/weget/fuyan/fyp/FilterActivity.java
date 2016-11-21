@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -23,6 +24,8 @@ public class FilterActivity extends AppCompatActivity {
     private static boolean hasChanged;
     private Switch radiusSwitch;
     private boolean switchEnabled;
+    private TextView dynamicPrice;
+    private TextView dynamicRadius;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,8 @@ public class FilterActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Filter");
-
+        dynamicPrice = (TextView) findViewById(R.id.priceRange);
+        dynamicRadius = (TextView) findViewById(R.id.radiusRange);
         /*
          * Configures the radius filter as selected by users
          * Radius Switch disables the radius displayed in home screen
@@ -58,8 +62,12 @@ public class FilterActivity extends AppCompatActivity {
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(FilterActivity.this, "Radius set at " + progressChangedValue + "m",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(FilterActivity.this, "Radius set at " + progressChangedValue + "m",
+//                        Toast.LENGTH_SHORT).show();
+                int val = (progressChangedValue * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
+                dynamicRadius.setVisibility(View.VISIBLE);
+                dynamicRadius.setText(progressChangedValue+"m");
+                dynamicRadius.setX(seekBar.getX() + val + seekBar.getThumbOffset() / 2);
                 result = progressChangedValue;
             }
         });
@@ -69,10 +77,6 @@ public class FilterActivity extends AppCompatActivity {
             radiusSwitch.setChecked(lastSwitchRadius);
         }
 
-        /*
-         * Configures the price filter as selected by users
-         *
-         */
 
         priceBar = (SeekBar) findViewById(R.id.priceBar);
         priceBar.setProgress(lastValuePrice);
@@ -89,8 +93,11 @@ public class FilterActivity extends AppCompatActivity {
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(FilterActivity.this, "Max price set at $" + progressChangedValue,
-                        Toast.LENGTH_SHORT).show();
+
+                int val = (progressChangedValue * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
+                dynamicPrice.setVisibility(View.VISIBLE);
+                dynamicPrice.setText("$" + progressChangedValue);
+                dynamicPrice.setX(seekBar.getX() + val + seekBar.getThumbOffset() / 2);
                 result1 = progressChangedValue;
             }
         });
