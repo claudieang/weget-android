@@ -222,7 +222,7 @@ public class CompletedRequestsFragment extends Fragment {
                     merged = gson.fromJson(rst, new TypeToken<List<Request>>(){}.getType());
 
                     for(Request m : merged){
-                        if(m.getStatus().equals("completed") || m.getStatus().equals("Dispute")){
+                        if(m.getStatus().equals("completed") || m.getStatus().equals("dispute")){
                             myRequestArrayList.add(m);
                         }
                     }

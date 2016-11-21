@@ -170,7 +170,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_screen, container, false);
-        Log.d("sigh", "initiate home fragment");
         return view;
     }
 
@@ -285,7 +284,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 }
             });
         } else {
-            Toast.makeText(activity, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(activity, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
         client = new GoogleApiClient.Builder(activity).addApi(AppIndex.API).build();
@@ -494,7 +493,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
             ready = true;
         }

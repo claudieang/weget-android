@@ -144,8 +144,6 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Log.d("Hihi", "checking requestor id : " + requestorId);
-                Log.d("Hihi", "checking myId : " + myId);
 
                 List<String> userIds = new ArrayList<>();
                 userIds.add(requestorId +"");
@@ -154,7 +152,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
 
                 GroupChannelListQuery mQuery = GroupChannel.createMyGroupChannelListQuery();
-                Log.d("victorious","mquerysize is : " + mQuery.hasNext());
+
                 if(mQuery == null){
                     GroupChannel.createChannelWithUserIds(userIds, true, new GroupChannel.GroupChannelCreateHandler() {
                         @Override
@@ -170,8 +168,6 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                         }
                     });
                 } else{
-
-                    Log.d("geo1","isit we dunnid create a group?");
 
                     mQuery.setIncludeEmpty(true);
                     mQuery.next(new GroupChannelListQuery.GroupChannelListQueryResultHandler() {
@@ -196,12 +192,10 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
 
                             if(imAFulfiller) {
-                                Log.d("victorious", "Yes Im a fulfiller!");
-                                Log.d("victorious", "YOYO This person has " + list.size() +" number of channles");
+
                                 for (GroupChannel gc : list) {
                                     if (!activityStarted) {
-                                        Log.d("victorious", "Activity not started yet! Running checks before opening channel...");
-                                        Log.d("victorious", "This person has " + list.size() +" number of channles");
+
                                         List<User> uList = gc.getMembers();
                                         for (User u : uList) {
 
@@ -220,7 +214,7 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
 
                                         //if im a requestor and channel already exists
                                         if (membercount == gc.getMemberCount() && haveMyId) {
-                                            Log.d("victorious", "if im a requestor and channel already exists");
+
                                             Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
                                             intent.putExtra("channel_url", gc.getUrl());
                                             activityStarted = true;
@@ -230,13 +224,8 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                                         membercount = 0;
                                     }
                                 }
-                                Log.d("victorious","activity has started? : " + activityStarted);
-                                Log.d("victorious","HAVE MY ID? : " + haveMyId);
+
                                 if (!activityStarted){
-                                    Log.d("victorious", "Activity still not started yet! Running checks before creating channel...");
-                                    Log.d("victorious", "if im a fulfiller and channel doesnt exists");
-                                    Log.d("victorious", "so the requestor is : " + requestorId);
-                                    Log.d("victorious", "so the fulfiller is : " + myId);
 
                                     List<String> uIds = new ArrayList<>();
                                     uIds.add(requestorId + "");
@@ -250,7 +239,6 @@ public class FulfillviewRequestDetails extends AppCompatActivity {
                                                 return;
                                             }
                                             Intent intent = new Intent(FulfillviewRequestDetails.this, UserChatActivity.class);
-                                            Log.d("victorious", "channel_url is : " + groupChannel.getUrl());
                                             intent.putExtra("channel_url", groupChannel.getUrl());
 
                                             startActivity(intent);

@@ -173,7 +173,7 @@ public class Dispute extends AppCompatActivity implements AdapterView.OnItemSele
             final String basicAuth = "Basic " + Base64.encodeToString(params[0].getBytes(), Base64.NO_WRAP);
 
             boolean success = false;
-            String url = URL + "transaction/" + transactionId+"/Dispute/";
+            String url = URL + "transaction/" + transactionId+"/dispute/";
             JSONObject jsoin = null;
             try{
                 jsoin = new JSONObject();

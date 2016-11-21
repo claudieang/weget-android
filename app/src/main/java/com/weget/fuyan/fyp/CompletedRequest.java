@@ -32,7 +32,7 @@ public class CompletedRequest extends AppCompatActivity {
     RelativeLayout transferredLayout;
     TextView productNameTV, requestorNameTV, addressTV, priceTV, requestorTitleTV,
             title, date, fulfillerName, details, transferTV;
-    String productName, requestorName, address, username, password, authString, requestorIdS, err, priceS;
+    String productName, requestorName, address, username, password, authString, requestorIdS, err, priceS, status;
     double price;
     String postal;
     int requestId, myId, requestorId;
@@ -77,6 +77,7 @@ public class CompletedRequest extends AppCompatActivity {
         price = r.getPrice();
         priceS = String.format("%.2f", price);
         postal = r.getPostal();
+        status = r.getStatus();
 
 
         title = (TextView)findViewById(R.id.title);
@@ -96,33 +97,24 @@ public class CompletedRequest extends AppCompatActivity {
             transferredLayout.setBackgroundColor(Color.parseColor("#45B39D"));
 
         }else{
-            transferTV.setText("Not Transferred");
-            transferredLayout.setBackgroundColor(Color.GRAY);
+            if(status.equals("completed")){
+                transferTV.setText("Not Transferred");
+                transferredLayout.setBackgroundColor(Color.GRAY);
+            }else{
+                transferTV.setVisibility(View.GONE);
+                transferredLayout.setVisibility(View.GONE);
+            }
+
         }
-
-
-//        ((TextView)findViewById(R.id.product_name)).setTypeface(typeFace);
-//        ((TextView)findViewById(R.id.product_description)).setTypeface(typeFaceLight);
-//        ((TextView)findViewById(R.id.requestor_tv)).setTypeface(typeFace);
-//        ((TextView)findViewById(R.id.requestor_name)).setTypeface(typeFaceLight);
-//        ((TextView)findViewById(R.id.address)).setTypeface(typeFace);
-//        ((TextView)findViewById(R.id.address_details)).setTypeface(typeFaceLight);
-//        ((TextView)findViewById(R.id.price)).setTypeface(typeFace);
-//        ((TextView)findViewById(R.id.price_detail)).setTypeface(typeFaceLight);
 
 
         if (myId != requestorId) {
 
-
-            Log.d("MY ID: =========", ""+myId);
-            Log.d("R ID:========", ""+requestorId);
             new getRequestor().execute(authString + "," + requestorIdS);
 
 
         }else{
 
-            Log.d("MY ID: =========", ""+myId);
-            Log.d("R ID:========", ""+requestorId);
             new getMyRequestFulfiller().execute(authString);
         }
 
@@ -141,9 +133,9 @@ public class CompletedRequest extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // handle arrow click here
+
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed(); // close this activity and return to preview activity (if there is any)
+            onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);
@@ -201,15 +193,6 @@ public class CompletedRequest extends AppCompatActivity {
 
             if(result){
 
-//
-//                requestorNameTV.setText(requestorName );
-//                productNameTV.setText(productName);
-//                addressTV.setText(address + " " + postal);
-//                priceTV.setText("$" + price + "0")
-
-
-
-
                 String status = r.getStatus();
                 status  = status.substring(0, 1).toUpperCase() + status.substring(1);
                 if(status.charAt(status.length() -1 ) != 'd'){
@@ -220,7 +203,6 @@ public class CompletedRequest extends AppCompatActivity {
                 title.setText(status + " Request");
                 date.setText(DateFormatter.formatDate(r.getStartTime()));
                 productNameTV.setText(productName);
-                //fulfillerName.setText();
                 priceTV.setText("$" + priceS);
                 addressTV.setText(address + " " + postal);
                 details.setText(r.getRequirement());
@@ -274,25 +256,6 @@ public class CompletedRequest extends AppCompatActivity {
                     Gson gson = new Gson();
                     fulfillerAccountList = gson.fromJson(rst, new TypeToken<List<Account>>() {}.getType());
 
-//                    JSONArray jsoArray = new JSONArray(rst);
-//                    for(int i = 0; i < jsoArray.length(); i++) {
-//                        JSONObject jso = jsoArray.getJSONObject(i);
-//
-//                        id = jso.getInt("id");
-//                        username = jso.getString("username");
-//                        password = jso.getString("password");
-//                        contactNo = jso.getInt("contactNo");
-//                        email = jso.getString("email");
-//                        fulfiller = jso.getString("fulfiller");
-//                        picture = jso.getString("picture");
-//
-//                        account = new Account(id, username, password, contactNo, email, fulfiller, picture);
-//
-//
-//                        fulfillerAccountList.add(account);
-//
-//
-//                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -306,14 +269,8 @@ public class CompletedRequest extends AppCompatActivity {
 
             if(result) {
                 if(fulfillerAccountList.size() == 1){
+
                     a = fulfillerAccountList.get(0);
-
-
-//                    requestorTitleTV.setText("Fulfilled by");
-//                    requestorNameTV.setText(a.getUsername());
-//                    productNameTV.setText(productName);
-//                    addressTV.setText(address + " " + postal);
-//                    priceTV.setText("$" + price + "0");
                     String status = r.getStatus();
                     status  = status.substring(0, 1).toUpperCase() + status.substring(1);
                     if(status.charAt(status.length() -1 ) != 'd'){

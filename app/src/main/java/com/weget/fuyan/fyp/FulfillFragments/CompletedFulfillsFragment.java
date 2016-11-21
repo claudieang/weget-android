@@ -193,7 +193,7 @@ public class CompletedFulfillsFragment extends Fragment {
                         boolean credited = jso.getBoolean("credited");
 
 
-                        if(status.equals("completed") || status.equals("Dispute")) {
+                        if(status.equals("completed") || status.equals("dispute")) {
                             Request request = new Request(id, requestorId, imageResource, productName, requirement, location,
                                     postal, startTime, endTime, duration, price, status);
                             myFulfillRequestArrayList.add(request);
