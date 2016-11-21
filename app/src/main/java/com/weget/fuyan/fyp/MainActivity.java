@@ -337,7 +337,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(int position) {
-
+                if(position == 2){
+                    //if reselect create a request when highlighted
+                    startActivity(new Intent(MainActivity.this, CreateRequestActivity.class));
+                }
             }
         });
 

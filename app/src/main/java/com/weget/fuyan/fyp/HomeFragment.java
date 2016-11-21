@@ -36,7 +36,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.google.android.gms.appindexing.Action;
@@ -156,18 +155,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     private Circle circle;
     boolean ready = false;
 
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        this.activity = activity;
-//    }
-
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        this.activity = null;
-//    }
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_screen, container, false);
         Log.d("sigh", "initiate home fragment");
@@ -223,7 +210,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
         authString = username + ":" + password;
         //requestArrayList = new ArrayList<Request>();
-        new getRequests().execute(authString);
+        new getRequests(true).execute(authString);
 
         recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.active_request_list);
         mAdapter = new com.weget.fuyan.fyp.Recycler.RequestAllListAdapter(requestArrayList, myId);
@@ -285,7 +272,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 }
             });
         } else {
-            Toast.makeText(activity, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(activity, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
         client = new GoogleApiClient.Builder(activity).addApi(AppIndex.API).build();
@@ -374,15 +361,22 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
     private class getRequests extends AsyncTask<String, Void, Boolean> {
 
+        boolean showDialog;
+        public getRequests(boolean show) {
+            showDialog = show;
+        }
+
         ProgressDialog dialog = new ProgressDialog(activity, R.style.MyTheme);
 
         @Override
         protected void onPreExecute() {
-            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            dialog.show();
-            ready = false;
+            if(showDialog) {
+                dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(false);
+                dialog.show();
+                ready = false;
+            }
         }
 
         @Override
@@ -420,8 +414,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
             originalList.clear();
             originalList.addAll(requestArrayList);
-            if(dialog.isShowing()) {
-                dialog.dismiss();
+            if(showDialog) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
             mAdapter.notifyDataSetChanged();
             new getLatlng().execute();
@@ -494,7 +490,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(activity.getApplicationContext(), err, Toast.LENGTH_SHORT).show();
             }
             ready = true;
         }
@@ -758,7 +754,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                     mMap.setMyLocationEnabled(true);
                 } else {
                     //Permission denied, Disable the functionality that depends on this permission
-                    Toast.makeText(activity, "Permission Denied", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(activity, "Permission Denied", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
@@ -793,7 +789,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
     public void refresh() {
         mMap.clear();
-        new getRequests().execute(authString);
+        new getRequests(true).execute(authString);
         //LatLng lastLocation = new LatLng(location.getLatitude(), location.getLongitude());
         drawCircle(lastLocation, 500);
 
@@ -835,5 +831,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         }else{
             Log.d("filter reset", requestArrayList.size() + ", " + originalList.size());
         }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        //Log.d("onHiddenChanged", hidden + "");
+        if(!hidden){
+            requestArrayList.clear();
+            new getRequests(false).execute(authString);
+        }
+
     }
 }
