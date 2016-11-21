@@ -291,7 +291,7 @@ public class MyfulfillDetails extends AppCompatActivity {
                 addressTV.setText(address);
                 priceTV.setText("" + price+"0");
 
-                newprice = (price-(price*0.029+0.3))*0.9;
+                newprice = price-(price*0.029+0.3);
                 newPriceTV.setText("$"+String.format("%.2f",newprice));
 
 
