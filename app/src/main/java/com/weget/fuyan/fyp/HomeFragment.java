@@ -790,7 +790,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         mMap.clear();
         new getRequests(true).execute(authString);
         //LatLng lastLocation = new LatLng(location.getLatitude(), location.getLongitude());
-        drawCircle(lastLocation, 500);
+        if (lastLocation != null) {
+            drawCircle(lastLocation, 500);
+        }
+
 
     }
 
