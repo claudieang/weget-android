@@ -107,19 +107,10 @@ public class PaymentActivity extends AppCompatActivity {
         productDescTV = (TextView)findViewById(R.id.product_description);
         productTitleTV = (TextView)findViewById(R.id.title);
         valTV = (TextView)findViewById(R.id.val);
-//        totalTV = (TextView)findViewById(R.id.total);
 
         productNameTV.setText(productName);
         productDescTV.setText(productDesc);
         valTV.setText("$" + priceS + "0");
-
-        //set fonts
-//        Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
-//        productNameTV.setTypeface(typeFace);
-//        productDescTV.setTypeface(typeFace);
-//        productTitleTV.setTypeface(typeFace);
-//        valTV.setTypeface(typeFace);
-//        totalTV.setTypeface(typeFace);
 
         cardNum = cardNumET.getText().toString();
 
@@ -160,13 +151,12 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                paymentBtn.setEnabled(false);
                 cardNum = cardNumET.getText().toString();
                 cardExpDate = cardExpDateET.getText().toString();
                 cvcNum = cardCvcET.getText().toString();
                 priceCentS = String.valueOf(price*100).substring(0,String.valueOf(price*100).indexOf('.'));
 
-                Log.d("Card Num:=======",cardNum );
                 if(cardNum.trim()!=null && cardNum.trim().length()!= 0){
                     if(cardExpDate.trim()!=null && cardExpDate.trim().length()!=0){
                         if(cvcNum.trim()!=null&& cvcNum.trim().length()!=0){
@@ -174,11 +164,9 @@ public class PaymentActivity extends AppCompatActivity {
                             cardMonth = Integer.parseInt(cardExpDate.substring(0,cardExpDate.indexOf('/')));
                             cardYear= 2000 + Integer.parseInt(cardExpDate.substring(cardExpDate.indexOf('/')+1));
 
-                            Log.d ("Year:==========", ""+cardYear);
+
                             Card card = new Card(cardNum,cardMonth, cardYear, cvcNum);
                             if (card.validateCard()) {
-                                // Do payment (create Charge)
-                                Log.d("CARD:=========", "IS VALID!");
 
                                 try {
                                     Stripe stripe = new Stripe(TEST_API);
@@ -187,21 +175,12 @@ public class PaymentActivity extends AppCompatActivity {
                                             card,
                                             new TokenCallback() {
                                                 public void onSuccess(Token token) {
-                                                    // Send token to your server
-                                                    Log.d ("Card Token:========= ", token.getId());
-                                                    Log.d ("Request ID:==========", requestString);
-                                                    Log.d ("Price:==========", priceCentS);
 
                                                     new processPayment().execute(token.getId());
+
                                                 }
                                                 public void onError(Exception error) {
-                                                    // Show localized error message
-                                                    /*
-                                                    Toast.makeText(mContext,
-                                                            error.getLocalizedString(mContext),
-                                                            Toast.LENGTH_LONG
-                                                    ).show();
-                                                    */
+
                                                 }
                                             }
                                     );
@@ -238,8 +217,6 @@ public class PaymentActivity extends AppCompatActivity {
 
 
 
-
-        //new processToken().execute(authString);
 
     }
 
@@ -316,6 +293,7 @@ public class PaymentActivity extends AppCompatActivity {
             dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
+            dialog.setMessage("Processing");
 
             if(!isFinishing()) {
                 dialog.show();
@@ -420,23 +398,11 @@ public class PaymentActivity extends AppCompatActivity {
             } else {
                 success = true;
 
-//                JSONObject jso = null;
                 try{
-//                    jso = new JSONObject(rst);
-//
-//                    transactionId = jso.getInt("transactionId");
-//                    requestId = jso.getInt("requestId");
-//                    fulfillId = jso.getInt("fulfillId");
-//                    amount = jso.getDouble("amount");
-//                    stripeCode = jso.getString("stripeCode");
-//                    received = jso.getBoolean("received");
-//                    delivered = jso.getBoolean("delivered");
-//                    status = jso.getString("status");
-//                    tr = new Transaction (transactionId, requestId, fulfillId, amount, stripeCode,
-//                            received, delivered, status);
 
-                Gson gson = new Gson();
-                tr = gson.fromJson(rst, Transaction.class);
+
+                    Gson gson = new Gson();
+                    tr = gson.fromJson(rst, Transaction.class);
 
                 }catch(Exception e){
                     e.printStackTrace();

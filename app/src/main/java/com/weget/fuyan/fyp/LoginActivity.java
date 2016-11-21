@@ -355,6 +355,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void initSendBirdLogin(){
+
+        b1.setEnabled(false);
         Log.d("username","username is now : " + dbUsername);
         SendBird.init("0ABD752F-9D9A-46DE-95D5-37A00A1B3958", getApplication().getApplicationContext());
         SendBird.connect(dbID+"", new SendBird.ConnectHandler() {
