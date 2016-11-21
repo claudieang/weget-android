@@ -95,6 +95,7 @@ public class Dispute extends AppCompatActivity implements AdapterView.OnItemSele
         String[] items = new String[0];
 
         //zero means fulfiller, 1 means requestor
+        Log.d("usertype","usertype is : " + usertype);
         if(usertype==0){
             items = new String[]{"Requestor refuses confirmation", "Requestor is difficult to handle", "Requestor refuses to accept item", "Requestor was unresponsive"};
         } else {

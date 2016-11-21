@@ -335,7 +335,7 @@ public class PendingdetailsRequester extends AppCompatActivity {
 
                 Intent i = new Intent (PendingdetailsRequester.this, Dispute.class);
                 i.putExtra("transaction_id", transactionId);
-                i.putExtra("user_type",0); //zero means fulfiller, 1 means requestor
+                i.putExtra("user_type",1); //zero means fulfiller, 1 means requestor
                 i.putExtra("origin", "requestor");
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
