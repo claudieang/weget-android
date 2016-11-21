@@ -63,8 +63,8 @@ public class PaymentActivity extends AppCompatActivity {
     EditText cardNumET,cardExpDateET, cardCvcET;
     int cardMonth, cardYear;
     Button paymentBtn;
-    final String TEST_API = "pk_test_bnzsfm0hZEoiXxKSklIkaUHM";
-    //final String TEST_API = "pk_live_aNklK47hNoxf21zHI5qY0TsI";
+    //final String TEST_API = "pk_test_bnzsfm0hZEoiXxKSklIkaUHM";
+    final String TEST_API = "pk_live_aNklK47hNoxf21zHI5qY0TsI";
     String URL;
     TextView productNameTV, productDescTV, productTitleTV, valTV, totalTV;
 
