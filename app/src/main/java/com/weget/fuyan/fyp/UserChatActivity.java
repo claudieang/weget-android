@@ -98,6 +98,8 @@ public class UserChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_userchat);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        Log.d("UCA", "double called?");
+
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         //toolbar.setTitle("Request Completed");
@@ -437,7 +439,7 @@ public class UserChatActivity extends AppCompatActivity {
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
                     if (keyCode == KeyEvent.KEYCODE_ENTER) {
                         if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                            send();
+                            //send();
                         }
                         return true; // Do not hide keyboard.
                     }
@@ -580,6 +582,8 @@ public class UserChatActivity extends AppCompatActivity {
             if (mEtxtMessage.getText().length() <= 0) {
                 return;
             }
+
+            Log.d("UCA","send how many?");
 
             mGroupChannel.sendUserMessage(mEtxtMessage.getText().toString(), new BaseChannel.SendUserMessageHandler() {
                 @Override
@@ -823,6 +827,8 @@ public class UserChatActivity extends AppCompatActivity {
                 case TYPE_USER_MESSAGE:
                     UserMessage message = (UserMessage) item;
                     if (message.getSender().getUserId().equals(SendBird.getCurrentUser().getUserId())) {
+                        Log.d("UCA","TEXT TWICE??");
+                        Log.d("UCA","Message.getmessage is : " + message.getMessage());
                         viewHolder.getView("left_container", View.class).setVisibility(View.GONE);
                         viewHolder.getView("right_container", View.class).setVisibility(View.VISIBLE);
 
