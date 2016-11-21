@@ -60,6 +60,9 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
     ViewPager viewPager;
     ViewPagerAdapter androidAdapter;
     String URL;
+    private ActiveFulfillsFragment active;
+    private PendingFulfillsFragment pending;
+    private CompletedFulfillsFragment completed;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.activity_my_fulfill, container, false);
@@ -164,6 +167,18 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
 
     }
 
+    public ActiveFulfillsFragment getActive() {
+        return active;
+    }
+
+    public PendingFulfillsFragment getPending() {
+        return pending;
+    }
+
+    public CompletedFulfillsFragment getCompleted() {
+        return completed;
+    }
+
     // view pager adapter
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -174,11 +189,14 @@ public class FulfillFragment extends Fragment  implements MaterialTabListener {
         public Fragment getItem(int num) {
             switch(num){
                 case 0:
-                    return new ActiveFulfillsFragment();
+                    active = new ActiveFulfillsFragment();
+                    return active;
                 case 1:
-                    return new PendingFulfillsFragment();
+                    pending = new PendingFulfillsFragment();
+                    return pending;
                 case 2:
-                    return new CompletedFulfillsFragment();
+                    completed = new CompletedFulfillsFragment();
+                    return completed;
             }
             return null;
         }

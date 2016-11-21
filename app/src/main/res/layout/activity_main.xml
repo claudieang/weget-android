@@ -53,7 +53,8 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="15dp"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_profile" />
+                    android:src="@drawable/ic_account_circle_black_36dp"
+                    android:tint="#FFFFFF"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

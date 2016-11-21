@@ -125,6 +125,9 @@ public class CompletedRequestsFragment extends Fragment {
                     public void onRefresh() {
 
                         new getMyRequests(false).execute(authString);
+                        RequestFragment parentFragment = (RequestFragment)getParentFragment();
+                        parentFragment.getActive().new getMyRequests(false).execute(authString);
+                        parentFragment.getPend().new getMyRequests(false).execute(authString);
 
                     }
                 }
@@ -150,7 +153,7 @@ public class CompletedRequestsFragment extends Fragment {
 
 
 
-    private class getMyRequests extends AsyncTask<String, Void, Boolean> {
+    public class getMyRequests extends AsyncTask<String, Void, Boolean> {
         Boolean showDialog;
 
         ProgressDialog dialog;

@@ -163,7 +163,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (profilePicture.equals("")) {
-            profileImage.setImageResource(R.drawable.ic_profile);
+//            profileImage.setImageResource(R.drawable.ic_account_circle_black_36dp);
+//            profileImage.setImageTintMode(new );
         } else {
             byte[] decodeString = Base64.decode(profilePicture, Base64.NO_WRAP);
             Bitmap decodebitmap = BitmapFactory.decodeByteArray(
