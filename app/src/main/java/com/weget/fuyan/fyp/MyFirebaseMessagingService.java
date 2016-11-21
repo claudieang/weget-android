@@ -99,7 +99,27 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 notificationManager.notify(0, notificationBuilder.build());
             }
 
-            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("fulfill1")) {
+            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("fulfillp")) {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("notification_request_tab", 1);
+                intent.putExtra("notification_request_swipe", 1);
+
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+                notificationBuilder.setContentTitle("Weget");
+                notificationBuilder.setContentText(remoteMessage.getNotification().getBody());
+                notificationBuilder.setAutoCancel(true);
+                notificationBuilder.setSmallIcon(R.drawable.ic_weget_notif);
+                notificationBuilder.setContentIntent(pendingIntent);
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(0, notificationBuilder.build());
+            }
+
+
+            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("fulfillc")) {
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("notification_request_tab", 1);
                 intent.putExtra("notification_request_swipe", 2);
@@ -118,8 +138,27 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 notificationManager.notify(0, notificationBuilder.build());
             }
 
+            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("requestp")) {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("notification_fulfill_tab", 3);
+                intent.putExtra("notification_fulfill_swipe", 1);
 
-            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("request1")) {
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+                notificationBuilder.setContentTitle("Weget");
+                notificationBuilder.setContentText(remoteMessage.getNotification().getBody());
+                notificationBuilder.setAutoCancel(true);
+                notificationBuilder.setSmallIcon(R.drawable.ic_weget_notif);
+                notificationBuilder.setContentIntent(pendingIntent);
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(0, notificationBuilder.build());
+            }
+
+
+            if (remoteMessage.getNotification().getTag().equalsIgnoreCase("requestc")) {
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("notification_fulfill_tab", 3);
                 intent.putExtra("notification_fulfill_swipe", 2);

@@ -203,7 +203,8 @@ public class CompletedRequest extends AppCompatActivity {
                 title.setText(status + " Request");
                 date.setText(DateFormatter.formatDate(r.getStartTime()));
                 productNameTV.setText(productName);
-                priceTV.setText("$" + priceS);
+                price = price - (price*0.029 + 0.3);
+                priceTV.setText("$" + String.format("%.2f",price));
                 addressTV.setText(address + " " + postal);
                 details.setText(r.getRequirement());
 
@@ -280,7 +281,7 @@ public class CompletedRequest extends AppCompatActivity {
                     date.setText(DateFormatter.formatDateFull(r.getStartTime()));
                     productNameTV.setText(productName);
                     fulfillerName.setText(a.getUsername());
-                    priceTV.setText("" + price + "0");
+                    priceTV.setText("$" + String.format("%.2f",price));
                     addressTV.setText(address + " " + postal);
                     details.setText(r.getRequirement());
 

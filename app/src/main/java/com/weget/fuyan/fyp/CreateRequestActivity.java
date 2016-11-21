@@ -335,29 +335,32 @@ public class CreateRequestActivity extends AppCompatActivity implements Calendar
 
                                     if (priceS != null && priceS.trim().length() > 0) {
                                         price = Double.parseDouble(priceS);
-                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                        Date now = new Date();
-                                        startTime = sdf.format(now);
+                                        if(price >= 1.00) {
+                                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                            Date now = new Date();
+                                            startTime = sdf.format(now);
 
-                                        if(endTime.length() != 0) {
-                                            Date end = null;
-                                            try {
-                                                end = sdf.parse(endTime);
+                                            if (endTime.length() != 0) {
+                                                Date end = null;
+                                                try {
+                                                    end = sdf.parse(endTime);
 
-                                            } catch (ParseException pe) {
-                                                etRequestDuration.setError("Invalid End Date");
-                                            }
-                                            if (end.before(now)) {
-                                                etRequestDuration.setError("Invalid End Date");
+                                                } catch (ParseException pe) {
+                                                    etRequestDuration.setError("Invalid End Date");
+                                                }
+                                                if (end.before(now)) {
+                                                    etRequestDuration.setError("Invalid End Date");
+                                                } else {
+                                                    authString = username + ":" + password;
+                                                    new createRequest().execute(authString);
+                                                }
                                             } else {
-                                                authString = username + ":" + password;
-                                                new createRequest().execute(authString);
+                                                etRequestDuration.setError("Invalid End Date");
                                             }
-                                        } else {
-                                            etRequestDuration.setError("Invalid End Date");
+
+                                        }else{
+                                            etPrice.setError("Invalid price!");
                                         }
-
-
 
                                     } else {
                                         etPrice.setError("Price required!");

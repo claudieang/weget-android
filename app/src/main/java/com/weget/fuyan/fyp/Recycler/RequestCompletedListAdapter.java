@@ -19,10 +19,12 @@ import java.util.List;
 public class RequestCompletedListAdapter  extends RecyclerView.Adapter<RequestCompletedListAdapter.MyViewHolder>{
 
     private List<Request> requestsList;
+    private String origin;
 
 
-    public RequestCompletedListAdapter(List<Request> requestsList) {
+    public RequestCompletedListAdapter(List<Request> requestsList, String origin) {
         this.requestsList = requestsList;
+        this.origin = origin;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -71,11 +73,20 @@ public class RequestCompletedListAdapter  extends RecyclerView.Adapter<RequestCo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position)  {
-        Request request = requestsList.get(position);
-        holder.title.setText(request.getProductName());
-        holder.details.setText(request.getRequirement());
-        holder.date.setText(DateFormatter.formatDateShort(request.getEndTime()));
-        holder.price.setText("$ " + String.format("%.2f",request.getPrice()));
+
+        if(origin.equals("fulfill")){
+            Request request = requestsList.get(position);
+            holder.title.setText(request.getProductName());
+            holder.details.setText(request.getRequirement());
+            holder.date.setText(DateFormatter.formatDateShort(request.getEndTime()));
+            holder.price.setText("$ " + String.format("%.2f",(request.getPrice()-(request.getPrice()*0.029 + 0.3))));
+        }else {
+            Request request = requestsList.get(position);
+            holder.title.setText(request.getProductName());
+            holder.details.setText(request.getRequirement());
+            holder.date.setText(DateFormatter.formatDateShort(request.getEndTime()));
+            holder.price.setText("$ " + String.format("%.2f", request.getPrice()));
+        }
         //final int idCheck = holder.fulfillers_btn.getId();
         //holder.fulfillers_btn = (RelativeLayout)itemView.findViewById(R.id.fulfillers_btn);
 

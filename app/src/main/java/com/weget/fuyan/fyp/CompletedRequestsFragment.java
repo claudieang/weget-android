@@ -107,7 +107,7 @@ public class CompletedRequestsFragment extends Fragment {
         emptyView3 = (TextView)view.findViewById(R.id.empty_view3);
 
 
-        mAdapter = new com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter(myRequestArrayList);
+        mAdapter = new com.weget.fuyan.fyp.Recycler.RequestCompletedListAdapter(myRequestArrayList, "request");
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view3));
